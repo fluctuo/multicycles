@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "multicycles",
+  "version": "1.0.0-beta.1",
+  "scripts": {
+    "#<git hooks>": "handled by husky",
+    "precommit": "lint-staged",
+    "#</git hooks>": "handled by husky",
+    "clean": "rm -rf packages/*/lib",
+    "transpile":
+      "lerna exec -- babel src --optional runtime --out-dir lib --ignore \"__tests__\"",
+    "posttranspile": "lerna run prepare",
+    "watch":
+      "lerna exec --parallel -- babel -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
+    "prepare": "npm run clean && npm run transpile",
+    "prerelease": "npm run prepare",
+    "release": "lerna publish",
+    "links": "lerna exec -- npm link"
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": ["prettier --write", "git add"]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "eslint-plugin-prettier": "^2.4.0",
+    "husky": "^0.14.3",
+    "lerna": "^2.5.1",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.2"
+  }
+}

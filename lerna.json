@@ -1,0 +1,10 @@
+{
+  "lerna": "2.5.1",
+  "packages": ["packages/*"],
+  "version": "independent",
+  "commands": {
+    "exec": {
+      "ignore": ["@multicycle/api"]
+    }
+  }
+}

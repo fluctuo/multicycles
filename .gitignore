@@ -1,0 +1,14 @@
+*.log
+
+# macOS crap
+.DS_Store
+
+# Node.js / npm
+node_modules
+
+# code coverage
+coverage
+
+# build
+lib
+dist
