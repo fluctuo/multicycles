@@ -12,3 +12,5 @@ coverage
 # build
 lib
 dist
+
+PRIVATE_*
