@@ -1,6 +1,6 @@
 {
   "name": "@multicycles/api",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "Api for multicycles.org",
   "author": "Pierrick <mulotmail@gmail.com>",
   "private": true,
