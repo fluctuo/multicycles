@@ -4,7 +4,7 @@
   "version": "independent",
   "commands": {
     "exec": {
-      "ignore": ["@multicycle/api"]
+      "ignore": ["@multicycles/api"]
     }
   }
 }
