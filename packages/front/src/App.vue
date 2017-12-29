@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper">
     <header>
-      <a href="https://mulicycles.org/">Mutlicycles.org</a>
+      <router-link to="/">Mutlicycles.org</router-link>
+      &nbsp;|&nbsp;
+      <router-link to="/about">About</router-link>
     </header>
     <router-view/>
   </div>
@@ -23,8 +25,6 @@ body {
 
 header {
   height: 40px;
-  // display: flex;
-  // align-content: center;
 }
 
 .wrapper {

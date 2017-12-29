@@ -1,5 +1,5 @@
-import ofo from '@multicycle/ofo'
-import gobee from '@multicycle/gobee.bike'
+import ofo from '@multicycles/ofo'
+import gobee from '@multicycles/gobee.bike'
 
 export default {
   getBikeByLatLng(data) {

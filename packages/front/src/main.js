@@ -1,11 +1,20 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import Axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueAnalytics from 'vue-analytics'
+
 import App from './App'
 import router from './router'
 
-import Axios from 'axios'
-import VueAxios from 'vue-axios'
+if (process.env.UA_ANALYTICS) {
+  Vue.use(VueAnalytics, {
+    id: process.env.UA_ANALYTICS,
+    router,
+    autoTracking: {
+      exception: true
+    }
+  })
+}
 
 Vue.config.productionTip = false
 

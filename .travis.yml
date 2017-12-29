@@ -7,8 +7,8 @@ services:
 
 before_install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker build -t multicycles/api packages/api
-    docker build -t multicycles/front packages/front
+    docker build -t multicycles/api packages/api;
+    docker build -t multicycles/front packages/front;
     fi
 
 after_success:

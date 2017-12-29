@@ -15,6 +15,7 @@
     "knacss": "^7.0.1",
     "leaflet.icon.glyph": "^0.2.0",
     "vue": "^2.5.2",
+    "vue-analytics": "^5.8.0",
     "vue-axios": "^2.0.2",
     "vue-router": "^3.0.1",
     "vue2-leaflet": "0.0.57"
