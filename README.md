@@ -13,8 +13,7 @@ Currently support:
 
 ## Roadmap
 
-* Design
-* Convert as "light PWA" (manifest for add on mobile desktop)
+* real-design
 * Optimise front map
 * Add obike
 * Add account to "merge" provider account

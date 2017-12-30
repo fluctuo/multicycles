@@ -4,7 +4,7 @@
       loading: {{ loading }}
     </div>
     <div class="map-container">
-      <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" style="height: 100%">
+      <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-zoomend="zoomEnd" style="height: 100%">
         <v-tilelayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
         <v-marker v-for="(bycycle, idx) in bycycles" :lat-lng="[bycycle.lat, bycycle.lng]" :icon="getIconByProvider(bycycle.provider)" :key=idx></v-marker>
       </v-map>
@@ -28,7 +28,7 @@ export default {
       loading: false,
       map: {
         center: [48.852775, 2.369336],
-        zoom: 16
+        zoom: 17
       },
       bycycles: []
     }
@@ -44,7 +44,7 @@ export default {
     getBicycles(lat, lng) {
       this.loading = true
       return this.axios.post('/getBicycles', { lat, lng }).then(resp => {
-        this.bycycles = this.bycycles.concat(resp.data)
+        this.bycycles = resp.data
         this.loading = false
       })
     },
@@ -61,10 +61,12 @@ export default {
         })
       }
     },
+    zoomEnd(event) {
+      this.map.zoom = this.$refs.map.mapObject.getZoom()
+    },
     moveCenter(event) {
       const latlng = this.$refs.map.mapObject.getCenter()
       this.map.center = [latlng.lat, latlng.lng]
-
       this.getBicycles(this.map.center[0], this.map.center[1])
     },
     getIconByProvider(provider) {

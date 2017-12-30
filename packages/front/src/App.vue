@@ -1,7 +1,11 @@
 <template>
   <div class="wrapper">
     <header>
-      <router-link to="/">Mutlicycles.org</router-link>
+      <img src="/static/bicyclist.svg" alt="mutlicycles logo" style="height: 30px">
+      &nbsp;
+      <router-link to="/">
+        Mutlicycles
+      </router-link>
       &nbsp;|&nbsp;
       <router-link to="/about">About</router-link>
     </header>
@@ -16,15 +20,33 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 @import '../node_modules/knacss/sass/knacss.scss';
 
 html,
 body {
+  font-family: 'Poppins', sans-serif;
   height: 100%;
 }
 
 header {
-  height: 40px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(18, 168, 11);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.3em;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+    }
+  }
 }
 
 .wrapper {
