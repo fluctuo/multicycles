@@ -15,8 +15,10 @@
     "@multicycles/gobee.bike": "*",
     "@multicycles/ofo": "*",
     "@std/esm": "^0.18.0",
+    "graphql": "^0.12.3",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
+    "koa-graphql": "^0.7.3",
     "koa-router": "^7.3.0"
   },
   "@std/esm": "cjs"

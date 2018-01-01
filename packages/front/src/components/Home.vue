@@ -3,7 +3,9 @@
     <div class="map-container">
       <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-zoomend="zoomEnd" style="height: 100%">
         <v-tilelayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
-        <v-marker v-for="(bicycle, idx) in bicycles" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(bicycle.provider)" :key=idx></v-marker>
+        <span v-for="(data, provider) in bicycles" :key="provider">
+          <v-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key=idx></v-marker>
+        </span>
       </v-map>
     </div>
   </div>
@@ -12,6 +14,7 @@
 <script>
 import Vue2Leaflet from 'vue2-leaflet'
 import lig from 'leaflet.icon.glyph'
+import gql from 'graphql-tag'
 
 function degreesToRadians(degrees) {
   return degrees * Math.PI / 180
@@ -44,14 +47,14 @@ export default {
     return {
       loading: false,
       location: {
-        lat: 0,
-        lng: 0
+        lat: 48.85,
+        lng: 2.36
       },
       map: {
         center: [48.852775, 2.369336],
         zoom: 17
       },
-      bicycles: []
+      bicycles: {}
     }
   },
   created() {
@@ -80,10 +83,8 @@ export default {
           lat: this.roundLocation(lat),
           lng: this.roundLocation(lng)
         }
-        return this.axios.post('/getBicycles', this.location).then(resp => {
-          this.bicycles = resp.data
-          this.loading = false
-        })
+
+        this.$apollo.queries.bicycles.refetch()
       }
     },
     setCenter() {
@@ -130,6 +131,33 @@ export default {
         glyph,
         iconUrl
       })
+    }
+  },
+  apollo: {
+    bicycles() {
+      return {
+        query: gql`
+          query($lat: Float!, $lng: Float!) {
+            bicyclesByLatLng(lat: $lat, lng: $lng) {
+              gobee {
+                lat
+                lng
+              }
+              ofo {
+                lat
+                lng
+              }
+            }
+          }
+        `,
+        variables() {
+          return { lat: this.location.lat, lng: this.location.lng }
+        },
+        loadingKey: 'loading',
+        update(data) {
+          return data.bicyclesByLatLng
+        }
+      }
     }
   }
 }
