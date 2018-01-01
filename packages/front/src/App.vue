@@ -4,7 +4,7 @@
       <img src="/static/bicyclist.svg" alt="mutlicycles logo" style="height: 30px">
       &nbsp;
       <router-link to="/">
-        Mutlicycles
+        Multicycles
       </router-link>
       &nbsp;|&nbsp;
       <router-link to="/about">About</router-link>
