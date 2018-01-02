@@ -7,6 +7,7 @@ import VueApollo from 'vue-apollo'
 import App from './App'
 import router from './router'
 import apolloProvider from './apollo'
+import i18n from './i18n'
 
 if (process.env.UA_ANALYTICS) {
   Vue.use(VueAnalytics, {
@@ -32,6 +33,7 @@ new Vue({
   el: '#app',
   router,
   apolloProvider,
+  i18n,
   template: '<App/>',
   components: { App }
 })

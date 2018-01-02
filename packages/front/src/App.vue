@@ -7,7 +7,9 @@
         Multicycles
       </router-link>
       &nbsp;|&nbsp;
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">
+        {{ $t('about.title') }}
+      </router-link>
     </header>
     <router-view/>
   </div>
