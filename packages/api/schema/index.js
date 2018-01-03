@@ -7,6 +7,7 @@ import {
 
 import gobee from './gobee'
 import ofo from './ofo'
+import mobike from './mobike'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -17,7 +18,8 @@ export default new GraphQLSchema({
           name: 'BicyclesByLatLng',
           fields: {
             gobee: gobee.getBicyclesByLatLng,
-            ofo: ofo.getBicyclesByLatLng
+            ofo: ofo.getBicyclesByLatLng,
+            mobike: mobike.getBicyclesByLatLng
           }
         }),
         args: {

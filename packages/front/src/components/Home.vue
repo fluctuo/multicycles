@@ -121,6 +121,10 @@ export default {
           glyph = 'G'
           iconUrl = '/static/glyph-marker-icon-gobee.png'
           break
+        case 'mobike':
+          glyph = 'M'
+          iconUrl = '/static/glyph-marker-icon-mobike.png'
+          break
         default:
           iconUrl = '/static/glyph-marker-icon.png'
           break
@@ -144,6 +148,10 @@ export default {
                 lng
               }
               ofo {
+                lat
+                lng
+              }
+              mobike {
                 lat
                 lng
               }
