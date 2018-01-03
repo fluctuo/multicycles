@@ -32,6 +32,7 @@ export default {
 
 <style lang="scss">
 .settings-panel {
+  z-index: 10000;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

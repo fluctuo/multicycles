@@ -80,6 +80,7 @@ header {
 }
 
 .settings {
+  z-index: 10001;
   position: absolute;
   right: 10px;
   line-height: 1;

@@ -2,7 +2,9 @@
   <div class="flex-container">
     <div class="map-container">
       <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-zoomend="zoomEnd" style="height: 100%">
-        <v-tilelayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
+        <v-tilelayer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></v-tilelayer>
+        <v-tilelayer v-else url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
+
         <span v-for="(data, provider) in bicycles" :key="provider">
           <v-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key=idx></v-marker>
         </span>
@@ -52,7 +54,7 @@ export default {
       },
       map: {
         center: [48.852775, 2.369336],
-        zoom: 17
+        zoom: 18
       },
       bicycles: {}
     }
@@ -78,7 +80,7 @@ export default {
         lng
       )
 
-      if (diff > 0.5) {
+      if (diff > 0.2) {
         this.location = {
           lat: this.roundLocation(lat),
           lng: this.roundLocation(lng)
