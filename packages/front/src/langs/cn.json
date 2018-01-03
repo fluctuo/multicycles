@@ -1,6 +1,6 @@
 {
   "about": {
-    "title": "About",
+    "title": "关于",
     "one":
       "<a href=\"https://multicycles.org/\">Multicycles</a> is an application that allows you to group together at a glance the different bicycle rental services (bicycle-sharing system).",
     "two":
@@ -9,7 +9,7 @@
       "Launched in early 2018, few services are available, but the list is growing steadily.<br>You can contact the initiator of the project on <a href=\"https://twitter.com/le_mulot\">twitter</a>"
   },
   "settings": {
-    "title": "Settings",
-    "lang": "Language"
+    "title": "设置",
+    "lang": "语言"
   }
 }

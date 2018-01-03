@@ -7,5 +7,9 @@
       "L'utilisation de l'application est <span class=\"important\">gratuite</span> et <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
     "three":
       "Lancée début 2018, peu de services sont disponibles, mais la liste augmente régulièrement.<br>Vous pouvez contacter l'initiateur du projet sur <a href=\"https://twitter.com/le_mulot\">twitter</a>"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "lang": "Langue"
   }
 }
