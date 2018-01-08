@@ -5,6 +5,8 @@
         <v-tilelayer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></v-tilelayer>
         <v-tilelayer v-else url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
 
+        <v-marker v-if="geolocation" :lat-lng="geolocation" :icon="getIconByProvider('geo')" />
+
         <span v-for="(data, provider) in bicycles" :key="provider">
           <v-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key=idx></v-marker>
         </span>
@@ -17,6 +19,8 @@
 import Vue2Leaflet from 'vue2-leaflet'
 import lig from 'leaflet.icon.glyph'
 import gql from 'graphql-tag'
+
+let geolocationWatcher
 
 function degreesToRadians(degrees) {
   return degrees * Math.PI / 180
@@ -56,12 +60,18 @@ export default {
         center: [48.852775, 2.369336],
         zoom: 18
       },
+      geolocation: false,
       bicycles: {}
     }
   },
   created() {
     this.setCenter()
     this.getBicycles(this.map.center[0], this.map.center[1])
+  },
+  destroyed() {
+    if (geolocationWatcher && navigator.geolocation) {
+      navigator.geolocation.clearWatch(geolocationWatcher)
+    }
   },
   watch: {
     $route: 'getBicycles'
@@ -90,16 +100,20 @@ export default {
       }
     },
     setCenter() {
+      function getGeolocation(position) {
+        this.map.center = [position.coords.latitude, position.coords.longitude]
+        this.geolocation = this.map.center
+        this.getBicycles(this.map.center[0], this.map.center[1])
+      }
+
       if (!navigator.geolocation) {
         console.warn('haha navigator.geolocation doesnt exist')
       } else {
-        navigator.geolocation.getCurrentPosition(position => {
-          this.map.center = [
-            position.coords.latitude,
-            position.coords.longitude
-          ]
-          this.getBicycles(this.map.center[0], this.map.center[1])
-        })
+        const bindedGetGeolocation = getGeolocation.bind(this)
+        navigator.geolocation.getCurrentPosition(bindedGetGeolocation)
+        geolocationWatcher = navigator.geolocation.watchPosition(
+          bindedGetGeolocation
+        )
       }
     },
     zoomEnd(event) {
@@ -111,6 +125,14 @@ export default {
       this.getBicycles(this.map.center[0], this.map.center[1])
     },
     getIconByProvider(provider) {
+      if (provider === 'geo') {
+        return L.icon({
+          prefix: '',
+          iconUrl: '/static/glyph-marker-dot.png',
+          iconSize: [24, 24]
+        })
+      }
+
       let glyph = ''
       let iconUrl = undefined
 
