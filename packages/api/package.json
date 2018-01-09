@@ -12,8 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "@koa/cors": "^2.2.1",
-    "@multicycles/gobee.bike": "*",
-    "@multicycles/ofo": "*",
+    "@multicycles/gobee.bike": "1.0.0-beta.2",
+    "@multicycles/ofo": "1.0.0-beta.3",
     "@multicycles/mobike": "1.0.0-beta.1",
     "@std/esm": "^0.18.0",
     "graphql": "^0.12.3",

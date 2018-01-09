@@ -6,7 +6,25 @@ const api = axios.create({
 })
 
 export default {
-  getBicyclesByLatLng({ lat, lng } = {}) {
+  getOTP({ tel, ccc }) {
+    return api.post('/verifyCode_v2', {
+      tel,
+      ccc,
+      type: 1,
+      lat: 48.85,
+      lng: 2.37
+    })
+  },
+  login({ tel, code, ccc }) {
+    return api.post('/api/login_v2', {
+      tel,
+      code,
+      ccc,
+      lat: 48.85,
+      lng: 2.37
+    })
+  },
+  getBicyclesByLatLng({ lat, lng, token } = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }
@@ -14,8 +32,8 @@ export default {
     return api.post('/nearbyofoCar', {
       lat,
       lng,
-      source: 2,
-      token: process.env.OFO_AUTH_TOKEN // auth token
+      token,
+      source: 2
     })
   }
 }
