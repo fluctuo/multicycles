@@ -9,6 +9,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.17.1"
+    "axios": "^0.17.1",
+    "firebase": "^4.8.1"
   }
 }

@@ -10,15 +10,15 @@ services:
 
 before_install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker build -t multicycles/api packages/api;
-    docker build -t multicycles/front packages/front;
+    docker build -t multicycles/api api;
+    docker build -t multicycles/front front;
     fi
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push multicycles/api;
-    docker push multicycles/front;
+    docker push api;
+    docker push front;
     fi
 
 notifications:

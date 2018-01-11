@@ -1,11 +1,4 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLList,
-  GraphQLInt,
-  GraphQLFloat,
-  GraphQLBoolean
-} from 'graphql'
+import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLFloat, GraphQLBoolean } from 'graphql'
 
 import gobee from '@multicycles/gobee.bike'
 

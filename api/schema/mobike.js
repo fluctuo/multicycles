@@ -1,10 +1,4 @@
-import {
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLFloat,
-  GraphQLInt,
-  GraphQLString
-} from 'graphql'
+import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString } from 'graphql'
 
 import mobike from '@multicycles/mobike'
 
