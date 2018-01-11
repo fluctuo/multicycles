@@ -1,13 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import gql from 'graphql-tag'
 
 import i18n from './i18n'
+import apolloProvider from './apollo'
 
 Vue.use(Vuex)
 
+const capacities = localStorage.getItem('capacities') && JSON.parse(localStorage.getItem('capacities'))
+
 const state = {
-  lang: localStorage.getItem('lang') || 'en',
-  settingPanel: false
+  lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
+  settingPanel: false,
+  geolocation: false,
+  providers: (capacities && capacities.providers) || ['ofo', 'gobee', 'obike', 'mobike']
 }
 
 const getters = {}
@@ -16,8 +22,33 @@ const actions = {
   toggleSettingPanel({ commit }) {
     commit('toggleSettingPanel')
   },
-  setLang: ({ commit }, event) => {
+  setLang({ commit }, event) {
     commit('setLang', event.target.value)
+  },
+  setGeolocation({ commit }, position) {
+    commit('setGeolocation', position)
+  },
+  getCapacities({ state, commit }, position) {
+    if (state.geolocation) {
+      apolloProvider.defaultClient
+        .query({
+          query: gql`
+            query($lat: Float!, $lng: Float!) {
+              capacities(lat: $lat, lng: $lng) {
+                defaultLanguage
+                providers
+              }
+            }
+          `,
+          variables: {
+            lat: state.geolocation[0],
+            lng: state.geolocation[1]
+          }
+        })
+        .then(result => {
+          commit('setCapacities', result.data.capacities)
+        })
+    }
   }
 }
 
@@ -29,6 +60,18 @@ const mutations = {
     localStorage.setItem('lang', lang)
     i18n.locale = lang
     state.lang = lang
+  },
+  setGeolocation(state, position) {
+    state.geolocation = position
+  },
+  setCapacities(state, capacities) {
+    localStorage.setItem('capacities', JSON.stringify(capacities))
+
+    if (!localStorage.getItem('lang')) {
+      i18n.locale = capacities.defaultLanguage
+    }
+
+    state.providers = capacities.providers
   }
 }
 
