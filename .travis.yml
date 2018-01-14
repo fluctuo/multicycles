@@ -17,8 +17,8 @@ before_install:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push api;
-    docker push front;
+    docker push multicycles/api;
+    docker push multicycles/front;
     fi
 
 notifications:

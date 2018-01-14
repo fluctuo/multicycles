@@ -13,7 +13,8 @@
     "prepare": "npm run clean && npm run transpile",
     "prerelease": "npm run prepare",
     "release": "lerna publish",
-    "links": "lerna exec -- npm link"
+    "links": "lerna exec -- npm link",
+    "test": "echo \"Error: pas de tests pour l'instant\" && exit 0"
   },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --write", "git add"]
