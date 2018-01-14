@@ -6,16 +6,8 @@
 
 Currently support:
 
-* [gobee.bike](http://gobee.bike) -> green [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/gobee.bike.svg)](https://www.npmjs.com/package/@multicycles/gobee.bike)
-* [Ofo](https://www.ofo.com) -> yellow [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/ofo.svg)](https://www.npmjs.com/package/@multicycles/ofo)
-* soon [Obike](https://www.o.bike/) -> ugly orange
+* [gobee.bike](http://gobee.bike) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/gobee.bike.svg)](https://www.npmjs.com/package/@multicycles/gobee.bike)
+* [Ofo](https://www.ofo.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/ofo.svg)](https://www.npmjs.com/package/@multicycles/ofo)
+* [Mobike](https://mobike.com/global/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/mobike.svg)](https://www.npmjs.com/package/@multicycles/mobike)
+* [Yobike](https://yobike.co.uk) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/yobike.svg)](https://www.npmjs.com/package/@multicycles/yobike)
 * Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)
-
-## Roadmap
-
-* real-design
-* Optimise front map
-* Add obike
-* Add account to "merge" provider account
-* Add renting
-* ...
