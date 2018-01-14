@@ -3,6 +3,7 @@ import { GraphQLSchema, GraphQLObjectType, GraphQLFloat, GraphQLNonNull } from '
 import gobee from './gobee'
 import ofo from './ofo'
 import mobike from './mobike'
+import yobike from './yobike'
 import capacities from './capacities'
 
 export default new GraphQLSchema({
@@ -16,7 +17,8 @@ export default new GraphQLSchema({
           fields: {
             gobee: gobee.getBicyclesByLatLng,
             ofo: ofo.getBicyclesByLatLng,
-            mobike: mobike.getBicyclesByLatLng
+            mobike: mobike.getBicyclesByLatLng,
+            yobike: yobike.getBicyclesByLatLng
           }
         }),
         args: {

@@ -144,6 +144,10 @@ export default {
           glyph = 'M'
           iconUrl = '/static/glyph-marker-icon-mobike.png'
           break
+        case 'yobike':
+          glyph = 'Y'
+          iconUrl = '/static/glyph-marker-icon-yobike.png'
+          break
         default:
           iconUrl = '/static/glyph-marker-icon.png'
           break

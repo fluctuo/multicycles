@@ -1,5 +1,11 @@
 export default {
+  // France
   France: ['ofo', 'gobee'],
   Paris: ['ofo', 'gobee'],
-  Shanghai: ['ofo', 'mobike']
+  // China
+  Shanghai: ['ofo', 'mobike'],
+  // UK
+  London: ['ofo', 'mobike'],
+  Bristol: ['yobike'],
+  Southampton: ['yobike']
 }

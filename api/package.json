@@ -16,6 +16,7 @@
     "@multicycles/gobee.bike": "1.0.0-beta.2",
     "@multicycles/mobike": "1.0.0-beta.1",
     "@multicycles/ofo": "1.0.0-beta.3",
+    "@multicycles/yobike": "1.0.0-beta.1",
     "@std/esm": "^0.18.0",
     "graphql": "^0.12.3",
     "koa": "^2.4.1",

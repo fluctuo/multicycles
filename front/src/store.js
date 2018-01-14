@@ -13,7 +13,7 @@ const state = {
   lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
   settingPanel: false,
   geolocation: false,
-  providers: (capacities && capacities.providers) || ['ofo', 'gobee', 'obike', 'mobike']
+  providers: (capacities && capacities.providers) || ['ofo', 'gobee', 'mobike', 'yobike']
 }
 
 const getters = {}
