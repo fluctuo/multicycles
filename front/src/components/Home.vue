@@ -1,7 +1,7 @@
 <template>
   <div class="flex-container">
     <div class="map-container">
-      <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-zoomend="zoomEnd" style="height: 100%">
+      <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-dragstart="moveStart" @l-zoomend="zoomEnd" style="height: 100%">
         <v-tilelayer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></v-tilelayer>
         <v-tilelayer v-else url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
 
@@ -11,6 +11,9 @@
           <v-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key=idx></v-marker>
         </span>
       </v-map>
+      <ul class="map-ui">
+        <li><a @click="centerOnGeolocation" href="#"><i data-feather="compass"></i></a></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -52,6 +55,7 @@ export default {
   data() {
     return {
       loading: false,
+      moved: false,
       location: {
         lat: 48.85,
         lng: 2.36
@@ -105,18 +109,25 @@ export default {
           this.getCapacities({ lat: this.map.center[0], lng: this.map.center[1] })
         })
         geolocationWatcher = navigator.geolocation.watchPosition(position => {
-          this.map.center = [position.coords.latitude, position.coords.longitude]
-          this.setGeolocation(this.map.center)
-          this.getBicycles(this.map.center[0], this.map.center[1])
+          this.setGeolocation([position.coords.latitude, position.coords.longitude])
+
+          if (!this.moved) {
+            this.map.center = [position.coords.latitude, position.coords.longitude]
+            this.getBicycles(this.map.center[0], this.map.center[1])
+          }
         })
       }
     },
     zoomEnd(event) {
       this.map.zoom = this.$refs.map.mapObject.getZoom()
     },
+    moveStart() {
+      this.moved = true
+    },
     moveCenter(event) {
       const latlng = this.$refs.map.mapObject.getCenter()
       this.map.center = [latlng.lat, latlng.lng]
+
       this.getBicycles(this.map.center[0], this.map.center[1])
     },
     getIconByProvider(provider) {
@@ -158,6 +169,13 @@ export default {
         glyph,
         iconUrl
       })
+    },
+    centerOnGeolocation() {
+      const geolocation = this.$store.state.geolocation
+      if (geolocation) {
+        this.moved = false
+        this.map.center = geolocation
+      }
     }
   },
   apollo: {
@@ -199,8 +217,34 @@ export default {
 }
 
 .map-container {
-  background-color: red;
   flex: 1;
+}
+
+.map-ui {
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  padding: 0;
+
+  z-index: 1000;
+
+  li {
+    list-style: none;
+
+    text-align: center;
+    border-radius: 50%;
+    line-height: 54px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+
+    background-color: #fff;
+
+    a {
+      display: block;
+      height: 45px;
+      width: 45px;
+      font-size: 22px;
+    }
+  }
 }
 </style>
 
