@@ -18,16 +18,22 @@ const yobikeType = new GraphQLObjectType({
 const getBicyclesByLatLng = {
   type: new GraphQLList(yobikeType),
   async resolve({ lat, lng }, args) {
-    const result = await yobike.getBicyclesByLatLng({
-      lat,
-      lng
-    })
+    try {
+      const result = await yobike.getBicyclesByLatLng({
+        lat,
+        lng
+      })
 
-    return result.data.data.map(bike => ({
-      id: bike.plate_no,
-      lat: bike.latitude,
-      lng: bike.longitude
-    }))
+      return result.data.data.map(bike => ({
+        id: bike.plate_no,
+        lat: bike.latitude,
+        lng: bike.longitude
+      }))
+    } catch (e) {
+      console.warn('[YOBIKE] - getBicyclesByLatLng', e.code, e.message, e.response)
+
+      return []
+    }
   }
 }
 

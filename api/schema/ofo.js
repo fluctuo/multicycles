@@ -18,17 +18,23 @@ const ofoType = new GraphQLObjectType({
 const getBicyclesByLatLng = {
   type: new GraphQLList(ofoType),
   async resolve({ lat, lng }, args) {
-    const result = await ofo.getBicyclesByLatLng({
-      lat,
-      lng,
-      token: config.ofoAuthToken
-    })
+    try {
+      const result = await ofo.getBicyclesByLatLng({
+        lat,
+        lng,
+        token: config.ofoAuthToken
+      })
 
-    return result.data.values.cars.map(bike => ({
-      userIdLast: bike.userIdLast,
-      lat: bike.lat,
-      lng: bike.lng
-    }))
+      return result.data.values.cars.map(bike => ({
+        userIdLast: bike.userIdLast,
+        lat: bike.lat,
+        lng: bike.lng
+      }))
+    } catch (e) {
+      console.warn('[OFO] - getBicyclesByLatLng', e.code, e.message, e.response)
+
+      return []
+    }
   }
 }
 

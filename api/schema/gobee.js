@@ -24,20 +24,26 @@ const gobeeType = new GraphQLObjectType({
 const getBicyclesByLatLng = {
   type: new GraphQLList(gobeeType),
   async resolve({ lat, lng }) {
-    const result = await gobee.getBicyclesByLatLng({ lat, lng })
+    try {
+      const result = await gobee.getBicyclesByLatLng({ lat, lng })
 
-    return result.data.data.bikes.map(bike => ({
-      id: bike.bid,
-      number: bike.number,
-      lat: bike.gLat,
-      lng: bike.gLng,
-      status: bike.status,
-      power: bike.power,
-      hasHotspotDropoffDiscount: bike.hasHotspotDropoffDiscount,
-      hotspotDropoffDiscountAmount: bike.hotspotDropoffDiscountAmount,
-      lastUsageTimestamp: bike.lastUsageTimestamp,
-      typeId: bike.typeId
-    }))
+      return result.data.data.bikes.map(bike => ({
+        id: bike.bid,
+        number: bike.number,
+        lat: bike.gLat,
+        lng: bike.gLng,
+        status: bike.status,
+        power: bike.power,
+        hasHotspotDropoffDiscount: bike.hasHotspotDropoffDiscount,
+        hotspotDropoffDiscountAmount: bike.hotspotDropoffDiscountAmount,
+        lastUsageTimestamp: bike.lastUsageTimestamp,
+        typeId: bike.typeId
+      }))
+    } catch (e) {
+      console.warn('[GOBEE] - getBicyclesByLatLng', e.code, e.message, e.response)
+
+      return []
+    }
   }
 }
 

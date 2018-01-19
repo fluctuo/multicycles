@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const BASE_URL = 'https://one.ofo.com'
 const api = axios.create({
-  baseURL: BASE_URL
+  baseURL: BASE_URL,
+  timeout: 1500
 })
 
 export default {
