@@ -5,7 +5,7 @@ import axios from 'axios'
 const BASE_URL = 'https://en.api.ohbike.com'
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 1500
+  timeout: 2000
 })
 
 function sign(a) {

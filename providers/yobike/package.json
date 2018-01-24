@@ -1,6 +1,6 @@
 {
   "name": "@multicycles/yobike",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "Yobike provider for multicycles",
   "main": "lib/index.js",
   "scripts": {

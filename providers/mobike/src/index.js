@@ -4,7 +4,7 @@ import axios from 'axios'
 const BASE_URL = 'https://mwx.mobike.com/mobike-api'
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 1500
+  timeout: 2000
 })
 
 export default {
