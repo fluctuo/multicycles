@@ -7,12 +7,19 @@
         <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
           <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
         </select>
+
+        <label for="lang">{{ $t('settings.providers') }}:</label>
+
+        <div v-for="provider in $store.state.providers" :key="provider" class="provider">
+          <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
+          <span>{{ provider }}</span>
+        </div>
       </form>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'SettingsPanel',
@@ -25,7 +32,8 @@ export default {
       ]
     }
   },
-  methods: mapActions(['setLang'])
+  computed: mapGetters(['isProviderDisabled']),
+  methods: mapActions(['setLang', 'toggleProvider'])
 }
 </script>
 
@@ -52,6 +60,16 @@ export default {
 
   &.hide {
     display: none;
+  }
+
+  .provider {
+    justify-content: start;
+    display: flex;
+
+    span {
+      margin-left: 5px;
+      text-transform: capitalize;
+    }
   }
 }
 

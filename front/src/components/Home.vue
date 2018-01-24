@@ -8,7 +8,7 @@
         <v-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
 
         <span v-for="(data, provider) in bicycles" :key="provider">
-          <v-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key=idx></v-marker>
+          <v-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key="idx"></v-marker>
         </span>
       </v-map>
       <ul class="map-ui">
@@ -185,7 +185,7 @@ export default {
           return gql`
             query($lat: Float!, $lng: Float!) {
               bicyclesByLatLng(lat: $lat, lng: $lng) {
-                ${this.$store.state.providers.map(p => `${p}{ lat, lng }`).join(',')}
+                ${this.$store.getters.enabledProviders.map(p => `${p}{ lat, lng }`).join(',')}
               }
             }
           `

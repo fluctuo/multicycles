@@ -8,15 +8,21 @@ import apolloProvider from './apollo'
 Vue.use(Vuex)
 
 const capacities = localStorage.getItem('capacities') && JSON.parse(localStorage.getItem('capacities'))
+const disabledProviders =
+  localStorage.getItem('disabledProviders') && JSON.parse(localStorage.getItem('disabledProviders'))
 
 const state = {
   lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
   settingPanel: false,
   geolocation: false,
-  providers: (capacities && capacities.providers) || ['ofo', 'gobee', 'mobike', 'yobike']
+  providers: (capacities && capacities.providers) || ['ofo', 'gobee', 'mobike', 'yobike'],
+  disabledProviders: disabledProviders || []
 }
 
-const getters = {}
+const getters = {
+  isProviderDisabled: state => provider => state.disabledProviders.includes(provider),
+  enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider))
+}
 
 const actions = {
   toggleSettingPanel({ commit }) {
@@ -49,6 +55,9 @@ const actions = {
           commit('setCapacities', result.data.capacities)
         })
     }
+  },
+  toggleProvider({ commit }, provider) {
+    commit('toggleProvider', provider)
   }
 }
 
@@ -72,6 +81,15 @@ const mutations = {
     }
 
     state.providers = capacities.providers
+  },
+  toggleProvider(state, provider) {
+    if (state.disabledProviders.includes(provider)) {
+      state.disabledProviders.splice(state.disabledProviders.indexOf(provider), 1)
+    } else {
+      state.disabledProviders.push(provider)
+    }
+
+    localStorage.setItem('disabledProviders', JSON.stringify(state.disabledProviders))
   }
 }
 

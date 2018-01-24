@@ -3,6 +3,7 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAnalytics from 'vue-analytics'
 import VueApollo from 'vue-apollo'
+import ToggleButton from 'vue-js-toggle-button'
 
 import App from './App'
 import router from './router'
@@ -28,6 +29,8 @@ Vue.use(
     baseURL: process.env.API_URL
   })
 )
+
+Vue.use(ToggleButton)
 
 /* eslint-disable no-new */
 new Vue({

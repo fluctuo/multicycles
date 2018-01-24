@@ -10,6 +10,7 @@
   },
   "settings": {
     "title": "设置",
-    "lang": "语言"
+    "lang": "语言",
+    "providers": "Providers"
   }
 }
