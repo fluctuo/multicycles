@@ -11,6 +11,14 @@ import apolloProvider from './apollo'
 import i18n from './i18n'
 import store from './store'
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(registrationError => {
+      console.log('SW registration failed: ', registrationError)
+    })
+  })
+}
+
 if (process.env.UA_ANALYTICS) {
   Vue.use(VueAnalytics, {
     id: process.env.UA_ANALYTICS,
