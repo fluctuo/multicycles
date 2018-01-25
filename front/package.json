@@ -19,7 +19,6 @@
     "graphql": "^0.12.3",
     "graphql-tag": "^2.6.1",
     "knacss": "^7.0.1",
-    "leaflet.icon.glyph": "^0.2.0",
     "vue": "^2.5.2",
     "vue-analytics": "^5.8.0",
     "vue-apollo": "^3.0.0-alpha.3",

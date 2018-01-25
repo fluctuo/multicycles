@@ -20,7 +20,6 @@
 
 <script>
 import Vue2Leaflet from 'vue2-leaflet'
-import lig from 'leaflet.icon.glyph'
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
 
@@ -144,30 +143,25 @@ export default {
 
       switch (provider) {
         case 'ofo':
-          glyph = 'O'
-          iconUrl = '/static/glyph-marker-icon-ofo.png'
+          iconUrl = '/static/marker-ofo.png'
           break
         case 'gobee':
-          glyph = 'G'
-          iconUrl = '/static/glyph-marker-icon-gobee.png'
+          iconUrl = '/static/marker-gobee.png'
           break
         case 'mobike':
-          glyph = 'M'
-          iconUrl = '/static/glyph-marker-icon-mobike.png'
+          iconUrl = '/static/marker-mobike.png'
           break
         case 'yobike':
-          glyph = 'Y'
-          iconUrl = '/static/glyph-marker-icon-yobike.png'
+          iconUrl = '/static/marker-yobike.png'
           break
         default:
-          iconUrl = '/static/glyph-marker-icon.png'
+          iconUrl = '/static/marker.png'
           break
       }
 
-      return L.icon.glyph({
-        prefix: '',
-        glyph,
-        iconUrl
+      return L.icon({
+        iconUrl,
+        iconSize: [24, 37]
       })
     },
     centerOnGeolocation() {
