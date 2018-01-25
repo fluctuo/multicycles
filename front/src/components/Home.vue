@@ -1,6 +1,7 @@
 <template>
   <div class="flex-container">
     <div class="map-container">
+      <v-progress v-if="fetchingBicycles !== 0" />
       <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-dragstart="moveStart" @l-zoomend="zoomEnd" style="height: 100%">
         <v-tilelayer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></v-tilelayer>
         <v-tilelayer v-else url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
@@ -22,6 +23,8 @@
 import Vue2Leaflet from 'vue2-leaflet'
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
+
+import Progress from './Progress'
 
 let geolocationWatcher
 
@@ -49,11 +52,12 @@ export default {
   components: {
     'v-map': Vue2Leaflet.Map,
     'v-tilelayer': Vue2Leaflet.TileLayer,
-    'v-marker': Vue2Leaflet.Marker
+    'v-marker': Vue2Leaflet.Marker,
+    'v-progress': Progress
   },
   data() {
     return {
-      loading: false,
+      fetchingBicycles: 0,
       moved: false,
       location: {
         lat: 48.85,
@@ -175,6 +179,7 @@ export default {
   apollo: {
     bicycles() {
       return {
+        loadingKey: 'fetchingBicycles',
         query() {
           return gql`
             query($lat: Float!, $lng: Float!) {
@@ -187,7 +192,6 @@ export default {
         variables() {
           return { lat: this.location.lat, lng: this.location.lng }
         },
-        loadingKey: 'loading',
         update(data) {
           return data.bicyclesByLatLng
         }
@@ -240,6 +244,8 @@ export default {
     }
   }
 }
+
+
 </style>
 
 
