@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://aws.gobee.bike/GobeeBike/bikes'
+const BASE_URL = 'https://appaws.gobee.bike/GobeeBike/bikes'
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: 2000
