@@ -10,6 +10,6 @@ export default {
     return languageCountry[country] || 'en'
   },
   getProviders(city, country) {
-    return providersLocations[city] || providersLocations[country] || ['gobee', 'ofo', 'mobike']
+    return providersLocations[city] || providersLocations[country] || ['gobee', 'ofo', 'mobike', 'yobike', 'jump']
   }
 }

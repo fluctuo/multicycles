@@ -4,6 +4,7 @@ import gobee from './gobee'
 import ofo from './ofo'
 import mobike from './mobike'
 import yobike from './yobike'
+import jump from './jump'
 import capacities from './capacities'
 
 export default new GraphQLSchema({
@@ -18,7 +19,8 @@ export default new GraphQLSchema({
             gobee: gobee.getBicyclesByLatLng,
             ofo: ofo.getBicyclesByLatLng,
             mobike: mobike.getBicyclesByLatLng,
-            yobike: yobike.getBicyclesByLatLng
+            yobike: yobike.getBicyclesByLatLng,
+            jump: jump.getBicyclesByLatLng
           }
         }),
         args: {

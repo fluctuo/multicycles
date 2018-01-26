@@ -15,7 +15,7 @@ const state = {
   lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
   settingPanel: false,
   geolocation: false,
-  providers: (capacities && capacities.providers) || ['ofo', 'gobee', 'mobike', 'yobike'],
+  providers: (capacities && capacities.providers) || ['ofo', 'gobee', 'mobike', 'yobike', 'jump'],
   disabledProviders: disabledProviders || []
 }
 
