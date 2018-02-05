@@ -4,7 +4,7 @@
       <v-progress v-if="fetchingBicycles !== 0" />
       <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-dragstart="moveStart" @l-zoomend="zoomEnd" style="height: 100%">
         <v-tilelayer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></v-tilelayer>
-        <v-tilelayer v-else url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></v-tilelayer>
+        <v-tilelayer v-else url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" :options="options" :attribution="attribution"></v-tilelayer>
 
         <v-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
 
@@ -57,6 +57,10 @@ export default {
   },
   data() {
     return {
+      options: {
+        mapboxKey: process.env.MAPBOX_KEY,
+      },
+      attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
       fetchingBicycles: 0,
       moved: false,
       location: {
