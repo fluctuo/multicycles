@@ -1,7 +1,7 @@
 export default {
   // France
-  France: ['ofo', 'gobee', 'mobike'],
-  Paris: ['ofo', 'gobee', 'mobike'],
+  France: ['ofo', 'mobike'],
+  Paris: ['ofo', 'mobike'],
   // China
   Shanghai: ['ofo', 'mobike'],
   // UK
