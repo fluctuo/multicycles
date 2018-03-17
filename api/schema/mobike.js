@@ -1,8 +1,10 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString } from 'graphql'
 
-import mobike from '@multicycles/mobike'
+import Mobike from '@multicycles/mobike'
 
 import bicycleType from './bicycleType'
+
+const mobike = new Mobike()
 
 const mobikeType = new GraphQLObjectType({
   name: 'Mobike',

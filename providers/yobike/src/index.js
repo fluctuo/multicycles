@@ -3,10 +3,6 @@ import querystring from 'querystring'
 import axios from 'axios'
 
 const BASE_URL = 'https://en.api.ohbike.com'
-const api = axios.create({
-  baseURL: BASE_URL,
-  timeout: 2000
-})
 
 function sign(a) {
   var c = [],
@@ -33,8 +29,15 @@ function boundsFromLatLng(lat, lng) {
   return `${latMin},${lngMin};${latMax},${lngMax}`
 }
 
-export default {
-  getBicyclesByLatLng({ lat, lng } = {}) {
+class Yobike {
+  constructor({ timeout } = {}) {
+    this.api = axios.create({
+      baseURL: BASE_URL,
+      timeout: timeout || 2000
+    })
+  }
+
+  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }
@@ -51,12 +54,15 @@ export default {
       zoom: '11.000000'
     }
 
-    return api.post(
+    return this.api.post(
       '/v1/vehicle/',
       querystring.stringify({
         ...data,
         sign: sign(data)
-      })
+      }),
+      config
     )
   }
 }
+
+export default Yobike

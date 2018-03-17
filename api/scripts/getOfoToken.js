@@ -1,5 +1,7 @@
 const readline = require('readline')
-const ofo = require('@multicycles/ofo')
+const Ofo = require('@multicycles/ofo')
+
+const ofo = new Ofo()
 
 const rl = readline.createInterface({
   input: process.stdin,

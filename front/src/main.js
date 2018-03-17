@@ -1,4 +1,8 @@
 import Vue from 'vue'
+if (process.env.NODE_ENV !== 'production') {
+  Vue.config.devtools = true
+  Vue.config.performance = true
+}
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAnalytics from 'vue-analytics'

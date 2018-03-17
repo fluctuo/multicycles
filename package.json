@@ -14,7 +14,7 @@
     "prerelease": "npm run prepare",
     "release": "lerna publish",
     "links": "lerna exec -- npm link",
-    "test": "echo \"Error: pas de tests pour l'instant\" && exit 0"
+    "test": "lerna run test"
   },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --write", "git add"]

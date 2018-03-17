@@ -1,9 +1,11 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'graphql'
 
-import yobike from '@multicycles/yobike'
+import Yobike from '@multicycles/yobike'
 
 import config from '../config'
 import bicycleType from './bicycleType'
+
+const yobike = new Yobike()
 
 const yobikeType = new GraphQLObjectType({
   name: 'Yobike',

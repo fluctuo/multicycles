@@ -6,17 +6,19 @@ const endpoints = {
   sf: 'https://sf.jumpmobility.com/opendata'
 }
 
-const api = axios.create({
-  timeout: 2000
-})
-
 function getEndpoint(lat, lng) {
   const zone = getZone(lat, lng)
   return zone ? endpoints[zone] : null
 }
 
-export default {
-  getBicyclesByLatLng({ lat, lng } = {}) {
+class Jump {
+  constructor({ timeout } = {}) {
+    this.api = axios.create({
+      timeout: timeout || 2000
+    })
+  }
+
+  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }
@@ -35,6 +37,8 @@ export default {
       })
     }
 
-    return api.get(`${endpoint}/free_bike_status.json`)
+    return this.api.get(`${endpoint}/free_bike_status.json`, config)
   }
 }
+
+export default Jump

@@ -1,18 +1,22 @@
 import axios from 'axios'
 
 const BASE_URL = 'https://appaws.gobee.bike/GobeeBike/bikes'
-const api = axios.create({
-  baseURL: BASE_URL,
-  timeout: 2000
-})
 
-export default {
-  getBicyclesByLatLng({ lat, lng } = {}) {
+class GobeeBike {
+  constructor({ timeout } = {}) {
+    this.api = axios.create({
+      baseURL: BASE_URL,
+      timeout: timeout || 2000
+    })
+  }
+
+  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }
 
-    return api.get('/near_bikes', {
+    return this.api.get('/near_bikes', {
+      ...config,
       params: {
         lat,
         lng
@@ -20,3 +24,5 @@ export default {
     })
   }
 }
+
+export default GobeeBike

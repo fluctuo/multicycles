@@ -1,8 +1,10 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString } from 'graphql'
 
-import jump from '@multicycles/jump'
+import Jump from '@multicycles/jump'
 
 import bicycleType from './bicycleType'
+
+const jump = new Jump()
 
 const jumpType = new GraphQLObjectType({
   name: 'Jump',

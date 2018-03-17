@@ -2,23 +2,29 @@ import querystring from 'querystring'
 import axios from 'axios'
 
 const BASE_URL = 'https://mwx.mobike.com/mobike-api'
-const api = axios.create({
-  baseURL: BASE_URL,
-  timeout: 2000
-})
 
-export default {
-  getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}) {
+class Mobike {
+  constructor({ timeout } = {}) {
+    this.api = axios.create({
+      baseURL: BASE_URL,
+      timeout: timeout || 2000
+    })
+  }
+
+  getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}, config = {}) {
     if (!latitude || !longitude) {
       throw new Error('Missing lat/lng')
     }
 
-    return api.post(
+    return this.api.post(
       '/rent/nearbyBikesInfo.do',
       querystring.stringify({
         latitude,
         longitude
-      })
+      }),
+      config
     )
   }
 }
+
+export default Mobike

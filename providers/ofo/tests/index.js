@@ -1,10 +1,10 @@
 import test from 'ava'
-import Yobike from '../lib'
+import Ofo from '../lib'
 
 test('overwrite timeout on constructor', async t => {
-  const yobike = new Yobike({ timeout: 1 })
+  const ofo = new Ofo({ timeout: 1, token: process.env.OFO_AUTH_TOKEN })
 
-  await yobike
+  await ofo
     .getBicyclesByLatLng({
       lat: 48.852775,
       lng: 2.369336
@@ -19,9 +19,9 @@ test('overwrite timeout on constructor', async t => {
 })
 
 test('overwrite timeout on method', async t => {
-  const yobike = new Yobike()
+  const ofo = new Ofo({ token: process.env.OFO_AUTH_TOKEN })
 
-  await yobike
+  await ofo
     .getBicyclesByLatLng(
       {
         lat: 48.852775,
@@ -39,19 +39,34 @@ test('overwrite timeout on method', async t => {
 })
 
 test('get bicycles by positions', async t => {
-  const yobike = new Yobike()
+  const ofo = new Ofo({ token: process.env.OFO_AUTH_TOKEN })
 
-  await yobike
+  await ofo
     .getBicyclesByLatLng({
-      lat: 51.456734,
-      lng: -2.591292
+      lat: 48.852775,
+      lng: 2.369336
     })
     .then(result => {
-      t.truthy(result.data.data.length)
+      t.is(result.status, 200)
       t.pass()
     })
-    .catch(err => {
-      console.log(err.response)
+    .catch(() => {
       t.fail()
+    })
+})
+
+test('get bicycles without token', async t => {
+  const ofo = new Ofo()
+
+  await ofo
+    .getBicyclesByLatLng({
+      lat: 48.852775,
+      lng: 2.369336
+    })
+    .then(() => {
+      t.fail()
+    })
+    .catch(() => {
+      t.pass()
     })
 })

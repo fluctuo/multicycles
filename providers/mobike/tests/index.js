@@ -1,13 +1,13 @@
 import test from 'ava'
-import Yobike from '../lib'
+import Mobike from '../lib'
 
 test('overwrite timeout on constructor', async t => {
-  const yobike = new Yobike({ timeout: 1 })
+  const mobike = new Mobike({ timeout: 1 })
 
-  await yobike
+  await mobike
     .getBicyclesByLatLng({
-      lat: 48.852775,
-      lng: 2.369336
+      lat: 38.907192,
+      lng: -77.036871
     })
     .then(() => {
       t.fail()
@@ -19,13 +19,13 @@ test('overwrite timeout on constructor', async t => {
 })
 
 test('overwrite timeout on method', async t => {
-  const yobike = new Yobike()
+  const mobike = new Mobike()
 
-  await yobike
+  await mobike
     .getBicyclesByLatLng(
       {
-        lat: 48.852775,
-        lng: 2.369336
+        lat: 38.907192,
+        lng: -77.036871
       },
       { timeout: 1 }
     )
@@ -39,19 +39,18 @@ test('overwrite timeout on method', async t => {
 })
 
 test('get bicycles by positions', async t => {
-  const yobike = new Yobike()
+  const mobike = new Mobike()
 
-  await yobike
+  await mobike
     .getBicyclesByLatLng({
-      lat: 51.456734,
-      lng: -2.591292
+      lat: 38.907192,
+      lng: -77.036871
     })
     .then(result => {
-      t.truthy(result.data.data.length)
+      t.is(result.status, 200)
       t.pass()
     })
-    .catch(err => {
-      console.log(err.response)
+    .catch(() => {
       t.fail()
     })
 })

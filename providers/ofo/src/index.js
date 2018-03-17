@@ -1,40 +1,68 @@
 import axios from 'axios'
 
 const BASE_URL = 'https://one.ofo.com'
-const api = axios.create({
-  baseURL: BASE_URL,
-  timeout: 2000
-})
 
-export default {
-  getOTP({ tel, ccc }) {
-    return api.post('/verifyCode_v2', {
-      tel,
-      ccc,
-      type: 1,
-      lat: 48.85,
-      lng: 2.37
+class Ofo {
+  constructor({ timeout, token } = {}) {
+    this.token = token
+    this.api = axios.create({
+      baseURL: BASE_URL,
+      timeout: timeout || 2000
     })
-  },
-  login({ tel, code, ccc }) {
-    return api.post('/api/login_v2', {
-      tel,
-      code,
-      ccc,
-      lat: 48.85,
-      lng: 2.37
-    })
-  },
-  getBicyclesByLatLng({ lat, lng, token } = {}) {
+  }
+
+  getOTP({ tel, ccc }, config) {
+    return this.api.post(
+      '/verifyCode_v2',
+      {
+        tel,
+        ccc,
+        type: 1,
+        lat: 48.85,
+        lng: 2.37
+      },
+      config
+    )
+  }
+
+  login({ tel, code, ccc }, config = {}) {
+    return this.api.post(
+      '/api/login_v2',
+      {
+        tel,
+        code,
+        ccc,
+        lat: 48.85,
+        lng: 2.37
+      },
+      config
+    )
+  }
+
+  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }
 
-    return api.post('/nearbyofoCar', {
-      lat,
-      lng,
-      token,
-      source: 2
-    })
+    return this.api
+      .post(
+        '/nearbyofoCar',
+        {
+          lat,
+          lng,
+          token: this.token,
+          source: 2
+        },
+        config
+      )
+      .then(result => {
+        if (result && result.data && result.data.errorCode !== 200) {
+          return Promise.reject(result)
+        }
+
+        return result
+      })
   }
 }
+
+export default Ofo

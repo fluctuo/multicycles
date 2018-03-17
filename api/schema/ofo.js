@@ -1,9 +1,11 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'graphql'
 
-import ofo from '@multicycles/ofo'
+import Ofo from '@multicycles/ofo'
 
 import config from '../config'
 import bicycleType from './bicycleType'
+
+const ofo = new Ofo({ token: config.ofoAuthToken })
 
 const ofoType = new GraphQLObjectType({
   name: 'Ofo',
@@ -21,8 +23,7 @@ const getBicyclesByLatLng = {
     try {
       const result = await ofo.getBicyclesByLatLng({
         lat,
-        lng,
-        token: config.ofoAuthToken
+        lng
       })
 
       return result.data.values.cars.map(bike => ({

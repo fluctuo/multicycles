@@ -1,8 +1,10 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLFloat, GraphQLBoolean } from 'graphql'
 
-import gobee from '@multicycles/gobee.bike'
+import GobeeBike from '@multicycles/gobee.bike'
 
 import bicycleType from './bicycleType'
+
+const gobee = new GobeeBike()
 
 const gobeeType = new GraphQLObjectType({
   name: 'Gobee',
