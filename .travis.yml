@@ -1,25 +1,30 @@
-sudo: required
+stages:
+  - test
+  - name: deploy
+    if: branch = master
 
 language: node_js
 
 node_js:
   - "8"
 
-services:
-  - docker
+jobs:
+  include:
+    - stage: test
+      before_script: lerna exec -- npm i
+      script: npm test
 
-before_install:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker build -t multicycles/api api;
-    docker build -t multicycles/front front;
-    fi
-
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push multicycles/api;
-    docker push multicycles/front;
-    fi
+    - stage: deploy
+      install: skip
+      services:
+        - docker
+      script:
+        - docker build -t multicycles/api api;
+          docker build -t multicycles/front front;
+      after_success:
+        - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+          docker push multicycles/api;
+          docker push multicycles/front;
 
 notifications:
   email: false
