@@ -5,6 +5,7 @@ import ofo from './ofo'
 import mobike from './mobike'
 import yobike from './yobike'
 import jump from './jump'
+import pony from './pony'
 import capacities from './capacities'
 
 export default new GraphQLSchema({
@@ -20,7 +21,8 @@ export default new GraphQLSchema({
             ofo: ofo.getBicyclesByLatLng,
             mobike: mobike.getBicyclesByLatLng,
             yobike: yobike.getBicyclesByLatLng,
-            jump: jump.getBicyclesByLatLng
+            jump: jump.getBicyclesByLatLng,
+            pony: pony.getBicyclesByLatLng
           }
         }),
         args: {

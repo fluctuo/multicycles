@@ -165,6 +165,9 @@ export default {
         case 'jump':
           iconUrl = '/static/marker-jump.png'
           break
+        case 'pony':
+          iconUrl = '/static/marker-pony.png'
+          break
         default:
           iconUrl = '/static/marker.png'
           break
