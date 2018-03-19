@@ -9,5 +9,5 @@ export default {
   London: ['ofo', 'mobike'],
   Bristol: ['yobike'],
   Southampton: ['yobike'],
-  Oxford: ['pony']
+  Oxford: ['ofo', 'mobike', 'pony']
 }
