@@ -11,4 +11,6 @@ Currently support:
 * [Mobike](https://mobike.com/global/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/mobike.svg)](https://www.npmjs.com/package/@multicycles/mobike)
 * [Yobike](https://yobike.co.uk) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/yobike.svg)](https://www.npmjs.com/package/@multicycles/yobike)
 * [Jump](https://jumpbikes.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/jump.svg)](https://www.npmjs.com/package/@multicycles/jump)
+* [Pony](http://getapony.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/pony.svg)](https://www.npmjs.com/package/@multicycles/pony)
+* [Lime](http://www.limebike.com/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/lime.svg)](https://www.npmjs.com/package/@multicycles/lime)
 * Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)

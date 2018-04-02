@@ -1,6 +1,9 @@
 import crypto from 'crypto'
 import querystring from 'querystring'
 import firebase from 'firebase'
+import bboxPolygon from '@turf/bbox-polygon'
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
+import { point } from '@turf/helpers'
 
 const DATABASE_URL = 'https://pony-bikes-f8cf9.firebaseio.com'
 
@@ -10,7 +13,7 @@ function boundsFromLatLng(lat, lng) {
   const lngMin = lng - 0.045 / Math.cos(lat * Math.PI / 180)
   const lngMax = lng + 0.045 / Math.cos(lat * Math.PI / 180)
 
-  return { latMin, lngMin, latMax, lngMax }
+  return bboxPolygon([latMin, lngMin, latMax, lngMax])
 }
 
 class Pony {
@@ -23,10 +26,6 @@ class Pony {
   }
 
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
-    // if (!lat || !lng) {
-    //   throw new Error('Missing lat/lng')
-    // }
-
     let bounds
 
     if (lat && lng) {
@@ -41,13 +40,7 @@ class Pony {
         const bikes = Object.keys(values).map(key => values[key])
 
         return lat && lng
-          ? bikes.filter(
-              bike =>
-                bike.latitude >= bounds.latMin &&
-                bike.latitude <= bounds.latMax &&
-                bike.longitude >= bounds.lngMin &&
-                bike.longitude <= bounds.lngMax
-            )
+          ? bikes.filter(bike => booleanPointInPolygon(point([bike.latitude, bike.longitude]), bounds))
           : bikes
       })
   }

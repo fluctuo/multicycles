@@ -20,11 +20,11 @@
     "*.{js,json,css,md}": ["prettier --write", "git add"]
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.36",
-    "@babel/core": "7.0.0-beta.36",
-    "@babel/preset-env": "^7.0.0-beta.36",
+    "@babel/cli": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "eslint-plugin-prettier": "^2.4.0",
     "husky": "^0.14.3",
     "lerna": "^2.5.1",
@@ -42,6 +42,6 @@
         }
       ]
     ],
-    "plugins": ["add-module-exports", "transform-object-rest-spread"]
+    "plugins": ["add-module-exports", "@babel/plugin-proposal-object-rest-spread"]
   }
 }
