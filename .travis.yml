@@ -1,7 +1,7 @@
 stages:
   - test
   - name: deploy
-    if: branch = master
+    if: branch = master AND type NOT cron
 
 language: node_js
 
