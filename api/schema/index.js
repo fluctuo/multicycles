@@ -6,6 +6,7 @@ import mobike from './mobike'
 import yobike from './yobike'
 import jump from './jump'
 import pony from './pony'
+import lime from './lime'
 import capacities from './capacities'
 
 export default new GraphQLSchema({
@@ -22,7 +23,8 @@ export default new GraphQLSchema({
             mobike: mobike.getBicyclesByLatLng,
             yobike: yobike.getBicyclesByLatLng,
             jump: jump.getBicyclesByLatLng,
-            pony: pony.getBicyclesByLatLng
+            pony: pony.getBicyclesByLatLng,
+            lime: lime.getBicyclesByLatLng
           }
         }),
         args: {
