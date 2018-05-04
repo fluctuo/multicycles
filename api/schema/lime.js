@@ -5,7 +5,7 @@ import Lime from '@multicycles/lime'
 import config from '../config'
 import bicycleType from './bicycleType'
 
-const lime = new Lime()
+const lime = new Lime({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const limeType = new GraphQLObjectType({
   name: 'Lime',

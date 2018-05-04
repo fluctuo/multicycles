@@ -5,7 +5,7 @@ import Ofo from '@multicycles/ofo'
 import config from '../config'
 import bicycleType from './bicycleType'
 
-const ofo = new Ofo({ token: config.ofoAuthToken })
+const ofo = new Ofo({ token: config.ofoAuthToken, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const ofoType = new GraphQLObjectType({
   name: 'Ofo',

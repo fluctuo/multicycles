@@ -4,7 +4,7 @@ import Mobike from '@multicycles/mobike'
 
 import bicycleType from './bicycleType'
 
-const mobike = new Mobike()
+const mobike = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const mobikeType = new GraphQLObjectType({
   name: 'Mobike',

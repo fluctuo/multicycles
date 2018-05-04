@@ -4,7 +4,7 @@ import Jump from '@multicycles/jump'
 
 import bicycleType from './bicycleType'
 
-const jump = new Jump()
+const jump = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const jumpType = new GraphQLObjectType({
   name: 'Jump',

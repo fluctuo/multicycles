@@ -4,7 +4,7 @@ import GobeeBike from '@multicycles/gobee.bike'
 
 import bicycleType from './bicycleType'
 
-const gobee = new GobeeBike()
+const gobee = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const gobeeType = new GraphQLObjectType({
   name: 'Gobee',

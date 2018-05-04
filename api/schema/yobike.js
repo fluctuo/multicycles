@@ -5,7 +5,7 @@ import Yobike from '@multicycles/yobike'
 import config from '../config'
 import bicycleType from './bicycleType'
 
-const yobike = new Yobike()
+const yobike = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const yobikeType = new GraphQLObjectType({
   name: 'Yobike',
