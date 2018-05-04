@@ -8,6 +8,7 @@ import jump from './jump'
 import pony from './pony'
 import lime from './lime'
 import capacities from './capacities'
+import whitebikes from './whitebikes'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -24,7 +25,8 @@ export default new GraphQLSchema({
             yobike: yobike.getBicyclesByLatLng,
             jump: jump.getBicyclesByLatLng,
             pony: pony.getBicyclesByLatLng,
-            lime: lime.getBicyclesByLatLng
+            lime: lime.getBicyclesByLatLng,
+            whitebikes: whitebikes.getBicyclesByLatLng
           }
         }),
         args: {
