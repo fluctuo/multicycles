@@ -7,7 +7,7 @@ class Ofo {
     this.token = token
     this.api = axios.create({
       baseURL: BASE_URL,
-      timeout: timeout || 2000
+      timeout: timeout
     })
   }
 

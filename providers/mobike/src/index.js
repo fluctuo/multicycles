@@ -7,7 +7,7 @@ class Mobike {
   constructor({ timeout } = {}) {
     this.api = axios.create({
       baseURL: BASE_URL,
-      timeout: timeout || 2000
+      timeout: timeout
     })
   }
 

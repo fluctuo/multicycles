@@ -14,7 +14,7 @@ function getEndpoint(lat, lng) {
 class Jump {
   constructor({ timeout } = {}) {
     this.api = axios.create({
-      timeout: timeout || 2000
+      timeout: timeout
     })
   }
 

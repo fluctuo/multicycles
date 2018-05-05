@@ -23,7 +23,7 @@ class Lime {
   constructor({ timeout, token } = {}) {
     this.api = axios.create({
       baseURL: BASE_URL,
-      timeout: timeout || 3000,
+      timeout: timeout,
       headers: {
         Authorization: `Bearer ${token || TOKEN}`
       }
