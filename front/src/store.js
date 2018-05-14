@@ -23,7 +23,8 @@ const state = {
     'jump',
     'pony',
     'lime',
-    'whitebikes'
+    'whitebikes',
+    'obike'
   ],
   disabledProviders: disabledProviders || []
 }

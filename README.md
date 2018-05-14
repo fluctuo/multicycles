@@ -14,4 +14,5 @@ Currently support:
 * [Pony](http://getapony.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/pony.svg)](https://www.npmjs.com/package/@multicycles/pony)
 * [Lime](http://www.limebike.com/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/lime.svg)](https://www.npmjs.com/package/@multicycles/lime)
 * [WhiteBike](https://www.facebook.com/White-bikes-Biele-bicykle-183156078451725/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/whitebikes.svg)](https://www.npmjs.com/package/@multicycles/whitebikes)
+* [Obike](https://www.o.bike/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/obike.svg)](https://www.npmjs.com/package/@multicycles/obike)
 * Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)

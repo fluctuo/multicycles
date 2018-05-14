@@ -1,33 +1,70 @@
-const firebase = require('firebase')
+import crypto from 'crypto'
+import axios from 'axios'
 
-// https://pony-bikes-f8cf9.firebaseio.com
-firebase.initializeApp({
-  databaseURL: 'https://turing-emitter-148803.firebaseio.com'
-})
+const BASE_URL = 'https://mobile.o.bike/api/v2'
 
-var database = firebase.database()
+const APP_VERSION = '3.2.4'
+const SHA1KEY = 'oBiOSX4buhBMG'
 
-console.log(require('util').inspect(database, { depth: null, colors: true }))
+function sha1(input) {
+  return crypto
+    .createHash('sha1')
+    .update(input)
+    .digest('hex')
+}
 
-database
-  .ref('/bikes')
-  .once('value')
-  .then(snapshot => {
-    console.log(snapshot.val())
-  })
-  .catch(console.error)
+function encodeBody({ lat, lng }) {
+  const data = {
+    countryCode: '33',
+    longitude: lng,
+    latitude: lat,
+    dateTime: `${new Date().getTime}.000000`
+  }
 
-// const BASE_URL = 'http://aws.gobee.bike/GobeeBike/bikes'
-// const api = axios.create({
-//   baseURL: BASE_URL
-// })
+  const versionWithoutDots = APP_VERSION.replace(/\./g, '')
 
-// export default {
-//   getBicyclesByLatLng({ lat, lng } = {}) {
-//     if (!lat || !lng) {
-//       throw new Error('Missing lat/lng')
-//     }
+  let jsonData = JSON.stringify(data).replace(/\s/g, '')
+  let sha1Data = jsonData + '&' + SHA1KEY + versionWithoutDots
+  let cryptData = jsonData + '&' + sha1(sha1Data)
 
-//     return Promise.resolve([])
-//   }
-// }
+  const KEY = 'oBiOSMYFUzLed' + versionWithoutDots
+  const IV = '1234567890123456'
+
+  let cipher = crypto.createCipheriv('aes128', KEY, IV)
+  let encrypted = cipher.update(cryptData, 'utf8', 'hex')
+  encrypted += cipher.final('hex')
+
+  return { value: encrypted }
+}
+
+class Obike {
+  constructor({ timeout } = {}) {
+    this.api = axios.create({
+      baseURL: BASE_URL,
+      timeout: timeout,
+      headers: {
+        version: APP_VERSION,
+        Authorization: '',
+        platform: 'iOS',
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+
+  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
+    if (!lat || !lng) {
+      throw new Error('Missing lat/lng')
+    }
+
+    return this.api.post(
+      '/bike/list',
+      encodeBody({
+        lat,
+        lng
+      }),
+      config
+    )
+  }
+}
+
+export default Obike

@@ -58,9 +58,10 @@ export default {
   data() {
     return {
       options: {
-        mapboxKey: process.env.MAPBOX_KEY,
+        mapboxKey: process.env.MAPBOX_KEY
       },
-      attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+      attribution:
+        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
       fetchingBicycles: 0,
       moved: false,
       location: {
@@ -174,6 +175,9 @@ export default {
         case 'whitebikes':
           iconUrl = '/static/marker-whitebikes.png'
           break
+        case 'obike':
+          iconUrl = '/static/marker-obike.png'
+          break
         default:
           iconUrl = '/static/marker.png'
           break
@@ -260,8 +264,6 @@ export default {
     }
   }
 }
-
-
 </style>
 
 
