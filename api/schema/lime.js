@@ -27,8 +27,6 @@ const getBicyclesByLatLng = {
         lng
       })
 
-      console.log(result.data[0])
-
       return result.data.map(bike => ({
         id: bike.id,
         plate: bike.attributes.plate,
