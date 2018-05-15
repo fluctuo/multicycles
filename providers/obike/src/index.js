@@ -17,8 +17,7 @@ function encodeBody({ lat, lng }) {
   const data = {
     countryCode: '33',
     longitude: lng,
-    latitude: lat,
-    dateTime: `${new Date().getTime}.000000`
+    latitude: lat
   }
 
   const versionWithoutDots = APP_VERSION.replace(/\./g, '')
@@ -44,7 +43,6 @@ class Obike {
       timeout: timeout,
       headers: {
         version: APP_VERSION,
-        Authorization: '',
         platform: 'iOS',
         'Content-Type': 'application/json'
       }
