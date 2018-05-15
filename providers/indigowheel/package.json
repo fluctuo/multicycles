@@ -1,7 +1,7 @@
 {
-  "name": "@multicycles/yobike",
-  "version": "1.0.0-beta.6",
-  "description": "Yobike provider for multicycles",
+  "name": "@multicycles/indigowheel",
+  "version": "1.0.0-beta.1",
+  "description": "Indigo Wheel provider for multicycles",
   "author": "Pierrick <mulotmail@gmail.com>",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": "github:PierrickP/multicycles",
   "dependencies": {
-    "axios": "^0.17.1"
+    "@multicycles/yobike": "^1.0.0-beta.6"
   },
   "devDependencies": {
     "ava": "^0.24.0"

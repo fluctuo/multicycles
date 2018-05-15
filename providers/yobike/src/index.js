@@ -30,7 +30,8 @@ function boundsFromLatLng(lat, lng) {
 }
 
 class Yobike {
-  constructor({ timeout } = {}) {
+  constructor({ timeout, appKey } = {}) {
+    this.appKey = appKey || 'WWTaJQrg-NHe_Zl0iwghHyYypYw6g-6GEZHPGBBF6TI7OzZWo9VVLXWRs2ngQJ18'
     this.api = axios.create({
       baseURL: BASE_URL,
       timeout: timeout
@@ -49,7 +50,7 @@ class Yobike {
       coord_type: 1,
       t: 'geonear',
       ts: +new Date() / 1000,
-      ak: 'WWTaJQrg-NHe_Zl0iwghHyYypYw6g-6GEZHPGBBF6TI7OzZWo9VVLXWRs2ngQJ18',
+      ak: this.appKey,
       bounds: boundsFromLatLng(lat, lng),
       zoom: '11.000000'
     }

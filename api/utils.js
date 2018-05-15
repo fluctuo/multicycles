@@ -11,7 +11,18 @@ export default {
   },
   getProviders(city, country) {
     return (
-      providersLocations[city] || providersLocations[country] || ['gobee', 'ofo', 'mobike', 'yobike', 'jump', 'lime']
+      providersLocations[city] ||
+      providersLocations[country] || [
+        'gobee',
+        'ofo',
+        'mobike',
+        'yobike',
+        'jump',
+        'lime',
+        'whitebikes',
+        'obike',
+        'indigowheel'
+      ]
     )
   }
 }

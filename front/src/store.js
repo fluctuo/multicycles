@@ -24,7 +24,8 @@ const state = {
     'pony',
     'lime',
     'whitebikes',
-    'obike'
+    'obike',
+    'indigowheel'
   ],
   disabledProviders: disabledProviders || []
 }

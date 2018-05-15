@@ -1,8 +1,8 @@
 export default {
   // France
-  France: ['ofo', 'mobike', 'obike'],
+  France: ['ofo', 'mobike', 'obike', 'indigowheel'],
   Paris: ['ofo', 'mobike', 'obike'],
-  Angers: ['pony'],
+  Angers: ['pony', 'indigowheel'],
   // China
   Shanghai: ['ofo', 'mobike', 'obike'],
   // UK
