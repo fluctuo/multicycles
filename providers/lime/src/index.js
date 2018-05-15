@@ -39,7 +39,7 @@ class Lime {
     const region = getRegion(lat, lng)
 
     if (!region) {
-      return Promise.resolve({ data: { data: [] } })
+      return Promise.resolve({ data: [] })
     }
 
     return this.api

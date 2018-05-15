@@ -65,6 +65,7 @@ test('return error on no available city', async t => {
       lng: 2.369336
     })
     .then(result => {
+      t.is(result.data.length, 0)
       t.pass()
     })
     .catch(e => {
