@@ -2,16 +2,16 @@
   <div class="flex-container">
     <div class="map-container">
       <v-progress v-if="fetchingBicycles !== 0" />
-      <v-map ref="map" :zoom=map.zoom :center=map.center @l-moveend="moveCenter" @l-dragstart="moveStart" @l-zoomend="zoomEnd" style="height: 100%">
-        <v-tilelayer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></v-tilelayer>
-        <v-tilelayer v-else url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" :options="options" :attribution="attribution"></v-tilelayer>
+      <l-map ref="map" :zoom=map.zoom :center=map.center @moveend="moveCenter" @dragstart="moveStart" @zoomend="zoomEnd" style="height: 100%">
+        <l-tile-layer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></l-tile-layer >
+        <l-tile-layer v-else url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" :options="options" :attribution="attribution"></l-tile-layer>
 
-        <v-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
+        <l-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
 
         <span v-for="(data, provider) in bicycles" :key="provider">
-          <v-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key="idx"></v-marker>
+          <l-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key="idx"></l-marker>
         </span>
-      </v-map>
+      </l-map>
       <ul class="map-ui">
         <li><a @click="centerOnGeolocation" href="#"><i data-feather="compass"></i></a></li>
       </ul>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Vue2Leaflet from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
 
@@ -50,9 +50,9 @@ function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
 export default {
   name: 'Home',
   components: {
-    'v-map': Vue2Leaflet.Map,
-    'v-tilelayer': Vue2Leaflet.TileLayer,
-    'v-marker': Vue2Leaflet.Marker,
+    LMap,
+    LTileLayer,
+    LMarker,
     'v-progress': Progress
   },
   data() {
@@ -133,9 +133,6 @@ export default {
       this.moved = true
     },
     moveCenter(event) {
-      const latlng = this.$refs.map.mapObject.getCenter()
-      this.map.center = [latlng.lat, latlng.lng]
-
       this.getBicycles(this.map.center[0], this.map.center[1])
     },
     getIconByProvider(provider) {
