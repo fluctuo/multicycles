@@ -5,6 +5,7 @@ import cors from '@koa/cors'
 import graphqlHTTP from 'koa-graphql'
 
 import schema from './schema'
+import logger from './logger'
 
 const app = new Koa()
 const router = new Router()
@@ -29,5 +30,9 @@ app
   .use(bodyparser())
   .use(router.routes())
   .use(router.allowedMethods())
+
+app.on('error', err => {
+  logger.exception(err)
+})
 
 app.listen(3000)

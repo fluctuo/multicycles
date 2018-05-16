@@ -8,6 +8,8 @@ import VueAxios from 'vue-axios'
 import VueAnalytics from 'vue-analytics'
 import VueApollo from 'vue-apollo'
 import ToggleButton from 'vue-js-toggle-button'
+import Raven from 'raven-js'
+import RavenVue from 'raven-js/plugins/vue'
 
 import App from './App'
 import router from './router'
@@ -31,6 +33,12 @@ if (process.env.UA_ANALYTICS) {
       exception: true
     }
   })
+}
+
+if (process.env.SENTRY_KEY) {
+  Raven.config(process.env.SENTRY_KEY)
+    .addPlugin(RavenVue, Vue)
+    .install()
 }
 
 Vue.config.productionTip = false

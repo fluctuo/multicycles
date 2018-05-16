@@ -2,8 +2,8 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoo
 
 import Pony from '@multicycles/pony'
 
-import config from '../config'
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const pony = new Pony()
 
@@ -24,7 +24,7 @@ const ponyType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(ponyType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await pony.getBicyclesByLatLng({
         lat,
@@ -42,7 +42,14 @@ const getBicyclesByLatLng = {
         userId: bike.userId
       }))
     } catch (e) {
-      console.warn('[PONY] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'pony' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

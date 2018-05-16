@@ -2,8 +2,8 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Obike from '@multicycles/obike'
 
-import config from '../config'
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const obike = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -25,7 +25,7 @@ const obikeType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(obikeType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await obike.getBicyclesByLatLng({
         lat,
@@ -44,7 +44,14 @@ const getBicyclesByLatLng = {
         helmet: bike.helmet
       }))
     } catch (e) {
-      console.warn('[OBIKE] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'obike' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

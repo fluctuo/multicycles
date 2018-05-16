@@ -4,6 +4,7 @@ import Ofo from '@multicycles/ofo'
 
 import config from '../config'
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const ofo = new Ofo({ token: config.ofoAuthToken, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -19,7 +20,7 @@ const ofoType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(ofoType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await ofo.getBicyclesByLatLng({
         lat,
@@ -32,7 +33,14 @@ const getBicyclesByLatLng = {
         lng: bike.lng
       }))
     } catch (e) {
-      console.warn('[OFO] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'ofo' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

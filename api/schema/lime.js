@@ -2,8 +2,8 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 
 import Lime from '@multicycles/lime'
 
-import config from '../config'
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const lime = new Lime({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -20,7 +20,7 @@ const limeType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(limeType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await lime.getBicyclesByLatLng({
         lat,
@@ -34,7 +34,14 @@ const getBicyclesByLatLng = {
         lng: bike.attributes.longitude
       }))
     } catch (e) {
-      console.warn('[LIME] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'lime' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

@@ -2,8 +2,8 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import IndigoWheel from '@multicycles/indigowheel'
 
-import config from '../config'
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const indigoWheel = new IndigoWheel({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -21,7 +21,7 @@ const indigoWheelType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(indigoWheelType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await indigoWheel.getBicyclesByLatLng({
         lat,
@@ -36,7 +36,14 @@ const getBicyclesByLatLng = {
         outside: bike.outside
       }))
     } catch (e) {
-      console.warn('[INDIGOWHEEL] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'indigowheel' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

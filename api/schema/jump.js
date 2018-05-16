@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 import Jump from '@multicycles/jump'
 
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const jump = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -22,7 +23,7 @@ const jumpType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(jumpType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await jump.getBicyclesByLatLng({ lat, lng })
 
@@ -36,7 +37,14 @@ const getBicyclesByLatLng = {
         jump_ebike_battery_level: bike.jump_ebike_battery_level
       }))
     } catch (e) {
-      console.warn('[JUMP] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'jump' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

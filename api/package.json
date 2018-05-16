@@ -28,7 +28,8 @@
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-graphql": "^0.7.3",
-    "koa-router": "^7.3.0"
+    "koa-router": "^7.3.0",
+    "raven": "^2.6.1"
   },
   "@std/esm": "cjs"
 }

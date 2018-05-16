@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 import Mobike from '@multicycles/mobike'
 
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const mobike = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -24,7 +25,7 @@ const mobikeType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(mobikeType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await mobike.getBicyclesByLatLng({ lat, lng })
 
@@ -40,7 +41,14 @@ const getBicyclesByLatLng = {
         boundary: bike.boundary
       }))
     } catch (e) {
-      console.warn('[MOBIKE] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'mobike' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

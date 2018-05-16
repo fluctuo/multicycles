@@ -2,8 +2,8 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 
 import WhiteBikes from '@multicycles/whitebikes'
 
-import config from '../config'
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const whiteBikes = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -23,7 +23,7 @@ const whiteBikesType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(whiteBikesType),
-  async resolve({ lat, lng }, args) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await whiteBikes.getBicyclesByLatLng({
         lat,
@@ -40,7 +40,14 @@ const getBicyclesByLatLng = {
         standPhoto: bike.standPhoto
       }))
     } catch (e) {
-      console.warn('[WHITEBIKES] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'whitebikes' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }

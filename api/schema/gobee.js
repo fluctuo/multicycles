@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLFloat
 import GobeeBike from '@multicycles/gobee.bike'
 
 import bicycleType from './bicycleType'
+import logger from '../logger'
 
 const gobee = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -25,7 +26,7 @@ const gobeeType = new GraphQLObjectType({
 
 const getBicyclesByLatLng = {
   type: new GraphQLList(gobeeType),
-  async resolve({ lat, lng }) {
+  async resolve({ lat, lng }, args, context, info) {
     try {
       const result = await gobee.getBicyclesByLatLng({ lat, lng })
 
@@ -42,7 +43,14 @@ const getBicyclesByLatLng = {
         typeId: bike.typeId
       }))
     } catch (e) {
-      console.warn('[GOBEE] - getBicyclesByLatLng', e.code, e.message, e.response)
+      logger.exception(e, {
+        tags: { provider: 'gobee' },
+        extra: {
+          path: info.path,
+          variable: info.variableValues,
+          body: context.req.body
+        }
+      })
 
       return []
     }
