@@ -36,7 +36,7 @@ const getBicyclesByLatLng = {
         num: bike.distNum,
         distance: bike.distance,
         bikeIds: bike.bikeIds,
-        bikeType: bike.bikeType,
+        biketype: bike.biketype,
         type: bike.type,
         boundary: bike.boundary
       }))

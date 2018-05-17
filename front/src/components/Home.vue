@@ -9,7 +9,7 @@
         <l-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
 
         <span v-for="(data, provider) in bicycles" :key="provider">
-          <l-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider)" :key="idx"></l-marker>
+          <l-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider, bicycle)" :key="idx"></l-marker>
         </span>
       </l-map>
       <ul class="map-ui">
@@ -135,7 +135,7 @@ export default {
     moveCenter(event) {
       this.getBicycles(this.map.center[0], this.map.center[1])
     },
-    getIconByProvider(provider) {
+    getIconByProvider(provider, bicycle) {
       if (provider === 'geo') {
         return L.icon({
           prefix: '',
@@ -155,7 +155,7 @@ export default {
           iconUrl = '/static/marker-gobee.png'
           break
         case 'mobike':
-          iconUrl = '/static/marker-mobike.png'
+          iconUrl = bicycle.biketype === 2 ? '/static/marker-mobike-2.png' : '/static/marker-mobike.png'
           break
         case 'yobike':
           iconUrl = '/static/marker-yobike.png'
@@ -204,7 +204,9 @@ export default {
           return gql`
             query($lat: Float!, $lng: Float!) {
               bicyclesByLatLng(lat: $lat, lng: $lng) {
-                ${this.$store.getters.enabledProviders.map(p => `${p}{ lat, lng }`).join(',')}
+                ${this.$store.getters.enabledProviders
+                  .map(p => (p === 'mobike' ? `${p}{ lat, lng, biketype }` : `${p}{ lat, lng }`))
+                  .join(',')}
               }
             }
           `
