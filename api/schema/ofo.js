@@ -12,9 +12,12 @@ const ofoType = new GraphQLObjectType({
   name: 'Ofo',
   interfaces: [bicycleType],
   fields: {
-    userIdLast: { type: GraphQLString },
+    id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
-    lng: { type: GraphQLFloat }
+    lng: { type: GraphQLFloat },
+    carno: { type: GraphQLString },
+    bomNum: { type: GraphQLString },
+    userIdLast: { type: GraphQLString }
   }
 })
 
@@ -28,9 +31,12 @@ const getBicyclesByLatLng = {
       })
 
       return result.data.values.cars.map(bike => ({
-        userIdLast: bike.userIdLast,
+        id: bike.carno,
         lat: bike.lat,
-        lng: bike.lng
+        lng: bike.lng,
+        carno: bike.carno,
+        bomNum: bike.bomNum,
+        userIdLast: bike.userIdLast
       }))
     } catch (e) {
       logger.exception(e, {

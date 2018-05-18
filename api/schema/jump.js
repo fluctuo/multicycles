@@ -11,9 +11,9 @@ const jumpType = new GraphQLObjectType({
   name: 'Jump',
   interfaces: [bicycleType],
   fields: {
+    id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
-    id: { type: GraphQLString },
     name: { type: GraphQLString },
     is_reserved: { type: GraphQLInt },
     is_disabled: { type: GraphQLInt },
@@ -28,9 +28,9 @@ const getBicyclesByLatLng = {
       const result = await jump.getBicyclesByLatLng({ lat, lng })
 
       return result.data.data.bikes.map(bike => ({
+        id: bike.bike_id,
         lat: bike.lat,
         lng: bike.lon,
-        id: bike.bike_id,
         name: bike.name,
         is_reserved: bike.is_reserved,
         is_disabled: bike.is_disabled,

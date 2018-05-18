@@ -12,9 +12,9 @@ const gobeeType = new GraphQLObjectType({
   interfaces: [bicycleType],
   fields: {
     id: { type: GraphQLString },
-    number: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    number: { type: GraphQLString },
     status: { type: GraphQLInt },
     power: { type: GraphQLInt },
     hasHotspotDropoffDiscount: { type: GraphQLBoolean },

@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'graphql'
+import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt } from 'graphql'
 
 import Yobike from '@multicycles/yobike'
 
@@ -13,7 +13,10 @@ const yobikeType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
-    lng: { type: GraphQLFloat }
+    lng: { type: GraphQLFloat },
+    plate_no: { type: GraphQLString },
+    discount: { type: GraphQLInt },
+    outside: { type: GraphQLInt }
   }
 })
 
@@ -29,7 +32,10 @@ const getBicyclesByLatLng = {
       return result.data.data.map(bike => ({
         id: bike.plate_no,
         lat: bike.latitude,
-        lng: bike.longitude
+        lng: bike.longitude,
+        plate_no: bike.plate_no,
+        discount: bike.discount,
+        outside: bike.outside
       }))
     } catch (e) {
       logger.exception(e, {

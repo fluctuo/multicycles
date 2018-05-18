@@ -11,9 +11,10 @@ const whiteBikesType = new GraphQLObjectType({
   name: 'WhiteBikes',
   interfaces: [bicycleType],
   fields: {
-    standId: { type: GraphQLString },
+    id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    standId: { type: GraphQLString },
     bikeCount: { type: GraphQLString },
     standDescription: { type: GraphQLString },
     standName: { type: GraphQLString },
@@ -31,9 +32,10 @@ const getBicyclesByLatLng = {
       })
 
       return result.map(bike => ({
-        standId: bike.standId,
+        id: bike.standId,
         lat: bike.lat,
         lng: bike.lon,
+        standId: bike.standId,
         bikeCount: bike.bikecount,
         standDescription: bike.standDescription,
         standName: bike.standName,

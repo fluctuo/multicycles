@@ -12,9 +12,9 @@ const limeType = new GraphQLObjectType({
   interfaces: [bicycleType],
   fields: {
     id: { type: GraphQLString },
-    plate: { type: GraphQLString },
     lat: { type: GraphQLFloat },
-    lng: { type: GraphQLFloat }
+    lng: { type: GraphQLFloat },
+    plate: { type: GraphQLString }
   }
 })
 
@@ -29,9 +29,9 @@ const getBicyclesByLatLng = {
 
       return result.data.map(bike => ({
         id: bike.id,
-        plate: bike.attributes.plate,
         lat: bike.attributes.latitude,
-        lng: bike.attributes.longitude
+        lng: bike.attributes.longitude,
+        plate: bike.attributes.plate
       }))
     } catch (e) {
       logger.exception(e, {

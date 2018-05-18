@@ -1,13 +1,10 @@
-import { GraphQLInterfaceType, GraphQLFloat } from 'graphql'
+import { GraphQLInterfaceType, GraphQLFloat, GraphQLString } from 'graphql'
 
 export default new GraphQLInterfaceType({
   name: 'Bicyle',
   fields: () => ({
-    lat: {
-      type: GraphQLFloat
-    },
-    lng: {
-      type: GraphQLFloat
-    }
+    id: { type: GraphQLString },
+    lat: { type: GraphQLFloat },
+    lng: { type: GraphQLFloat }
   })
 })

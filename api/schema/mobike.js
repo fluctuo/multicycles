@@ -11,9 +11,9 @@ const mobikeType = new GraphQLObjectType({
   name: 'Mobike',
   interfaces: [bicycleType],
   fields: {
+    id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
-    id: { type: GraphQLString },
     num: { type: GraphQLInt },
     distance: { type: GraphQLString },
     bikeIds: { type: GraphQLString },
@@ -30,9 +30,9 @@ const getBicyclesByLatLng = {
       const result = await mobike.getBicyclesByLatLng({ lat, lng })
 
       return result.data.object.map(bike => ({
+        id: bike.distId,
         lat: bike.distY,
         lng: bike.distX,
-        id: bike.distId,
         num: bike.distNum,
         distance: bike.distance,
         bikeIds: bike.bikeIds,

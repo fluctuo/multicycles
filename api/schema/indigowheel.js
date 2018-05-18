@@ -14,6 +14,7 @@ const indigoWheelType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    plate_no: { type: GraphQLString },
     discount: { type: GraphQLInt },
     outside: { type: GraphQLInt }
   }
@@ -32,6 +33,7 @@ const getBicyclesByLatLng = {
         id: bike.plate_no,
         lat: bike.latitude,
         lng: bike.longitude,
+        plate_no: bike.plate_no,
         discount: bike.discount,
         outside: bike.outside
       }))
