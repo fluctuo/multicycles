@@ -70,7 +70,8 @@ export default {
       },
       map: {
         center: [48.852775, 2.369336],
-        zoom: 18
+        zoom: 18,
+        detectRetina: true
       },
       bicycles: {}
     }
@@ -145,46 +146,17 @@ export default {
       }
 
       let glyph = ''
-      let iconUrl = undefined
+      let iconUrl = `/static/marker-${provider}.png`
+      let iconRetinaUrl = `/static/marker-${provider}-2x.png`
 
-      switch (provider) {
-        case 'ofo':
-          iconUrl = '/static/marker-ofo.png'
-          break
-        case 'gobee':
-          iconUrl = '/static/marker-gobee.png'
-          break
-        case 'mobike':
-          iconUrl = bicycle.biketype === 2 ? '/static/marker-mobike-2.png' : '/static/marker-mobike.png'
-          break
-        case 'yobike':
-          iconUrl = '/static/marker-yobike.png'
-          break
-        case 'jump':
-          iconUrl = '/static/marker-jump.png'
-          break
-        case 'pony':
-          iconUrl = '/static/marker-pony.png'
-          break
-        case 'lime':
-          iconUrl = '/static/marker-lime.png'
-          break
-        case 'whitebikes':
-          iconUrl = '/static/marker-whitebikes.png'
-          break
-        case 'obike':
-          iconUrl = '/static/marker-obike.png'
-          break
-        case 'indigowheel':
-          iconUrl = '/static/marker-indigowheel.png'
-          break
-        default:
-          iconUrl = '/static/marker.png'
-          break
+      if (provider === 'mobike') {
+        iconUrl = bicycle.biketype === 2 ? '/static/marker-mobike-2.png' : '/static/marker-mobike.png'
+        iconRetinaUrl = bicycle.biketype === 2 ? '/static/marker-mobike-2-2x.png' : '/static/marker-mobike-2x.png'
       }
 
       return L.icon({
         iconUrl,
+        iconRetinaUrl,
         iconSize: [24, 37]
       })
     },
