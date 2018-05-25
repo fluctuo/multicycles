@@ -16,4 +16,5 @@ Currently support:
 * [WhiteBike](https://www.facebook.com/White-bikes-Biele-bicykle-183156078451725/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/whitebikes.svg)](https://www.npmjs.com/package/@multicycles/whitebikes)
 * [Obike](https://www.o.bike/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/obike.svg)](https://www.npmjs.com/package/@multicycles/obike)
 * [IndigoWheel](https://www.indigoweel.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/indigowheel.svg)](https://www.npmjs.com/package/@multicycles/indigowheel)
+* [Byke](http://byke.de/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/byke.svg)](https://www.npmjs.com/package/@multicycles/byke)
 * Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)

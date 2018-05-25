@@ -21,7 +21,8 @@ export default {
         'lime',
         'whitebikes',
         'obike',
-        'indigowheel'
+        'indigowheel',
+        'byke'
       ]
     )
   }
