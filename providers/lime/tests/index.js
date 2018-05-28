@@ -2,7 +2,13 @@ import test from 'ava'
 import Lime from '../lib'
 
 test('overwrite timeout on constructor', async t => {
-  const lime = new Lime({ timeout: 1 })
+  const lime = new Lime({
+    auth: {
+      token: process.env.LIME_AUTH_TOKEN,
+      session: process.env.LIME_AUTH_SESSION
+    },
+    timeout: 1
+  })
 
   await lime
     .getBicyclesByLatLng({
@@ -19,7 +25,12 @@ test('overwrite timeout on constructor', async t => {
 })
 
 test('overwrite timeout on method', async t => {
-  const lime = new Lime()
+  const lime = new Lime({
+    auth: {
+      token: process.env.LIME_AUTH_TOKEN,
+      session: process.env.LIME_AUTH_SESSION
+    }
+  })
 
   await lime
     .getBicyclesByLatLng(
@@ -39,7 +50,12 @@ test('overwrite timeout on method', async t => {
 })
 
 test('get bicycles by positions', async t => {
-  const lime = new Lime()
+  const lime = new Lime({
+    auth: {
+      token: process.env.LIME_AUTH_TOKEN,
+      session: process.env.LIME_AUTH_SESSION
+    }
+  })
 
   await lime
     .getBicyclesByLatLng({
@@ -47,7 +63,7 @@ test('get bicycles by positions', async t => {
       lng: -77.036871
     })
     .then(result => {
-      t.truthy(result.data.length)
+      t.truthy(result.data.data.attributes.nearby_locked_bikes.length)
       t.pass()
     })
     .catch(err => {
@@ -56,19 +72,19 @@ test('get bicycles by positions', async t => {
     })
 })
 
-test('return error on no available city', async t => {
+test('get bicycles without auth', async t => {
   const lime = new Lime()
 
   await lime
     .getBicyclesByLatLng({
-      lat: 48.852775,
-      lng: 2.369336
+      lat: 38.907192, // Washintown, DC
+      lng: -77.036871
     })
     .then(result => {
-      t.is(result.data.length, 0)
-      t.pass()
-    })
-    .catch(e => {
+      console.log(result)
       t.fail()
+    })
+    .catch(err => {
+      t.pass()
     })
 })
