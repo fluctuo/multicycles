@@ -12,6 +12,7 @@ import whitebikes from './whitebikes'
 import obike from './obike'
 import indigowheel from './indigowheel'
 import byke from './byke'
+import donkey from './donkey'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -32,7 +33,8 @@ export default new GraphQLSchema({
             whitebikes: whitebikes.getBicyclesByLatLng,
             obike: obike.getBicyclesByLatLng,
             indigowheel: indigowheel.getBicyclesByLatLng,
-            byke: byke.getBicyclesByLatLng
+            byke: byke.getBicyclesByLatLng,
+            donkey: donkey.getBicyclesByLatLng
           }
         }),
         args: {

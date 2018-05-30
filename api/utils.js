@@ -22,7 +22,8 @@ export default {
         'whitebikes',
         'obike',
         'indigowheel',
-        'byke'
+        'byke',
+        'donkey'
       ]
     )
   }

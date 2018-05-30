@@ -14,6 +14,7 @@
     "@google/maps": "^0.4.5",
     "@koa/cors": "^2.2.1",
     "@multicycles/byke": "^1.0.0-beta.1",
+    "@multicycles/donkey": "^1.0.0-beta.1",
     "@multicycles/gobee.bike": "1.0.0-beta.7",
     "@multicycles/indigowheel": "^1.0.0-beta.1",
     "@multicycles/jump": "1.0.0-beta.3",
