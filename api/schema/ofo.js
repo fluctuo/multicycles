@@ -2,30 +2,32 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 
 import Ofo from '@multicycles/ofo'
 
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import config from '../config'
-import bicycleType from './bicycleType'
 import logger from '../logger'
 
-const ofo = new Ofo({ token: config.ofoAuthToken, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Ofo({ token: config.ofoAuthToken, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const ofoType = new GraphQLObjectType({
+const OfoType = new GraphQLObjectType({
   name: 'Ofo',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     carno: { type: GraphQLString },
     bomNum: { type: GraphQLString },
     userIdLast: { type: GraphQLString }
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(ofoType),
+const ofo = {
+  type: new GraphQLList(OfoType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await ofo.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -34,6 +36,9 @@ const getBicyclesByLatLng = {
         id: bike.carno,
         lat: bike.lat,
         lng: bike.lng,
+        provider: {
+          name: 'ofo'
+        },
         carno: bike.carno,
         bomNum: bike.bomNum,
         userIdLast: bike.userIdLast
@@ -53,6 +58,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { OfoType, ofo }

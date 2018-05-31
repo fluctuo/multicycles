@@ -2,29 +2,31 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import IndigoWheel from '@multicycles/indigowheel'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const indigoWheel = new IndigoWheel({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new IndigoWheel({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const indigoWheelType = new GraphQLObjectType({
+const IndigoWheelType = new GraphQLObjectType({
   name: 'IndigoWheel',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     plate_no: { type: GraphQLString },
     discount: { type: GraphQLInt },
     outside: { type: GraphQLInt }
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(indigoWheelType),
+const indigowheel = {
+  type: new GraphQLList(IndigoWheelType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await indigoWheel.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -33,6 +35,9 @@ const getBicyclesByLatLng = {
         id: bike.plate_no,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: {
+          name: 'indigoWheel'
+        },
         plate_no: bike.plate_no,
         discount: bike.discount,
         outside: bike.outside
@@ -52,6 +57,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { indigowheel, IndigoWheelType }

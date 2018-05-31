@@ -3,10 +3,11 @@ import GraphQLJSON from 'graphql-type-json'
 
 import Lime from '@multicycles/lime'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const lime = new Lime({
+const client = new Lime({
   auth: {
     token: process.env.LIME_AUTH_TOKEN,
     session: process.env.LIME_AUTH_SESSION
@@ -14,13 +15,14 @@ const lime = new Lime({
   timeout: process.env.PROVIDER_TIMEOUT || 3000
 })
 
-const limeType = new GraphQLObjectType({
+const LimeType = new GraphQLObjectType({
   name: 'Lime',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     status: { type: GraphQLString },
     plate_number: { type: GraphQLString },
     last_activity_at: { type: GraphQLString },
@@ -35,11 +37,11 @@ const limeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(limeType),
+const lime = {
+  type: new GraphQLList(LimeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await lime.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -48,6 +50,9 @@ const getBicyclesByLatLng = {
         id: bike.id,
         lat: bike.attributes.latitude,
         lng: bike.attributes.longitude,
+        provider: {
+          name: 'lime'
+        },
         status: bike.attributes.status,
         plate_number: bike.attributes.plate_number,
         last_activity_at: bike.attributes.last_activity_at,
@@ -75,6 +80,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { LimeType, lime }

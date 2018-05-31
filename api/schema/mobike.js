@@ -2,18 +2,20 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 
 import Mobike from '@multicycles/mobike'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const mobike = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const mobikeType = new GraphQLObjectType({
+const MobikeType = new GraphQLObjectType({
   name: 'Mobike',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     num: { type: GraphQLInt },
     distance: { type: GraphQLString },
     bikeIds: { type: GraphQLString },
@@ -23,16 +25,19 @@ const mobikeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(mobikeType),
+const mobike = {
+  type: new GraphQLList(MobikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await mobike.getBicyclesByLatLng({ lat, lng })
+      const result = await client.getBicyclesByLatLng({ lat, lng })
 
       return result.body.object.map(bike => ({
         id: bike.distId,
         lat: bike.distY,
         lng: bike.distX,
+        provider: {
+          name: 'mobike'
+        },
         num: bike.distNum,
         distance: bike.distance,
         bikeIds: bike.bikeIds,
@@ -55,6 +60,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { MobikeType, mobike }

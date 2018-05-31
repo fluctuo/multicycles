@@ -2,29 +2,31 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Yobike from '@multicycles/yobike'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const yobike = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const yobikeType = new GraphQLObjectType({
+const YobikeType = new GraphQLObjectType({
   name: 'Yobike',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     plate_no: { type: GraphQLString },
     discount: { type: GraphQLInt },
     outside: { type: GraphQLInt }
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(yobikeType),
+const yobike = {
+  type: new GraphQLList(YobikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await yobike.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -33,6 +35,9 @@ const getBicyclesByLatLng = {
         id: bike.plate_no,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: {
+          name: 'yobike'
+        },
         plate_no: bike.plate_no,
         discount: bike.discount,
         outside: bike.outside
@@ -52,6 +57,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { YobikeType, yobike }

@@ -3,18 +3,20 @@ import GraphQLJSON from 'graphql-type-json'
 
 import Donkey from '@multicycles/donkey'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const donkey = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const donkeyType = new GraphQLObjectType({
+const DonkeyType = new GraphQLObjectType({
   name: 'Donkey',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     name: { type: GraphQLString },
     radius: { type: GraphQLInt },
     available_bikes_count: { type: GraphQLInt },
@@ -25,11 +27,11 @@ const donkeyType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(donkeyType),
+const donkey = {
+  type: new GraphQLList(DonkeyType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await donkey.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -38,6 +40,9 @@ const getBicyclesByLatLng = {
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: {
+          name: 'donkey'
+        },
         name: bike.name,
         radius: bike.radius,
         available_bikes_count: bike.available_bikes_count,
@@ -61,6 +66,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { DonkeyType, donkey }

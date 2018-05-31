@@ -2,18 +2,20 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Obike from '@multicycles/obike'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const obike = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const obikeType = new GraphQLObjectType({
+const ObikeType = new GraphQLObjectType({
   name: 'Obike',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     imei: { type: GraphQLString },
     iconUrl: { type: GraphQLString },
     promotionActivityType: { type: GraphQLString },
@@ -23,11 +25,11 @@ const obikeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(obikeType),
+const obike = {
+  type: new GraphQLList(ObikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await obike.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -36,6 +38,9 @@ const getBicyclesByLatLng = {
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: {
+          name: 'obike'
+        },
         imei: bike.imei,
         iconUrl: bike.iconUrl,
         promotionActivityType: bike.promotionActivityType,
@@ -58,6 +63,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { ObikeType, obike }

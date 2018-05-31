@@ -2,18 +2,20 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 
 import WhiteBikes from '@multicycles/whitebikes'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const whiteBikes = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const whiteBikesType = new GraphQLObjectType({
+const WhiteBikesType = new GraphQLObjectType({
   name: 'WhiteBikes',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     standId: { type: GraphQLString },
     bikeCount: { type: GraphQLString },
     standDescription: { type: GraphQLString },
@@ -22,11 +24,11 @@ const whiteBikesType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(whiteBikesType),
+const whitebikes = {
+  type: new GraphQLList(WhiteBikesType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await whiteBikes.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -35,6 +37,9 @@ const getBicyclesByLatLng = {
         id: bike.standId,
         lat: bike.lat,
         lng: bike.lon,
+        provider: {
+          name: 'whitebikes'
+        },
         standId: bike.standId,
         bikeCount: bike.bikecount,
         standDescription: bike.standDescription,
@@ -56,6 +61,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { WhiteBikesType, whitebikes }

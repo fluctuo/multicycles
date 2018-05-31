@@ -2,18 +2,20 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Byke from '@multicycles/byke'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const byke = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const bykeType = new GraphQLObjectType({
+const BykeType = new GraphQLObjectType({
   name: 'Byke',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     bikeId: { type: GraphQLString },
     bikeType: { type: GraphQLString },
     bikeNo: { type: GraphQLString },
@@ -28,11 +30,11 @@ const bykeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(bykeType),
+const byke = {
+  type: new GraphQLList(BykeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await byke.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -41,6 +43,9 @@ const getBicyclesByLatLng = {
         id: bike.bikeNo,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: {
+          name: 'byke'
+        },
         bikeId: bike.bikeId,
         bikeType: bike.bikeType,
         bikeNo: bike.bikeNo,
@@ -68,6 +73,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { BykeType, byke }

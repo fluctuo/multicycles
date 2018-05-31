@@ -12,7 +12,6 @@ import MapboxClient from 'mapbox'
 import config from '../config'
 import utils from '../utils'
 import logger from '../logger'
-import bicycleType from './bicycleType'
 
 const mapboxClient = new MapboxClient(config.mapboxKey)
 

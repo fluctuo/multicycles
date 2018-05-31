@@ -2,18 +2,20 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoo
 
 import Pony from '@multicycles/pony'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const pony = new Pony()
+const client = new Pony()
 
-const ponyType = new GraphQLObjectType({
+const PonyType = new GraphQLObjectType({
   name: 'Pony',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     manualLocation: { type: GraphQLBoolean },
     reason: { type: GraphQLString },
     region: { type: GraphQLString },
@@ -22,11 +24,11 @@ const ponyType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(ponyType),
+const pony = {
+  type: new GraphQLList(PonyType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await pony.getBicyclesByLatLng({
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
@@ -35,6 +37,9 @@ const getBicyclesByLatLng = {
         id: bike.physicalId,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: {
+          name: 'pony'
+        },
         manualLocation: bike.manualLocation,
         reason: bike.reason,
         region: bike.region,
@@ -56,6 +61,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { PonyType, pony }

@@ -2,18 +2,20 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 
 import Jump from '@multicycles/jump'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const jump = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const jumpType = new GraphQLObjectType({
+const JumpType = new GraphQLObjectType({
   name: 'Jump',
-  interfaces: [bicycleType],
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     name: { type: GraphQLString },
     is_reserved: { type: GraphQLInt },
     is_disabled: { type: GraphQLInt },
@@ -21,16 +23,19 @@ const jumpType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(jumpType),
+const jump = {
+  type: new GraphQLList(JumpType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await jump.getBicyclesByLatLng({ lat, lng })
+      const result = await client.getBicyclesByLatLng({ lat, lng })
 
       return result.body.data.bikes.map(bike => ({
         id: bike.bike_id,
         lat: bike.lat,
         lng: bike.lon,
+        provider: {
+          name: 'jump'
+        },
         name: bike.name,
         is_reserved: bike.is_reserved,
         is_disabled: bike.is_disabled,
@@ -51,6 +56,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { JumpType, jump }

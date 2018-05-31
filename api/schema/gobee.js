@@ -2,18 +2,20 @@ import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLFloat
 
 import GobeeBike from '@multicycles/gobee.bike'
 
-import bicycleType from './bicycleType'
+import { BikeType } from './bikes'
+import ProviderType from './provider'
 import logger from '../logger'
 
-const gobee = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const gobeeType = new GraphQLObjectType({
-  name: 'Gobee',
-  interfaces: [bicycleType],
+const GobeeBikeType = new GraphQLObjectType({
+  name: 'GobeeBike',
+  interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     number: { type: GraphQLString },
     status: { type: GraphQLInt },
     power: { type: GraphQLInt },
@@ -24,17 +26,20 @@ const gobeeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(gobeeType),
+const gobeebike = {
+  type: new GraphQLList(GobeeBikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await gobee.getBicyclesByLatLng({ lat, lng })
+      const result = await client.getBicyclesByLatLng({ lat, lng })
 
       return result.body.data.bikes.map(bike => ({
         id: bike.bid,
         number: bike.number,
         lat: bike.gLat,
         lng: bike.gLng,
+        provider: {
+          name: 'gobeebike'
+        },
         status: bike.status,
         power: bike.power,
         hasHotspotDropoffDiscount: bike.hasHotspotDropoffDiscount,
@@ -44,7 +49,7 @@ const getBicyclesByLatLng = {
       }))
     } catch (e) {
       logger.exception(e, {
-        tags: { provider: 'gobee' },
+        tags: { provider: 'gobeebike' },
         extra: {
           path: info.path,
           variable: info.variableValues,
@@ -57,6 +62,4 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+export { GobeeBikeType, gobeebike }
