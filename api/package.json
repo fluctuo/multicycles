@@ -24,7 +24,7 @@
     "@multicycles/ofo": "1.0.0-beta.8",
     "@multicycles/pony": "^1.0.0-beta.2",
     "@multicycles/whitebikes": "^1.0.0-beta.3",
-    "@multicycles/yobike": "1.0.0-beta.6",
+    "@multicycles/yobike": "1.0.0-beta.7",
     "@std/esm": "^0.18.0",
     "graphql": "^0.12.3",
     "graphql-type-json": "^0.2.1",
