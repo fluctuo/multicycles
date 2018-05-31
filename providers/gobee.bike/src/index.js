@@ -1,13 +1,12 @@
-import axios from 'axios'
+import got from 'got'
 
 const BASE_URL = 'https://appaws.gobee.bike/GobeeBike/bikes'
 
 class GobeeBike {
   constructor({ timeout } = {}) {
-    this.api = axios.create({
-      baseURL: BASE_URL,
+    this.config = {
       timeout: timeout
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
@@ -15,12 +14,14 @@ class GobeeBike {
       throw new Error('Missing lat/lng')
     }
 
-    return this.api.get('/near_bikes', {
-      ...config,
-      params: {
+    return got.get(`${BASE_URL}/near_bikes`, {
+      json: true,
+      query: {
         lat,
         lng
-      }
+      },
+      timeout: this.config.timeout,
+      ...config
     })
   }
 }

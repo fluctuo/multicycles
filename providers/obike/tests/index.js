@@ -13,7 +13,8 @@ test('overwrite timeout on constructor', async t => {
       t.fail()
     })
     .catch(err => {
-      t.is(err.code, 'ECONNABORTED')
+      console.log(err)
+      t.is(err.code, 'ETIMEDOUT')
       t.pass()
     })
 })
@@ -33,7 +34,7 @@ test('overwrite timeout on method', async t => {
       t.fail()
     })
     .catch(err => {
-      t.is(err.code, 'ECONNABORTED')
+      t.is(err.code, 'ETIMEDOUT')
       t.pass()
     })
 })
@@ -47,11 +48,12 @@ test('get bicycles by positions', async t => {
       lng: 2.369336
     })
     .then(result => {
-      t.is(result.status, 200)
-      t.truthy(result.data.data.list.length)
+      t.is(result.statusCode, 200)
+      t.truthy(result.body.data.list.length)
       t.pass()
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err)
       t.fail()
     })
 })

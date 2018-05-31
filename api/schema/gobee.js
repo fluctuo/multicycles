@@ -30,7 +30,7 @@ const getBicyclesByLatLng = {
     try {
       const result = await gobee.getBicyclesByLatLng({ lat, lng })
 
-      return result.data.data.bikes.map(bike => ({
+      return result.body.data.bikes.map(bike => ({
         id: bike.bid,
         number: bike.number,
         lat: bike.gLat,

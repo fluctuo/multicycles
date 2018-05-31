@@ -1,14 +1,13 @@
 import querystring from 'querystring'
-import axios from 'axios'
+import got from 'got'
 
 const BASE_URL = 'https://mwx.mobike.com/mobike-api'
 
 class Mobike {
   constructor({ timeout } = {}) {
-    this.api = axios.create({
-      baseURL: BASE_URL,
+    this.config = {
       timeout: timeout
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}, config = {}) {
@@ -16,14 +15,16 @@ class Mobike {
       throw new Error('Missing lat/lng')
     }
 
-    return this.api.post(
-      '/rent/nearbyBikesInfo.do',
-      querystring.stringify({
+    return got.post(`${BASE_URL}/rent/nearbyBikesInfo.do`, {
+      json: true,
+      form: true,
+      body: {
         latitude,
         longitude
-      }),
-      config
-    )
+      },
+      timeout: this.config.timeout,
+      ...config
+    })
   }
 }
 

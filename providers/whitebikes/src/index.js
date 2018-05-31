@@ -1,5 +1,4 @@
-import querystring from 'querystring'
-import axios from 'axios'
+import got from 'got'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 import { point } from '@turf/helpers'
@@ -17,10 +16,9 @@ function boundsFromLatLng(lat, lng) {
 
 class WhiteBikes {
   constructor({ timeout } = {}) {
-    this.api = axios.create({
-      baseURL: BASE_URL,
+    this.config = {
       timeout: timeout
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
@@ -30,9 +28,15 @@ class WhiteBikes {
       bounds = boundsFromLatLng(lat, lng)
     }
 
-    return this.api.get('/command.php?action=map:markers', config).then(({ data: bikes }) => {
-      return lat && lng ? bikes.filter(bike => booleanPointInPolygon(point([bike.lat, bike.lon]), bounds)) : bikes
-    })
+    return got
+      .get(`${BASE_URL}/command.php?action=map:markers`, {
+        json: true,
+        timeout: this.config.timeout,
+        ...config
+      })
+      .then(({ body: bikes }) => {
+        return lat && lng ? bikes.filter(bike => booleanPointInPolygon(point([bike.lat, bike.lon]), bounds)) : bikes
+      })
   }
 }
 

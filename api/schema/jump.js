@@ -27,7 +27,7 @@ const getBicyclesByLatLng = {
     try {
       const result = await jump.getBicyclesByLatLng({ lat, lng })
 
-      return result.data.data.bikes.map(bike => ({
+      return result.body.data.bikes.map(bike => ({
         id: bike.bike_id,
         lat: bike.lat,
         lng: bike.lon,

@@ -37,7 +37,7 @@ const getBicyclesByLatLng = {
         lng
       })
 
-      return result.data.items.map(bike => ({
+      return result.body.items.map(bike => ({
         id: bike.bikeNo,
         lat: bike.latitude,
         lng: bike.longitude,

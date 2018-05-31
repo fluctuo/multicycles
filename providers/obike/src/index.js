@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import axios from 'axios'
+import got from 'got'
 
 const BASE_URL = 'https://mobile.o.bike/api/v2'
 
@@ -38,7 +38,7 @@ function encodeBody({ lat, lng }) {
 
 class Obike {
   constructor({ timeout } = {}) {
-    this.api = axios.create({
+    this.config = {
       baseURL: BASE_URL,
       timeout: timeout,
       headers: {
@@ -46,7 +46,7 @@ class Obike {
         platform: 'iOS',
         'Content-Type': 'application/json'
       }
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
@@ -54,14 +54,16 @@ class Obike {
       throw new Error('Missing lat/lng')
     }
 
-    return this.api.post(
-      '/bike/list',
-      encodeBody({
+    return got.post(`${this.config.baseURL}/bike/list`, {
+      json: true,
+      headers: this.config.headers,
+      body: encodeBody({
         lat,
         lng
       }),
-      config
-    )
+      timeout: this.config.timeout,
+      ...config
+    })
   }
 }
 

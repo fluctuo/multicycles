@@ -13,7 +13,7 @@ test('overwrite timeout on constructor', async t => {
       t.fail()
     })
     .catch(err => {
-      t.is(err.code, 'ECONNABORTED')
+      t.is(err.code, 'ETIMEDOUT')
       t.pass()
     })
 })
@@ -33,7 +33,7 @@ test('overwrite timeout on method', async t => {
       t.fail()
     })
     .catch(err => {
-      t.is(err.code, 'ECONNABORTED')
+      t.is(err.code, 'ETIMEDOUT')
       t.pass()
     })
 })
@@ -47,10 +47,12 @@ test('get bicycles by positions', async t => {
       lng: -77.036871
     })
     .then(result => {
-      t.is(result.status, 200)
+      t.is(result.statusCode, 200)
+      t.truthy(result.body.data.bikes.length)
       t.pass()
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err)
       t.fail()
     })
 })
@@ -64,9 +66,12 @@ test('return error on no available city', async t => {
       lng: 2.369336
     })
     .then(result => {
+      t.is(result.statusCode, 200)
+      t.is(result.body.data.bikes.length, 0)
       t.pass()
     })
-    .catch(e => {
+    .catch(err => {
+      console.log(err)
       t.fail()
     })
 })

@@ -44,7 +44,7 @@ const getBicyclesByLatLng = {
         lng
       })
 
-      return result.data.data.attributes.nearby_locked_bikes.map(bike => ({
+      return result.body.data.attributes.nearby_locked_bikes.map(bike => ({
         id: bike.id,
         lat: bike.attributes.latitude,
         lng: bike.attributes.longitude,

@@ -1,14 +1,13 @@
 import querystring from 'querystring'
-import axios from 'axios'
+import got from 'got'
 
 const BASE_URL = 'https://api-prod.ibyke.io'
 
 class Byke {
   constructor({ timeout } = {}) {
-    this.api = axios.create({
-      baseURL: BASE_URL,
+    this.config = {
       timeout: timeout
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}, config = {}) {
@@ -16,12 +15,14 @@ class Byke {
       throw new Error('Missing lat/lng')
     }
 
-    return this.api.get('/v2/bikes', {
-      ...config,
-      params: {
+    return got.get(`${BASE_URL}/v2/bikes`, {
+      json: true,
+      query: {
         latitude,
         longitude
-      }
+      },
+      timeout: this.config.timeout,
+      ...config
     })
   }
 }

@@ -29,7 +29,7 @@ const getBicyclesByLatLng = {
     try {
       const result = await mobike.getBicyclesByLatLng({ lat, lng })
 
-      return result.data.object.map(bike => ({
+      return result.body.object.map(bike => ({
         id: bike.distId,
         lat: bike.distY,
         lng: bike.distX,

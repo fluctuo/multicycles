@@ -1,4 +1,4 @@
-import axios from 'axios'
+import got from 'got'
 import getZone from './zones'
 
 const endpoints = {
@@ -13,9 +13,9 @@ function getEndpoint(lat, lng) {
 
 class Jump {
   constructor({ timeout } = {}) {
-    this.api = axios.create({
+    this.config = {
       timeout: timeout
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
@@ -27,7 +27,8 @@ class Jump {
 
     if (!endpoint) {
       return Promise.resolve({
-        data: {
+        statusCode: 200,
+        body: {
           last_updated: +new Date(),
           ttl: 60,
           data: {
@@ -37,7 +38,11 @@ class Jump {
       })
     }
 
-    return this.api.get(`${endpoint}/free_bike_status.json`, config)
+    return got.get(`${endpoint}/free_bike_status.json`, {
+      json: true,
+      timeout: this.config.timeout,
+      ...config
+    })
   }
 }
 

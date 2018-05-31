@@ -1,6 +1,5 @@
 import crypto from 'crypto'
-import querystring from 'querystring'
-import axios from 'axios'
+import got from 'got'
 
 const BASE_URL = 'https://en.api.ohbike.com'
 
@@ -32,10 +31,9 @@ function boundsFromLatLng(lat, lng) {
 class Yobike {
   constructor({ timeout, appKey } = {}) {
     this.appKey = appKey || 'WWTaJQrg-NHe_Zl0iwghHyYypYw6g-6GEZHPGBBF6TI7OzZWo9VVLXWRs2ngQJ18'
-    this.api = axios.create({
-      baseURL: BASE_URL,
+    this.config = {
       timeout: timeout
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
@@ -55,14 +53,16 @@ class Yobike {
       zoom: '11.000000'
     }
 
-    return this.api.post(
-      '/v1/vehicle/',
-      querystring.stringify({
+    return got.post(`${BASE_URL}/v1/vehicle/`, {
+      json: true,
+      form: true,
+      body: {
         ...data,
         sign: sign(data)
-      }),
-      config
-    )
+      },
+      timeout: this.config.timeout,
+      ...config
+    })
   }
 }
 

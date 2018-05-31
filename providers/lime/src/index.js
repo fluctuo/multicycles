@@ -1,27 +1,24 @@
-import axios from 'axios'
+import got from 'got'
 
 const BASE_URL = 'https://web-production.lime.bike/api/rider'
 
 class Lime {
   constructor({ timeout, auth } = {}) {
-    this.api = new axios.create({
-      baseURL: BASE_URL,
+    this.config = {
       timeout: timeout
-    })
+    }
 
     if (auth) {
-      this.api.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`
-      this.api.defaults.headers.common['Cookie'] = `_limebike-web_session=${auth.session}; path=/; secure; HttpOnly`
-    } else {
-      // fix https://github.com/axios/axios/issues/812
-      this.api.defaults.headers.common['Authorization'] = undefined
-      this.api.defaults.headers.common['Cookie'] = undefined
+      this.config.headers = {
+        Authorization: `Bearer ${auth.token}`,
+        Cookie: `_limebike-web_session=${auth.session}; path=/; secure; HttpOnly`
+      }
     }
   }
 
   getOTP({ phone }, config) {
-    return this.api.get('/v1/login', {
-      data: {
+    return got.get(`${BASE_URL}/v1/login`, {
+      query: {
         phone
       },
       ...config
@@ -29,19 +26,14 @@ class Lime {
   }
 
   login({ phone, code }, config = {}) {
-    return this.api
-      .post(
-        '/v1/login',
-        {
-          login_code: code,
-          phone
-        },
-        config
-      )
-      .then(resp => {
-        this.api.defaults.headers.common['Authorization'] = `Bearer ${resp.data.token}`
-        return resp
-      })
+    return got.post(`${BASE_URL}/v1/login`, {
+      json: true,
+      body: {
+        login_code: code,
+        phone
+      },
+      ...config
+    })
   }
 
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
@@ -49,13 +41,16 @@ class Lime {
       throw new Error('Missing lat/lng')
     }
 
-    return this.api.get('/v1/views/main', {
-      params: {
+    return got.get(`${BASE_URL}/v1/views/main`, {
+      json: true,
+      headers: this.config.headers,
+      query: {
         map_center_latitude: lat,
         map_center_longitude: lng,
         user_latitude: lat,
         user_longitude: lng
       },
+      timeout: this.config.timeout,
       ...config
     })
   }

@@ -1,13 +1,12 @@
-import axios from 'axios'
+import got from 'got'
 
 const BASE_URL = 'https://stables.donkey.bike/api'
 
 class Donkey {
   constructor({ timeout } = {}) {
-    this.api = axios.create({
-      baseURL: BASE_URL,
+    this.config = {
       timeout: timeout
-    })
+    }
   }
 
   getBicyclesByLatLng({ lat, lng, radius = 800 } = {}, config = {}) {
@@ -15,12 +14,14 @@ class Donkey {
       throw new Error('Missing lat/lng')
     }
 
-    return this.api.get('/public/availability/hubs', {
-      ...config,
-      params: {
+    return got.get(`${BASE_URL}/public/availability/hubs`, {
+      json: true,
+      query: {
         radius,
         location: `${lat},${lng}`
-      }
+      },
+      timeout: this.config.timeout,
+      ...config
     })
   }
 }

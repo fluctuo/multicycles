@@ -2,7 +2,7 @@ import test from 'ava'
 import Ofo from '../lib'
 
 test('overwrite timeout on constructor', async t => {
-  const ofo = new Ofo({ timeout: 1, token: process.env.OFO_AUTH_TOKEN })
+  const ofo = new Ofo({ timeout: 1 })
 
   await ofo
     .getBicyclesByLatLng({
@@ -13,13 +13,13 @@ test('overwrite timeout on constructor', async t => {
       t.fail()
     })
     .catch(err => {
-      t.is(err.code, 'ECONNABORTED')
+      t.is(err.code, 'ETIMEDOUT')
       t.pass()
     })
 })
 
 test('overwrite timeout on method', async t => {
-  const ofo = new Ofo({ token: process.env.OFO_AUTH_TOKEN })
+  const ofo = new Ofo({})
 
   await ofo
     .getBicyclesByLatLng(
@@ -33,7 +33,7 @@ test('overwrite timeout on method', async t => {
       t.fail()
     })
     .catch(err => {
-      t.is(err.code, 'ECONNABORTED')
+      t.is(err.code, 'ETIMEDOUT')
       t.pass()
     })
 })
@@ -47,10 +47,12 @@ test('get bicycles by positions', async t => {
       lng: 2.369336
     })
     .then(result => {
-      t.is(result.status, 200)
+      t.is(result.statusCode, 200)
+      t.truthy(result.body.values.cars.length)
       t.pass()
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err)
       t.fail()
     })
 })
@@ -63,7 +65,8 @@ test('get bicycles without token', async t => {
       lat: 48.852775,
       lng: 2.369336
     })
-    .then(() => {
+    .then(resp => {
+      console.log(resp)
       t.fail()
     })
     .catch(() => {

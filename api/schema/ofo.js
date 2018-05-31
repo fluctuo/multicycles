@@ -30,7 +30,7 @@ const getBicyclesByLatLng = {
         lng
       })
 
-      return result.data.values.cars.map(bike => ({
+      return result.body.values.cars.map(bike => ({
         id: bike.carno,
         lat: bike.lat,
         lng: bike.lng,
