@@ -5,7 +5,7 @@ const BASE_URL = 'https://stables.donkey.bike/api'
 class Donkey {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 

@@ -5,7 +5,7 @@ const BASE_URL = 'https://web-production.lime.bike/api/rider'
 class Lime {
   constructor({ timeout, auth } = {}) {
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
 
     if (auth) {

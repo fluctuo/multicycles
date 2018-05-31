@@ -14,7 +14,7 @@ function getEndpoint(lat, lng) {
 class Jump {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 

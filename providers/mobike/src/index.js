@@ -6,7 +6,7 @@ const BASE_URL = 'https://mwx.mobike.com/mobike-api'
 class Mobike {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 

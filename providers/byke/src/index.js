@@ -6,7 +6,7 @@ const BASE_URL = 'https://api-prod.ibyke.io'
 class Byke {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 

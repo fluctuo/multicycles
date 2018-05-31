@@ -32,7 +32,7 @@ class Yobike {
   constructor({ timeout, appKey } = {}) {
     this.appKey = appKey || 'WWTaJQrg-NHe_Zl0iwghHyYypYw6g-6GEZHPGBBF6TI7OzZWo9VVLXWRs2ngQJ18'
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 

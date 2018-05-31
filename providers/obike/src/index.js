@@ -40,7 +40,7 @@ class Obike {
   constructor({ timeout } = {}) {
     this.config = {
       baseURL: BASE_URL,
-      timeout: timeout,
+      timeout: timeout && parseInt(timeout, 10),
       headers: {
         version: APP_VERSION,
         platform: 'iOS',

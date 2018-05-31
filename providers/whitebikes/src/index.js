@@ -17,7 +17,7 @@ function boundsFromLatLng(lat, lng) {
 class WhiteBikes {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 

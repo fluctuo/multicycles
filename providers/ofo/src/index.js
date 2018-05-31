@@ -6,7 +6,7 @@ class Ofo {
   constructor({ timeout, token } = {}) {
     this.token = token
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 

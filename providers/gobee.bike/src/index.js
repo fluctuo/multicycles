@@ -5,7 +5,7 @@ const BASE_URL = 'https://appaws.gobee.bike/GobeeBike/bikes'
 class GobeeBike {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout
+      timeout: timeout && parseInt(timeout, 10)
     }
   }
 
