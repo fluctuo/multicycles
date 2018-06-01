@@ -6,7 +6,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node -r @std/esm index.js",
+    "start": "node -r esm index.js",
     "test": "ava tests/*.js"
   },
   "license": "MIT",
@@ -24,7 +24,7 @@
     "@multicycles/pony": "^1.0.0-beta.2",
     "@multicycles/whitebikes": "^1.0.0-beta.4",
     "@multicycles/yobike": "1.0.0-beta.8",
-    "@std/esm": "^0.18.0",
+    "esm": "^3.0.43",
     "graphql": "^0.12.3",
     "graphql-type-json": "^0.2.1",
     "koa": "^2.4.1",
@@ -34,11 +34,13 @@
     "mapbox": "^1.0.0-beta10",
     "raven": "^2.6.1"
   },
-  "@std/esm": "cjs",
+  "esm": {
+    "cjs": true
+  },
   "devDependencies": {
     "ava": "^0.25.0"
   },
   "ava": {
-    "require": ["@std/esm"]
+    "require": ["esm"]
   }
 }
