@@ -1,10 +1,5 @@
 {
   "lerna": "2.5.1",
   "packages": ["api", "front", "providers/*"],
-  "version": "independent",
-  "commands": {
-    "exec": {
-      "ignore": ["@multicycles/api", "@multicycles/front"]
-    }
-  }
+  "version": "independent"
 }
