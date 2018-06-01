@@ -7,11 +7,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r @std/esm index.js",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "ava tests/*.js"
   },
   "license": "MIT",
   "dependencies": {
-    "@google/maps": "^0.4.5",
     "@koa/cors": "^2.2.1",
     "@multicycles/byke": "^1.0.0-beta.3",
     "@multicycles/donkey": "^1.0.0-beta.3",
@@ -32,7 +31,14 @@
     "koa-bodyparser": "^4.2.0",
     "koa-graphql": "^0.7.3",
     "koa-router": "^7.3.0",
+    "mapbox": "^1.0.0-beta10",
     "raven": "^2.6.1"
   },
-  "@std/esm": "cjs"
+  "@std/esm": "cjs",
+  "devDependencies": {
+    "ava": "^0.25.0"
+  },
+  "ava": {
+    "require": ["@std/esm"]
+  }
 }

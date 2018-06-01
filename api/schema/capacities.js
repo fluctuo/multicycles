@@ -7,16 +7,14 @@ import {
   GraphQLBoolean,
   GraphQLNonNull
 } from 'graphql'
-import gmaps from '@google/maps'
+import MapboxClient from 'mapbox'
 
 import config from '../config'
 import utils from '../utils'
+import logger from '../logger'
 import bicycleType from './bicycleType'
 
-const gmapsClient = gmaps.createClient({
-  key: config.gmapsKey,
-  Promise
-})
+const mapboxClient = new MapboxClient(config.mapboxKey)
 
 const capacitiesType = new GraphQLObjectType({
   name: 'Capacities',
@@ -38,30 +36,34 @@ export default {
   },
   async resolve(root, args) {
     let country, city
-    const geocode = await gmapsClient
-      .reverseGeocode({
-        latlng: {
-          lat: args.lat,
-          lng: args.lng
+
+    try {
+      const geocode = await mapboxClient.geocodeReverse(
+        {
+          latitude: args.lat,
+          longitude: args.lng
+        },
+        {
+          types: 'country,place',
+          language: 'en'
+        }
+      )
+
+      geocode.entity.features.forEach(ac => {
+        if (ac.place_type.includes('country')) {
+          country = ac.text
+        }
+
+        if (ac.place_type.includes('place')) {
+          city = ac.text
         }
       })
-      .asPromise()
-
-    geocode.json.results.forEach(ac => {
-      if (ac.types.includes('country') && ac.types.includes('political')) {
-        country = ac.formatted_address
-      }
-
-      if (ac.types.includes('locality') && ac.types.includes('political')) {
-        ac.address_components.forEach(c => {
-          if (c.types.includes('locality') && c.types.includes('political')) {
-            city = c.long_name
-          }
-        })
-      }
-    })
+    } catch (err) {
+      logger.exception(err)
+    }
 
     return {
+      location: country ? `${city && `${city}, `}${country}` : 'unknown',
       defaultLanguage: utils.getLanguage(country),
       providers: utils.getProviders(city, country)
     }
