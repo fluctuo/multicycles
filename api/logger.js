@@ -11,7 +11,7 @@ if (useRaven) {
 export default {
   exception(err, data) {
     if (useRaven) {
-      if (err.code && err.code === 'ECONNABORTED') {
+      if (err.code && err.code === 'ETIMEDOUT') {
         data.level = 'warning'
       }
 
