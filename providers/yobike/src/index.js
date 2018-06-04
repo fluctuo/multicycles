@@ -36,6 +36,17 @@ class Yobike {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'yobike',
+      website: 'https://yobike.com/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.gesila.yobike',
+        ios: 'https://itunes.apple.com/app/id1207509504'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')

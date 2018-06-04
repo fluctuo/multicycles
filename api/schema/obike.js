@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Obike from '@multicycles/obike'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
@@ -63,4 +63,6 @@ const obike = {
   }
 }
 
-export { ObikeType, obike }
+const provider = Obike.getProviderDetails()
+
+export { ObikeType, obike, provider }

@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoo
 import Pony from '@multicycles/pony'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new Pony()
@@ -61,4 +61,6 @@ const pony = {
   }
 }
 
-export { PonyType, pony }
+const provider = Pony.getProviderDetails()
+
+export { PonyType, pony, provider }

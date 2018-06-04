@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 import Ofo from '@multicycles/ofo'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import config from '../config'
 import logger from '../logger'
 
@@ -58,4 +58,6 @@ const ofo = {
   }
 }
 
-export { OfoType, ofo }
+const provider = Ofo.getProviderDetails()
+
+export { OfoType, ofo, provider }

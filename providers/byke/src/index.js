@@ -10,6 +10,17 @@ class Byke {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'byke',
+      website: 'http://byke.de/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.zen.zbike',
+        ios: 'https://itunes.apple.com/app/id1247826304'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}, config = {}) {
     if (!latitude || !longitude) {
       throw new Error('Missing lat/lng')

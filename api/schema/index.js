@@ -1,5 +1,6 @@
 import { GraphQLSchema, GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLList } from 'graphql'
 import { bikes } from './bikes'
+import { providers } from './providers'
 
 import { byke } from './byke'
 import { donkey } from './donkey'
@@ -55,7 +56,8 @@ export default new GraphQLSchema({
         },
         resolve: (root, args) => args
       },
-      bikes
+      bikes,
+      providers
     }
   })
 })

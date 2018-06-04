@@ -4,7 +4,7 @@ import GraphQLJSON from 'graphql-type-json'
 import Lime from '@multicycles/lime'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new Lime({
@@ -80,4 +80,6 @@ const lime = {
   }
 }
 
-export { LimeType, lime }
+const provider = Lime.getProviderDetails()
+
+export { LimeType, lime, provider }

@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import IndigoWheel from '@multicycles/indigowheel'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new IndigoWheel({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
@@ -57,4 +57,6 @@ const indigowheel = {
   }
 }
 
-export { indigowheel, IndigoWheelType }
+const provider = IndigoWheel.getProviderDetails()
+
+export { indigowheel, IndigoWheelType, provider }

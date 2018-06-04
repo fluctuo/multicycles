@@ -21,6 +21,17 @@ class WhiteBikes {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'whitebikes',
+      website: 'https://whitebikes.info',
+      app: {
+        android: null,
+        ios: null
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     let bounds
 

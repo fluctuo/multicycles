@@ -12,7 +12,10 @@ import { OfoType, ofo } from './ofo'
 import { PonyType, pony } from './pony'
 import { WhiteBikesType, whitebikes } from './whitebikes'
 import { YobikeType, yobike } from './yobike'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
+
+import { reverseGeocode } from '../geolocation'
+import utils from '../utils'
 
 function flat(arr) {
   return arr.reduce((r, a) => [...r, ...a])
@@ -82,21 +85,15 @@ const bikes = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  resolve: (root, args) => {
-    return Promise.all([
-      byke.resolve(args),
-      donkey.resolve(args),
-      gobeebike.resolve(args),
-      indigowheel.resolve(args),
-      jump.resolve(args),
-      lime.resolve(args),
-      mobike.resolve(args),
-      obike.resolve(args),
-      ofo.resolve(args),
-      pony.resolve(args),
-      whitebikes.resolve(args),
-      yobike.resolve(args)
-    ]).then(flat)
+  resolve: async (root, args) => {
+    const { city, country } = await reverseGeocode({
+      lat: args.lat,
+      lng: args.lng
+    })
+
+    const availableProviders = utils.getProviders(city, country)
+
+    return Promise.all(availableProviders.map(provider => eval(provider).resolve(args))).then(flat)
   }
 }
 

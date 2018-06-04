@@ -18,6 +18,17 @@ class Jump {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'jump',
+      website: 'https://jumpbikes.com/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.jumpmobility',
+        ios: 'https://itunes.apple.com/app/id1251322970'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')

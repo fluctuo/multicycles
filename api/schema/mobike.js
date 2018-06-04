@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 import Mobike from '@multicycles/mobike'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
@@ -60,4 +60,6 @@ const mobike = {
   }
 }
 
-export { MobikeType, mobike }
+const provider = Mobike.getProviderDetails()
+
+export { MobikeType, mobike, provider }

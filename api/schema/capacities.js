@@ -64,7 +64,7 @@ export default {
     return {
       location: country ? `${city && `${city}, `}${country}` : 'unknown',
       defaultLanguage: utils.getLanguage(country),
-      providers: utils.getProviders(city, country)
+      providers: utils.getProviders(city, country, true)
     }
   }
 }

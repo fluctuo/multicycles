@@ -10,6 +10,17 @@ class Mobike {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'mobike',
+      website: 'https://mobike.com/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.mobike.mobikeapp',
+        ios: 'https://itunes.apple.com/app/id1044535426'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}, config = {}) {
     if (!latitude || !longitude) {
       throw new Error('Missing lat/lng')

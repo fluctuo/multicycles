@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLFloat
 import GobeeBike from '@multicycles/gobee.bike'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
@@ -62,4 +62,6 @@ const gobeebike = {
   }
 }
 
-export { GobeeBikeType, gobeebike }
+const provider = GobeeBike.getProviderDetails()
+
+export { GobeeBikeType, gobeebike, provider }

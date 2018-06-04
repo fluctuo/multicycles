@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 import WhiteBikes from '@multicycles/whitebikes'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
@@ -61,4 +61,6 @@ const whitebikes = {
   }
 }
 
-export { WhiteBikesType, whitebikes }
+const provider = WhiteBikes.getProviderDetails()
+
+export { WhiteBikesType, whitebikes, provider }

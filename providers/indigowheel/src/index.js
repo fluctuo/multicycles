@@ -8,6 +8,17 @@ class IndigoWheel {
     })
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'indigowheel',
+      website: 'https://www.indigoweel.com/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.gesila.indigo',
+        ios: 'https://itunes.apple.com/app/id1317216469'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     return this.yobike.getBicyclesByLatLng({ lat, lng }, config)
   }

@@ -23,6 +23,17 @@ class Pony {
     this.database = firebase.database()
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'pony',
+      website: 'http://getapony.com/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=co.ponybikes.mercury',
+        ios: 'https://itunes.apple.com/app/id1273866794'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     let bounds
 

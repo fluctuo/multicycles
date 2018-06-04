@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 import Jump from '@multicycles/jump'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
@@ -56,4 +56,6 @@ const jump = {
   }
 }
 
-export { JumpType, jump }
+const provider = Jump.getProviderDetails()
+
+export { JumpType, jump, provider }

@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Byke from '@multicycles/byke'
 
 import { BikeType } from './bikes'
-import ProviderType from './provider'
+import { ProviderType } from './providers'
 import logger from '../logger'
 
 const client = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
@@ -73,4 +73,6 @@ const byke = {
   }
 }
 
-export { BykeType, byke }
+const provider = Byke.getProviderDetails()
+
+export { BykeType, byke, provider }

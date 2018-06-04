@@ -10,6 +10,17 @@ class Ofo {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'ofo',
+      website: 'https://www.ofo.com',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=so.ofo.abroad',
+        ios: 'https://itunes.apple.com/us/app/ofo-smart-bike-sharing/id1190831637?mt=8'
+      }
+    }
+  }
+
   getOTP({ tel, ccc }, config) {
     return got.post(`${BASE_URL}/verifyCode_v2`, {
       json: true,
