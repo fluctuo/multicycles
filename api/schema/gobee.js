@@ -10,6 +10,7 @@ const client = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const GobeeBikeType = new GraphQLObjectType({
   name: 'GobeeBike',
+  description: 'A Gobee bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

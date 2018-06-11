@@ -10,6 +10,7 @@ const client = new IndigoWheel({ timeout: process.env.PROVIDER_TIMEOUT || 3000 }
 
 const IndigoWheelType = new GraphQLObjectType({
   name: 'IndigoWheel',
+  description: 'A IndigoWheel bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

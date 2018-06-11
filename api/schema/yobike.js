@@ -10,6 +10,7 @@ const client = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const YobikeType = new GraphQLObjectType({
   name: 'Yobike',
+  description: 'A Yobike bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

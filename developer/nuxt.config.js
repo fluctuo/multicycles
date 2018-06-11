@@ -33,7 +33,15 @@ module.exports = {
       }
     }
   },
-  modules: ['bootstrap-vue/nuxt', '@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/google-analytics', '@nuxtjs/sentry'],
+  plugins: ['~/plugins/highlight'],
+  modules: [
+    'bootstrap-vue/nuxt',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+    '@nuxtjs/google-analytics',
+    '@nuxtjs/sentry',
+    '@nuxtjs/apollo'
+  ],
   auth: {
     redirect: {
       home: 'account'
@@ -50,5 +58,12 @@ module.exports = {
   },
   sentry: {
     dsn: 'https://6870ab4d97dc4c4abe9d53d5e4b887d0@sentry.io/1223211'
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'http://localhost:3000/v1'
+      }
+    }
   }
 }

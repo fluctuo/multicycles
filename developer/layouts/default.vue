@@ -18,11 +18,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import 'highlight.js/styles/tomorrow-night-eighties.css';
+
 html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   margin-bottom: 250px;
 }

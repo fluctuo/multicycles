@@ -10,6 +10,7 @@ const client = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const BykeType = new GraphQLObjectType({
   name: 'Byke',
+  description: 'A Byke bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

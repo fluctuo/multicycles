@@ -10,6 +10,7 @@ const client = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const JumpType = new GraphQLObjectType({
   name: 'Jump',
+  description: 'A Jump vehicle',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

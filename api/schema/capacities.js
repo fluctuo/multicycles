@@ -17,6 +17,7 @@ const mapboxClient = new MapboxClient(config.mapboxKey)
 
 const capacitiesType = new GraphQLObjectType({
   name: 'Capacities',
+  description: 'The available capacities',
   fields: {
     defaultLanguage: { type: GraphQLString },
     providers: { type: new GraphQLList(GraphQLString) }
@@ -25,11 +26,14 @@ const capacitiesType = new GraphQLObjectType({
 
 export default {
   type: capacitiesType,
+  description: 'Query capacities according to location',
   args: {
     lat: {
+      description: 'The requested latitude',
       type: new GraphQLNonNull(GraphQLFloat)
     },
     lng: {
+      description: 'The requested longitude',
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },

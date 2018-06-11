@@ -11,6 +11,7 @@ const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const DonkeyType = new GraphQLObjectType({
   name: 'Donkey',
+  description: 'A Donkey bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

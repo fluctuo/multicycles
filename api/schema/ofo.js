@@ -11,6 +11,7 @@ const client = new Ofo({ token: config.ofoAuthToken, timeout: process.env.PROVID
 
 const OfoType = new GraphQLObjectType({
   name: 'Ofo',
+  description: 'A Ofo bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

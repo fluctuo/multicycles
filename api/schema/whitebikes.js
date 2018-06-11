@@ -10,6 +10,7 @@ const client = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const WhiteBikesType = new GraphQLObjectType({
   name: 'WhiteBikes',
+  description: 'A WhiteBikes bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

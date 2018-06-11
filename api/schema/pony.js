@@ -10,6 +10,7 @@ const client = new Pony()
 
 const PonyType = new GraphQLObjectType({
   name: 'Pony',
+  description: 'A Pony bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

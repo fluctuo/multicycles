@@ -10,6 +10,7 @@ const client = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const MobikeType = new GraphQLObjectType({
   name: 'Mobike',
+  description: 'A Mobike bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

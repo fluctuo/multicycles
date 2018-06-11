@@ -17,6 +17,7 @@ const client = new Lime({
 
 const LimeType = new GraphQLObjectType({
   name: 'Lime',
+  description: 'A Lime vehicle',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },

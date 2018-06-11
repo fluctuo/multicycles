@@ -24,6 +24,7 @@ export default new GraphQLSchema({
     fields: {
       capacities,
       bicyclesByLatLng: {
+        deprecationReason: 'Use the aggregated query "bikes"',
         type: new GraphQLObjectType({
           name: 'BicyclesByLatLng',
           fields: {

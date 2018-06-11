@@ -23,10 +23,11 @@ function flat(arr) {
 
 const BikeType = new GraphQLInterfaceType({
   name: 'Bike',
+  description: 'A geolocated bike or vehicle',
   fields: () => ({
-    id: { type: GraphQLString },
-    lat: { type: GraphQLFloat },
-    lng: { type: GraphQLFloat },
+    id: { description: 'The provider id', type: GraphQLString },
+    lat: { description: "The bike's latitude", type: GraphQLFloat },
+    lng: { description: "The bike's longitude", type: GraphQLFloat },
     provider: { type: ProviderType }
   }),
   resolveType: bike => {
@@ -77,11 +78,14 @@ const BikeType = new GraphQLInterfaceType({
 
 const bikes = {
   type: new GraphQLList(BikeType),
+  description: 'Query available bikes according to location',
   args: {
     lat: {
+      description: 'The requested latitude',
       type: new GraphQLNonNull(GraphQLFloat)
     },
     lng: {
+      description: 'The requested longitude',
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },

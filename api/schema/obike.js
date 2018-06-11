@@ -10,6 +10,7 @@ const client = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const ObikeType = new GraphQLObjectType({
   name: 'Obike',
+  description: 'A Obike bike',
   interfaces: () => [BikeType],
   fields: {
     id: { type: GraphQLString },
