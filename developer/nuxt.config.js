@@ -32,5 +32,23 @@ module.exports = {
         })
       }
     }
+  },
+  modules: ['bootstrap-vue/nuxt', '@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/google-analytics', '@nuxtjs/sentry'],
+  auth: {
+    redirect: {
+      home: 'account'
+    },
+    strategies: {
+      auth0: {
+        domain: 'multicycles.eu.auth0.com',
+        client_id: 'HFpb4x48lzWo1tkkAMY8u5z-bFA1xjQC'
+      }
+    }
+  },
+  'google-analytics': {
+    id: 'UA-4718334-16'
+  },
+  sentry: {
+    dsn: 'https://6870ab4d97dc4c4abe9d53d5e4b887d0@sentry.io/1223211'
   }
 }

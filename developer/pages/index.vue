@@ -1,64 +1,48 @@
 <template>
-  <section class="container">
-    <div>
-      <app-logo/>
-      <h1 class="title">
-        developer
-      </h1>
-      <h2 class="subtitle">
-        Multicycles Open API - Developer portal
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+  <div>
+    <div class="titi">
+      <b-container>
+        <h1 class="display-3">The Open API <br> for Bikes sharing</h1>
+        <h2>
+          The only free-floating bicycle API and other shared mobility service.<br>
+          Explore all the cities in the world in a few lines of code.
+        </h2>
+
+        <div class="mt-5">
+          <b-button size="lg" variant="primary" href="/account">Start exploring</b-button>
+          <b-button variant="outline-light" class="ml-2" href="mailto:hello@pierrickp.xyz">Contact us</b-button>
+        </div>
+      </b-container>
     </div>
-  </section>
+
+    <features/>
+
+    <b-container class="mt-5">
+      <hr>
+    </b-container>
+
+    <pricing/>
+
+  </div>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
+import pricing from '~/components/Pricing.vue'
+import features from '~/components/Features.vue'
 
 export default {
-  components: {
-    AppLogo
-  }
+  components: { pricing, features }
 }
 </script>
 
 <style>
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+.titi {
+  background-image: url('~/assets/home-background-bike.jpg');
+  background-size: cover;
+  background-position: center;
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+  color: #fff;
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+  padding: 120px 0;
 }
 </style>
