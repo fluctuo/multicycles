@@ -1,0 +1,48 @@
+<template>
+  <div>
+    <div class="titi">
+      <b-container>
+        <h1 class="display-3">The Open API <br> for Bikes sharing</h1>
+        <h2>
+          The only free-floating bicycle API and other shared mobility service.<br>
+          Explore all the cities in the world in a few lines of code.
+        </h2>
+
+        <div class="mt-5">
+          <b-button size="lg" variant="primary" href="/account">Start exploring</b-button>
+          <b-button variant="outline-light" class="ml-2" href="mailto:hello@pierrickp.xyz">Contact us</b-button>
+        </div>
+      </b-container>
+    </div>
+
+    <features/>
+
+    <b-container class="mt-5">
+      <hr>
+    </b-container>
+
+    <pricing/>
+
+  </div>
+</template>
+
+<script>
+import pricing from '~/components/Pricing.vue'
+import features from '~/components/Features.vue'
+
+export default {
+  components: { pricing, features }
+}
+</script>
+
+<style>
+.titi {
+  background-image: url('~/assets/home-background-bike.jpg');
+  background-size: cover;
+  background-position: center;
+
+  color: #fff;
+
+  padding: 120px 0;
+}
+</style>
