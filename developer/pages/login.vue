@@ -24,18 +24,7 @@ import { GithubIcon } from 'vue-feather-icons'
 
 export default {
   middleware: ['auth'],
-  components: { GithubIcon },
-  computed: {
-    redirect() {
-      return (
-        this.$route.query.redirect &&
-        decodeURIComponent(this.$route.query.redirect)
-      )
-    },
-    isCallback() {
-      return Boolean(this.$route.query.callback)
-    }
-  }
+  components: { GithubIcon }
 }
 </script>
 

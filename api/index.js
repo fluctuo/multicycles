@@ -6,6 +6,7 @@ import graphqlHTTP from 'koa-graphql'
 
 import schema from './schema'
 import logger from './logger'
+import jwt from './jwt'
 
 const app = new Koa()
 const router = new Router()
@@ -28,6 +29,19 @@ router.all(
 app
   .use(cors())
   .use(bodyparser())
+  .use(jwt)
+  .use(function(ctx, next) {
+    return next().catch(err => {
+      if (err.status === 401) {
+        ctx.status = 401
+        ctx.body = {
+          error: err.originalError ? err.originalError.message : err.message
+        }
+      } else {
+        throw err
+      }
+    })
+  })
   .use(router.routes())
   .use(router.allowedMethods())
 

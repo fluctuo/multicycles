@@ -1,7 +1,7 @@
 <template>
     <b-container fluid>
       <b-row class="mt-3">
-        <b-col cols="2">
+        <b-col cols="3">
           <ul class="list-unstyled">
             <li><nuxt-link to="/docs">Introduction</nuxt-link></li>
             <li><nuxt-link to="/docs/auth">Authentication</nuxt-link></li>
@@ -21,9 +21,8 @@
             </li>
           </ul>
         </b-col>
-        <b-col>
+        <b-col cols="9">
           <nuxt-child />
-
         </b-col>
       </b-row>
     </b-container>
@@ -34,8 +33,8 @@
 import { introspectionQuery } from 'graphql'
 import gql from 'graphql-tag';
 
-const excludedQueries = ['bicyclesByLatLng']
-const excludedTypes = ['App', 'BicyclesByLatLng', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive']
+const excludedQueries = ['bicyclesByLatLng', 'tokens']
+const excludedTypes = ['App', 'BicyclesByLatLng', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken']
 
 export default {
   data: () => ({

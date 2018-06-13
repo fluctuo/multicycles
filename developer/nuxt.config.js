@@ -33,23 +33,27 @@ module.exports = {
       }
     }
   },
-  plugins: ['~/plugins/highlight'],
+  plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy'],
   modules: [
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/google-analytics',
     '@nuxtjs/sentry',
-    '@nuxtjs/apollo'
+    '@nuxtjs/apollo',
+    '@nuxtjs/moment'
   ],
   auth: {
     redirect: {
-      home: 'account'
+      home: '/account',
+      callback: '/callback'
     },
     strategies: {
       auth0: {
         domain: 'multicycles.eu.auth0.com',
-        client_id: 'HFpb4x48lzWo1tkkAMY8u5z-bFA1xjQC'
+        client_id: 'fOYk1TlPc20pzwVhTpN4eKuji7SUbPgM',
+        userinfo_endpoint: false,
+        token_key: 'id_token'
       }
     }
   },
@@ -61,9 +65,7 @@ module.exports = {
   },
   apollo: {
     clientConfigs: {
-      default: {
-        httpEndpoint: 'http://localhost:3000/v1'
-      }
+      default: '~/apollo/default.js'
     }
   }
 }

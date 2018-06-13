@@ -13,14 +13,20 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/apollo": "^4.0.0-beta.1",
+    "@nuxtjs/apollo": "^3.0.7",
     "@nuxtjs/auth": "^4.5.1",
     "@nuxtjs/axios": "^5.3.1",
     "@nuxtjs/google-analytics": "^2.0.2",
+    "@nuxtjs/moment": "^1.0.0",
     "@nuxtjs/sentry": "^1.0.3",
+    "apollo-link-error": "^1.1.0",
+    "apollo-link-http": "^1.5.4",
     "bootstrap-vue": "^2.0.0-rc.11",
+    "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
-    "nuxt": "^1.4.0",
+    "moment": "^2.22.2",
+    "nuxt": "^1.4.1",
+    "vue-clipboard2": "^0.1.1",
     "vue-feather-icons": "^4.7.1",
     "vue-highlightjs": "^1.3.3"
   },

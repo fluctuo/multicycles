@@ -16,7 +16,10 @@ import { pony } from './pony'
 import { whitebikes } from './whitebikes'
 import { yobike } from './yobike'
 import capacities from './capacities'
+import { tokens, createToken, deleteToken } from './tokens'
 import util from 'util'
+
+// @TODO add token check on all resolves
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -58,7 +61,15 @@ export default new GraphQLSchema({
         resolve: (root, args) => args
       },
       bikes,
-      providers
+      providers,
+      tokens
+    }
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+      createToken,
+      deleteToken
     }
   })
 })
