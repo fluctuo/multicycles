@@ -9,15 +9,11 @@ import {
 } from 'graphql'
 import { GraphQLDateTime } from 'graphql-iso-date'
 import randomstring from 'randomstring'
-import { createError } from 'apollo-errors'
 
 import utils from '../utils'
 import logger from '../logger'
 import db from '../db'
-
-const AuthenticatedError = createError('AuthenticatedError', {
-  message: 'You are no authorized or you don`t have the proper scope'
-})
+import { requireScope } from '../auth'
 
 async function generateToken() {
   let result
@@ -42,12 +38,6 @@ const tokenType = new GraphQLObjectType({
     createdAt: { type: GraphQLDateTime }
   }
 })
-
-function requireScope(user, scope) {
-  if (!user || !user.scopes.includes(scope)) {
-    throw new AuthenticatedError()
-  }
-}
 
 function formatToken({ id, value, created_at }) {
   return {

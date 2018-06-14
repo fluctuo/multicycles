@@ -41,7 +41,9 @@ const providers = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  resolve: async (root, args) => {
+  resolve: async (root, args, ctx) => {
+    requireAccessToken(ctx.state.accessToken)
+
     const { city, country } = await reverseGeocode({
       lat: args.lat,
       lng: args.lng

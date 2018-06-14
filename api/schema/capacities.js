@@ -36,7 +36,9 @@ export default {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, args) {
+  async resolve(root, args, ctx) {
+    requireAccessToken(ctx.state.accessToken)
+
     let country, city
 
     try {
