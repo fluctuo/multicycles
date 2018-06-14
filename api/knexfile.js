@@ -1,21 +1,11 @@
-module.exports = {
-  development: {
-    client: 'postgresql',
-    connection: {
-      host: '127.0.0.1',
-      user: 'postgres',
-      password: 'postgres',
-      database: 'multicycles'
-    }
-  },
+require('dotenv').config
 
-  production: {
-    client: 'postgresql',
-    connection: {
-      host: 'database',
-      user: 'postgres',
-      password: 'postgres',
-      database: 'multicycles'
-    }
+module.exports = {
+  client: 'pg',
+  connection: {
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: 'multicycles'
   }
 }

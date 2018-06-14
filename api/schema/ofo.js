@@ -4,10 +4,9 @@ import Ofo from '@multicycles/ofo'
 
 import { BikeType } from './bikes'
 import { ProviderType } from './providers'
-import config from '../config'
 import logger from '../logger'
 
-const client = new Ofo({ token: config.ofoAuthToken, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Ofo({ token: process.env.OFO_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
 const OfoType = new GraphQLObjectType({
   name: 'Ofo',

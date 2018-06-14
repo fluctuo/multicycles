@@ -11,7 +11,6 @@ import { GraphQLDateTime } from 'graphql-iso-date'
 import randomstring from 'randomstring'
 import { createError } from 'apollo-errors'
 
-import config from '../config'
 import utils from '../utils'
 import logger from '../logger'
 import db from '../db'

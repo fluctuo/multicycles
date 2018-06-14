@@ -9,11 +9,10 @@ import {
 } from 'graphql'
 import MapboxClient from 'mapbox'
 
-import config from '../config'
 import utils from '../utils'
 import logger from '../logger'
 
-const mapboxClient = new MapboxClient(config.mapboxKey)
+const mapboxClient = new MapboxClient(process.env.MAPBOX_KEY)
 
 const capacitiesType = new GraphQLObjectType({
   name: 'Capacities',

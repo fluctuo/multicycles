@@ -1,8 +1,6 @@
 import MapboxClient from 'mapbox'
 
-import config from './config'
-
-const mapboxClient = new MapboxClient(config.mapboxKey)
+const mapboxClient = new MapboxClient(process.env.MAPBOX_KEY)
 
 async function reverseGeocode({ lat, lng }) {
   let country, city
