@@ -1,10 +1,10 @@
 import { GraphQLSchema, GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLList } from 'graphql'
-import { bikes } from './bikes'
+import { vehicles } from './vehicles'
 import { providers } from './providers'
 
 import { byke } from './byke'
 import { donkey } from './donkey'
-import { gobeebike, GobeeBikeType } from './gobee'
+import { gobeebike, GobeeVehicleType } from './gobee'
 import { indigowheel } from './indigowheel'
 import { inspect } from 'util'
 import { jump } from './jump'
@@ -19,8 +19,6 @@ import capacities from './capacities'
 import { tokens, createToken, deleteToken } from './tokens'
 import util from 'util'
 
-// @TODO add token check on all resolves
-
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
@@ -34,7 +32,7 @@ export default new GraphQLSchema({
             byke,
             donkey,
             gobee: {
-              type: GobeeBikeType,
+              type: GobeeVehicleType,
               deprecationReason: 'Renamed gobeebike',
               resolve: gobeebike.resolve
             },
@@ -60,7 +58,7 @@ export default new GraphQLSchema({
         },
         resolve: (root, args) => args
       },
-      bikes,
+      vehicles,
       providers,
       tokens
     }

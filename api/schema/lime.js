@@ -3,7 +3,7 @@ import GraphQLJSON from 'graphql-type-json'
 
 import Lime from '@multicycles/lime'
 
-import { BikeType } from './bikes'
+import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
 
@@ -18,7 +18,7 @@ const client = new Lime({
 const LimeType = new GraphQLObjectType({
   name: 'Lime',
   description: 'A Lime vehicle',
-  interfaces: () => [BikeType],
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },

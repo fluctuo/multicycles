@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 
 import Jump from '@multicycles/jump'
 
-import { BikeType } from './bikes'
+import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
 
@@ -11,7 +11,7 @@ const client = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 const JumpType = new GraphQLObjectType({
   name: 'Jump',
   description: 'A Jump vehicle',
-  interfaces: () => [BikeType],
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },

@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import IndigoWheel from '@multicycles/indigowheel'
 
-import { BikeType } from './bikes'
+import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
 
@@ -11,7 +11,7 @@ const client = new IndigoWheel({ timeout: process.env.PROVIDER_TIMEOUT || 3000 }
 const IndigoWheelType = new GraphQLObjectType({
   name: 'IndigoWheel',
   description: 'A IndigoWheel bike',
-  interfaces: () => [BikeType],
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },

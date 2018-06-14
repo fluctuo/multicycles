@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLFloat
 
 import GobeeBike from '@multicycles/gobee.bike'
 
-import { BikeType } from './bikes'
+import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
 
@@ -11,7 +11,7 @@ const client = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 const GobeeBikeType = new GraphQLObjectType({
   name: 'GobeeBike',
   description: 'A Gobee bike',
-  interfaces: () => [BikeType],
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },

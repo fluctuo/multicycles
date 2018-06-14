@@ -17,7 +17,7 @@
       curl --request POST \
         --url https://api.multicycles.org/v1?access_token=MY_ACCESS_TOKEN \
         --header 'content-type: application/json' \
-        --data '{"query":"query ($lat: Float!, $lng: Float!) {\n  bikes(lat: $lat, lng: $lng) {\n\t\tid\n  }\n}","variables":{"lat":48.856614,"lng":2.352222}}'
+        --data '{"query":"query ($lat: Float!, $lng: Float!) {\n  vehicles(lat: $lat, lng: $lng) {\n\t\tid\n  }\n}","variables":{"lat":48.856614,"lng":2.352222}}'
     </code></pre>
   </div>
 </template>

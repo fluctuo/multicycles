@@ -2,16 +2,16 @@ import { GraphQLInterfaceType, GraphQLNonNull, GraphQLFloat, GraphQLString, Grap
 
 import { BykeType, byke } from './byke'
 import { DonkeyType, donkey } from './donkey'
-import { GobeeBikeType, gobeebike } from './gobee'
+import { GobeeVehicleType, gobeebike } from './gobee'
 import { IndigoWheelType, indigowheel } from './indigowheel'
 import { JumpType, jump } from './jump'
 import { LimeType, lime } from './lime'
-import { MobikeType, mobike } from './mobike'
-import { ObikeType, obike } from './obike'
+import { MoVehicleType, mobike } from './mobike'
+import { OVehicleType, obike } from './obike'
 import { OfoType, ofo } from './ofo'
 import { PonyType, pony } from './pony'
 import { WhiteBikesType, whitebikes } from './whitebikes'
-import { YobikeType, yobike } from './yobike'
+import { YoVehicleType, yobike } from './yobike'
 import { ProviderType } from './providers'
 
 import { reverseGeocode } from '../geolocation'
@@ -22,19 +22,19 @@ function flat(arr) {
   return arr.reduce((r, a) => [...r, ...a])
 }
 
-const BikeType = new GraphQLInterfaceType({
-  name: 'Bike',
+const VehicleType = new GraphQLInterfaceType({
+  name: 'Vehicle',
   description: 'A geolocated bike or vehicle',
   fields: () => ({
     id: { description: 'The provider id', type: GraphQLString },
-    lat: { description: "The bike's latitude", type: GraphQLFloat },
-    lng: { description: "The bike's longitude", type: GraphQLFloat },
+    lat: { description: "The vehicle's latitude", type: GraphQLFloat },
+    lng: { description: "The vehicle's longitude", type: GraphQLFloat },
     provider: { type: ProviderType }
   }),
-  resolveType: bike => {
+  resolveType: vehicle => {
     let type
 
-    switch (bike.provider.name) {
+    switch (vehicle.provider.name) {
       case 'byke':
         type = BykeType
         break
@@ -42,7 +42,7 @@ const BikeType = new GraphQLInterfaceType({
         type = DonkeyType
         break
       case 'gobeebike':
-        type = GobeeBikeType
+        type = GobeeVehicleType
         break
       case 'indigowheel':
         type = IndigoWheelType
@@ -54,10 +54,10 @@ const BikeType = new GraphQLInterfaceType({
         type = LimeType
         break
       case 'mobike':
-        type = MobikeType
+        type = MoVehicleType
         break
       case 'obike':
-        type = ObikeType
+        type = OVehicleType
         break
       case 'ofo':
         type = OfoType
@@ -69,7 +69,7 @@ const BikeType = new GraphQLInterfaceType({
         type = WhiteBikesType
         break
       case 'yobike':
-        type = YobikeType
+        type = YoVehicleType
         break
     }
 
@@ -77,9 +77,9 @@ const BikeType = new GraphQLInterfaceType({
   }
 })
 
-const bikes = {
-  type: new GraphQLList(BikeType),
-  description: 'Query available bikes according to location',
+const vehicles = {
+  type: new GraphQLList(VehicleType),
+  description: 'Query available vehicles according to location',
   args: {
     lat: {
       description: 'The requested latitude',
@@ -104,4 +104,4 @@ const bikes = {
   }
 }
 
-export { bikes, BikeType }
+export { vehicles, VehicleType }

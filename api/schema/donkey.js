@@ -3,7 +3,7 @@ import GraphQLJSON from 'graphql-type-json'
 
 import Donkey from '@multicycles/donkey'
 
-import { BikeType } from './bikes'
+import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
 
@@ -12,7 +12,7 @@ const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 const DonkeyType = new GraphQLObjectType({
   name: 'Donkey',
   description: 'A Donkey bike',
-  interfaces: () => [BikeType],
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },

@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Byke from '@multicycles/byke'
 
-import { BikeType } from './bikes'
+import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
 
@@ -11,14 +11,14 @@ const client = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 const BykeType = new GraphQLObjectType({
   name: 'Byke',
   description: 'A Byke bike',
-  interfaces: () => [BikeType],
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
     provider: { type: ProviderType },
     bikeId: { type: GraphQLString },
-    bikeType: { type: GraphQLString },
+    VehicleType: { type: GraphQLString },
     bikeNo: { type: GraphQLString },
     lockType: { type: GraphQLString },
     pricingUnit: { type: GraphQLInt },
@@ -48,7 +48,7 @@ const byke = {
           name: 'byke'
         },
         bikeId: bike.bikeId,
-        bikeType: bike.bikeType,
+        VehicleType: bike.VehicleType,
         bikeNo: bike.bikeNo,
         lockType: bike.lockType,
         pricingUnit: bike.pricingUnit,
