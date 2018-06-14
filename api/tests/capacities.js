@@ -7,7 +7,8 @@ test('Return capacitie for Paris', async t => {
     {
       lat: 48.852775,
       lng: 2.369336
-    }
+    },
+    { state: {} }
   )
 
   t.deepEqual(capacitie, {
@@ -23,24 +24,25 @@ test('Return capacitie for Tokyo', async t => {
     {
       lat: 35.689487,
       lng: 139.691706
-    }
+    },
+    { state: {} }
   )
 
   t.deepEqual(capacitie, {
     location: 'Tokyo, Japan',
     defaultLanguage: 'en',
     providers: [
-      'gobee',
-      'ofo',
-      'mobike',
-      'yobike',
+      'byke',
+      'donkey',
+      'gobeebike',
+      'indigowheel',
       'jump',
       'lime',
-      'whitebikes',
+      'mobike',
       'obike',
-      'indigowheel',
-      'byke',
-      'donkey'
+      'ofo',
+      'whitebikes',
+      'yobike'
     ]
   })
 })
@@ -51,24 +53,25 @@ test('Return capacitie for 0,0', async t => {
     {
       lat: 0,
       lng: 0
-    }
+    },
+    { state: {} }
   )
 
   t.deepEqual(capacitie, {
     location: 'unknown',
     defaultLanguage: 'en',
     providers: [
-      'gobee',
-      'ofo',
-      'mobike',
-      'yobike',
+      'byke',
+      'donkey',
+      'gobeebike',
+      'indigowheel',
       'jump',
       'lime',
-      'whitebikes',
+      'mobike',
       'obike',
-      'indigowheel',
-      'byke',
-      'donkey'
+      'ofo',
+      'whitebikes',
+      'yobike'
     ]
   })
 })

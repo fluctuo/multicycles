@@ -11,6 +11,7 @@ import MapboxClient from 'mapbox'
 
 import utils from '../utils'
 import logger from '../logger'
+import { requireAccessToken } from '../auth'
 
 const mapboxClient = new MapboxClient(process.env.MAPBOX_KEY)
 
