@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
   /*
   ** Headers of the page
@@ -35,6 +37,7 @@ module.exports = {
   },
   plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy'],
   modules: [
+    '@nuxtjs/dotenv',
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/auth',
@@ -58,10 +61,10 @@ module.exports = {
     }
   },
   'google-analytics': {
-    id: 'UA-4718334-16'
+    id: process.env.ANALYTICS_KEY || 'UA-000000-1'
   },
   sentry: {
-    dsn: 'https://6870ab4d97dc4c4abe9d53d5e4b887d0@sentry.io/1223211'
+    dsn: process.env.SENTRY_KEY
   },
   apollo: {
     clientConfigs: {

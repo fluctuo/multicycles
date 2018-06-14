@@ -4,7 +4,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { onError } from 'apollo-link-error'
 
 export default ctx => {
-  const httpLink = new HttpLink({ uri: 'http://localhost:3000/v1' })
+  const httpLink = new HttpLink({ uri: process.env.MULTICYCLES_API })
   const authLink = new ApolloLink((operation, forward) => {
     const jwtCookie = process.server
       ? ctx.req.headers.cookie.split(';').find(c => c.trim().startsWith('auth._token.auth0'))
