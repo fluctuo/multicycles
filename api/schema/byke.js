@@ -51,9 +51,7 @@ const byke = {
         id: bike.bikeNo,
         lat: bike.latitude,
         lng: bike.longitude,
-        provider: {
-          name: 'byke'
-        },
+        provider: Byke.getProviderDetails(),
         bikeId: bike.bikeId,
         VehicleType: bike.VehicleType,
         bikeNo: bike.bikeNo,

@@ -58,9 +58,7 @@ const lime = {
         id: bike.id,
         lat: bike.attributes.latitude,
         lng: bike.attributes.longitude,
-        provider: {
-          name: 'lime'
-        },
+        provider: Lime.getProviderDetails(),
         status: bike.attributes.status,
         plate_number: bike.attributes.plate_number,
         last_activity_at: bike.attributes.last_activity_at,

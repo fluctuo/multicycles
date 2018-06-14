@@ -48,9 +48,7 @@ const donkey = {
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
-        provider: {
-          name: 'donkey'
-        },
+        provider: Donkey.getProviderDetails(),
         name: bike.name,
         radius: bike.radius,
         available_bikes_count: bike.available_bikes_count,

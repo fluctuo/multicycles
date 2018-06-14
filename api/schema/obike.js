@@ -46,9 +46,7 @@ const obike = {
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
-        provider: {
-          name: 'obike'
-        },
+        provider: Obike.getProviderDetails(),
         imei: bike.imei,
         iconUrl: bike.iconUrl,
         promotionActivityType: bike.promotionActivityType,

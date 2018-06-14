@@ -43,9 +43,7 @@ const mobike = {
         id: bike.distId,
         lat: bike.distY,
         lng: bike.distX,
-        provider: {
-          name: 'mobike'
-        },
+        provider: Mobike.getProviderDetails(),
         num: bike.distNum,
         distance: bike.distance,
         bikeIds: bike.bikeIds,

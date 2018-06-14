@@ -41,9 +41,7 @@ const jump = {
         id: bike.bike_id,
         lat: bike.lat,
         lng: bike.lon,
-        provider: {
-          name: 'jump'
-        },
+        provider: Jump.getProviderDetails(),
         name: bike.name,
         is_reserved: bike.is_reserved,
         is_disabled: bike.is_disabled,

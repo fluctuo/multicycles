@@ -45,9 +45,7 @@ const whitebikes = {
         id: bike.standId,
         lat: bike.lat,
         lng: bike.lon,
-        provider: {
-          name: 'whitebikes'
-        },
+        provider: WhiteBikes.getProviderDetails(),
         standId: bike.standId,
         bikeCount: bike.bikecount,
         standDescription: bike.standDescription,

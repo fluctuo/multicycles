@@ -45,9 +45,7 @@ const pony = {
         id: bike.physicalId,
         lat: bike.latitude,
         lng: bike.longitude,
-        provider: {
-          name: 'pony'
-        },
+        provider: Pony.getProviderDetails(),
         manualLocation: bike.manualLocation,
         reason: bike.reason,
         region: bike.region,

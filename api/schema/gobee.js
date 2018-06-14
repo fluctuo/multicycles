@@ -45,9 +45,7 @@ const gobeebike = {
         number: bike.number,
         lat: bike.gLat,
         lng: bike.gLng,
-        provider: {
-          name: 'gobeebike'
-        },
+        provider: GobeeBike.getProviderDetails(),
         status: bike.status,
         power: bike.power,
         hasHotspotDropoffDiscount: bike.hasHotspotDropoffDiscount,

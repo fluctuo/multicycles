@@ -43,9 +43,7 @@ const ofo = {
         id: bike.carno,
         lat: bike.lat,
         lng: bike.lng,
-        provider: {
-          name: 'ofo'
-        },
+        provider: Ofo.getProviderDetails(),
         carno: bike.carno,
         bomNum: bike.bomNum,
         userIdLast: bike.userIdLast

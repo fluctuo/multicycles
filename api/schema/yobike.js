@@ -43,9 +43,7 @@ const yobike = {
         id: bike.plate_no,
         lat: bike.latitude,
         lng: bike.longitude,
-        provider: {
-          name: 'yobike'
-        },
+        provider: Yobike.getProviderDetails(),
         plate_no: bike.plate_no,
         discount: bike.discount,
         outside: bike.outside
