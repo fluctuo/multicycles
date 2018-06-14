@@ -6,6 +6,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "prestart": "knex migrate:latest",
     "start": "node -r esm -r dotenv/config index.js",
     "test": "ava tests/*.js"
   },
