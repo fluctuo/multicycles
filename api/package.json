@@ -26,6 +26,8 @@
     "@multicycles/whitebikes": "^1.0.0-beta.5",
     "@multicycles/yobike": "1.0.0-beta.9",
     "apollo-errors": "^1.9.0",
+    "cacheman": "^2.2.1",
+    "cacheman-redis": "^2.0.0",
     "dotenv": "^6.0.0",
     "esm": "^3.0.43",
     "graphql": "^0.12.3",
@@ -41,7 +43,8 @@
     "mapbox": "^1.0.0-beta10",
     "pg": "^7.4.3",
     "randomstring": "^1.1.5",
-    "raven": "^2.6.1"
+    "raven": "^2.6.1",
+    "redis": "^2.8.0"
   },
   "esm": {
     "cjs": true

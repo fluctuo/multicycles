@@ -5,6 +5,7 @@ import WhiteBikes from '@multicycles/whitebikes'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -29,12 +30,18 @@ const whitebikes = {
   type: new GraphQLList(WhiteBikesType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`whitebikes|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.map(bike => ({
+      const formatedResult = result.map(bike => ({
         id: bike.standId,
         lat: bike.lat,
         lng: bike.lon,
@@ -47,6 +54,9 @@ const whitebikes = {
         standName: bike.standName,
         standPhoto: bike.standPhoto
       }))
+
+      cache.set(`whitebikes|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'whitebikes' },

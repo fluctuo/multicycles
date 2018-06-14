@@ -5,6 +5,7 @@ import Jump from '@multicycles/jump'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -28,9 +29,15 @@ const jump = {
   type: new GraphQLList(JumpType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`jump|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({ lat, lng })
 
-      return result.body.data.bikes.map(bike => ({
+      const formatedResult = result.body.data.bikes.map(bike => ({
         id: bike.bike_id,
         lat: bike.lat,
         lng: bike.lon,
@@ -42,6 +49,9 @@ const jump = {
         is_disabled: bike.is_disabled,
         jump_ebike_battery_level: bike.jump_ebike_battery_level
       }))
+
+      cache.set(`jump|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'jump' },

@@ -22,6 +22,13 @@ function flat(arr) {
   return arr.reduce((r, a) => [...r, ...a])
 }
 
+function roundPosition({ lat, lng }) {
+  return {
+    lat: Math.round(lat * 1000) / 1000,
+    lng: Math.round(lng * 1000) / 1000
+  }
+}
+
 const VehicleType = new GraphQLInterfaceType({
   name: 'Vehicle',
   description: 'A geolocated bike or vehicle',
@@ -99,8 +106,9 @@ const vehicles = {
     })
 
     const availableProviders = utils.getProviders(city, country)
+    const { lat, lng } = roundPosition(args)
 
-    return Promise.all(availableProviders.map(provider => eval(provider).resolve(args))).then(flat)
+    return Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }))).then(flat)
   }
 }
 

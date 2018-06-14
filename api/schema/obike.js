@@ -5,6 +5,7 @@ import Obike from '@multicycles/obike'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -30,12 +31,18 @@ const obike = {
   type: new GraphQLList(ObikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`obike|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.data.list.map(bike => ({
+      const formatedResult = result.body.data.list.map(bike => ({
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
@@ -49,6 +56,9 @@ const obike = {
         cityId: bike.cityId,
         helmet: bike.helmet
       }))
+
+      cache.set(`obike|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'obike' },

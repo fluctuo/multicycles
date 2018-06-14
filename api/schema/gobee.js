@@ -5,6 +5,7 @@ import GobeeBike from '@multicycles/gobee.bike'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new GobeeBike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -31,9 +32,15 @@ const gobeebike = {
   type: new GraphQLList(GobeeBikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`gobee|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({ lat, lng })
 
-      return result.body.data.bikes.map(bike => ({
+      const formatedResult = result.body.data.bikes.map(bike => ({
         id: bike.bid,
         number: bike.number,
         lat: bike.gLat,
@@ -48,6 +55,9 @@ const gobeebike = {
         lastUsageTimestamp: bike.lastUsageTimestamp,
         typeId: bike.typeId
       }))
+
+      cache.set(`gobee|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'gobeebike' },

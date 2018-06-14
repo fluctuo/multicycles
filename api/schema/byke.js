@@ -5,6 +5,7 @@ import Byke from '@multicycles/byke'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -35,12 +36,18 @@ const byke = {
   type: new GraphQLList(BykeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`byke|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.items.map(bike => ({
+      const formatedResult = result.body.items.map(bike => ({
         id: bike.bikeNo,
         lat: bike.latitude,
         lng: bike.longitude,
@@ -59,6 +66,9 @@ const byke = {
         isLocked: bike.isLocked,
         isReadyForRiding: bike.isReadyForRiding
       }))
+
+      cache.set(`byke|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'byke' },

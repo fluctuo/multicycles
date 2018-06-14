@@ -5,6 +5,7 @@ import Yobike from '@multicycles/yobike'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -27,12 +28,18 @@ const yobike = {
   type: new GraphQLList(YobikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`yobike|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.data.map(bike => ({
+      const formatedResult = result.body.data.map(bike => ({
         id: bike.plate_no,
         lat: bike.latitude,
         lng: bike.longitude,
@@ -43,6 +50,9 @@ const yobike = {
         discount: bike.discount,
         outside: bike.outside
       }))
+
+      cache.set(`yobike|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'yobike' },

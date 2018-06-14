@@ -6,6 +6,7 @@ import Donkey from '@multicycles/donkey'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -32,12 +33,18 @@ const donkey = {
   type: new GraphQLList(DonkeyType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`donkey|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.map(bike => ({
+      const formatedResult = result.body.map(bike => ({
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
@@ -52,6 +59,9 @@ const donkey = {
         currency: bike.currency,
         price: bike.price
       }))
+
+      cache.set(`donkey|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'donkey' },

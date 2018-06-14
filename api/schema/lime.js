@@ -6,6 +6,7 @@ import Lime from '@multicycles/lime'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new Lime({
   auth: {
@@ -42,12 +43,18 @@ const lime = {
   type: new GraphQLList(LimeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`lime|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.data.attributes.nearby_locked_bikes.map(bike => ({
+      const formatedResult = result.body.data.attributes.nearby_locked_bikes.map(bike => ({
         id: bike.id,
         lat: bike.attributes.latitude,
         lng: bike.attributes.longitude,
@@ -66,6 +73,9 @@ const lime = {
         bike_icon_id: bike.attributes.bike_icon_id,
         last_three: bike.attributes.last_three
       }))
+
+      cache.set(`lime|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'lime' },

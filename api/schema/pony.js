@@ -5,6 +5,7 @@ import Pony from '@multicycles/pony'
 import { VehicleType } from './vehicles'
 import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
 const client = new Pony()
 
@@ -29,12 +30,18 @@ const pony = {
   type: new GraphQLList(PonyType),
   async resolve({ lat, lng }, args, context, info) {
     try {
+      const cached = await cache.get(`pony|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
       const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.filter(bike => bike.status === 'AVAILABLE').map(bike => ({
+      const formatedResult = result.filter(bike => bike.status === 'AVAILABLE').map(bike => ({
         id: bike.physicalId,
         lat: bike.latitude,
         lng: bike.longitude,
@@ -47,6 +54,9 @@ const pony = {
         status: bike.status,
         userId: bike.userId
       }))
+
+      cache.set(`pony|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'pony' },
