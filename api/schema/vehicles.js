@@ -2,16 +2,16 @@ import { GraphQLInterfaceType, GraphQLNonNull, GraphQLFloat, GraphQLString, Grap
 
 import { BykeType, byke } from './byke'
 import { DonkeyType, donkey } from './donkey'
-import { GobeeVehicleType, gobeebike } from './gobee'
+import { GobeeBikeType, gobeebike } from './gobee'
 import { IndigoWheelType, indigowheel } from './indigowheel'
 import { JumpType, jump } from './jump'
 import { LimeType, lime } from './lime'
-import { MoVehicleType, mobike } from './mobike'
-import { OVehicleType, obike } from './obike'
+import { MobikeType, mobike } from './mobike'
+import { ObikeType, obike } from './obike'
 import { OfoType, ofo } from './ofo'
 import { PonyType, pony } from './pony'
 import { WhiteBikesType, whitebikes } from './whitebikes'
-import { YoVehicleType, yobike } from './yobike'
+import { YobikeType, yobike } from './yobike'
 import { ProviderType } from './providers'
 
 import { reverseGeocode } from '../geolocation'
@@ -49,7 +49,7 @@ const VehicleType = new GraphQLInterfaceType({
         type = DonkeyType
         break
       case 'gobeebike':
-        type = GobeeVehicleType
+        type = GobeebikeType
         break
       case 'indigowheel':
         type = IndigoWheelType
@@ -61,10 +61,10 @@ const VehicleType = new GraphQLInterfaceType({
         type = LimeType
         break
       case 'mobike':
-        type = MoVehicleType
+        type = MobikeType
         break
       case 'obike':
-        type = OVehicleType
+        type = ObikeType
         break
       case 'ofo':
         type = OfoType
@@ -76,7 +76,7 @@ const VehicleType = new GraphQLInterfaceType({
         type = WhiteBikesType
         break
       case 'yobike':
-        type = YoVehicleType
+        type = YobikeType
         break
     }
 

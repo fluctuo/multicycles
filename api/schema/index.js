@@ -4,7 +4,7 @@ import { providers } from './providers'
 
 import { byke } from './byke'
 import { donkey } from './donkey'
-import { gobeebike, GobeeVehicleType } from './gobee'
+import { gobeebike, GobeeBikeType } from './gobee'
 import { indigowheel } from './indigowheel'
 import { inspect } from 'util'
 import { jump } from './jump'
@@ -32,7 +32,7 @@ export default new GraphQLSchema({
             byke,
             donkey,
             gobee: {
-              type: GobeeVehicleType,
+              type: GobeeBikeType,
               deprecationReason: 'Renamed gobeebike',
               resolve: gobeebike.resolve
             },

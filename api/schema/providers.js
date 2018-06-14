@@ -9,6 +9,7 @@ import {
 
 import { reverseGeocode } from '../geolocation'
 import utils from '../utils'
+import { requireAccessToken } from '../auth'
 
 const AppType = new GraphQLObjectType({
   name: 'App',
