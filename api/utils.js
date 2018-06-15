@@ -9,22 +9,25 @@ export default {
   getLanguage(country) {
     return languageCountry[country] || 'en'
   },
-  getProviders(city, country) {
+  getProviders(city, country, defaultToAll) {
     return (
       providersLocations[city] ||
-      providersLocations[country] || [
-        'gobee',
-        'ofo',
-        'mobike',
-        'yobike',
-        'jump',
-        'lime',
-        'whitebikes',
-        'obike',
-        'indigowheel',
-        'byke',
-        'donkey'
-      ]
+      providersLocations[country] ||
+      (defaultToAll
+        ? [
+            'byke',
+            'donkey',
+            'gobeebike',
+            'indigowheel',
+            'jump',
+            'lime',
+            'mobike',
+            'obike',
+            'ofo',
+            'whitebikes',
+            'yobike'
+          ]
+        : [])
     )
   }
 }

@@ -2,18 +2,22 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 
 import WhiteBikes from '@multicycles/whitebikes'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const whiteBikes = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const whiteBikesType = new GraphQLObjectType({
+const WhiteBikesType = new GraphQLObjectType({
   name: 'WhiteBikes',
-  interfaces: [bicycleType],
+  description: 'A WhiteBikes bike',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     standId: { type: GraphQLString },
     bikeCount: { type: GraphQLString },
     standDescription: { type: GraphQLString },
@@ -22,25 +26,35 @@ const whiteBikesType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(whiteBikesType),
+const whitebikes = {
+  type: new GraphQLList(WhiteBikesType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await whiteBikes.getBicyclesByLatLng({
+      const cached = await cache.get(`whitebikes|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.map(bike => ({
+      const formatedResult = result.map(bike => ({
         id: bike.standId,
         lat: bike.lat,
         lng: bike.lon,
+        provider: WhiteBikes.getProviderDetails(),
         standId: bike.standId,
         bikeCount: bike.bikecount,
         standDescription: bike.standDescription,
         standName: bike.standName,
         standPhoto: bike.standPhoto
       }))
+
+      cache.set(`whitebikes|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'whitebikes' },
@@ -56,6 +70,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = WhiteBikes.getProviderDetails()
+
+export { WhiteBikesType, whitebikes, provider }

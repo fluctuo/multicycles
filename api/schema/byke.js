@@ -2,20 +2,24 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Byke from '@multicycles/byke'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const byke = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const bykeType = new GraphQLObjectType({
+const BykeType = new GraphQLObjectType({
   name: 'Byke',
-  interfaces: [bicycleType],
+  description: 'A Byke bike',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     bikeId: { type: GraphQLString },
-    bikeType: { type: GraphQLString },
+    VehicleType: { type: GraphQLString },
     bikeNo: { type: GraphQLString },
     lockType: { type: GraphQLString },
     pricingUnit: { type: GraphQLInt },
@@ -28,21 +32,28 @@ const bykeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(bykeType),
+const byke = {
+  type: new GraphQLList(BykeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await byke.getBicyclesByLatLng({
+      const cached = await cache.get(`byke|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.items.map(bike => ({
+      const formatedResult = result.body.items.map(bike => ({
         id: bike.bikeNo,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: Byke.getProviderDetails(),
         bikeId: bike.bikeId,
-        bikeType: bike.bikeType,
+        VehicleType: bike.VehicleType,
         bikeNo: bike.bikeNo,
         lockType: bike.lockType,
         pricingUnit: bike.pricingUnit,
@@ -53,6 +64,9 @@ const getBicyclesByLatLng = {
         isLocked: bike.isLocked,
         isReadyForRiding: bike.isReadyForRiding
       }))
+
+      cache.set(`byke|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'byke' },
@@ -68,6 +82,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = Byke.getProviderDetails()
+
+export { BykeType, byke, provider }

@@ -2,18 +2,22 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Obike from '@multicycles/obike'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const obike = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const obikeType = new GraphQLObjectType({
+const ObikeType = new GraphQLObjectType({
   name: 'Obike',
-  interfaces: [bicycleType],
+  description: 'A Obike bike',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     imei: { type: GraphQLString },
     iconUrl: { type: GraphQLString },
     promotionActivityType: { type: GraphQLString },
@@ -23,19 +27,26 @@ const obikeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(obikeType),
+const obike = {
+  type: new GraphQLList(ObikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await obike.getBicyclesByLatLng({
+      const cached = await cache.get(`obike|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.data.list.map(bike => ({
+      const formatedResult = result.body.data.list.map(bike => ({
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: Obike.getProviderDetails(),
         imei: bike.imei,
         iconUrl: bike.iconUrl,
         promotionActivityType: bike.promotionActivityType,
@@ -43,6 +54,9 @@ const getBicyclesByLatLng = {
         cityId: bike.cityId,
         helmet: bike.helmet
       }))
+
+      cache.set(`obike|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'obike' },
@@ -58,6 +72,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = Obike.getProviderDetails()
+
+export { ObikeType, obike, provider }

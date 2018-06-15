@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
   /*
   ** Headers of the page
@@ -33,22 +35,40 @@ module.exports = {
       }
     }
   },
-  modules: ['bootstrap-vue/nuxt', '@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/google-analytics', '@nuxtjs/sentry'],
+  plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy'],
+  modules: [
+    '@nuxtjs/dotenv',
+    ['bootstrap-vue/nuxt', { css: false }],
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+    '@nuxtjs/google-analytics',
+    '@nuxtjs/sentry',
+    '@nuxtjs/apollo',
+    '@nuxtjs/moment'
+  ],
   auth: {
     redirect: {
-      home: 'account'
+      home: '/account',
+      callback: '/callback'
     },
     strategies: {
       auth0: {
         domain: 'multicycles.eu.auth0.com',
-        client_id: 'HFpb4x48lzWo1tkkAMY8u5z-bFA1xjQC'
+        client_id: 'fOYk1TlPc20pzwVhTpN4eKuji7SUbPgM',
+        userinfo_endpoint: false,
+        token_key: 'id_token'
       }
     }
   },
   'google-analytics': {
-    id: 'UA-4718334-16'
+    id: process.env.ANALYTICS_KEY || 'UA-000000-1'
   },
   sentry: {
-    dsn: 'https://6870ab4d97dc4c4abe9d53d5e4b887d0@sentry.io/1223211'
+    dsn: process.env.SENTRY_KEY
+  },
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/default.js'
+    }
   }
 }

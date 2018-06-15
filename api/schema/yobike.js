@@ -2,41 +2,55 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 
 import Yobike from '@multicycles/yobike'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const yobike = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const yobikeType = new GraphQLObjectType({
+const YobikeType = new GraphQLObjectType({
   name: 'Yobike',
-  interfaces: [bicycleType],
+  description: 'A Yobike bike',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     plate_no: { type: GraphQLString },
     discount: { type: GraphQLInt },
     outside: { type: GraphQLInt }
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(yobikeType),
+const yobike = {
+  type: new GraphQLList(YobikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await yobike.getBicyclesByLatLng({
+      const cached = await cache.get(`yobike|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.data.map(bike => ({
+      const formatedResult = result.body.data.map(bike => ({
         id: bike.plate_no,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: Yobike.getProviderDetails(),
         plate_no: bike.plate_no,
         discount: bike.discount,
         outside: bike.outside
       }))
+
+      cache.set(`yobike|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'yobike' },
@@ -52,6 +66,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = Yobike.getProviderDetails()
+
+export { YobikeType, yobike, provider }

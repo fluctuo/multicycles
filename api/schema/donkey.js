@@ -3,18 +3,22 @@ import GraphQLJSON from 'graphql-type-json'
 
 import Donkey from '@multicycles/donkey'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const donkey = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const donkeyType = new GraphQLObjectType({
+const DonkeyType = new GraphQLObjectType({
   name: 'Donkey',
-  interfaces: [bicycleType],
+  description: 'A Donkey bike',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     name: { type: GraphQLString },
     radius: { type: GraphQLInt },
     available_bikes_count: { type: GraphQLInt },
@@ -25,19 +29,26 @@ const donkeyType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(donkeyType),
+const donkey = {
+  type: new GraphQLList(DonkeyType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await donkey.getBicyclesByLatLng({
+      const cached = await cache.get(`donkey|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.map(bike => ({
+      const formatedResult = result.body.map(bike => ({
         id: bike.id,
         lat: bike.latitude,
         lng: bike.longitude,
+        provider: Donkey.getProviderDetails(),
         name: bike.name,
         radius: bike.radius,
         available_bikes_count: bike.available_bikes_count,
@@ -46,6 +57,9 @@ const getBicyclesByLatLng = {
         currency: bike.currency,
         price: bike.price
       }))
+
+      cache.set(`donkey|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'donkey' },
@@ -61,6 +75,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = Donkey.getProviderDetails()
+
+export { DonkeyType, donkey, provider }

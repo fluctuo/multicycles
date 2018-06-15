@@ -2,18 +2,22 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 
 import Jump from '@multicycles/jump'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const jump = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Jump({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const jumpType = new GraphQLObjectType({
+const JumpType = new GraphQLObjectType({
   name: 'Jump',
-  interfaces: [bicycleType],
+  description: 'A Jump vehicle',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     name: { type: GraphQLString },
     is_reserved: { type: GraphQLInt },
     is_disabled: { type: GraphQLInt },
@@ -21,21 +25,31 @@ const jumpType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(jumpType),
+const jump = {
+  type: new GraphQLList(JumpType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await jump.getBicyclesByLatLng({ lat, lng })
+      const cached = await cache.get(`jump|${lat}|${lng}`)
 
-      return result.body.data.bikes.map(bike => ({
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({ lat, lng })
+
+      const formatedResult = result.body.data.bikes.map(bike => ({
         id: bike.bike_id,
         lat: bike.lat,
         lng: bike.lon,
+        provider: Jump.getProviderDetails(),
         name: bike.name,
         is_reserved: bike.is_reserved,
         is_disabled: bike.is_disabled,
         jump_ebike_battery_level: bike.jump_ebike_battery_level
       }))
+
+      cache.set(`jump|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'jump' },
@@ -51,6 +65,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = Jump.getProviderDetails()
+
+export { JumpType, jump, provider }

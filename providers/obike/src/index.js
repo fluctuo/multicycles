@@ -49,6 +49,17 @@ class Obike {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'obike',
+      website: 'https://www.o.bike',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.obike',
+        ios: 'https://itunes.apple.com/app/obike/id1184154041'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')

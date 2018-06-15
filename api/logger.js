@@ -1,11 +1,10 @@
 import util from 'util'
 import Raven from 'raven'
-import config from './config'
 
-const useRaven = !!(config.logger && process.env.NODE_ENV === 'production')
+const useRaven = !!(process.env.SENTRY_KEY && process.env.NODE_ENV === 'production')
 
 if (useRaven) {
-  Raven.config(config.logger).install()
+  Raven.config(process.env.SENTRY_KEY).install()
 }
 
 export default {

@@ -9,6 +9,17 @@ class GobeeBike {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'gobeebike',
+      website: 'http://gobee.bike/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.pgt.gobeebike',
+        ios: 'https://itunes.apple.com/app/id1230842750'
+      }
+    }
+  }
+
   getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')

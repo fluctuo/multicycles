@@ -3,10 +3,12 @@ import GraphQLJSON from 'graphql-type-json'
 
 import Lime from '@multicycles/lime'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const lime = new Lime({
+const client = new Lime({
   auth: {
     token: process.env.LIME_AUTH_TOKEN,
     session: process.env.LIME_AUTH_SESSION
@@ -14,13 +16,15 @@ const lime = new Lime({
   timeout: process.env.PROVIDER_TIMEOUT || 3000
 })
 
-const limeType = new GraphQLObjectType({
+const LimeType = new GraphQLObjectType({
   name: 'Lime',
-  interfaces: [bicycleType],
+  description: 'A Lime vehicle',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     status: { type: GraphQLString },
     plate_number: { type: GraphQLString },
     last_activity_at: { type: GraphQLString },
@@ -35,19 +39,26 @@ const limeType = new GraphQLObjectType({
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(limeType),
+const lime = {
+  type: new GraphQLList(LimeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await lime.getBicyclesByLatLng({
+      const cached = await cache.get(`lime|${lat}|${lng}`)
+
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({
         lat,
         lng
       })
 
-      return result.body.data.attributes.nearby_locked_bikes.map(bike => ({
+      const formatedResult = result.body.data.attributes.nearby_locked_bikes.map(bike => ({
         id: bike.id,
         lat: bike.attributes.latitude,
         lng: bike.attributes.longitude,
+        provider: Lime.getProviderDetails(),
         status: bike.attributes.status,
         plate_number: bike.attributes.plate_number,
         last_activity_at: bike.attributes.last_activity_at,
@@ -60,6 +71,9 @@ const getBicyclesByLatLng = {
         bike_icon_id: bike.attributes.bike_icon_id,
         last_three: bike.attributes.last_three
       }))
+
+      cache.set(`lime|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'lime' },
@@ -75,6 +89,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = Lime.getProviderDetails()
+
+export { LimeType, lime, provider }

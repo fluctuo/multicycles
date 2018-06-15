@@ -1,18 +1,23 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLFloat, GraphQLNonNull } from 'graphql'
+import { GraphQLSchema, GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLList } from 'graphql'
+import { vehicles } from './vehicles'
+import { providers } from './providers'
 
-import gobee from './gobee'
-import ofo from './ofo'
-import mobike from './mobike'
-import yobike from './yobike'
-import jump from './jump'
-import pony from './pony'
-import lime from './lime'
+import { byke } from './byke'
+import { donkey } from './donkey'
+import { gobeebike, GobeeBikeType } from './gobee'
+import { indigowheel } from './indigowheel'
+import { inspect } from 'util'
+import { jump } from './jump'
+import { lime } from './lime'
+import { mobike } from './mobike'
+import { obike } from './obike'
+import { ofo } from './ofo'
+import { pony } from './pony'
+import { whitebikes } from './whitebikes'
+import { yobike } from './yobike'
 import capacities from './capacities'
-import whitebikes from './whitebikes'
-import obike from './obike'
-import indigowheel from './indigowheel'
-import byke from './byke'
-import donkey from './donkey'
+import { tokens, createToken, deleteToken } from './tokens'
+import util from 'util'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -20,21 +25,27 @@ export default new GraphQLSchema({
     fields: {
       capacities,
       bicyclesByLatLng: {
+        deprecationReason: 'Use the aggregated query "bikes"',
         type: new GraphQLObjectType({
           name: 'BicyclesByLatLng',
           fields: {
-            gobee: gobee.getBicyclesByLatLng,
-            ofo: ofo.getBicyclesByLatLng,
-            mobike: mobike.getBicyclesByLatLng,
-            yobike: yobike.getBicyclesByLatLng,
-            jump: jump.getBicyclesByLatLng,
-            pony: pony.getBicyclesByLatLng,
-            lime: lime.getBicyclesByLatLng,
-            whitebikes: whitebikes.getBicyclesByLatLng,
-            obike: obike.getBicyclesByLatLng,
-            indigowheel: indigowheel.getBicyclesByLatLng,
-            byke: byke.getBicyclesByLatLng,
-            donkey: donkey.getBicyclesByLatLng
+            byke,
+            donkey,
+            gobee: {
+              type: GobeeBikeType,
+              deprecationReason: 'Renamed gobeebike',
+              resolve: gobeebike.resolve
+            },
+            gobeebike,
+            indigowheel,
+            jump,
+            lime,
+            mobike,
+            obike,
+            ofo,
+            pony,
+            whitebikes,
+            yobike
           }
         }),
         args: {
@@ -46,7 +57,17 @@ export default new GraphQLSchema({
           }
         },
         resolve: (root, args) => args
-      }
+      },
+      vehicles,
+      providers,
+      tokens
+    }
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+      createToken,
+      deleteToken
     }
   })
 })

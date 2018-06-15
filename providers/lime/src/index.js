@@ -16,6 +16,17 @@ class Lime {
     }
   }
 
+  static getProviderDetails() {
+    return {
+      name: 'lime',
+      website: 'https://www.limebike.com/',
+      app: {
+        android: 'https://play.google.com/store/apps/details?id=com.limebike',
+        ios: 'https://itunes.apple.com/app/id1199780189'
+      }
+    }
+  }
+
   getOTP({ phone }, config) {
     return got.get(`${BASE_URL}/v1/login`, {
       query: {

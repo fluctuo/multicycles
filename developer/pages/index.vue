@@ -35,13 +35,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '~/scss/app.scss';
+
 .titi {
   background-image: url('~/assets/home-background-bike.jpg');
   background-size: cover;
   background-position: center;
 
-  color: #fff;
+  color: $light;
 
   padding: 120px 0;
 }

@@ -9,15 +9,15 @@ import {
 } from 'graphql'
 import MapboxClient from 'mapbox'
 
-import config from '../config'
 import utils from '../utils'
 import logger from '../logger'
-import bicycleType from './bicycleType'
+import { requireAccessToken } from '../auth'
 
-const mapboxClient = new MapboxClient(config.mapboxKey)
+const mapboxClient = new MapboxClient(process.env.MAPBOX_KEY)
 
 const capacitiesType = new GraphQLObjectType({
   name: 'Capacities',
+  description: 'The available capacities',
   fields: {
     defaultLanguage: { type: GraphQLString },
     providers: { type: new GraphQLList(GraphQLString) }
@@ -26,15 +26,20 @@ const capacitiesType = new GraphQLObjectType({
 
 export default {
   type: capacitiesType,
+  description: 'Query capacities according to location',
   args: {
     lat: {
+      description: 'The requested latitude',
       type: new GraphQLNonNull(GraphQLFloat)
     },
     lng: {
+      description: 'The requested longitude',
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, args) {
+  async resolve(root, args, ctx) {
+    requireAccessToken(ctx.state.accessToken)
+
     let country, city
 
     try {
@@ -65,7 +70,7 @@ export default {
     return {
       location: country ? `${city && `${city}, `}${country}` : 'unknown',
       defaultLanguage: utils.getLanguage(country),
-      providers: utils.getProviders(city, country)
+      providers: utils.getProviders(city, country, true)
     }
   }
 }

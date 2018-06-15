@@ -2,44 +2,58 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 
 import Mobike from '@multicycles/mobike'
 
-import bicycleType from './bicycleType'
+import { VehicleType } from './vehicles'
+import { ProviderType } from './providers'
 import logger from '../logger'
+import cache from '../cache'
 
-const mobike = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Mobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const mobikeType = new GraphQLObjectType({
+const MobikeType = new GraphQLObjectType({
   name: 'Mobike',
-  interfaces: [bicycleType],
+  description: 'A Mobike bike',
+  interfaces: () => [VehicleType],
   fields: {
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    provider: { type: ProviderType },
     num: { type: GraphQLInt },
     distance: { type: GraphQLString },
     bikeIds: { type: GraphQLString },
-    biketype: { type: GraphQLInt },
+    VehicleType: { type: GraphQLInt },
     type: { type: GraphQLInt },
     boundary: { type: GraphQLString }
   }
 })
 
-const getBicyclesByLatLng = {
-  type: new GraphQLList(mobikeType),
+const mobike = {
+  type: new GraphQLList(MobikeType),
   async resolve({ lat, lng }, args, context, info) {
     try {
-      const result = await mobike.getBicyclesByLatLng({ lat, lng })
+      const cached = await cache.get(`mobike|${lat}|${lng}`)
 
-      return result.body.object.map(bike => ({
+      if (cached) {
+        return cached
+      }
+
+      const result = await client.getBicyclesByLatLng({ lat, lng })
+
+      const formatedResult = result.body.object.map(bike => ({
         id: bike.distId,
         lat: bike.distY,
         lng: bike.distX,
+        provider: Mobike.getProviderDetails(),
         num: bike.distNum,
         distance: bike.distance,
         bikeIds: bike.bikeIds,
-        biketype: bike.biketype,
+        VehicleType: bike.VehicleType,
         type: bike.type,
         boundary: bike.boundary
       }))
+
+      cache.set(`mobike|${lat}|${lng}`, formatedResult)
+      return formatedResult
     } catch (e) {
       logger.exception(e, {
         tags: { provider: 'mobike' },
@@ -55,6 +69,6 @@ const getBicyclesByLatLng = {
   }
 }
 
-export default {
-  getBicyclesByLatLng
-}
+const provider = Mobike.getProviderDetails()
+
+export { MobikeType, mobike, provider }
