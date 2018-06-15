@@ -13,6 +13,9 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
+  env: {
+    MULTICYCLES_API: process.env.MULTICYCLES_API
+  },
   /*
   ** Customize the progress bar color
   */
