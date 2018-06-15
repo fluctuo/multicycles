@@ -33,11 +33,13 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
+@import '~/scss/app.scss';
+
 #footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  color: #fff;
+  color: $light;
 }
 </style>

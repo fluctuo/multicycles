@@ -1,15 +1,5 @@
 <template>
   <div class="logo">
-    Open API <span class="text-muted">by Multicyles.org</span>
+    <img src="~/assets/logo-light.svg" alt="Open-API logo" width="120px" />
   </div>
 </template>
-
-<style>
-.logo {
-  font-size: 1.5em;
-}
-
-.text-muted {
-  font-size: 0.5em;
-}
-</style>

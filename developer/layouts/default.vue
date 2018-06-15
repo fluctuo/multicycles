@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar/>
-    <nuxt/>
+    <nuxt class="push-footer"/>
     <my-footer/>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~/scss/app.scss';
 @import 'highlight.js/styles/tomorrow-night-eighties.css';
 
 html {
@@ -26,7 +27,7 @@ html {
   min-height: 100%;
 }
 
-body {
+.push-footer {
   margin-bottom: 250px;
 }
 </style>

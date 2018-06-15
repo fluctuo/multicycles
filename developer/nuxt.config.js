@@ -38,7 +38,7 @@ module.exports = {
   plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy'],
   modules: [
     '@nuxtjs/dotenv',
-    'bootstrap-vue/nuxt',
+    ['bootstrap-vue/nuxt', { css: false }],
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/google-analytics',
