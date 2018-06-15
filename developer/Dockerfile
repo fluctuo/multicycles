@@ -4,14 +4,14 @@ WORKDIR /app
 
 ADD package.json /app/
 
-ENV NODE_ENV production
-
-RUN npm install --production
+RUN npm install
 
 ADD . /app/
 
 RUN npm run build
 
 EXPOSE 3000
+
+ENV NODE_ENV production
 
 CMD [ "npm", "start" ]
