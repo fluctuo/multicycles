@@ -70,7 +70,10 @@ export default {
             createdAt
           }
         }
-      `
+      `,
+      error(err) {
+        this.$auth.logout();
+      }
     }
   }
 }

@@ -12,18 +12,20 @@ import accessToken from './accessToken'
 const app = new Koa()
 const router = new Router()
 
-router.all(
+router.post(
   '/v1',
   graphqlHTTP({
     schema,
     graphiql: process.env.NODE_ENV !== 'production',
     pretty: process.env.NODE_ENV !== 'production',
-    formatError: error => ({
-      message: error.message,
-      locations: error.locations,
-      stack: error.stack,
-      path: error.path
-    })
+    formatError: error => {
+      return {
+        message: error.message,
+        locations: error.locations,
+        stack: error.stack,
+        path: error.path
+      }
+    }
   })
 )
 
@@ -32,18 +34,6 @@ app
   .use(bodyparser())
   .use(jwt)
   .use(accessToken)
-  .use(function(ctx, next) {
-    return next().catch(err => {
-      if (err.status === 401) {
-        ctx.status = 401
-        ctx.body = {
-          error: err.originalError ? err.originalError.message : err.message
-        }
-      } else {
-        throw err
-      }
-    })
-  })
   .use(router.routes())
   .use(router.allowedMethods())
 
