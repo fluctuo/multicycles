@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLFloat
 import GobeeBike from '@multicycles/gobee.bike'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,6 +18,8 @@ const GobeeBikeType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     number: { type: GraphQLString },
     status: { type: GraphQLInt },
@@ -45,6 +48,8 @@ const gobeebike = {
         number: bike.number,
         lat: bike.gLat,
         lng: bike.gLng,
+        type: 'BIKE',
+        attributes: [],
         provider: GobeeBike.getProviderDetails(),
         status: bike.status,
         power: bike.power,

@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 import Mobike from '@multicycles/mobike'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,12 +18,14 @@ const MobikeType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     num: { type: GraphQLInt },
     distance: { type: GraphQLString },
     bikeIds: { type: GraphQLString },
     biketype: { type: GraphQLInt },
-    type: { type: GraphQLInt },
+    mobike_type: { type: GraphQLInt },
     boundary: { type: GraphQLString }
   }
 })
@@ -43,12 +46,14 @@ const mobike = {
         id: bike.distId,
         lat: bike.distY,
         lng: bike.distX,
+        type: 'BIKE',
+        attributes: bike.biketype === 2 ? ['GEARS'] : [],
         provider: Mobike.getProviderDetails(),
         num: bike.distNum,
         distance: bike.distance,
         bikeIds: bike.bikeIds,
         biketype: bike.biketype,
-        type: bike.type,
+        mobike_type: bike.type,
         boundary: bike.boundary
       }))
 

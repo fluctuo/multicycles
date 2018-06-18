@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import IndigoWheel from '@multicycles/indigowheel'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,6 +18,8 @@ const IndigoWheelType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     plate_no: { type: GraphQLString },
     discount: { type: GraphQLInt },
@@ -43,6 +46,8 @@ const indigowheel = {
         id: bike.plate_no,
         lat: bike.latitude,
         lng: bike.longitude,
+        type: 'BIKE',
+        attributes: ['GEARS'],
         provider: IndigoWheel.getProviderDetails(),
         plate_no: bike.plate_no,
         discount: bike.discount,

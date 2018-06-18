@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Bird from '@multicycles/bird'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,6 +18,8 @@ const BirdType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     code: { type: GraphQLString },
     battery_level: { type: GraphQLInt }
@@ -42,6 +45,8 @@ const bird = {
         id: bike.id,
         lat: bike.location.latitude,
         lng: bike.location.longitude,
+        type: 'SCOOTER',
+        attributes: ['ELECTRIC'],
         provider: Bird.getProviderDetails(),
         code: bike.code,
         battery_level: bike.battery_level

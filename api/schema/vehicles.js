@@ -21,6 +21,7 @@ import { WhiteBikesType, whitebikes } from './whitebikes'
 import { YobikeType, yobike } from './yobike'
 import { BirdType, bird } from './bird'
 import { ProviderType } from './providers'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 
 import { reverseGeocode } from '../geolocation'
 import utils from '../utils'
@@ -44,6 +45,8 @@ const VehicleType = new GraphQLInterfaceType({
     id: { description: 'The provider id', type: GraphQLString },
     lat: { description: "The vehicle's latitude", type: GraphQLFloat },
     lng: { description: "The vehicle's longitude", type: GraphQLFloat },
+    type: { description: "The vehicle's type", type: VehicleTypeEnumType },
+    attributes: { description: "The vehicle's attributes", type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType }
   }),
   resolveType: vehicle => {

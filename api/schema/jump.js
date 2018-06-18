@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString
 import Jump from '@multicycles/jump'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,6 +18,8 @@ const JumpType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     name: { type: GraphQLString },
     is_reserved: { type: GraphQLInt },
@@ -41,6 +44,8 @@ const jump = {
         id: bike.bike_id,
         lat: bike.lat,
         lng: bike.lon,
+        type: 'BIKE',
+        attributes: ['GEARS', 'ELECTRIC'],
         provider: Jump.getProviderDetails(),
         name: bike.name,
         is_reserved: bike.is_reserved,

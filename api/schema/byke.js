@@ -3,6 +3,8 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Byke from '@multicycles/byke'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
+
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,9 +19,11 @@ const BykeType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     bikeId: { type: GraphQLString },
-    VehicleType: { type: GraphQLString },
+    bikeType: { type: GraphQLString },
     bikeNo: { type: GraphQLString },
     lockType: { type: GraphQLString },
     pricingUnit: { type: GraphQLInt },
@@ -51,9 +55,11 @@ const byke = {
         id: bike.bikeNo,
         lat: bike.latitude,
         lng: bike.longitude,
+        type: 'BIKE',
+        attributes: ['GEARS'],
         provider: Byke.getProviderDetails(),
         bikeId: bike.bikeId,
-        VehicleType: bike.VehicleType,
+        bikeType: bike.bikeType,
         bikeNo: bike.bikeNo,
         lockType: bike.lockType,
         pricingUnit: bike.pricingUnit,

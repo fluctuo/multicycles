@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoo
 import Pony from '@multicycles/pony'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,6 +18,8 @@ const PonyType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     manualLocation: { type: GraphQLBoolean },
     reason: { type: GraphQLString },
@@ -45,6 +48,8 @@ const pony = {
         id: bike.physicalId,
         lat: bike.latitude,
         lng: bike.longitude,
+        type: 'BIKE',
+        attributes: [],
         provider: Pony.getProviderDetails(),
         manualLocation: bike.manualLocation,
         reason: bike.reason,

@@ -4,9 +4,20 @@ import GraphQLJSON from 'graphql-type-json'
 import Lime from '@multicycles/lime'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
+
+function getAttributes(attrs) {
+  const attributes = ['GEARS']
+
+  if (attrs.type_name === 'scooter' || attrs.type_name === 'electric') {
+    attributes.push('ELECTRIC')
+  }
+
+  return attributes
+}
 
 const client = new Lime({
   auth: {
@@ -24,6 +35,8 @@ const LimeType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     status: { type: GraphQLString },
     plate_number: { type: GraphQLString },
@@ -58,6 +71,8 @@ const lime = {
         id: bike.id,
         lat: bike.attributes.latitude,
         lng: bike.attributes.longitude,
+        type: bike.attributes.type_name === 'scooter' ? 'SCOOTER' : 'BIKE',
+        attributes: getAttributes(bike.attributes),
         provider: Lime.getProviderDetails(),
         status: bike.attributes.status,
         plate_number: bike.attributes.plate_number,

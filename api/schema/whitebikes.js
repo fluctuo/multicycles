@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 import WhiteBikes from '@multicycles/whitebikes'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,6 +18,8 @@ const WhiteBikesType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     standId: { type: GraphQLString },
     bikeCount: { type: GraphQLString },
@@ -45,6 +48,8 @@ const whitebikes = {
         id: bike.standId,
         lat: bike.lat,
         lng: bike.lon,
+        type: 'BIKE',
+        attributes: [],
         provider: WhiteBikes.getProviderDetails(),
         standId: bike.standId,
         bikeCount: bike.bikecount,

@@ -3,6 +3,7 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'gra
 import Ofo from '@multicycles/ofo'
 
 import { VehicleType } from './vehicles'
+import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -17,6 +18,8 @@ const OfoType = new GraphQLObjectType({
     id: { type: GraphQLString },
     lat: { type: GraphQLFloat },
     lng: { type: GraphQLFloat },
+    type: { type: VehicleTypeEnumType },
+    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
     provider: { type: ProviderType },
     carno: { type: GraphQLString },
     bomNum: { type: GraphQLString },
@@ -43,6 +46,8 @@ const ofo = {
         id: bike.carno,
         lat: bike.lat,
         lng: bike.lng,
+        type: 'BIKE',
+        attributes: ['GEARS'],
         provider: Ofo.getProviderDetails(),
         carno: bike.carno,
         bomNum: bike.bomNum,
