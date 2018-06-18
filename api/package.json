@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "knex migrate:latest",
-    "start": "node -r esm -r dotenv/config index.js",
+    "start": "node -r esm -r sqreen -r dotenv/config index.js",
     "test": "ava tests/*.js"
   },
   "license": "MIT",
@@ -45,7 +45,8 @@
     "pg": "^7.4.3",
     "randomstring": "^1.1.5",
     "raven": "^2.6.1",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "sqreen": "^1.19.0"
   },
   "esm": {
     "cjs": true

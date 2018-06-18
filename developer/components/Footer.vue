@@ -1,11 +1,14 @@
 <template>
   <footer id="footer" class="mt-5 pt-5 pb-5 bg-dark">
     <b-container>
-      <b-row align-v="center" align-h="center">
+      <b-row align="center">
         <b-col>
           <logo/>
         </b-col>
-        <b-col>
+        <b-col align="center">
+          <a title="Realtime application protection" href="https://www.sqreen.io/?utm_source=badge"><img style="width:109px;height:36px" src="https://s3-eu-west-1.amazonaws.com/sqreen-assets/badges/20171107/sqreen-light-badge.svg" alt="Sqreen | Runtime Application Protection" /></a>
+        </b-col>
+        <b-col align="center">
           <h5>Contact</h5>
           <ul class="list-unstyled">
             <li>
