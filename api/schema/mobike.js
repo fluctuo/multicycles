@@ -21,7 +21,7 @@ const MobikeType = new GraphQLObjectType({
     num: { type: GraphQLInt },
     distance: { type: GraphQLString },
     bikeIds: { type: GraphQLString },
-    VehicleType: { type: GraphQLInt },
+    biketype: { type: GraphQLInt },
     type: { type: GraphQLInt },
     boundary: { type: GraphQLString }
   }
@@ -47,7 +47,7 @@ const mobike = {
         num: bike.distNum,
         distance: bike.distance,
         bikeIds: bike.bikeIds,
-        VehicleType: bike.VehicleType,
+        biketype: bike.biketype,
         type: bike.type,
         boundary: bike.boundary
       }))
