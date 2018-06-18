@@ -16,7 +16,8 @@
     "prerelease": "npm run prepare",
     "release": "lerna publish",
     "links": "lerna exec -- npm link",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "generate": "plop"
   },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --write", "git add"]
@@ -31,6 +32,7 @@
     "husky": "^0.14.3",
     "lerna": "^2.5.1",
     "lint-staged": "^6.0.0",
+    "plop": "^2.0.0",
     "prettier": "^1.9.2"
   },
   "babel": {
