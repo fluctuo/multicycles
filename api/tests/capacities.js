@@ -32,6 +32,7 @@ test('Return capacitie for Tokyo', async t => {
     location: 'Tokyo, Japan',
     defaultLanguage: 'en',
     providers: [
+      'bird',
       'byke',
       'donkey',
       'gobeebike',
@@ -61,6 +62,7 @@ test('Return capacitie for 0,0', async t => {
     location: 'unknown',
     defaultLanguage: 'en',
     providers: [
+      'bird',
       'byke',
       'donkey',
       'gobeebike',

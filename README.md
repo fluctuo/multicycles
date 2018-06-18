@@ -18,4 +18,5 @@ Currently support:
 * [IndigoWheel](https://www.indigoweel.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/indigowheel.svg)](https://www.npmjs.com/package/@multicycles/indigowheel)
 * [Byke](http://byke.de/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/byke.svg)](https://www.npmjs.com/package/@multicycles/byke)
 * [Donkey](https://www.donkey.bike/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/donkey.svg)](https://www.npmjs.com/package/@multicycles/donkey)
+* [Bird](https://www.bird.co/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/bird.svg)](https://www.npmjs.com/package/@multicycles/bird)
 * Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)

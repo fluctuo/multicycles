@@ -15,6 +15,7 @@ export default {
       providersLocations[country] ||
       (defaultToAll
         ? [
+            'bird',
             'byke',
             'donkey',
             'gobeebike',
