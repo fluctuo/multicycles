@@ -122,7 +122,9 @@ const vehicles = {
     const availableProviders = utils.getProviders(city, country)
     const { lat, lng } = roundPosition(args)
 
-    return Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }))).then(flat)
+    return availableProviders.length
+      ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }))).then(flat)
+      : []
   }
 }
 
