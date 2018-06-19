@@ -5,13 +5,26 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'Multicycles Open API - Developer portal',
+    title: 'Open-API by Multicycles - The only API for dockless bicycles and other shared vehicles',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Multicycles Open API - Developer portal' }
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Open-API - The only API for dockless bicycles and other shared vehicles'
+      }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+
+    link: [
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+      { rel: 'manifest', href: '/site.webmanifest' },
+      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#151a26' },
+      { name: 'msapplication-TileColor', content: '#151a26' },
+      { name: 'theme-color', content: '#151a26' }
+    ]
   },
   env: {
     MULTICYCLES_API: process.env.MULTICYCLES_API
@@ -19,7 +32,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#3B8070' },
+  loading: { color: '#677fb7' },
   /*
   ** Build configuration
   */
@@ -35,6 +48,18 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+      }
+
+      const vueLoader = config.module.rules.find(rule => rule.loader === 'vue-loader')
+      vueLoader.options.transformToRequire = {
+        img: 'src',
+        image: 'xlink:href',
+        'b-img': 'src',
+        'b-img-lazy': ['src', 'blank-src'],
+        'b-card': 'img-src',
+        'b-card-img': 'img-src',
+        'b-carousel-slide': 'img-src',
+        'b-embed': 'src'
       }
     }
   },

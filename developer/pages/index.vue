@@ -4,8 +4,8 @@
       <b-container>
         <h1 class="display-3">The Open API <br> for Bikes sharing</h1>
         <h2>
-          The only free-floating bicycle API and other shared mobility service.<br>
-          Explore all the cities in the world in a few lines of code.
+          The only API for dockless bicycles and other shared vehicles<br>
+          Explore and get instant vehicle positions in a single query.
         </h2>
 
         <div class="mt-5">

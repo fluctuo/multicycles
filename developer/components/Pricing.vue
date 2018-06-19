@@ -4,7 +4,9 @@
 
     <b-row align-v="center">
       <b-col>
-        <p class="lead text-center pb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsam nemo cumque nulla fuga tempore quaerat corporis a praesentium, iusto officia. Quibusdam maxime fugiat voluptatem consequatur explicabo commodi voluptas accusantium!</p>
+        <p class="lead text-center pb-5">Made with open-source software spirit, Open-API are free for non-profit OSS projets, whithout limitation.<br>
+        <a href="mailto:contact@multicycles.org">Contact us</a> for business projects. We can develop specific providers, use Open-API on premise.
+        </p>
       </b-col>
     </b-row>
 

@@ -4,38 +4,26 @@
 
     <b-row align-v="center">
       <b-col class="text-center">
-        <b-img blank blank-color="#777" width="250" height="250" alt="transparent" class="m-1" />
+        <b-img src="~/assets/aggreation-feature.jpg" height="250" alt="transparent" class="m-1" />
       </b-col>
       <b-col class="text-center">
         <h4>Many providers, worldwide</h4>
         <p class="lead">
-          Implements many bike sharing suppliers like Mobike or Ofo and other shared mobility service.
+          Implements many bike sharing suppliers like Mobike or Ofo and other shared vehicles.
           Available wordwide, no coutries locks.
         </p>
       </b-col>
     </b-row>
 
-    <b-row align-v="center">
+    <b-row align-v="center" class="mt-5">
       <b-col class="text-center">
         <h4>Standardized</h4>
         <p class="lead">
-          Return Standardized data and service specific fiels. Backward compatibilty guarantee.
+          Return standardized data and provider specific fiels. Backward compatibilty guarantee.
         </p>
       </b-col>
       <b-col class="text-center">
-        <b-img blank blank-color="#777" width="250" height="250" alt="transparent" class="m-1" />
-      </b-col>
-    </b-row>
-
-    <b-row align-v="center">
-      <b-col class="text-center">
-        <b-img blank blank-color="#777" width="250" height="250" alt="transparent" class="m-1" />
-      </b-col>
-      <b-col class="text-center">
-        <h4>Realtime</h4>
-        <p class="lead">
-          Freshly crawled for you.
-        </p>
+        <b-img src="~/assets/standard-feature.jpg" height="500" alt="transparent" class="m-1" />
       </b-col>
     </b-row>
   </b-container>
