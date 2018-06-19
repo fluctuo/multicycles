@@ -31,7 +31,7 @@
           <li>Premium support</li>
         </ul>
 
-        <b-button slot="footer" size="lg" variant="outline-primary" href="mailto:hello@pierrickp.xyz">Contact us</b-button>
+        <b-button slot="footer" size="lg" variant="outline-primary" href="mailto:contact@multicycles.org">Contact us</b-button>
       </b-card>
     </b-card-group>
   </b-container>

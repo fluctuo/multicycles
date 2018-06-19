@@ -10,7 +10,7 @@
 
         <div class="mt-5">
           <b-button size="lg" variant="primary" href="/account">Start exploring</b-button>
-          <b-button variant="outline-light" class="ml-2" href="mailto:hello@pierrickp.xyz">Contact us</b-button>
+          <b-button variant="outline-light" class="ml-2" href="mailto:contact@multicycles.org">Contact us</b-button>
         </div>
       </b-container>
     </div>

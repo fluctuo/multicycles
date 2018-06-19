@@ -15,7 +15,7 @@
               <a href="https://twitter.com/multicyclesOrg">
                 <twitter-icon />
               </a>&nbsp;
-              <a href="mailto:hello@pierrickp.xyz">
+              <a href="mailto:contact@multicycles.org">
                 <mail-icon class="custom-class"></mail-icon>
               </a>
             </li>
