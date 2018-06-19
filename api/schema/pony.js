@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoolean } from 'graphql'
+import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoolean, GraphQLNonNull } from 'graphql'
 
 import Pony from '@multicycles/pony'
 
@@ -26,6 +26,15 @@ const PonyType = new GraphQLObjectType({
 
 const pony = {
   type: new GraphQLList(PonyType),
+  description: 'Get Pony bikes by position',
+  args: {
+    lat: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    },
+    lng: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    }
+  },
   async resolve({ lat, lng }, args, context, info) {
     try {
       const cached = await cache.get(`pony|${lat}|${lng}`)

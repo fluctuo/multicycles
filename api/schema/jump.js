@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString } from 'graphql'
+import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql'
 
 import Jump from '@multicycles/jump'
 
@@ -25,6 +25,15 @@ const JumpType = new GraphQLObjectType({
 
 const jump = {
   type: new GraphQLList(JumpType),
+  description: 'Get Jump bikes by position',
+  args: {
+    lat: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    },
+    lng: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    }
+  },
   async resolve({ lat, lng }, args, context, info) {
     try {
       const cached = await cache.get(`jump|${lat}|${lng}`)

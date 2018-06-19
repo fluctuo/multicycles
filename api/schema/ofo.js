@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString } from 'graphql'
+import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLNonNull } from 'graphql'
 
 import Ofo from '@multicycles/ofo'
 
@@ -24,6 +24,15 @@ const OfoType = new GraphQLObjectType({
 
 const ofo = {
   type: new GraphQLList(OfoType),
+  description: 'Get Ofo bikes by position',
+  args: {
+    lat: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    },
+    lng: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    }
+  },
   async resolve({ lat, lng }, args, context, info) {
     try {
       const cached = await cache.get(`ofo|${lat}|${lng}`)

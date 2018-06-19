@@ -47,8 +47,6 @@ const VehicleType = new GraphQLInterfaceType({
   resolveType: vehicle => {
     let type
 
-    console.log(BirdType)
-
     switch (vehicle.provider.name) {
       case 'byke':
         type = BykeType

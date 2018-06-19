@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt } from 'graphql'
+import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 import GraphQLJSON from 'graphql-type-json'
 
 import Lime from '@multicycles/lime'
@@ -49,6 +49,15 @@ const LimeType = new GraphQLObjectType({
 
 const lime = {
   type: new GraphQLList(LimeType),
+  description: 'Get Byke bikes by position',
+  args: {
+    lat: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    },
+    lng: {
+      type: new GraphQLNonNull(GraphQLFloat)
+    }
+  },
   async resolve({ lat, lng }, args, context, info) {
     try {
       const cached = await cache.get(`lime|${lat}|${lng}`)

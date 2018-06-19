@@ -4,7 +4,7 @@ import { providers } from './providers'
 
 import { byke } from './byke'
 import { donkey } from './donkey'
-import { gobeebike, GobeeBikeType } from './gobee'
+import { gobeebike } from './gobee'
 import { indigowheel } from './indigowheel'
 import { inspect } from 'util'
 import { jump } from './jump'
@@ -15,6 +15,7 @@ import { ofo } from './ofo'
 import { pony } from './pony'
 import { whitebikes } from './whitebikes'
 import { yobike } from './yobike'
+import { bird } from './bird'
 import capacities from './capacities'
 import { tokens, createToken, deleteToken } from './tokens'
 import util from 'util'
@@ -22,46 +23,27 @@ import util from 'util'
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
-    fields: {
-      capacities,
-      bicyclesByLatLng: {
-        deprecationReason: 'Use the aggregated query "bikes"',
-        type: new GraphQLObjectType({
-          name: 'BicyclesByLatLng',
-          fields: {
-            byke,
-            donkey,
-            gobee: {
-              type: GobeeBikeType,
-              deprecationReason: 'Renamed gobeebike',
-              resolve: gobeebike.resolve
-            },
-            gobeebike,
-            indigowheel,
-            jump,
-            lime,
-            mobike,
-            obike,
-            ofo,
-            pony,
-            whitebikes,
-            yobike
-          }
-        }),
-        args: {
-          lat: {
-            type: new GraphQLNonNull(GraphQLFloat)
-          },
-          lng: {
-            type: new GraphQLNonNull(GraphQLFloat)
-          }
-        },
-        resolve: (root, args) => args
-      },
+    fields: () => ({
+      /* Main */
       vehicles,
       providers,
-      tokens
-    }
+      tokens,
+      /* Providers */
+      bird,
+      byke,
+      capacities,
+      donkey,
+      gobeebike,
+      indigowheel,
+      jump,
+      lime,
+      mobike,
+      obike,
+      ofo,
+      pony,
+      whitebikes,
+      yobike
+    })
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
