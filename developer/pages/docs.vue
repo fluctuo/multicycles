@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid>
+    <b-container>
       <b-row class="mt-3">
         <b-col cols="3">
           <ul class="list-unstyled">
@@ -20,6 +20,13 @@
               <nuxt-link :to="{ name: 'docs-type-value', params: { type: 'Type', value: t.name }}">{{ t.name }}</nuxt-link>
             </li>
           </ul>
+
+          <h4>Enums</h4>
+          <ul class="list-unstyled">
+            <li v-for="t in enums(this.$store.state.introspection)" :key="t.name">
+              <nuxt-link :to="{ name: 'docs-type-value', params: { type: 'Enum', value: t.name }}">{{ t.name }}</nuxt-link>
+            </li>
+          </ul>
         </b-col>
         <b-col cols="9">
           <nuxt-child />
@@ -35,11 +42,9 @@ import gql from 'graphql-tag';
 
 const excludedQueries = ['bicyclesByLatLng', 'tokens']
 const excludedTypes = ['App', 'BicyclesByLatLng', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken']
+const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
 export default {
-  data: () => ({
-
-  }),
   methods: {
     queries: (introspection) => {
       if (!introspection) {
@@ -48,8 +53,6 @@ export default {
 
       const q = introspection.__schema && introspection.__schema.types.filter((type) => type.name === 'Query');
 
-      // console.log(q)
-
       return Array.isArray(q) && q[0].fields.filter((f) => !excludedQueries.includes(f.name))
     },
     types: (introspection) => {
@@ -57,11 +60,14 @@ export default {
         return []
       }
 
-      const t = introspection.__schema && introspection.__schema.types.filter((type) => type.kind === 'OBJECT').filter((f) => !excludedTypes.includes(f.name));
+      return introspection.__schema && introspection.__schema.types.filter((type) => type.kind === 'OBJECT').filter((f) => !excludedTypes.includes(f.name));
+    },
+    enums: (introspection) => {
+      if (!introspection) {
+        return []
+      }
 
-      // console.log(t);
-
-      return t;
+      return introspection.__schema && introspection.__schema.types.filter((type) => type.kind === 'ENUM').filter((f) => !excludedEnums.includes(f.name));
     }
   },
   apollo: {

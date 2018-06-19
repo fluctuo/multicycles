@@ -4,7 +4,7 @@ import GraphQLJSON from 'graphql-type-json'
 import Donkey from '@multicycles/donkey'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType } from './vehicleDetailType'
+import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
@@ -16,12 +16,7 @@ const DonkeyType = new GraphQLObjectType({
   description: 'A Donkey bike',
   interfaces: () => [VehicleType],
   fields: {
-    id: { type: GraphQLString },
-    lat: { type: GraphQLFloat },
-    lng: { type: GraphQLFloat },
-    type: { type: VehicleTypeEnumType },
-    attributes: { type: new GraphQLList(VehicleAttributeEnumType) },
-    provider: { type: ProviderType },
+    ...vehicleInterfaceType,
     name: { type: GraphQLString },
     radius: { type: GraphQLInt },
     available_bikes_count: { type: GraphQLInt },

@@ -6,10 +6,10 @@
     <b-alert :show="!!selectedObject.isDeprecated" variant="danger">{{ selectedObject.deprecationReason }}</b-alert>
 
     <div v-if="selectedObject.args">
-      <pre v-highlightjs><code class="js">{{ renderPrototype(selectedObject) }}</code></pre>
+      <div class="prototype" v-html="renderPrototype(selectedObject)"></div>
 
       <h5>Fields</h5>
-      <b-table striped hover :items="selectedObject.args" :fields="fields">
+      <b-table striped hover responsive :items="selectedObject.args" :fields="fields">
         <template slot="type" slot-scope="data">
           {{ renderType(data.value) }}
         </template>
@@ -29,9 +29,9 @@
     <b-card v-if="selectedObject.fields">
       <h5>Fields</h5>
 
-      <b-table striped hover :items="selectedObject.fields" :fields="fields">
+      <b-table striped hover responsive :items="selectedObject.fields" :fields="fields">
         <template slot="type" slot-scope="data">
-          {{ renderType(data.value) }}
+          <span v-html="renderType(data.value)"></span>
         </template>
       </b-table>
     </b-card>
@@ -45,6 +45,12 @@
         </li>
       </ul>
     </div>
+
+    <b-card v-if="selectedObject.enumValues">
+      <h5>Values</h5>
+
+      <b-table striped hover responsive :items="selectedObject.enumValues" :fields="enumFields"></b-table>
+    </b-card>
   </div>
 </template>
 
@@ -52,6 +58,7 @@
 export default {
   data: () => ({
     fields: ['name', 'type', 'description'],
+    enumFields: ['name', 'description'],
     possibleTypesFields: ['Name']
   }),
   computed: {
@@ -61,7 +68,6 @@ export default {
       }
 
       const f = this.$store.state.introspection.__schema && this.$store.state.introspection.__schema.types.find((t) => t.name === this.$route.params.type || t.name === this.$route.params.value)
-
 
       if (this.$route.params.type !== 'Query') {
         return f;
@@ -77,13 +83,15 @@ export default {
 
       switch (t.kind) {
         case 'LIST':
-          type = `[${t.ofType.name}]`
+          type = `[${this.renderType(t.ofType)}]`
           break;
         case 'NON_NULL':
-          type = `${t.ofType.name}!`
+          type = `${this.renderType(t.ofType)}!`
           break;
         case 'OBJECT':
-          type = `<nuxt-link :to="{ name: 'docs-type-value', params: { type: 'Type', value:'${t.name}' }}">${t.name}</nuxt-link>`
+        case 'ENUM':
+        case 'INTERFACE':
+          type = `<a href="/docs/${t.kind.toLowerCase().replace(/^\w/, c => c.toUpperCase())}/${t.name}">${t.name}</a>`
           break;
         default:
           type = `${t.name}`
@@ -104,3 +112,20 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import '~/scss/app.scss';
+
+.prototype {
+  font-family: 'Courier New', Courier, monospace;
+  color: $light;
+  background-color: $dark;
+
+  margin: 20px 0;
+  padding: 10px;
+
+  a {
+    color: $primary;
+  }
+}
+</style>
