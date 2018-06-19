@@ -72,7 +72,7 @@ export default {
         zoom: 18,
         detectRetina: true
       },
-      vehicles: {}
+      vehicles: []
     }
   },
   created() {
