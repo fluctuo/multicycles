@@ -1,16 +1,15 @@
 <template>
   <div class="flex-container">
     <div class="map-container">
-      <v-progress v-if="fetchingBicycles !== 0" />
+      <v-progress v-if="fetchingVehicles !== 0" />
       <l-map ref="map" :zoom=map.zoom :center=map.center @moveend="moveCenter" @dragstart="moveStart" @zoomend="zoomEnd" style="height: 100%">
         <l-tile-layer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></l-tile-layer >
         <l-tile-layer v-else url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" :options="options" :attribution="attribution"></l-tile-layer>
 
         <l-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
 
-        <span v-for="(data, provider) in bicycles" :key="provider">
-          <l-marker v-for="(bicycle, idx) in data" :lat-lng="[bicycle.lat, bicycle.lng]" :icon="getIconByProvider(provider, bicycle)" :key="idx"></l-marker>
-        </span>
+
+        <l-marker v-for="vehicle in filterVehicles(vehicles)" :lat-lng="[vehicle.lat, vehicle.lng]" :icon="getIconByProvider(vehicle)" :key="vehicle.id"></l-marker>
       </l-map>
       <ul class="map-ui">
         <li><a @click="centerOnGeolocation" href="#"><i data-feather="compass"></i></a></li>
@@ -62,7 +61,7 @@ export default {
       },
       attribution:
         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-      fetchingBicycles: 0,
+      fetchingVehicles: 0,
       moved: false,
       location: {
         lat: 48.85,
@@ -73,12 +72,12 @@ export default {
         zoom: 18,
         detectRetina: true
       },
-      bicycles: {}
+      vehicles: {}
     }
   },
   created() {
     this.startGeolocation()
-    this.getBicycles(this.map.center[0], this.map.center[1])
+    this.getVehicles(this.map.center[0], this.map.center[1])
   },
   destroyed() {
     if (geolocationWatcher && navigator.geolocation) {
@@ -86,14 +85,14 @@ export default {
     }
   },
   watch: {
-    $route: 'getBicycles'
+    $route: 'getVehicles'
   },
   methods: {
     ...mapActions(['getCapacities', 'setGeolocation']),
     roundLocation(l) {
       return Math.round(l * 1000) / 1000
     },
-    getBicycles(lat, lng) {
+    getVehicles(lat, lng) {
       this.loading = true
 
       const diff = distanceInKmBetweenEarthCoordinates(this.location.lat, this.location.lng, lat, lng)
@@ -104,7 +103,7 @@ export default {
           lng: this.roundLocation(lng)
         }
 
-        this.$apollo.queries.bicycles.refetch()
+        this.$apollo.queries.vehicles.refetch()
       }
     },
     startGeolocation() {
@@ -114,7 +113,7 @@ export default {
         navigator.geolocation.getCurrentPosition(position => {
           this.map.center = [position.coords.latitude, position.coords.longitude]
           this.setGeolocation(this.map.center)
-          this.getBicycles(this.map.center[0], this.map.center[1])
+          this.getVehicles(this.map.center[0], this.map.center[1])
           this.getCapacities({ lat: this.map.center[0], lng: this.map.center[1] })
         })
         geolocationWatcher = navigator.geolocation.watchPosition(position => {
@@ -122,7 +121,7 @@ export default {
 
           if (!this.moved) {
             this.map.center = [position.coords.latitude, position.coords.longitude]
-            this.getBicycles(this.map.center[0], this.map.center[1])
+            this.getVehicles(this.map.center[0], this.map.center[1])
           }
         })
       }
@@ -134,10 +133,10 @@ export default {
       this.moved = true
     },
     moveCenter(event) {
-      this.getBicycles(this.map.center[0], this.map.center[1])
+      this.getVehicles(this.map.center[0], this.map.center[1])
     },
-    getIconByProvider(provider, bicycle) {
-      if (provider === 'geo') {
+    getIconByProvider(vehicle) {
+      if (vehicle === 'geo') {
         return L.icon({
           prefix: '',
           iconUrl: '/static/glyph-marker-dot.png',
@@ -146,12 +145,14 @@ export default {
       }
 
       let glyph = ''
-      let iconUrl = `/static/marker-${provider}.png`
-      let iconRetinaUrl = `/static/marker-${provider}-2x.png`
+      let iconUrl = `/static/marker-${vehicle.provider.name}.png`
+      let iconRetinaUrl = `/static/marker-${vehicle.provider.name}-2x.png`
 
-      if (provider === 'mobike') {
-        iconUrl = bicycle.biketype === 2 ? '/static/marker-mobike-2.png' : '/static/marker-mobike.png'
-        iconRetinaUrl = bicycle.biketype === 2 ? '/static/marker-mobike-2-2x.png' : '/static/marker-mobike-2x.png'
+      if (vehicle.provider.name === 'mobike') {
+        iconUrl = vehicle.attributes.includes('GEARS') ? '/static/marker-mobike-2.png' : '/static/marker-mobike.png'
+        iconRetinaUrl = vehicle.attributes.includes('GEARS')
+          ? '/static/marker-mobike-2-2x.png'
+          : '/static/marker-mobike-2x.png'
       }
 
       return L.icon({
@@ -166,19 +167,32 @@ export default {
         this.moved = false
         this.map.center = geolocation
       }
+    },
+    filterVehicles(vehicles) {
+      return vehicles.filter(v => !this.$store.state.disabledProviders.includes(v.provider.name))
     }
   },
   apollo: {
-    bicycles() {
+    vehicles() {
       return {
-        loadingKey: 'fetchingBicycles',
+        loadingKey: 'fetchingVehicles',
         query() {
           return gql`
             query($lat: Float!, $lng: Float!) {
-              bicyclesByLatLng(lat: $lat, lng: $lng) {
-                ${this.$store.getters.enabledProviders
-                  .map(p => (p === 'mobike' ? `${p}{ lat, lng, biketype }` : `${p}{ lat, lng }`))
-                  .join(',')}
+              vehicles(lat: $lat, lng: $lng) {
+                id
+                lat
+                lng
+                type
+                attributes
+                provider {
+                  name
+                  website
+                  app {
+                    android
+                    ios
+                  }
+                }
               }
             }
           `
@@ -187,7 +201,7 @@ export default {
           return { lat: this.location.lat, lng: this.location.lng }
         },
         update(data) {
-          return data.bicyclesByLatLng
+          return data.vehicles
         }
       }
     }

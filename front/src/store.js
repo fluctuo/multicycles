@@ -16,18 +16,19 @@ const state = {
   settingPanel: false,
   geolocation: false,
   providers: (capacities && capacities.providers) || [
-    'ofo',
-    'gobee',
-    'mobike',
-    'yobike',
-    'jump',
-    'pony',
-    'lime',
-    'whitebikes',
-    'obike',
-    'indigowheel',
+    'bird',
     'byke',
-    'donkey'
+    'donkey',
+    'gobeebike',
+    'indigowheel',
+    'jump',
+    'lime',
+    'mobike',
+    'obike',
+    'ofo',
+    'pony',
+    'whitebikes',
+    'yobike'
   ],
   disabledProviders: disabledProviders || []
 }
