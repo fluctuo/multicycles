@@ -47,6 +47,8 @@ const VehicleType = new GraphQLInterfaceType({
   resolveType: vehicle => {
     let type
 
+    console.log(BirdType)
+
     switch (vehicle.provider.name) {
       case 'byke':
         type = BykeType
@@ -106,7 +108,7 @@ const vehicles = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  resolve: async (root, args, ctx) => {
+  resolve: async (root, args, ctx, info) => {
     requireAccessToken(ctx.state.accessToken)
 
     const { city, country } = await reverseGeocode({
@@ -118,7 +120,9 @@ const vehicles = {
     const { lat, lng } = roundPosition(args)
 
     return availableProviders.length
-      ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }))).then(flat)
+      ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }, args, ctx, info))).then(
+          flat
+        )
       : []
   }
 }
