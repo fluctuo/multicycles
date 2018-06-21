@@ -8,12 +8,12 @@
 
         <l-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
 
-
-        <l-marker v-for="vehicle in filterVehicles(vehicles)" :lat-lng="[vehicle.lat, vehicle.lng]" :icon="getIconByProvider(vehicle)" :key="vehicle.id"></l-marker>
+        <l-marker v-for="vehicle in filterVehicles(vehicles)" :lat-lng="[vehicle.lat, vehicle.lng]" :icon="getIconByProvider(vehicle)" :key="vehicle.id" @click="selectVehicle(vehicle)"></l-marker>
       </l-map>
       <ul class="map-ui">
         <li><a @click="centerOnGeolocation" href="#"><i data-feather="compass"></i></a></li>
       </ul>
+      <selected-vehicle v-if="$store.state.selectedVehicle" :vehicle="$store.state.selectedVehicle"></selected-vehicle>
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
 
 import Progress from './Progress'
+import SelectedVehicle from './SelectedVehicle.vue'
 
 let geolocationWatcher
 
@@ -52,7 +53,8 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    'v-progress': Progress
+    'v-progress': Progress,
+    SelectedVehicle
   },
   data() {
     return {
@@ -88,7 +90,7 @@ export default {
     $route: 'getVehicles'
   },
   methods: {
-    ...mapActions(['getCapacities', 'setGeolocation']),
+    ...mapActions(['getCapacities', 'setGeolocation', 'selectVehicle']),
     roundLocation(l) {
       return Math.round(l * 1000) / 1000
     },
@@ -130,6 +132,9 @@ export default {
       this.map.zoom = this.$refs.map.mapObject.getZoom()
     },
     moveStart() {
+      if (this.$store.state.selectedVehicle) {
+        this.selectVehicle(false)
+      }
       this.moved = true
     },
     moveCenter(event) {

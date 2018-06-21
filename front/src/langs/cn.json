@@ -12,5 +12,15 @@
     "title": "设置",
     "lang": "语言",
     "providers": "Providers"
+  },
+  "vehicleType": {
+    "BIKE": "Bike",
+    "BIKEElectric": "Electric bike",
+    "BIKEGears": "Bike with gears",
+    "BIKEElectricGears": "Electric bike with gears",
+    "SCOOTER": "Scooter",
+    "SCOOTERElectric": "Electric scooter",
+    "SCOOTERGears": "Scooter with gears",
+    "SCOOTERElectricGears": "Electric scooter with gears"
   }
 }

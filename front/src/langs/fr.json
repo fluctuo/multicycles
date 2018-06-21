@@ -12,5 +12,15 @@
     "title": "Paramètres",
     "lang": "Langue",
     "providers": "Providers"
+  },
+  "vehicleType": {
+    "BIKE": "Vélo",
+    "BIKEElectric": "Vélo électrique",
+    "BIKEGears": "Vélo avec vitesses",
+    "BIKEElectricGears": "Vélo électrique avec vitesses",
+    "SCOOTER": "trottinette",
+    "SCOOTERElectric": "Trottinette électrique",
+    "SCOOTERGears": "Trottinette avec vitesses",
+    "SCOOTERElectricGears": "rottinette électrique avec vitesses"
   }
 }

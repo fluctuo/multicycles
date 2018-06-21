@@ -30,7 +30,8 @@ const state = {
     'whitebikes',
     'yobike'
   ],
-  disabledProviders: disabledProviders || []
+  disabledProviders: disabledProviders || [],
+  selectedVehicle: false
 }
 
 const getters = {
@@ -72,6 +73,9 @@ const actions = {
   },
   toggleProvider({ commit }, provider) {
     commit('toggleProvider', provider)
+  },
+  selectVehicle({ commit }, vehicle) {
+    commit('selectVehicle', vehicle)
   }
 }
 
@@ -104,6 +108,9 @@ const mutations = {
     }
 
     localStorage.setItem('disabledProviders', JSON.stringify(state.disabledProviders))
+  },
+  selectVehicle(state, vehicle) {
+    state.selectedVehicle = vehicle
   }
 }
 

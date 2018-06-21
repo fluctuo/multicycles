@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <settings-panel />
-    <header>
+    <div class="header">
       <img src="/static/bicyclist.svg" alt="mutlicycles logo" style="height: 30px">
       &nbsp;
       <router-link to="/">
@@ -14,7 +14,7 @@
 
       <a @click="toggleSettingPanel" class="settings"><i data-feather="settings"></i></a>
 
-    </header>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -38,10 +38,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Poppins');
-@import '../node_modules/knacss/sass/knacss.scss';
-
-$mainColor: rgb(18, 168, 11);
+@import './app.scss';
 
 html,
 body {
@@ -49,7 +46,7 @@ body {
   height: 100%;
 }
 
-header {
+.header {
   height: 45px;
   display: flex;
   align-items: center;
