@@ -13,7 +13,12 @@
       <ul class="map-ui">
         <li><a @click="centerOnGeolocation" href="#"><i data-feather="compass"></i></a></li>
       </ul>
-      <selected-vehicle v-if="$store.state.selectedVehicle" :vehicle="$store.state.selectedVehicle"></selected-vehicle>
+      <transition name="custom-classes-transition"
+        enter-active-class="fadeInUp"
+        leave-active-class="fadeOutDown"
+      >
+        <selected-vehicle v-if="$store.state.selectedVehicle" :vehicle="$store.state.selectedVehicle"></selected-vehicle>
+      </transition>
     </div>
   </div>
 </template>
@@ -58,6 +63,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       options: {
         mapboxKey: process.env.MAPBOX_KEY
       },

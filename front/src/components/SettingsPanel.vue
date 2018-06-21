@@ -1,21 +1,23 @@
 <template>
-  <div class="settings-panel" :class="{hide: !$store.state.settingPanel}">
-    <h2>{{ $t('settings.title')}}</h2>
+  <transition name="fade">
+    <div class="settings-panel" v-show="!$store.state.settingPanel">
+      <h2>{{ $t('settings.title')}}</h2>
 
-      <form>
-        <label for="lang">{{ $t('settings.lang') }}:</label>
-        <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
-          <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
-        </select>
+        <form>
+          <label for="lang">{{ $t('settings.lang') }}:</label>
+          <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
+            <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
+          </select>
 
-        <label for="lang">{{ $t('settings.providers') }}:</label>
+          <label for="lang">{{ $t('settings.providers') }}:</label>
 
-        <div v-for="provider in $store.state.providers" :key="provider" class="provider">
-          <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
-          <span>{{ provider }}</span>
-        </div>
-      </form>
-  </div>
+          <div v-for="provider in $store.state.providers" :key="provider" class="provider">
+            <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
+            <span>{{ provider }}</span>
+          </div>
+        </form>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -25,11 +27,7 @@ export default {
   name: 'SettingsPanel',
   data() {
     return {
-      langs: [
-        { text: 'Français', value: 'fr' },
-        { text: 'English', value: 'en' },
-        { text: '中文', value: 'cn' }
-      ]
+      langs: [{ text: 'Français', value: 'fr' }, { text: 'English', value: 'en' }, { text: '中文', value: 'cn' }]
     }
   },
   computed: mapGetters(['isProviderDisabled']),
@@ -57,10 +55,6 @@ export default {
   color: #ffffff;
 
   text-align: center;
-
-  &.hide {
-    display: none;
-  }
 
   .provider {
     justify-content: start;

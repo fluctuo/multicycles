@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 @import '~knacss/sass/knacss.scss';
 
+$animationDuration: 0.3s;
+@import '~vue2-animate/src/sass/vue2-animate.scss';
+
 $mainColor: rgb(18, 168, 11);

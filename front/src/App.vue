@@ -44,6 +44,7 @@ html,
 body {
   font-family: 'Poppins', sans-serif;
   height: 100%;
+  overflow: hidden;
 }
 
 .header {

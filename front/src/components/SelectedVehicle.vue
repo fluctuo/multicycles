@@ -1,7 +1,6 @@
 <template>
   <div class="selected-vehicle">
     <div class="detail">
-
       <div class="column">
         <img :src="logoSrc(vehicle.provider)" alt="logo" class="logo">
       </div>
@@ -59,6 +58,7 @@ export default {
 
   width: 100%;
   bottom: 0;
+  z-index: 9999;
 
   .logo {
     width: 50px;
