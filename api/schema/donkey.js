@@ -8,6 +8,7 @@ import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } f
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
+import { requireAccessToken } from '../auth'
 
 const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -38,7 +39,9 @@ const donkey = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve({ lat, lng }, args, context, info) {
+  async resolve(root, { lat, lng }, ctx, info) {
+    requireAccessToken(ctx.state.accessToken)
+
     try {
       const cached = await cache.get(`donkey|${lat}|${lng}`)
 
@@ -75,7 +78,7 @@ const donkey = {
         extra: {
           path: info.path,
           variable: info.variableValues,
-          body: context.req.body
+          body: ctx.req.body
         }
       })
 

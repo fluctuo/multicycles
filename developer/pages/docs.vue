@@ -40,7 +40,7 @@
 import { introspectionQuery } from 'graphql'
 import gql from 'graphql-tag';
 
-const excludedQueries = ['bicyclesByLatLng', 'tokens']
+const onlyQueries = ['vehicles', 'providers']
 const excludedTypes = ['App', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken', 'Mutation']
 const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
@@ -53,7 +53,7 @@ export default {
 
       const q = introspection.__schema && introspection.__schema.types.filter((type) => type.name === 'Query');
 
-      return Array.isArray(q) && q[0].fields.filter((f) => !excludedQueries.includes(f.name))
+      return Array.isArray(q) && q[0].fields.filter((f) => onlyQueries.includes(f.name))
     },
     types: (introspection) => {
       if (!introspection) {

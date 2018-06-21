@@ -7,6 +7,7 @@ import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } f
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
+import { requireAccessToken } from '../auth'
 
 const client = new Bird({ token: process.env.BIRD_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -32,7 +33,9 @@ const bird = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve({ lat, lng }, args, context, info) {
+  async resolve(root, { lat, lng }, ctx, info) {
+    requireAccessToken(ctx.state.accessToken)
+
     try {
       const cached = await cache.get(`bird|${lat}|${lng}`)
 
@@ -64,7 +67,7 @@ const bird = {
         extra: {
           path: info.path,
           variable: info.variableValues,
-          body: context.req.body
+          body: ctx.req.body
         }
       })
 

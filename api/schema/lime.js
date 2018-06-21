@@ -8,6 +8,7 @@ import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } f
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
+import { requireAccessToken } from '../auth'
 
 function getAttributes(attrs) {
   const attributes = []
@@ -62,7 +63,9 @@ const lime = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, context, info) {
+  async resolve(root, { lat, lng }, ctx, info) {
+    requireAccessToken(ctx.state.accessToken)
+
     try {
       const cached = await cache.get(`lime|${lat}|${lng}`)
 
@@ -103,7 +106,7 @@ const lime = {
         extra: {
           path: info.path,
           variable: info.variableValues,
-          body: context.req.body
+          body: ctx.req.body
         }
       })
 

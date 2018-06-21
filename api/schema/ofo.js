@@ -7,6 +7,7 @@ import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } f
 import { ProviderType } from './providers'
 import logger from '../logger'
 import cache from '../cache'
+import { requireAccessToken } from '../auth'
 
 const client = new Ofo({ token: process.env.OFO_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -33,7 +34,9 @@ const ofo = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve({ lat, lng }, args, context, info) {
+  async resolve(root, { lat, lng }, ctx, info) {
+    requireAccessToken(ctx.state.accessToken)
+
     try {
       const cached = await cache.get(`ofo|${lat}|${lng}`)
 
@@ -66,7 +69,7 @@ const ofo = {
         extra: {
           path: info.path,
           variable: info.variableValues,
-          body: context.req.body
+          body: ctx.req.body
         }
       })
 
