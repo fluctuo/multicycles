@@ -11,11 +11,11 @@ const rl = readline.createInterface({
 rl.question('Country code : ', ccc => {
   rl.question('Mobile tel number : ', tel => {
     ofo.getOTP({ tel, ccc }).then(resp => {
-      console.log(resp.data)
+      console.log(resp.body)
 
       rl.question('OTP : ', code => {
         ofo.login({ tel, code, ccc }).then(resp => {
-          console.log(resp.data)
+          console.log(resp.body)
 
           rl.close()
         })

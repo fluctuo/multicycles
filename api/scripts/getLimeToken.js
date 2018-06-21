@@ -12,7 +12,7 @@ rl.question('Phone number : ', phone => {
   lime.getOTP({ phone }).then(resp => {
     rl.question('OTP : ', code => {
       lime.login({ phone, code }).then(resp => {
-        console.log('token:', resp.data.token)
+        console.log('token:', resp.body.token)
         console.log('cookie:', resp.headers['set-cookie'])
 
         rl.close()

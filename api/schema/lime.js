@@ -10,7 +10,11 @@ import logger from '../logger'
 import cache from '../cache'
 
 function getAttributes(attrs) {
-  const attributes = ['GEARS']
+  const attributes = []
+
+  if (attributes.type_name === 'electric' || attributes.type_name === 'manual') {
+    attributes.push('GEARS')
+  }
 
   if (attrs.type_name === 'scooter' || attrs.type_name === 'electric') {
     attributes.push('ELECTRIC')
@@ -58,7 +62,7 @@ const lime = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve({ lat, lng }, args, context, info) {
+  async resolve(root, { lat, lng }, context, info) {
     try {
       const cached = await cache.get(`lime|${lat}|${lng}`)
 

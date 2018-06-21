@@ -14,7 +14,7 @@ test('Return capacitie for Paris', async t => {
   t.deepEqual(capacitie, {
     location: 'Paris, France',
     defaultLanguage: 'fr',
-    providers: ['ofo', 'mobike', 'obike', 'donkey']
+    providers: ['ofo', 'mobike', 'obike', 'donkey', 'lime']
   })
 })
 
