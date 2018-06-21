@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="settings-panel" v-show="!$store.state.settingPanel">
+    <div class="settings-panel" v-show="$store.state.settingPanel">
       <h2>{{ $t('settings.title')}}</h2>
 
         <form>
