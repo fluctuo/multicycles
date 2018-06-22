@@ -1,0 +1,20 @@
+{
+  "name": "@multicycles/spin",
+  "version": "1.0.0-beta.2",
+  "description": "Spin provider for multicycles",
+  "author": "Pierrick <mulotmail@gmail.com>",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "ava tests/*.js"
+  },
+  "license": "MIT",
+  "repository": "github:PierrickP/multicycles",
+  "dependencies": {
+    "got": "^8.3.1",
+    "jsonwebtoken": "^8.3.0",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0"
+  }
+}

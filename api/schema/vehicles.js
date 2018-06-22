@@ -20,6 +20,7 @@ import { PonyType, pony } from './pony'
 import { WhiteBikesType, whitebikes } from './whitebikes'
 import { YobikeType, yobike } from './yobike'
 import { BirdType, bird } from './bird'
+import { SpinType, spin } from './spin'
 import { ProviderType } from './providers'
 import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
 
@@ -86,6 +87,9 @@ const VehicleType = new GraphQLInterfaceType({
         break
       case 'bird':
         type = BirdType
+        break
+      case 'spin':
+        type = SpinType
         break
     }
 
