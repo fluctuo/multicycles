@@ -38,7 +38,8 @@ class Yobike {
 
   static getProviderDetails() {
     return {
-      name: 'yobike',
+      name: 'Yobike',
+      slug: 'yobike',
       website: 'https://yobike.com/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.gesila.yobike',

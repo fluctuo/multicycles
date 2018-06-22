@@ -12,7 +12,8 @@ class Mobike {
 
   static getProviderDetails() {
     return {
-      name: 'mobike',
+      name: 'Mobike',
+      slug: 'mobike',
       website: 'https://mobike.com/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.mobike.mobikeapp',

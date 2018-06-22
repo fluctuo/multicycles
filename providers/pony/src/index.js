@@ -25,7 +25,8 @@ class Pony {
 
   static getProviderDetails() {
     return {
-      name: 'pony',
+      name: 'Pony',
+      slug: 'pony',
       website: 'http://getapony.com/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=co.ponybikes.mercury',

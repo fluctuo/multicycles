@@ -41,7 +41,7 @@ export default {
       return key
     },
     logoSrc(provider) {
-      return require(`../assets/providers/${provider.name}.jpg`)
+      return require(`../assets/providers/${provider.slug}.jpg`)
     }
   }
 }

@@ -51,7 +51,8 @@ class Obike {
 
   static getProviderDetails() {
     return {
-      name: 'obike',
+      name: 'Obike',
+      slug: 'obike',
       website: 'https://www.o.bike',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.obike',

@@ -12,7 +12,8 @@ class Ofo {
 
   static getProviderDetails() {
     return {
-      name: 'ofo',
+      name: 'Ofo',
+      slug: 'ofo',
       website: 'https://www.ofo.com',
       app: {
         android: 'https://play.google.com/store/apps/details?id=so.ofo.abroad',

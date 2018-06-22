@@ -41,7 +41,7 @@ import { introspectionQuery } from 'graphql'
 import gql from 'graphql-tag';
 
 const onlyQueries = ['vehicles', 'providers']
-const excludedTypes = ['App', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken', 'Mutation']
+const excludedTypes = ['AppLink', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken', 'Mutation']
 const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
 export default {

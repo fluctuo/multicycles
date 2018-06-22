@@ -11,7 +11,8 @@ class GobeeBike {
 
   static getProviderDetails() {
     return {
-      name: 'gobeebike',
+      name: 'GoBee Bike',
+      slug: 'gobeebike',
       website: 'http://gobee.bike/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.pgt.gobeebike',

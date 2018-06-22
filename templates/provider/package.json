@@ -1,5 +1,5 @@
 {
-  "name": "@multicycles/{{ camelCase provider }}",
+  "name": "@multicycles/{{ totalyLower provider }}",
   "version": "1.0.0-beta.1",
   "description": "{{ titleCase provider }} provider for multicycles",
   "author": "Pierrick <mulotmail@gmail.com>",

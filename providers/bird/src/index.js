@@ -20,7 +20,8 @@ class Bird {
 
   static getProviderDetails() {
     return {
-      name: 'bird',
+      name: 'Bird',
+      slug: 'bird',
       website: 'https://www.bird.co/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=co.bird.android',

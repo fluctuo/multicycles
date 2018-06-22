@@ -11,11 +11,11 @@ import { reverseGeocode } from '../geolocation'
 import utils from '../utils'
 import { requireAccessToken } from '../auth'
 
-const AppType = new GraphQLObjectType({
-  name: 'App',
+const AppLinkType = new GraphQLObjectType({
+  name: 'AppLink',
   fields: {
-    android: { type: GraphQLString },
-    ios: { type: GraphQLString }
+    android: { type: GraphQLString, description: 'Android app link' },
+    ios: { type: GraphQLString, description: 'iOs app link' }
   }
 })
 
@@ -23,9 +23,10 @@ const ProviderType = new GraphQLObjectType({
   name: 'Provider',
   description: 'A provider detail. A provider refer to a company or a service that rents vehicles.',
   fields: {
-    name: { type: GraphQLString },
-    website: { type: GraphQLString },
-    app: { type: AppType }
+    name: { type: GraphQLString, description: 'Provider name' },
+    slug: { type: GraphQLString, description: 'Provider slug, can be used as a key' },
+    website: { type: GraphQLString, description: 'Main provider website' },
+    app: { type: AppLinkType, description: 'Link to mobile app' }
   }
 })
 

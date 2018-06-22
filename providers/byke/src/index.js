@@ -12,7 +12,8 @@ class Byke {
 
   static getProviderDetails() {
     return {
-      name: 'byke',
+      name: 'Byke',
+      slug: 'byke',
       website: 'http://byke.de/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.zen.zbike',

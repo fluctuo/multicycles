@@ -20,7 +20,8 @@ class Jump {
 
   static getProviderDetails() {
     return {
-      name: 'jump',
+      name: 'Jump',
+      slug: 'jump',
       website: 'https://jumpbikes.com/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.jumpmobility',

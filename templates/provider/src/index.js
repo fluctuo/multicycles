@@ -11,7 +11,8 @@ class {{ properCase provider }} {
 
   static getProviderDetails() {
     return {
-      name: '{{ totalyLower provider }}',
+      name: '{{ provider }}',
+      slug: '{{ totalyLower provider }}',
       website: '@TODO website',
       app: {
         android: '@TODO android link',

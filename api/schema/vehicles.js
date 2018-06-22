@@ -47,7 +47,7 @@ const VehicleType = new GraphQLInterfaceType({
   resolveType: vehicle => {
     let type
 
-    switch (vehicle.provider.name) {
+    switch (vehicle.provider.slug) {
       case 'byke':
         type = BykeType
         break

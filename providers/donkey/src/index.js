@@ -11,7 +11,8 @@ class Donkey {
 
   static getProviderDetails() {
     return {
-      name: 'donkey',
+      name: 'Donkey Republic',
+      slug: 'donkey',
       website: 'https://www.donkey.bike/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.donkeyrepublic.bike.android',

@@ -63,7 +63,6 @@ export default {
   },
   data() {
     return {
-      show: false,
       options: {
         mapboxKey: process.env.MAPBOX_KEY
       },
@@ -156,10 +155,10 @@ export default {
       }
 
       let glyph = ''
-      let iconUrl = `/static/marker-${vehicle.provider.name}.png`
-      let iconRetinaUrl = `/static/marker-${vehicle.provider.name}-2x.png`
+      let iconUrl = `/static/marker-${vehicle.provider.slug}.png`
+      let iconRetinaUrl = `/static/marker-${vehicle.provider.slug}-2x.png`
 
-      if (vehicle.provider.name === 'mobike') {
+      if (vehicle.provider.slug === 'mobike') {
         iconUrl = vehicle.attributes.includes('GEARS') ? '/static/marker-mobike-2.png' : '/static/marker-mobike.png'
         iconRetinaUrl = vehicle.attributes.includes('GEARS')
           ? '/static/marker-mobike-2-2x.png'
@@ -180,7 +179,7 @@ export default {
       }
     },
     filterVehicles(vehicles) {
-      return vehicles.filter(v => !this.$store.state.disabledProviders.includes(v.provider.name))
+      return vehicles.filter(v => !this.$store.state.disabledProviders.includes(v.provider.slug))
     }
   },
   apollo: {
@@ -198,6 +197,7 @@ export default {
                 attributes
                 provider {
                   name
+                  slug
                   website
                   app {
                     android

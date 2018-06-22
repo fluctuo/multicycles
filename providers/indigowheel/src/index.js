@@ -10,7 +10,8 @@ class IndigoWheel {
 
   static getProviderDetails() {
     return {
-      name: 'indigowheel',
+      name: 'INDIGO wheel',
+      slug: 'indigowheel',
       website: 'https://www.indigoweel.com/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.gesila.indigo',

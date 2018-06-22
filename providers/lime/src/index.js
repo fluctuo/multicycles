@@ -18,7 +18,8 @@ class Lime {
 
   static getProviderDetails() {
     return {
-      name: 'lime',
+      name: 'Lime',
+      slug: 'lime',
       website: 'https://www.limebike.com/',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.limebike',

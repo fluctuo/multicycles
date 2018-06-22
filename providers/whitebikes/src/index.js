@@ -23,7 +23,8 @@ class WhiteBikes {
 
   static getProviderDetails() {
     return {
-      name: 'whitebikes',
+      name: 'White Bikes',
+      slug: 'whitebikes',
       website: 'https://whitebikes.info',
       app: {
         android: null,
