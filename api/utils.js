@@ -26,6 +26,7 @@ export default {
             'obike',
             'ofo',
             'pony',
+            'spin',
             'whitebikes',
             'yobike'
           ]

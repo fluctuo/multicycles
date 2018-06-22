@@ -43,6 +43,7 @@ test('Return capacitie for Tokyo', async t => {
       'obike',
       'ofo',
       'pony',
+      'spin',
       'whitebikes',
       'yobike'
     ]
@@ -74,6 +75,7 @@ test('Return capacitie for 0,0', async t => {
       'obike',
       'ofo',
       'pony',
+      'spin',
       'whitebikes',
       'yobike'
     ]
