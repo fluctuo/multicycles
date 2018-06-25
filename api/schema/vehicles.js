@@ -118,7 +118,7 @@ const vehicles = {
       lng: args.lng
     })
 
-    const availableProviders = utils.getProviders(city, country)
+    const availableProviders = utils.getProviders(city, country, true)
     const { lat, lng } = roundPosition(args)
 
     return availableProviders.length
