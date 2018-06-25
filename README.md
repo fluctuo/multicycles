@@ -4,19 +4,27 @@
 
 [Multicycles.org](http://multicycles.org) aggregates on one map, different "free-floating" bike rental services.
 
-Currently support:
+See [Open-API](https://developer.multicycles.org/) for the API endpoint.
 
-* [gobee.bike](http://gobee.bike) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/gobee.bike.svg)](https://www.npmjs.com/package/@multicycles/gobee.bike)
-* [Ofo](https://www.ofo.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/ofo.svg)](https://www.npmjs.com/package/@multicycles/ofo)
-* [Mobike](https://mobike.com/global/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/mobike.svg)](https://www.npmjs.com/package/@multicycles/mobike)
-* [Yobike](https://yobike.co.uk) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/yobike.svg)](https://www.npmjs.com/package/@multicycles/yobike)
-* [Jump](https://jumpbikes.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/jump.svg)](https://www.npmjs.com/package/@multicycles/jump)
-* [Pony](http://getapony.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/pony.svg)](https://www.npmjs.com/package/@multicycles/pony)
-* [Lime](http://www.limebike.com/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/lime.svg)](https://www.npmjs.com/package/@multicycles/lime)
-* [WhiteBike](https://www.facebook.com/White-bikes-Biele-bicykle-183156078451725/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/whitebikes.svg)](https://www.npmjs.com/package/@multicycles/whitebikes)
-* [Obike](https://www.o.bike/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/obike.svg)](https://www.npmjs.com/package/@multicycles/obike)
-* [IndigoWheel](https://www.indigoweel.com) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/indigowheel.svg)](https://www.npmjs.com/package/@multicycles/indigowheel)
-* [Byke](http://byke.de/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/byke.svg)](https://www.npmjs.com/package/@multicycles/byke)
-* [Donkey](https://www.donkey.bike/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/donkey.svg)](https://www.npmjs.com/package/@multicycles/donkey)
-* [Bird](https://www.bird.co/) -> [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/bird.svg)](https://www.npmjs.com/package/@multicycles/bird)
-* Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)
+## Supported Providers
+
+|                                                                                                                                                        |                                                                                                                                         |                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/bird.svg?label=Bird)](https://www.npmjs.com/package/@multicycles/bird)                      | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/jump.svg?label=Jump)](https://www.npmjs.com/package/@multicycles/jump)       | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/pony.svg?label=Pony)](https://www.npmjs.com/package/@multicycles/pony)                   |
+| [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/byke.svg?label=Byke)](https://www.npmjs.com/package/@multicycles/byke)                      | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/lime.svg?label=Lime)](https://www.npmjs.com/package/@multicycles/lime)       | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/spin.svg?label=Spin)](https://www.npmjs.com/package/@multicycles/spin)                   |
+| [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/donkey.svg?label=Donkey%20Republic)](https://www.npmjs.com/package/@multicycles/donkey)     | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/mobike.svg?label=Mobike)](https://www.npmjs.com/package/@multicycles/mobike) | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/whitebikes.svg?label=WhiteBikes)](https://www.npmjs.com/package/@multicycles/whitebikes) |
+| [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/gobee.bike.svg?label=Gobee.bike)](https://www.npmjs.com/package/@multicycles/gobee.bike)    | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/obike.svg?label=Obike)](https://www.npmjs.com/package/@multicycles/obike)    | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/yobike.svg?label=Yobike)](https://www.npmjs.com/package/@multicycles/yobike)             |  |
+| [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/indigowheel.svg?label=IndigoWheel)](https://www.npmjs.com/package/@multicycles/indigowheel) | [![npm (scoped)](https://img.shields.io/npm/v/@multicycles/ofo.svg?label=Ofo)](https://www.npmjs.com/package/@multicycles/ofo)          |                                                                                                                                                     |
+
+Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)
+Or submit an [Issue](https://github.com/PierrickP/multicycles/issues/new)
+
+## Contact
+
+Email: contact@multicycles.org
+Twitter: https://twitter.com/multicyclesOrg
+
+## Sponsors
+
+[![Realtime application protection](https://s3-eu-west-1.amazonaws.com/sqreen-assets/badges/20171107/sqreen-light-badge.svg)](https://www.sqreen.io/?utm_source=badge)
+[![Sentry](https://developer.multicycles.org/sentry-logo-black.png)](https://sentry.io)
