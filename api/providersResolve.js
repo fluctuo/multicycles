@@ -14,14 +14,13 @@ async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
       return cached
     }
 
-    const result = await client.getBicyclesByLatLng({
-      lat,
-      lng
-    })
-
+    const result = await client.getBicyclesByLatLng({ lat, lng })
     const formatedResult = mapVehicles(result)
 
-    cache.set(`${provider.slug}|${lat}|${lng}`, formatedResult)
+    if (formatedResult.length > 0) {
+      cache.set(`${provider.slug}|${lat}|${lng}`, formatedResult)
+    }
+
     return formatedResult
   } catch (e) {
     logger.exception(e, {
