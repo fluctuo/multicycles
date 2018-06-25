@@ -3,12 +3,30 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Byke from '@multicycles/byke'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
 
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+function mapVehicles({ body }) {
+  return body.items.map(bike => ({
+    id: bike.bikeNo,
+    lat: bike.latitude,
+    lng: bike.longitude,
+    type: 'BIKE',
+    attributes: ['GEARS'],
+    provider: Byke.getProviderDetails(),
+    bikeId: bike.bikeId,
+    bikeType: bike.bikeType,
+    bikeNo: bike.bikeNo,
+    lockType: bike.lockType,
+    pricingUnit: bike.pricingUnit,
+    pricingAmount: bike.pricingAmount,
+    currentRideId: bike.currentRideId,
+    vol: bike.vol,
+    status: bike.status,
+    isLocked: bike.isLocked,
+    isReadyForRiding: bike.isReadyForRiding
+  }))
+}
 
 const client = new Byke({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -43,55 +61,8 @@ const byke = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`byke|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.body.items.map(bike => ({
-        id: bike.bikeNo,
-        lat: bike.latitude,
-        lng: bike.longitude,
-        type: 'BIKE',
-        attributes: ['GEARS'],
-        provider: Byke.getProviderDetails(),
-        bikeId: bike.bikeId,
-        bikeType: bike.bikeType,
-        bikeNo: bike.bikeNo,
-        lockType: bike.lockType,
-        pricingUnit: bike.pricingUnit,
-        pricingAmount: bike.pricingAmount,
-        currentRideId: bike.currentRideId,
-        vol: bike.vol,
-        status: bike.status,
-        isLocked: bike.isLocked,
-        isReadyForRiding: bike.isReadyForRiding
-      }))
-
-      cache.set(`byke|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'byke' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Byke, client, mapVehicles)
   }
 }
 

@@ -3,11 +3,25 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Obike from '@multicycles/obike'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles({ body }) {
+  return body.data.list.map(bike => ({
+    id: bike.id,
+    lat: bike.latitude,
+    lng: bike.longitude,
+    type: 'BIKE',
+    attributes: [],
+    provider: Obike.getProviderDetails(),
+    imei: bike.imei,
+    iconUrl: bike.iconUrl,
+    promotionActivityType: bike.promotionActivityType,
+    countryId: bike.countryId,
+    cityId: bike.cityId,
+    helmet: bike.helmet
+  }))
+}
 
 const client = new Obike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -37,50 +51,8 @@ const obike = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`obike|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.body.data.list.map(bike => ({
-        id: bike.id,
-        lat: bike.latitude,
-        lng: bike.longitude,
-        type: 'BIKE',
-        attributes: [],
-        provider: Obike.getProviderDetails(),
-        imei: bike.imei,
-        iconUrl: bike.iconUrl,
-        promotionActivityType: bike.promotionActivityType,
-        countryId: bike.countryId,
-        cityId: bike.cityId,
-        helmet: bike.helmet
-      }))
-
-      cache.set(`obike|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'obike' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Obike, client, mapVehicles)
   }
 }
 

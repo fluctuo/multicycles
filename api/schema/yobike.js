@@ -3,11 +3,22 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Yobike from '@multicycles/yobike'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles({ body }) {
+  return body.data.map(bike => ({
+    id: bike.plate_no,
+    lat: bike.latitude,
+    lng: bike.longitude,
+    type: 'BIKE',
+    attributes: ['GEARS'],
+    provider: Yobike.getProviderDetails(),
+    plate_no: bike.plate_no,
+    discount: bike.discount,
+    outside: bike.outside
+  }))
+}
 
 const client = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -34,47 +45,8 @@ const yobike = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`yobike|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.body.data.map(bike => ({
-        id: bike.plate_no,
-        lat: bike.latitude,
-        lng: bike.longitude,
-        type: 'BIKE',
-        attributes: ['GEARS'],
-        provider: Yobike.getProviderDetails(),
-        plate_no: bike.plate_no,
-        discount: bike.discount,
-        outside: bike.outside
-      }))
-
-      cache.set(`yobike|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'yobike' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Yobike, client, mapVehicles)
   }
 }
 

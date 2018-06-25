@@ -4,11 +4,26 @@ import GraphQLJSON from 'graphql-type-json'
 import Donkey from '@multicycles/donkey'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles({ body }) {
+  return body.map(bike => ({
+    id: bike.id,
+    lat: bike.latitude,
+    lng: bike.longitude,
+    type: 'BIKE',
+    attributes: ['GEARS'],
+    provider: Donkey.getProviderDetails(),
+    name: bike.name,
+    radius: bike.radius,
+    available_bikes_count: bike.available_bikes_count,
+    thumbnail_url: bike.thumbnail_url,
+    country_code: bike.country_code,
+    currency: bike.currency,
+    price: bike.price
+  }))
+}
 
 const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -39,51 +54,8 @@ const donkey = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`donkey|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.body.map(bike => ({
-        id: bike.id,
-        lat: bike.latitude,
-        lng: bike.longitude,
-        type: 'BIKE',
-        attributes: ['GEARS'],
-        provider: Donkey.getProviderDetails(),
-        name: bike.name,
-        radius: bike.radius,
-        available_bikes_count: bike.available_bikes_count,
-        thumbnail_url: bike.thumbnail_url,
-        country_code: bike.country_code,
-        currency: bike.currency,
-        price: bike.price
-      }))
-
-      cache.set(`donkey|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'donkey' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Donkey, client, mapVehicles)
   }
 }
 

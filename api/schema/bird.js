@@ -3,11 +3,21 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Bird from '@multicycles/bird'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles({ body }) {
+  return body.birds.map(bike => ({
+    id: bike.id,
+    lat: bike.location.latitude,
+    lng: bike.location.longitude,
+    type: 'SCOOTER',
+    attributes: ['ELECTRIC'],
+    provider: Bird.getProviderDetails(),
+    code: bike.code,
+    battery_level: bike.battery_level
+  }))
+}
 
 const client = new Bird({ token: process.env.BIRD_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -33,46 +43,8 @@ const bird = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`bird|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.body.birds.map(bike => ({
-        id: bike.id,
-        lat: bike.location.latitude,
-        lng: bike.location.longitude,
-        type: 'SCOOTER',
-        attributes: ['ELECTRIC'],
-        provider: Bird.getProviderDetails(),
-        code: bike.code,
-        battery_level: bike.battery_level
-      }))
-
-      cache.set(`bird|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'bird' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Bird, client, mapVehicles)
   }
 }
 

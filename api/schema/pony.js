@@ -3,11 +3,24 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoo
 import Pony from '@multicycles/pony'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles(result) {
+  return result.filter(bike => bike.status === 'AVAILABLE').map(bike => ({
+    id: bike.physicalId,
+    lat: bike.latitude,
+    lng: bike.longitude,
+    type: 'BIKE',
+    attributes: [],
+    provider: Pony.getProviderDetails(),
+    manualLocation: bike.manualLocation,
+    reason: bike.reason,
+    region: bike.region,
+    status: bike.status,
+    userId: bike.userId
+  }))
+}
 
 const client = new Pony()
 
@@ -36,49 +49,8 @@ const pony = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`pony|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.filter(bike => bike.status === 'AVAILABLE').map(bike => ({
-        id: bike.physicalId,
-        lat: bike.latitude,
-        lng: bike.longitude,
-        type: 'BIKE',
-        attributes: [],
-        provider: Pony.getProviderDetails(),
-        manualLocation: bike.manualLocation,
-        reason: bike.reason,
-        region: bike.region,
-        status: bike.status,
-        userId: bike.userId
-      }))
-
-      cache.set(`pony|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'pony' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Pony, client, mapVehicles)
   }
 }
 

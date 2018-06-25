@@ -3,11 +3,24 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLNon
 import WhiteBikes from '@multicycles/whitebikes'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles(result) {
+  return result.map(bike => ({
+    id: bike.standId,
+    lat: bike.lat,
+    lng: bike.lon,
+    type: 'BIKE',
+    attributes: [],
+    provider: WhiteBikes.getProviderDetails(),
+    standId: bike.standId,
+    bikeCount: bike.bikecount,
+    standDescription: bike.standDescription,
+    standName: bike.standName,
+    standPhoto: bike.standPhoto
+  }))
+}
 
 const client = new WhiteBikes({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -36,49 +49,8 @@ const whitebikes = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`whitebikes|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.map(bike => ({
-        id: bike.standId,
-        lat: bike.lat,
-        lng: bike.lon,
-        type: 'BIKE',
-        attributes: [],
-        provider: WhiteBikes.getProviderDetails(),
-        standId: bike.standId,
-        bikeCount: bike.bikecount,
-        standDescription: bike.standDescription,
-        standName: bike.standName,
-        standPhoto: bike.standPhoto
-      }))
-
-      cache.set(`whitebikes|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'whitebikes' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, WhiteBikes, client, mapVehicles)
   }
 }
 

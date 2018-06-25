@@ -3,11 +3,22 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLNon
 import Ofo from '@multicycles/ofo'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles({ body }) {
+  return body.values.cars.map(bike => ({
+    id: bike.carno,
+    lat: bike.lat,
+    lng: bike.lng,
+    type: 'BIKE',
+    attributes: ['GEARS'],
+    provider: Ofo.getProviderDetails(),
+    carno: bike.carno,
+    bomNum: bike.bomNum,
+    userIdLast: bike.userIdLast
+  }))
+}
 
 const client = new Ofo({ token: process.env.OFO_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -34,47 +45,8 @@ const ofo = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`ofo|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.body.values.cars.map(bike => ({
-        id: bike.carno,
-        lat: bike.lat,
-        lng: bike.lng,
-        type: 'BIKE',
-        attributes: ['GEARS'],
-        provider: Ofo.getProviderDetails(),
-        carno: bike.carno,
-        bomNum: bike.bomNum,
-        userIdLast: bike.userIdLast
-      }))
-
-      cache.set(`ofo|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'ofo' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Ofo, client, mapVehicles)
   }
 }
 

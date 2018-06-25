@@ -3,11 +3,23 @@ import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt
 import Spin from '@multicycles/spin'
 
 import { VehicleType } from './vehicles'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
-import { ProviderType } from './providers'
-import logger from '../logger'
-import cache from '../cache'
-import { requireAccessToken } from '../auth'
+import { vehicleInterfaceType } from './vehicleDetailType'
+import resolve from '../providersResolve'
+
+function mapVehicles({ body }) {
+  return body.vehicles.map(bike => ({
+    id: `spin-${bike.last4}`,
+    lat: bike.lat,
+    lng: bike.lng,
+    type: bike.vehicle_type === 'bicycle' ? 'BIKE' : 'SCOOTER',
+    attributes: ['ELECTRIC'],
+    provider: Spin.getProviderDetails(),
+    last4: bike.last4,
+    vehicle_type: bike.vehicle_type,
+    batt_percentage: bike.batt_percentage,
+    rebalance: bike.rebalance
+  }))
+}
 
 const client = new Spin({
   email: process.env.SPIN_AUTH_EMAIL,
@@ -39,48 +51,8 @@ const spin = {
       type: new GraphQLNonNull(GraphQLFloat)
     }
   },
-  async resolve(root, { lat, lng }, ctx, info) {
-    requireAccessToken(ctx.state.accessToken)
-
-    try {
-      const cached = await cache.get(`spin|${lat}|${lng}`)
-
-      if (cached) {
-        return cached
-      }
-
-      const result = await client.getBicyclesByLatLng({
-        lat,
-        lng
-      })
-
-      const formatedResult = result.body.vehicles.map(bike => ({
-        id: `spin-${bike.last4}`,
-        lat: bike.lat,
-        lng: bike.lng,
-        type: bike.vehicle_type === 'bicycle' ? 'BIKE' : 'SCOOTER',
-        attributes: ['ELECTRIC'],
-        provider: Spin.getProviderDetails(),
-        last4: bike.last4,
-        vehicle_type: bike.vehicle_type,
-        batt_percentage: bike.batt_percentage,
-        rebalance: bike.rebalance
-      }))
-
-      cache.set(`spin|${lat}|${lng}`, formatedResult)
-      return formatedResult
-    } catch (e) {
-      logger.exception(e, {
-        tags: { provider: 'spin' },
-        extra: {
-          path: info.path,
-          variable: info.variableValues,
-          body: ctx.req.body
-        }
-      })
-
-      return []
-    }
+  async resolve(root, args, ctx, info) {
+    return resolve(args, ctx, info, Spin, client, mapVehicles)
   }
 }
 

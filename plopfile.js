@@ -22,6 +22,11 @@ module.exports = plop => {
         base: 'templates/provider/',
         force: true,
         abortOnFail: true
+      },
+      {
+        type: 'add',
+        path: 'api/schema/{{ totalyLower provider}}.js',
+        templateFile: 'templates/api/schema.js'
       }
     ]
   })
