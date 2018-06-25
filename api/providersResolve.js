@@ -23,6 +23,11 @@ async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
 
     return formatedResult
   } catch (e) {
+    // For Spin
+    if (e.response && e.response.body && e.response.body.error === 'This region is not enabled') {
+      return []
+    }
+
     logger.exception(e, {
       tags: { provider: `${provider.slug}` },
       extra: {
