@@ -24,9 +24,10 @@ import { SpinType, spin } from './spin'
 import { ProviderType } from './providers'
 import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
 
-import { reverseGeocode } from '../geolocation'
-import utils from '../utils'
 import { requireAccessToken } from '../auth'
+import { reverseGeocode } from '../geolocation'
+import db from '../db'
+import utils from '../utils'
 
 function flat(arr) {
   return arr.reduce((r, a) => [...r, ...a])
@@ -122,11 +123,23 @@ const vehicles = {
     const { lat, lng } = roundPosition(args)
 
     return availableProviders.length
-      ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }, args, ctx, info))).then(
-          flat
-        )
+      ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }, args, ctx, info)))
+          .then(flat)
+          .then(vehicles => saveCityProviders(vehicles, { city, country }, { lat, lng }))
       : []
   }
+}
+
+async function saveCityProviders(vehicles, { city, country }, { lat, lng }) {
+  await db('cities').insert({
+    city,
+    country,
+    lat,
+    lng,
+    providers: [...new Set(vehicles.map(v => v.provider.slug))]
+  })
+
+  return vehicles
 }
 
 export { vehicles, VehicleType }
