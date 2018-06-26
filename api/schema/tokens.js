@@ -89,7 +89,7 @@ const deleteToken = {
     id: { type: GraphQLInt }
   },
   async resolve(root, args, ctx) {
-    requireScope(ctx.state.user, 'remove:tokens')
+    requireScope(ctx.state.user, 'delete:tokens')
 
     await db('tokens')
       .where({
