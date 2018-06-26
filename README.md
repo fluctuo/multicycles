@@ -19,6 +19,22 @@ See [Open-API](https://developer.multicycles.org/) for the API endpoint.
 Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)
 Or submit an [Issue](https://github.com/PierrickP/multicycles/issues/new)
 
+## Contribute
+
+### Setup
+
+`git clone https://github.com/PierrickP/multicycles && cd multicycles`
+run `npm i`
+
+### Create a new provider
+
+Run `npm run generate`
+
+### Run services
+
+Set `{api,developer}/.env` files
+Use `npm run dev:SERVICE` with SERVICE as `api` / `front` / `developer`
+
 ## Contact
 
 Email: contact@multicycles.org

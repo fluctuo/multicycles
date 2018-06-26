@@ -9,15 +9,14 @@
     "clean": "rm -rf providers/*/lib",
     "transpile":
       "lerna exec --ignore '@multicycles/{api,front,developer}' -- babel src --optional runtime --out-dir lib --ignore \"__tests__\"",
-    "posttranspile": "lerna run prepare",
     "watch":
       "lerna exec --ignore '@multicycles/{api,front,developer}' --parallel -- babel -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
     "prepare": "npm run clean && npm run transpile",
-    "prerelease": "npm run prepare",
-    "release": "lerna publish",
-    "links": "lerna exec -- npm link",
     "test": "lerna run test",
-    "generate": "plop"
+    "generate": "plop",
+    "dev:api": "cd api && npm start",
+    "dev:front": "cd front && npm run dev",
+    "dev:developer": "cd developer && HOST=0.0.0.0 PORT=8081 npm run dev"
   },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --write", "git add"]
