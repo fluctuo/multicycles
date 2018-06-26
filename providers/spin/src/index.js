@@ -50,7 +50,7 @@ class Spin {
       })
   }
 
-  refreshToken() {
+  refresh() {
     return got
       .post(`${BASE_URL}/v1/auth_tokens`, {
         json: true,
@@ -77,7 +77,7 @@ class Spin {
     if (!this.token) {
       return this.login()
     } else if (this.decodedToken.exp < Math.floor(Date.now() / 1000)) {
-      return this.refreshToken()
+      return this.refresh()
     } else {
       return Promise.resolve()
     }
