@@ -19,6 +19,7 @@ import { bird } from './bird'
 import { spin } from './spin'
 import capacities from './capacities'
 import { tokens, createToken, deleteToken } from './tokens'
+import { tokenStats } from './tokenStats'
 import util from 'util'
 
 export default new GraphQLSchema({
@@ -29,6 +30,7 @@ export default new GraphQLSchema({
       vehicles,
       providers,
       tokens,
+      tokenStats,
       /* Providers */
       bird,
       byke,

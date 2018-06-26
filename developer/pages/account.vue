@@ -68,6 +68,10 @@ export default {
             id
             value
             createdAt
+            stats {
+              date
+              hits
+            }
           }
         }
       `,

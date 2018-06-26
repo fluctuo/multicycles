@@ -10,6 +10,8 @@ import {
 import { GraphQLDateTime } from 'graphql-iso-date'
 import randomstring from 'randomstring'
 
+import { tokenStats, TokenStatsType } from './tokenStats'
+
 import utils from '../utils'
 import logger from '../logger'
 import db from '../db'
@@ -35,7 +37,8 @@ const tokenType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLInt },
     value: { type: GraphQLString },
-    createdAt: { type: GraphQLDateTime }
+    createdAt: { type: GraphQLDateTime },
+    stats: { type: new GraphQLList(TokenStatsType), resolve: tokenStats.resolve }
   }
 })
 

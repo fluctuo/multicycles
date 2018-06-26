@@ -1,25 +1,34 @@
 <template>
-  <div class="token">
-    <div class="access-token bg-light">
-      {{ token.value }}
-      <a href="#" v-clipboard:copy="token.value">
-        <copy-icon class="copy"/>
-      </a>
-    </div>
-    <div class="sub">
-      <span>Created {{ token.createdAt | ago }} ago</span>
-      <a class="delete" href="#" @click="promptDeleteToken(token.id)">Delete</a>
-    </div>
-  </div>
+  <b-container fluid class="token">
+    <b-row align-v="center">
+      <b-col>
+        Token #{{token.id}}
+        <div class="access-token bg-light">
+          {{ token.value }}
+          <a href="#" v-clipboard:copy="token.value">
+            <copy-icon class="copy"/>
+          </a>
+        </div>
+        <div class="sub">
+          <span>Created {{ token.createdAt | ago }} ago</span>
+          <a class="delete" href="#" @click="promptDeleteToken(token.id)">Delete</a>
+        </div>
+      </b-col>
+      <b-col md="5" sm="12">
+        <token-stats-chart :chart-data="token.stats" class="chart"/>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import moment from 'moment'
 import { CopyIcon } from 'vue-feather-icons'
+import TokenStatsChart from './TokenStatsChart.vue'
 
 export default {
-  components: { CopyIcon },
+  components: { CopyIcon, TokenStatsChart },
   props: ['token', 'deleteToken'],
   methods: {
     promptDeleteToken(id) {
@@ -62,6 +71,10 @@ export default {
       position: absolute;
       right: 28px;
     }
+  }
+
+  .chart {
+    height: 80px;
   }
 }
 </style>
