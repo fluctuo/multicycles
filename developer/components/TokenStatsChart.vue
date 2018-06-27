@@ -23,7 +23,13 @@ export default {
       responsive: true, maintainAspectRatio: false,
       legend: { display: false },
       scales: {
-        xAxes: [{ gridLines: { display: false } }],
+        xAxes: [{
+          gridLines: { display: false },
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 5
+          }
+        }],
         yAxes: [{
           ticks: {
             beginAtZero: true,

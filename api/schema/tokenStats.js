@@ -24,7 +24,7 @@ const TokenStatsType = new GraphQLObjectType({
 const tokenStats = {
   type: new GraphQLList(TokenStatsType),
   args: {
-    id: { type: GraphQLInt }
+    id: { type: new GraphQLNonNull(GraphQLInt) }
   },
   async resolve(root, args, ctx) {
     if (!root || !root.id) {
@@ -43,11 +43,24 @@ const tokenStats = {
     }
 
     const tokenId = root && root.id ? root.id : args.id
+    const result = await db.raw(
+      `
+      SELECT
+        day as "date",
+        coalesce(hits, 0) as "hits"
+      FROM (
+        select generate_series(now() - interval '1 month', now(), interval '1 day')::date
+      ) as d(day)
+      LEFT JOIN (
+        SELECT * FROM stats
+        WHERE token_id = ?
+      ) as s ON s.date::date = day
+      ORDER BY day
+    `,
+      [tokenId]
+    )
 
-    return await db('stats')
-      .where('token_id', tokenId)
-      .where('date', '>', db.raw("now() - INTERVAL '1 months'"))
-      .orderBy('date', 'desc')
+    return result.rows
   }
 }
 
