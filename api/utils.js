@@ -17,6 +17,7 @@ export default {
         ? [
             'bird',
             'byke',
+            'coup',
             'donkey',
             'gobeebike',
             'indigowheel',

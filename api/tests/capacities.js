@@ -14,7 +14,7 @@ test('Return capacitie for Paris', async t => {
   t.deepEqual(capacitie, {
     location: 'Paris, France',
     defaultLanguage: 'fr',
-    providers: ['ofo', 'mobike', 'obike', 'donkey', 'lime']
+    providers: ['ofo', 'mobike', 'obike', 'donkey', 'lime', 'coup']
   })
 })
 
@@ -34,6 +34,7 @@ test('Return capacitie for Tokyo', async t => {
     providers: [
       'bird',
       'byke',
+      'coup',
       'donkey',
       'gobeebike',
       'indigowheel',
@@ -66,6 +67,7 @@ test('Return capacitie for 0,0', async t => {
     providers: [
       'bird',
       'byke',
+      'coup',
       'donkey',
       'gobeebike',
       'indigowheel',

@@ -3,6 +3,7 @@ import { vehicles } from './vehicles'
 import { providers } from './providers'
 
 import { byke } from './byke'
+import { coup } from './coup'
 import { donkey } from './donkey'
 import { gobeebike } from './gobee'
 import { indigowheel } from './indigowheel'
@@ -29,12 +30,13 @@ export default new GraphQLSchema({
       /* Main */
       vehicles,
       providers,
+      capacities,
       tokens,
       tokenStats,
       /* Providers */
       bird,
       byke,
-      capacities,
+      coup,
       donkey,
       gobeebike,
       indigowheel,

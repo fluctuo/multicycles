@@ -21,6 +21,10 @@
     "SCOOTER": "Scooter",
     "SCOOTERElectric": "Electric scooter",
     "SCOOTERGears": "Scooter with gears",
-    "SCOOTERElectricGears": "Electric scooter with gears"
+    "SCOOTERElectricGears": "Electric scooter with gears",
+    "MOTORSCOOTER": "Motor-scooter",
+    "MOTORSCOOTERElectric": "Electric motor-scooter",
+    "MOTORSCOOTERGears": "Motor-scooter",
+    "MOTORSCOOTERElectricGears": "Electric motor-scooter"
   }
 }

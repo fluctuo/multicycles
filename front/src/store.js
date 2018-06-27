@@ -18,6 +18,7 @@ const state = {
   providers: (capacities && capacities.providers) || [
     'bird',
     'byke',
+    'coup',
     'donkey',
     'gobeebike',
     'indigowheel',

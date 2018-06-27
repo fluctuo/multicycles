@@ -21,6 +21,10 @@
     "SCOOTER": "trottinette",
     "SCOOTERElectric": "Trottinette électrique",
     "SCOOTERGears": "Trottinette avec vitesses",
-    "SCOOTERElectricGears": "rottinette électrique avec vitesses"
+    "SCOOTERElectricGears": "rottinette électrique avec vitesses",
+    "MOTORSCOOTER": "Scooter",
+    "MOTORSCOOTERElectric": "Scooter électrique",
+    "MOTORSCOOTERGears": "Scooter avec vitesses",
+    "MOTORSCOOTERElectricGears": "Scooter électrique avec vitesses"
   }
 }

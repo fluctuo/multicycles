@@ -6,7 +6,8 @@ const VehicleTypeEnumType = new GraphQLEnumType({
   description: 'Kind of vehicle',
   values: {
     BIKE: { description: 'A bike, something with two wheel, a handlebar and a saddle' },
-    SCOOTER: { description: 'A scooter, like a bike without saddle. ¯\\_(⊙︿⊙)_/¯' }
+    SCOOTER: { description: 'A scooter, like a bike without saddle. ¯\\_(⊙︿⊙)_/¯' },
+    MOTORSCOOTER: { description: 'A motor-scooter' }
   }
 })
 

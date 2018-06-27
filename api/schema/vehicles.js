@@ -8,6 +8,7 @@ import {
 } from 'graphql'
 
 import { BykeType, byke } from './byke'
+import { CoupType, coup } from './coup'
 import { DonkeyType, donkey } from './donkey'
 import { GobeeBikeType, gobeebike } from './gobee'
 import { IndigoWheelType, indigowheel } from './indigowheel'
@@ -91,6 +92,9 @@ const VehicleType = new GraphQLInterfaceType({
         break
       case 'spin':
         type = SpinType
+        break
+      case 'coup':
+        type = CoupType
         break
     }
 

@@ -17,7 +17,7 @@ export default {
   Venice: ['bird'],
   // France
   France: ['ofo', 'mobike', 'obike', 'indigowheel'],
-  Paris: ['ofo', 'mobike', 'obike', 'donkey', 'lime'],
+  Paris: ['ofo', 'mobike', 'obike', 'donkey', 'lime', 'coup'],
   Angers: ['pony', 'indigowheel'],
   // China
   Shanghai: ['ofo', 'mobike', 'obike'],

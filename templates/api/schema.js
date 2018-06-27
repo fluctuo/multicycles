@@ -23,7 +23,7 @@ const {{ properCase provider}}Type = new GraphQLObjectType({
 })
 
 const {{ totalyLower provider}} = {
-  type: new GraphQLList(BirdType),
+  type: new GraphQLList({{ properCase provider}}Type),
   description: 'Get {{ properCase provider}} vehicles by postions',
   args: {
     lat: {
@@ -34,7 +34,7 @@ const {{ totalyLower provider}} = {
     }
   },
   async resolve(root, args, ctx, info) {
-    return resolve(args, ctx, info, {{ camelCase provider}}, client, mapVehicles)
+    return resolve(args, ctx, info, {{ properCase provider}}, client, mapVehicles)
   }
 }
 
