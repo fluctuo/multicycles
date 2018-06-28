@@ -29,6 +29,12 @@ router.post(
   })
 )
 
+router.get('/health', ctx => {
+  ctx.body = JSON.stringify({
+    ok: true
+  })
+})
+
 app
   .use(cors())
   .use(bodyparser())
