@@ -30,7 +30,9 @@ class Coup {
         json: true
       })
       .then(({ body }) => {
-        this.markets[index].business_areas = body.data.business_areas
+        market.business_areas = body.data.business_areas
+
+        return market
       })
   }
 
@@ -39,10 +41,9 @@ class Coup {
       .get(`${BASE_URL}/v3/markets`, {
         json: true
       })
-      .then(({ body }) => {
-        this.markets = body.data.markets
-
-        return Promise.all(body.data.markets.map((m, i) => this.getBusinessAreas(m, i)))
+      .then(({ body }) => Promise.all(body.data.markets.map((m, i) => this.getBusinessAreas(m, i))))
+      .then(markets => {
+        this.markets = markets
       })
   }
 
