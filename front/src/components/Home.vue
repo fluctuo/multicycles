@@ -71,11 +71,11 @@ export default {
       fetchingVehicles: 0,
       moved: false,
       location: {
-        lat: 48.85,
-        lng: 2.36
+        lat: this.$store.state.geolocation[0],
+        lng: this.$store.state.geolocation[1]
       },
       map: {
-        center: [48.852775, 2.369336],
+        center: this.$store.state.geolocation,
         zoom: 18,
         detectRetina: true
       },

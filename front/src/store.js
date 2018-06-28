@@ -10,11 +10,12 @@ Vue.use(Vuex)
 const capacities = localStorage.getItem('capacities') && JSON.parse(localStorage.getItem('capacities'))
 const disabledProviders =
   localStorage.getItem('disabledProviders') && JSON.parse(localStorage.getItem('disabledProviders'))
+const position = localStorage.getItem('position') && JSON.parse(localStorage.getItem('position'))
 
 const state = {
   lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
   settingPanel: false,
-  geolocation: false,
+  geolocation: position || [48.852775, 2.369336],
   providers: (capacities && capacities.providers) || [
     'bird',
     'byke',
@@ -90,6 +91,7 @@ const mutations = {
     state.lang = lang
   },
   setGeolocation(state, position) {
+    localStorage.setItem('position', JSON.stringify(position))
     state.geolocation = position
   },
   setCapacities(state, capacities) {
