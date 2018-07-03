@@ -17,6 +17,7 @@ import { IndigoWheelType, indigowheel } from './indigowheel'
 import { JumpType, jump } from './jump'
 import { LimeType, lime } from './lime'
 import { MobikeType, mobike } from './mobike'
+import { NextbikeType, nextbike } from './nextbike'
 import { ObikeType, obike } from './obike'
 import { OfoType, ofo } from './ofo'
 import { PonyType, pony } from './pony'
@@ -25,7 +26,7 @@ import { YobikeType, yobike } from './yobike'
 import { BirdType, bird } from './bird'
 import { SpinType, spin } from './spin'
 import { ProviderType } from './providers'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
+import { ObjectTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
 
 import { requireAccessToken } from '../auth'
 import { reverseGeocode } from '../geolocation'
@@ -97,6 +98,9 @@ const VehicleType = new GraphQLInterfaceType({
         break
       case 'coup':
         type = CoupType
+        break
+      case 'nextbike':
+        type = NextbikeType
         break
     }
 

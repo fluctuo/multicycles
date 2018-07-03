@@ -1,13 +1,14 @@
-import { GraphQLString, GraphQLFloat, GraphQLList, GraphQLEnumType } from 'graphql'
+import { GraphQLString, GraphQLFloat, GraphQLList, GraphQLEnumType, GraphQLInt } from 'graphql'
 import { ProviderType } from './providers'
 
-const VehicleTypeEnumType = new GraphQLEnumType({
-  name: 'VehicleType',
+const ObjectTypeEnumType = new GraphQLEnumType({
+  name: 'ObjectType',
   description: 'Kind of vehicle',
   values: {
     BIKE: { description: 'A bike, something with two wheel, a handlebar and a saddle' },
     SCOOTER: { description: 'A scooter, like a bike without saddle. ¯\\_(⊙︿⊙)_/¯' },
-    MOTORSCOOTER: { description: 'A motor-scooter' }
+    MOTORSCOOTER: { description: 'A motor-scooter' },
+    STATION: { description: 'A station of vehicles.' }
   }
 })
 
@@ -24,9 +25,15 @@ const vehicleInterfaceType = {
   id: { description: 'The provider id', type: GraphQLString },
   lat: { description: "The vehicle's latitude", type: GraphQLFloat },
   lng: { description: "The vehicle's longitude", type: GraphQLFloat },
-  type: { description: "The vehicle's type", type: VehicleTypeEnumType },
+  type: { description: "The object's type", type: ObjectTypeEnumType },
   attributes: { description: "The vehicle's attributes", type: new GraphQLList(VehicleAttributeEnumType) },
   provider: { type: ProviderType }
 }
 
-export { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType }
+const stationInterfaceType = {
+  available_vehicles: { description: 'Number of available vehicles', type: GraphQLInt },
+  available_stands: { description: 'Number of available free stands', type: GraphQLInt },
+  total_stands: { description: 'Total of stands', type: GraphQLInt }
+}
+
+export { ObjectTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType, stationInterfaceType }
