@@ -1,0 +1,29 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "Vehicle",
+        "possibleTypes": [
+          { "name": "Bird" },
+          { "name": "Byke" },
+          { "name": "Coup" },
+          { "name": "Donkey" },
+          { "name": "GobeeBike" },
+          { "name": "IndigoWheel" },
+          { "name": "Jump" },
+          { "name": "Lime" },
+          { "name": "Mobike" },
+          { "name": "Nextbike" },
+          { "name": "Obike" },
+          { "name": "Ofo" },
+          { "name": "Pony" },
+          { "name": "Spin" },
+          { "name": "WhiteBikes" },
+          { "name": "Yobike" }
+        ]
+      },
+      { "kind": "INTERFACE", "name": "Station", "possibleTypes": [{ "name": "Nextbike" }] }
+    ]
+  }
+}

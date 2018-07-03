@@ -9,7 +9,7 @@
           {{ vehicle.provider.name }}
         </div>
         <div class="kind">
-          {{ $t(getVehicleTypeKey(vehicle))}}
+          {{ $t(getVehicleTypeKey(vehicle), vehicle)}}
         </div>
       </div>
       <div class="column">
@@ -30,14 +30,15 @@ export default {
     getVehicleTypeKey(vehicle) {
       let key = `vehicleType.${vehicle.type}`
 
-      if (vehicle.attributes.includes('ELECTRIC')) {
+      if (vehicle.attributes && vehicle.attributes.includes('ELECTRIC')) {
         key += 'Electric'
       }
 
-      if (vehicle.attributes.includes('GEARS')) {
+      if (vehicle.attributes && vehicle.attributes.includes('GEARS')) {
         key += 'Gears'
       }
 
+      console.log('key', key)
       return key
     },
     logoSrc(provider) {

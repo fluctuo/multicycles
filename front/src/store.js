@@ -26,6 +26,7 @@ const state = {
     'jump',
     'lime',
     'mobike',
+    'nextbike',
     'obike',
     'ofo',
     'pony',
