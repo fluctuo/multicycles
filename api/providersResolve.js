@@ -23,6 +23,11 @@ async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
 
     return formatedResult
   } catch (e) {
+    // Generic soft error for not covered area
+    if (e.message === 'Not Covered') {
+      return []
+    }
+
     // For Spin
     if (e.response && e.response.body && e.response.body.error === 'This region is not enabled') {
       return []

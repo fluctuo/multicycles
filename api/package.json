@@ -15,7 +15,7 @@
     "@koa/cors": "^2.2.1",
     "@multicycles/bird": "^1.0.0-beta.2",
     "@multicycles/byke": "^1.0.0-beta.5",
-    "@multicycles/coup": "^1.0.0-beta.2",
+    "@multicycles/coup": "^1.0.0-beta.3",
     "@multicycles/donkey": "^1.0.0-beta.5",
     "@multicycles/gobee.bike": "1.0.0-beta.11",
     "@multicycles/indigowheel": "^1.0.0-beta.5",

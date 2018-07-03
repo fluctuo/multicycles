@@ -75,7 +75,7 @@ class Coup {
     const market = await this.getMarket({ lat, lng })
 
     if (!market) {
-      return []
+      throw new Error('Not Covered')
     }
 
     return got.get(`${BASE_URL}/v3/markets/${market.id}/scooters`, {
