@@ -12,6 +12,7 @@
           <b-navbar-nav>
             <b-nav-item href="/#features" >Features</b-nav-item>
             <b-nav-item href="/#pricing" >Pricing</b-nav-item>
+            <b-nav-item href="/showcase" >Showcase</b-nav-item>
             <b-nav-item href="/docs" >Documentation</b-nav-item>
           </b-navbar-nav>
 
