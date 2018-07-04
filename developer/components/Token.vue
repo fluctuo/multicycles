@@ -23,7 +23,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import moment from 'moment'
 import { CopyIcon } from 'vue-feather-icons'
 import TokenStatsChart from './TokenStatsChart.vue'
 

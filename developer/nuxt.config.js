@@ -27,7 +27,8 @@ module.exports = {
     ]
   },
   env: {
-    MULTICYCLES_API: process.env.MULTICYCLES_API
+    MULTICYCLES_API: process.env.MULTICYCLES_API,
+    MULTICYCLES_ACCESS_TOKEN: process.env.MULTICYCLES_ACCESS_TOKEN
   },
   /*
   ** Customize the progress bar color
@@ -61,9 +62,12 @@ module.exports = {
         'b-carousel-slide': 'img-src',
         'b-embed': 'src'
       }
+    },
+    babel: {
+      plugins: ['transform-react-jsx']
     }
   },
-  plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy'],
+  plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy', { src: '~/plugins/react', ssr: false }],
   modules: [
     '@nuxtjs/dotenv',
     ['bootstrap-vue/nuxt', { css: false }],
