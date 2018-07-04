@@ -25,7 +25,7 @@ class Spin {
     }
   }
 
-  login({ uid = uuid() } = {}, config) {
+  login({ uid = uuid() } = {}) {
     return got
       .post(`${BASE_URL}/v1/auth_tokens`, {
         json: true,
@@ -35,9 +35,7 @@ class Spin {
             mobileType: 'ios'
           },
           grantType: 'device'
-        },
-        timeout: this.config.timeout,
-        ...config
+        }
       })
       .then(result => {
         if (result.body && result.body.jwt) {
@@ -58,9 +56,7 @@ class Spin {
           grantType: 'refresh_token',
           userUniqueKey: this.decodedToken.userUniqueKey,
           refreshToken: this.refreshToken
-        },
-        timeout: this.config.timeout,
-        ...config
+        }
       })
       .then(result => {
         if (result.body && result.body.jwt) {
