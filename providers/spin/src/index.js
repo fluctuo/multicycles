@@ -56,7 +56,7 @@ class Spin {
         json: true,
         body: {
           grantType: 'refresh_token',
-          userUniqueKey: this.decodedToken.payload.userUniqueKey,
+          userUniqueKey: this.decodedToken.userUniqueKey,
           refreshToken: this.refreshToken
         },
         timeout: this.config.timeout,

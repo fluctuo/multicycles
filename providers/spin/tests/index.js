@@ -44,7 +44,8 @@ test('get bicycles by positions', async t => {
   await spin
     .getBicyclesByLatLng({
       lat: 38.907192,
-      lng: -77.036871
+      lng: -77.036871,
+      distance: 1000
     })
     .then(result => {
       t.is(result.statusCode, 200)
