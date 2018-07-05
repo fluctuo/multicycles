@@ -8,12 +8,14 @@ import schema from './schema'
 import logger from './logger'
 import jwt from './jwt'
 import accessToken from './accessToken'
+import rateLimit from './rateLimit'
 
 const app = new Koa()
 const router = new Router()
 
 router.post(
   '/v1',
+  rateLimit,
   graphqlHTTP({
     schema,
     graphiql: process.env.NODE_ENV !== 'production',
@@ -34,6 +36,8 @@ router.get('/health', ctx => {
     ok: true
   })
 })
+
+app.proxy = true
 
 app
   .use(cors())
