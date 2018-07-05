@@ -11,7 +11,8 @@
   "settings": {
     "title": "设置",
     "lang": "语言",
-    "providers": "Providers"
+    "providers": "Providers",
+    "installApp": "Install App"
   },
   "vehicleType": {
     "BIKE": "Bike",

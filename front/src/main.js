@@ -25,6 +25,11 @@ if ('serviceWorker' in navigator) {
   })
 }
 
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault()
+  // window.installPromptEvent = event
+})
+
 if (process.env.UA_ANALYTICS) {
   Vue.use(VueAnalytics, {
     id: process.env.UA_ANALYTICS,

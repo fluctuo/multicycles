@@ -2,20 +2,25 @@
   <transition name="fade">
     <div class="settings-panel" v-show="$store.state.settingPanel">
       <h2>{{ $t('settings.title')}}</h2>
+      <div class="install" v-if="hasInstallPromptEvent">
+        <button @click="installApp()">
+          <i data-feather="arrow-down-circle"></i>
+          {{ $t('settings.installApp')}}
+        </button>
+      </div>
+      <form>
+        <label for="lang">{{ $t('settings.lang') }}:</label>
+        <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
+          <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
+        </select>
 
-        <form>
-          <label for="lang">{{ $t('settings.lang') }}:</label>
-          <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
-            <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
-          </select>
+        <label for="lang">{{ $t('settings.providers') }}:</label>
 
-          <label for="lang">{{ $t('settings.providers') }}:</label>
-
-          <div v-for="provider in $store.state.providers" :key="provider" class="provider">
-            <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
-            <span>{{ provider }}</span>
-          </div>
-        </form>
+        <div v-for="provider in $store.state.providers" :key="provider" class="provider">
+          <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
+          <span>{{ provider }}</span>
+        </div>
+      </form>
     </div>
   </transition>
 </template>
@@ -27,11 +32,17 @@ export default {
   name: 'SettingsPanel',
   data() {
     return {
+      hasInstallPromptEvent: !!window.installPromptEvent,
       langs: [{ text: 'Français', value: 'fr' }, { text: 'English', value: 'en' }, { text: '中文', value: 'cn' }]
     }
   },
   computed: mapGetters(['isProviderDisabled']),
-  methods: mapActions(['setLang', 'toggleProvider'])
+  methods: {
+    ...mapActions(['setLang', 'toggleProvider']),
+    installApp() {
+      window.installPromptEvent.prompt()
+    }
+  }
 }
 </script>
 
@@ -70,6 +81,20 @@ export default {
 form {
   display: flex;
   flex-direction: column;
+}
+
+.install button {
+  margin: 15px 0;
+  background: #fff;
+  padding: 10px 50px;
+  display: block;
+  border-radius: 5px;
+  text-decoration: none;
+
+  .feather {
+    margin-bottom: -6px;
+    margin-right: 5px;
+  }
 }
 </style>
 

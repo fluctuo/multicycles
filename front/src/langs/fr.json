@@ -11,7 +11,8 @@
   "settings": {
     "title": "Paramètres",
     "lang": "Langue",
-    "providers": "Providers"
+    "providers": "Providers",
+    "installApp": "Installer l'application"
   },
   "vehicleType": {
     "BIKE": "Vélo",
