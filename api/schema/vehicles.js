@@ -118,10 +118,12 @@ const vehicles = {
   resolve: async (root, args, ctx, info) => {
     requireAccessToken(ctx.state.accessToken)
 
-    const { city, country } = await reverseGeocode({
-      lat: args.lat,
-      lng: args.lng
-    })
+    // const { city, country } = await reverseGeocode({
+    //   lat: args.lat,
+    //   lng: args.lng
+    // })
+    const city = undefined
+    const country = undefined
 
     const availableProviders = utils.getProviders(city, country, true)
     const { lat, lng } = roundPosition(args)
