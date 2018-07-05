@@ -6,6 +6,8 @@ import {
   GraphQLList,
   GraphQLEnumType
 } from 'graphql'
+import distance from '@turf/distance'
+import { point } from '@turf/helpers'
 
 import { BykeType, byke } from './byke'
 import { CoupType, coup } from './coup'
@@ -132,6 +134,7 @@ const vehicles = {
       ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }, args, ctx, info)))
           .then(flat)
           .then(vehicles => saveCityProviders(vehicles, { city, country }, { lat, lng }))
+          .then(vehicles => limitToRadius({ lat, lng }, vehicles, 400))
       : []
   }
 }
@@ -146,6 +149,16 @@ async function saveCityProviders(vehicles, { city, country }, { lat, lng }) {
   })
 
   return vehicles
+}
+
+function limitToRadius(center, vehicles, meters) {
+  const user = point([center.lng, center.lat])
+
+  return vehicles.filter(v => {
+    const vehicle = point([v.lng, v.lat])
+
+    return distance(user, vehicle) <= meters / 1000
+  })
 }
 
 export { vehicles, VehicleType }
