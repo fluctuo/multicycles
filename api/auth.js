@@ -15,9 +15,9 @@ function requireScope(user, scope) {
 }
 
 function requireAccessToken(accessToken) {
-  // if (!accessToken) {
-  //   throw new AuthorizedError()
-  // }
+  if (!accessToken) {
+    throw new AuthorizedError()
+  }
 }
 
 export { requireScope, requireAccessToken }
