@@ -109,8 +109,6 @@ export default {
           lat: this.roundLocation(lat),
           lng: this.roundLocation(lng)
         }
-
-        this.$apollo.queries.vehicles.refetch()
       }
     },
     startGeolocation() {
