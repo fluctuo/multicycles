@@ -30,6 +30,19 @@ export default {
     getVehicleTypeKey(vehicle) {
       let key = `vehicleType.${vehicle.type}`
 
+      if (vehicle.attributes && vehicle.attributes.includes('CARGO')) {
+        return 'CARGO'
+      }
+
+      if (vehicle.attributes && vehicle.attributes.includes('TANDEM')) {
+        return 'TANDEM'
+      }
+
+      if (vehicle.attributes && vehicle.attributes.includes('TANDEM')) {
+        key += 'ChildSeat'
+        return key
+      }
+
       if (vehicle.attributes && vehicle.attributes.includes('ELECTRIC')) {
         key += 'Electric'
       }
@@ -38,7 +51,6 @@ export default {
         key += 'Gears'
       }
 
-      console.log('key', key)
       return key
     },
     logoSrc(provider) {

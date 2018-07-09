@@ -26,7 +26,7 @@ import { YobikeType, yobike } from './yobike'
 import { BirdType, bird } from './bird'
 import { SpinType, spin } from './spin'
 import { ProviderType } from './providers'
-import { ObjectTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
+import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
 
 import { requireAccessToken } from '../auth'
 import { reverseGeocode } from '../geolocation'

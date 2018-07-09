@@ -27,6 +27,9 @@
     "MOTORSCOOTERElectric": "Scooter électrique",
     "MOTORSCOOTERGears": "Scooter avec vitesses",
     "MOTORSCOOTERElectricGears": "Scooter électrique avec vitesses",
-    "STATION": "Station avec {available_vehicles} vélos et {available_stands} places"
+    "STATION": "Station avec {available_vehicles} vélos et {available_stands} places",
+    "CARGO": "Vélo cargo",
+    "TANDEM": "Tandem <3",
+    "BIKEChildSeat": "Vélo avec siège enfant"
   }
 }
