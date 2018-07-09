@@ -22,6 +22,7 @@
     "@multicycles/jump": "1.0.0-beta.7",
     "@multicycles/lime": "1.0.0-beta.8",
     "@multicycles/mobike": "1.0.0-beta.9",
+    "@multicycles/nextbike": "^1.0.0-beta.1",
     "@multicycles/obike": "^1.0.0-beta.7",
     "@multicycles/ofo": "1.0.0-beta.11",
     "@multicycles/pony": "^1.0.0-beta.5",

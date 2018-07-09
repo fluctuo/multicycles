@@ -17,6 +17,7 @@ import { IndigoWheelType, indigowheel } from './indigowheel'
 import { JumpType, jump } from './jump'
 import { LimeType, lime } from './lime'
 import { MobikeType, mobike } from './mobike'
+import { NextbikeType, nextbike } from './nextbike'
 import { ObikeType, obike } from './obike'
 import { OfoType, ofo } from './ofo'
 import { PonyType, pony } from './pony'
@@ -97,6 +98,9 @@ const VehicleType = new GraphQLInterfaceType({
         break
       case 'coup':
         type = CoupType
+        break
+      case 'nextbike':
+        type = NextbikeType
         break
     }
 

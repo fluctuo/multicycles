@@ -5,6 +5,7 @@
           <ul class="list-unstyled">
             <li><nuxt-link to="/docs">Introduction</nuxt-link></li>
             <li><nuxt-link to="/docs/auth">Authentication</nuxt-link></li>
+            <li><nuxt-link to="/docs/recipes">Recipes</nuxt-link></li>
           </ul>
 
           <h4>Queries</h4>
@@ -41,7 +42,7 @@ import { introspectionQuery } from 'graphql'
 import gql from 'graphql-tag';
 
 const onlyQueries = ['vehicles', 'providers']
-const excludedTypes = ['AppLink', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken', 'Mutation', 'TokenStats']
+const excludedTypes = ['AppLink', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken', 'Mutation', 'TokenStats', 'NextbikeFields']
 const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
 export default {

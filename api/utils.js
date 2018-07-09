@@ -24,6 +24,7 @@ export default {
             'jump',
             'lime',
             'mobike',
+            'nextbike',
             'obike',
             'ofo',
             'pony',

@@ -26,6 +26,10 @@
     "MOTORSCOOTER": "Motor-scooter",
     "MOTORSCOOTERElectric": "Electric motor-scooter",
     "MOTORSCOOTERGears": "Motor-scooter",
-    "MOTORSCOOTERElectricGears": "Electric motor-scooter"
+    "MOTORSCOOTERElectricGears": "Electric motor-scooter",
+    "STATION": "Station with {available_vehicles} bikes and {available_stands} stands",
+    "CARGO": "Cargo bike",
+    "TANDEM": "Tandem",
+    "BIKEChildSeat": "Bike with child seat"
   }
 }

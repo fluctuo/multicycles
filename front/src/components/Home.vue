@@ -202,6 +202,10 @@ export default {
                     ios
                   }
                 }
+                ... on Station {
+                  available_vehicles
+                  available_stands
+                }
               }
             }
           `
