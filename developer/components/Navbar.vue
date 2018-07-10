@@ -18,7 +18,7 @@
 
           <b-nav-item-dropdown right v-if="$auth && $auth.$state.loggedIn" class="fix-dropdown-padding">
             <template slot="button-content">
-              <b-img :src="$auth.user.picture" rounded="circle" width="30" height="30"/>
+              <b-img blank blank-color="#677fb7" :src="$auth.user.picture" rounded="circle" width="30" height="30"/>
             </template>
             <b-dropdown-item href="/account">Account</b-dropdown-item>
             <b-dropdown-item @click="logout">Sign out</b-dropdown-item>

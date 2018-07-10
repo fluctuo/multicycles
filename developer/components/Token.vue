@@ -3,7 +3,7 @@
     <b-row align-v="center">
       <b-col>
         Token #{{token.id}}
-        <div class="access-token bg-light">
+        <div class="access-token bg-light" v-if="token.value">
           {{ token.value }}
           <a href="#" v-clipboard:copy="token.value">
             <copy-icon class="copy"/>
@@ -11,10 +11,10 @@
         </div>
         <div class="sub">
           <span>Created {{ token.createdAt | ago }} ago</span>
-          <a class="delete" href="#" @click="promptDeleteToken(token.id)">Delete</a>
+          <a v-if="deleteToken" class="delete" href="#" @click="promptDeleteToken(token.id)">Delete</a>
         </div>
       </b-col>
-      <b-col md="5" sm="12">
+      <b-col :md="token.value ? 5 : 12" sm="12">
         <token-stats-chart :chart-data="token.stats" class="chart"/>
       </b-col>
     </b-row>
@@ -34,10 +34,6 @@ export default {
       if (confirm('Are-you sure to delete this token ?')) {
         this.deleteToken(id);
       }
-    },
-    copy() {
-      this.$co
-      alert(this.token.value)
     }
   }
 }

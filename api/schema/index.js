@@ -22,6 +22,7 @@ import { nextbike } from './nextbike'
 import capacities from './capacities'
 import { tokens, createToken, deleteToken } from './tokens'
 import { tokenStats } from './tokenStats'
+import { users } from './users'
 import util from 'util'
 
 export default new GraphQLSchema({
@@ -34,6 +35,7 @@ export default new GraphQLSchema({
       capacities,
       tokens,
       tokenStats,
+      users,
       /* Providers */
       bird,
       byke,

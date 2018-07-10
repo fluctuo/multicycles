@@ -42,7 +42,7 @@ import { introspectionQuery } from 'graphql'
 import gql from 'graphql-tag';
 
 const onlyQueries = ['vehicles', 'providers']
-const excludedTypes = ['AppLink', 'Query', '__Schema', '__Type', '__Field', '__InputValue', '__EnumValue', '__Directive', 'Token', 'DeletedToken', 'Mutation', 'TokenStats', 'NextbikeFields']
+const onlyTypes = ['Provider', 'Capacities', 'Bird', 'Byke', 'Coup', 'Donkey', 'GobeeBike', 'IndigoWheel', 'Jump', 'Lime', 'Mobike', 'Nextbike', 'Obike', 'Ofo', 'Pony', 'Spin', 'WhiteBikes', 'Yobike']
 const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
 export default {
@@ -61,7 +61,7 @@ export default {
         return []
       }
 
-      return introspection.__schema && introspection.__schema.types.filter((type) => type.kind === 'OBJECT').filter((f) => !excludedTypes.includes(f.name));
+      return introspection.__schema && introspection.__schema.types.filter((type) => type.kind === 'OBJECT').filter((f) => onlyTypes.includes(f.name));
     },
     enums: (introspection) => {
       if (!introspection) {

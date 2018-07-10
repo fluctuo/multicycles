@@ -5,10 +5,10 @@ function (user, context, callback) {
   var addRolesToUser = function(user, cb) {
     if (user.email && (
         user.email.indexOf('@multicycles.org') > -1 ||
-        user.email === 'multomail@gmail.com'
+        user.email === 'mulotmail@gmail.com'
       )
     ) {
-      cb(null, ['admin']);
+      cb(null, ['admin', 'user']);
     } else {
       cb(null, ['user']);
     }

@@ -9,7 +9,7 @@ const AuthorizedError = createError('AuthorizedError', {
 })
 
 function requireScope(user, scope) {
-  if (!user || !user.scopes.includes(scope)) {
+  if (!user || !user.scopes.includes(scope) || !user.roles.includes('admin')) {
     throw new AuthenticatedError()
   }
 }
@@ -20,4 +20,10 @@ function requireAccessToken(accessToken) {
   }
 }
 
-export { requireScope, requireAccessToken }
+function requireAdmin(user) {
+  if (!user.roles.includes('admin')) {
+    throw new AuthenticatedError()
+  }
+}
+
+export { requireScope, requireAccessToken, requireAdmin }

@@ -57,7 +57,7 @@ const tokens = {
     requireScope(ctx.state.user, 'read:tokens')
 
     return await db('tokens')
-      .where('userId', ctx.state.user.sub)
+      .where('userId', root ? root.user_id : ctx.state.user.sub)
       .then(tokens => tokens.map(formatToken))
   }
 }
