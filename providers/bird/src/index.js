@@ -23,9 +23,14 @@ class Bird {
       name: 'Bird',
       slug: 'bird',
       website: 'https://www.bird.co/',
+      discountCode: 'https://gift.bird.co/4uR8WFEeuO',
       app: {
         android: 'https://play.google.com/store/apps/details?id=co.bird.android',
-        ios: 'https://itunes.apple.com/us/app/bird-enjoy-the-ride/id1260842311'
+        ios: 'https://itunes.apple.com/app/id1260842311'
+      },
+      deepLink: {
+        android: 'https://98kz.app.link',
+        ios: 'https://98kz.app.link'
       }
     }
   }

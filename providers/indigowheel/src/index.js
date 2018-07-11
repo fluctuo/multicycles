@@ -13,9 +13,14 @@ class IndigoWheel {
       name: 'INDIGO wheel',
       slug: 'indigowheel',
       website: 'https://www.indigoweel.com/',
+      discountCode: 'http://eu.static.bikesharingos.com/ShareInvitingPage/IndigoWeel/index.html?code=8D9VS8S',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.gesila.indigo',
         ios: 'https://itunes.apple.com/app/id1317216469'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

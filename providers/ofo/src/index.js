@@ -15,9 +15,14 @@ class Ofo {
       name: 'Ofo',
       slug: 'ofo',
       website: 'https://www.ofo.com',
+      discountCode: 'http://promo.ofo.com/Y03poRA',
       app: {
         android: 'https://play.google.com/store/apps/details?id=so.ofo.abroad',
         ios: 'https://itunes.apple.com/us/app/ofo-smart-bike-sharing/id1190831637?mt=8'
+      },
+      deepLink: {
+        android: 'growing.75b85ae957f8a52b://',
+        ios: 'growing.272596a6fc275283://'
       }
     }
   }

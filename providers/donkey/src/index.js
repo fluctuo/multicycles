@@ -14,9 +14,14 @@ class Donkey {
       name: 'Donkey Republic',
       slug: 'donkey',
       website: 'https://www.donkey.bike/',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.donkeyrepublic.bike.android',
         ios: 'https://itunes.apple.com/app/id933526449'
+      },
+      deepLink: {
+        android: 'https://dnky.bike',
+        ios: 'https://dnky.bike'
       }
     }
   }

@@ -26,7 +26,12 @@ class WhiteBikes {
       name: 'White Bikes',
       slug: 'whitebikes',
       website: 'https://whitebikes.info',
+      discountCode: null,
       app: {
+        android: null,
+        ios: null
+      },
+      deepLink: {
         android: null,
         ios: null
       }

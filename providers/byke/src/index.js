@@ -15,9 +15,14 @@ class Byke {
       name: 'Byke',
       slug: 'byke',
       website: 'http://byke.de/',
+      discountCode: 'J41EK4M',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.zen.zbike',
         ios: 'https://itunes.apple.com/app/id1247826304'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

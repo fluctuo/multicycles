@@ -23,9 +23,14 @@ class Jump {
       name: 'Jump',
       slug: 'jump',
       website: 'https://jumpbikes.com/',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.jumpmobility',
         ios: 'https://itunes.apple.com/app/id1251322970'
+      },
+      deepLink: {
+        android: 'jump://',
+        ios: 'jump://'
       }
     }
   }

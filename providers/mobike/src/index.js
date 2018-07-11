@@ -15,9 +15,15 @@ class Mobike {
       name: 'Mobike',
       slug: 'mobike',
       website: 'https://mobike.com/',
+      discountCode:
+        'https://m2.mobike.com/h5/overseas_accept_invite/en/index.html?referralId=V1U0Rjl2VmdVVWdobThUUjVPcUlNRVROdlpyZFFKY2ZlZzc0ZlkyN0NIbz0=&nickName=&reward=50',
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.mobike.mobikeapp',
         ios: 'https://itunes.apple.com/app/id1044535426'
+      },
+      deepLink: {
+        android: null,
+        ios: 'growing.98cfc9b5ea1caa2c://'
       }
     }
   }
