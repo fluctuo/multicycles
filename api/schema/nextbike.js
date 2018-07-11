@@ -24,7 +24,7 @@ function mapVehicles({ body }) {
     }
   })
 
-  return city.places.map(o => {
+  return city.places.filter(o => !o.bike || (o.bike && o.bikes > 0)).map(o => {
     const data = {
       id: o.uid,
       lat: o.lat,
