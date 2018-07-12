@@ -27,7 +27,7 @@ if ('serviceWorker' in navigator) {
 
 window.addEventListener('beforeinstallprompt', event => {
   event.preventDefault()
-  // window.installPromptEvent = event
+  window.installPromptEvent = event
 })
 
 if (process.env.UA_ANALYTICS) {
