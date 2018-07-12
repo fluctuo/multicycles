@@ -18,9 +18,14 @@ class Nextbike {
       name: 'Nextbike',
       slug: 'nextbike',
       website: 'https://www.nextbike.net/',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=de.nextbike',
         ios: 'https://itunes.apple.com/app/id504288371'
+      },
+      deepLink: {
+        android: 'nextbike://',
+        ios: 'nextbike://'
       }
     }
   }

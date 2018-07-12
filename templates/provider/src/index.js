@@ -14,9 +14,14 @@ class {{ properCase provider }} {
       name: '{{ provider }}',
       slug: '{{ totalyLower provider }}',
       website: '@TODO website',
+      discountCode: null,
       app: {
         android: '@TODO android link',
         ios: '@TODO ios link'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

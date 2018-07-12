@@ -31,5 +31,13 @@
     "CARGO": "Cargo bike",
     "TANDEM": "Tandem",
     "BIKEChildSeat": "Bike with child seat"
+  },
+  "selectedVehicle": {
+    "ihaveanaccount": "I have a account",
+    "openApp": "Open App",
+    "downloadApp": "Download app",
+    "useDiscountCode": "Get free rides with ",
+    "discountLink": "this link",
+    "discountCode": "this code"
   }
 }

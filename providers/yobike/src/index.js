@@ -41,9 +41,14 @@ class Yobike {
       name: 'Yobike',
       slug: 'yobike',
       website: 'https://yobike.com/',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.gesila.yobike',
         ios: 'https://itunes.apple.com/app/id1207509504'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

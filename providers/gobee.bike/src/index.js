@@ -14,9 +14,14 @@ class GobeeBike {
       name: 'GoBee Bike',
       slug: 'gobeebike',
       website: 'http://gobee.bike/',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.pgt.gobeebike',
         ios: 'https://itunes.apple.com/app/id1230842750'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

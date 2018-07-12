@@ -12,7 +12,9 @@
         {{ $t('about.title') }}
       </router-link>
 
-      <a @click="toggleSettingPanel" class="settings"><i data-feather="settings"></i></a>
+      <a @click="toggleSettingPanel" class="settings">
+        <settings-icon></settings-icon>
+      </a>
 
     </div>
     <router-view/>
@@ -21,17 +23,15 @@
 
 <script>
 import { mapActions } from 'vuex'
-import feather from 'feather-icons'
+import { SettingsIcon } from 'vue-feather-icons'
 
 import settingsPanel from './components/SettingsPanel'
 
 export default {
   name: 'app',
   components: {
-    settingsPanel
-  },
-  mounted() {
-    feather.replace()
+    settingsPanel,
+    SettingsIcon
   },
   methods: mapActions(['toggleSettingPanel'])
 }

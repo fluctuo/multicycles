@@ -17,9 +17,14 @@ class Coup {
       name: 'Coup',
       slug: 'coup',
       website: 'https://joincoup.com',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.joincoup.app',
         ios: 'https://itunes.apple.com/app/id1139725011'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

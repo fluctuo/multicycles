@@ -54,9 +54,14 @@ class Obike {
       name: 'Obike',
       slug: 'obike',
       website: 'https://www.o.bike',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.obike',
         ios: 'https://itunes.apple.com/app/obike/id1184154041'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

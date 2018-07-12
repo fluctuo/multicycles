@@ -21,9 +21,14 @@ class Lime {
       name: 'Lime',
       slug: 'lime',
       website: 'https://www.limebike.com/',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.limebike',
         ios: 'https://itunes.apple.com/app/id1199780189'
+      },
+      deepLink: {
+        android: 'https://limebike.app.link',
+        ios: 'https://limebike.app.link'
       }
     }
   }

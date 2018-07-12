@@ -18,9 +18,14 @@ class Spin {
       name: 'Spin',
       slug: 'spin',
       website: 'https://www.spin.pm',
+      discount: 'MULOTMAI',
       app: {
         android: 'https://play.google.com/store/apps/details?id=pm.spin',
         ios: 'https://itunes.apple.com/app/id1241808993'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

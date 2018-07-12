@@ -28,9 +28,14 @@ class Pony {
       name: 'Pony',
       slug: 'pony',
       website: 'http://getapony.com/',
+      discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=co.ponybikes.mercury',
         ios: 'https://itunes.apple.com/app/id1273866794'
+      },
+      deepLink: {
+        android: null,
+        ios: null
       }
     }
   }

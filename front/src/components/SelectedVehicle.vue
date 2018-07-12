@@ -1,6 +1,6 @@
 <template>
   <div class="selected-vehicle">
-    <div class="detail">
+    <div class="bloc">
       <div class="column">
         <img :src="logoSrc(vehicle.provider)" alt="logo" class="logo">
       </div>
@@ -13,8 +13,32 @@
         </div>
       </div>
       <div class="column">
-        <a v-if="vehicle.provider.app.android" :href="vehicle.provider.app.android"><img src="../assets/android-badge.png" alt=""></a>
-        <a v-if="vehicle.provider.app.ios" :href="vehicle.provider.app.ios"><img src="../assets/ios-badge.png" alt=""></a>
+        <a @click="detail = !detail" class="ride" href="#">
+          Ride
+          <arrow-right-circle-icon></arrow-right-circle-icon>
+        </a>
+      </div>
+
+      <div v-if="detail" class="flex-container detail" style="width: 100%; flex-direction: row; margin: 20px 0;">
+        <div v-if="isAndroid || isiOs" class="w50 txtcenter item-center">
+          {{ $t('selectedVehicle.ihaveanaccount') }}
+          <div>
+            <a v-if="isiOs && vehicle.provider.deepLink.ios" :href="vehicle.provider.deepLink.ios">{{ $t('selectedVehicle.openApp') }}</a>
+            <a v-if="isAndroid && vehicle.provider.deepLink.android" :href="vehicle.provider.deepLink.android">{{ $t('selectedVehicle.openApp') }}</a>
+          </div>
+        </div>
+
+        <div class="w50 txtcenter item-center">
+          <div v-if="vehicle.provider.discountCode">
+            {{ $t('selectedVehicle.useDiscountCode') }}<br/>
+            <span v-html="renderDiscountCode(vehicle.provider.discountCode)"></span>
+          </div>
+          {{ $t('selectedVehicle.downloadApp') }}
+          <div>
+            <a v-if="(isComputer || isiOs) && vehicle.provider.app.ios" :href="vehicle.provider.app.ios"><img src="../assets/ios-badge.png" alt=""></a>
+            <a v-if="(isComputer || isAndroid) && vehicle.provider.app.android" :href="vehicle.provider.app.android"><img src="../assets/android-badge.png" alt=""></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -22,9 +46,22 @@
 
 <script>
 import { mapActions } from 'vuex'
+import MobileDetect from 'mobile-detect'
+import { ArrowRightCircleIcon } from 'vue-feather-icons'
+
+const md = new MobileDetect(window.navigator.userAgent)
 
 export default {
+  components: {
+    ArrowRightCircleIcon
+  },
   props: ['vehicle'],
+  data: () => ({
+    detail: false,
+    isAndroid: md.is('AndroidOS'),
+    isiOs: md.is('iOS'),
+    isComputer: md.phone() === null && md.tablet() === null
+  }),
   methods: {
     ...mapActions(['selectVehicle']),
     getVehicleTypeKey(vehicle) {
@@ -55,6 +92,11 @@ export default {
     },
     logoSrc(provider) {
       return require(`../assets/providers/${provider.slug}.jpg`)
+    },
+    renderDiscountCode(discount) {
+      return discount.match(/^http/)
+        ? `<a href="${discount}">${this.$i18n.t('selectedVehicle.discountLink')}</a>`
+        : `${this.$i18n.t('selectedVehicle.discountCode')} <span class="discountCode">${discount}</span>`
     }
   }
 }
@@ -77,7 +119,7 @@ export default {
     width: 50px;
   }
 
-  .detail {
+  .bloc {
     z-index: 9999;
     background-color: $mainColor;
     color: #fff;
@@ -118,6 +160,28 @@ export default {
 
       a {
         display: block;
+      }
+    }
+
+    .ride {
+      border: 2px solid;
+      padding: 12px;
+      border-radius: 100px;
+      color: #fff;
+      text-decoration: none;
+
+      svg {
+        margin-bottom: -7px;
+      }
+    }
+
+    .detail {
+      border-top: 1px solid #fff;
+      padding-top: 10px;
+
+      a {
+        color: #fff;
+        font-weight: bold;
       }
     }
   }

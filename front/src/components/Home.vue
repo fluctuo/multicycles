@@ -11,7 +11,11 @@
         <l-marker v-for="vehicle in filterVehicles(vehicles)" :lat-lng="[vehicle.lat, vehicle.lng]" :icon="getIconByProvider(vehicle)" :key="vehicle.id" @click="selectVehicle(vehicle)"></l-marker>
       </l-map>
       <ul class="map-ui">
-        <li><a @click="centerOnGeolocation" href="#"><i data-feather="compass"></i></a></li>
+        <li>
+          <a @click="centerOnGeolocation" href="#">
+            <compass-icon></compass-icon>
+          </a>
+        </li>
       </ul>
       <transition name="custom-classes-transition"
         enter-active-class="fadeInUp"
@@ -27,6 +31,7 @@
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
+import { CompassIcon } from 'vue-feather-icons'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
@@ -59,7 +64,8 @@ export default {
     LTileLayer,
     LMarker,
     'v-progress': Progress,
-    SelectedVehicle
+    SelectedVehicle,
+    CompassIcon
   },
   data() {
     return {
@@ -125,7 +131,7 @@ export default {
           this.setGeolocation([position.coords.latitude, position.coords.longitude])
 
           if (!this.moved) {
-            this.map.center = [position.coords.latitude, position.coords.longitude]
+            this.map.center = JSON.parse(JSON.stringify([position.coords.latitude, position.coords.longitude]))
             this.getVehicles(this.map.center[0], this.map.center[1])
           }
         })
@@ -171,9 +177,10 @@ export default {
     },
     centerOnGeolocation() {
       const geolocation = this.$store.state.geolocation
+
       if (geolocation) {
         this.moved = false
-        this.map.center = geolocation
+        this.map.center = JSON.parse(JSON.stringify(geolocation))
       }
     },
     filterVehicles(vehicles) {
@@ -197,7 +204,12 @@ export default {
                   name
                   slug
                   website
+                  discountCode
                   app {
+                    android
+                    ios
+                  }
+                  deepLink {
                     android
                     ios
                   }
