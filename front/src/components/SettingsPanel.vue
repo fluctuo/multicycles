@@ -4,7 +4,7 @@
       <h2>{{ $t('settings.title')}}</h2>
       <div class="install" v-if="hasInstallPromptEvent">
         <button @click="installApp()">
-          <i data-feather="arrow-down-circle"></i>
+          <arrow-down-circle-icon></arrow-down-circle-icon>
           {{ $t('settings.installApp')}}
         </button>
       </div>
@@ -27,9 +27,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { ArrowDownCircleIcon } from 'vue-feather-icons'
 
 export default {
   name: 'SettingsPanel',
+  components: {
+    ArrowDownCircleIcon
+  },
   data() {
     return {
       hasInstallPromptEvent: !!window.installPromptEvent,
@@ -91,7 +95,7 @@ form {
   border-radius: 5px;
   text-decoration: none;
 
-  .feather {
+  svg {
     margin-bottom: -6px;
     margin-right: 5px;
   }

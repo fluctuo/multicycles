@@ -31,5 +31,13 @@
     "CARGO": "Vélo cargo",
     "TANDEM": "Tandem <3",
     "BIKEChildSeat": "Vélo avec siège enfant"
+  },
+  "selectedVehicle": {
+    "ihaveanaccount": "J'ai un compte",
+    "openApp": "Ouvrir l'app",
+    "downloadApp": "Télécharger l'application",
+    "useDiscountCode": "Je profite d'une offre avec ",
+    "discountLink": "ce lien",
+    "discountCode": "ce code"
   }
 }
