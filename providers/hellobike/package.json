@@ -1,0 +1,18 @@
+{
+  "name": "@multicycles/hellobike",
+  "version": "1.0.0-beta.1",
+  "description": "Hellobike provider for multicycles",
+  "author": "Pierrick <mulotmail@gmail.com>",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "ava tests/*.js"
+  },
+  "license": "MIT",
+  "repository": "github:PierrickP/multicycles",
+  "dependencies": {
+    "got": "^8.3.1"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0"
+  }
+}

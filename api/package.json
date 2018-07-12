@@ -18,6 +18,7 @@
     "@multicycles/coup": "1.0.0-beta.4",
     "@multicycles/donkey": "1.0.0-beta.6",
     "@multicycles/gobee.bike": "1.0.0-beta.12",
+    "@multicycles/hellobike": "^1.0.0-beta.1",
     "@multicycles/indigowheel": "1.0.0-beta.6",
     "@multicycles/jump": "1.0.0-beta.8",
     "@multicycles/lime": "1.0.0-beta.9",

@@ -22,6 +22,7 @@ const state = {
     'coup',
     'donkey',
     'gobeebike',
+    'hellobike',
     'indigowheel',
     'jump',
     'lime',

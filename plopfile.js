@@ -40,6 +40,7 @@ module.exports = plop => {
           '+ Add new provider in `api/utils.js`',
           ' ',
           '= Front =',
+          '+ run `npm run fragments`',
           '+ Add new provider in `front/src/store.js`',
           plop.renderString(
             '+ Create `front/static/marker-{{ totalyLower provider }}.png` & `front/static/marker-{{ totalyLower provider }}-2x.png`',
@@ -48,7 +49,10 @@ module.exports = plop => {
           plop.renderString(
             '+ Create `front/src/assets/providers/{{ totalyLower provider }}.jpg` logo 50px x 50px ',
             answers
-          )
+          ),
+          ' ',
+          '= Developer =',
+          '+ Add new provider type in `developer/pages/docs.js`'
         ].join('\n')
       }
     ]

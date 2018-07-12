@@ -20,7 +20,7 @@ export default {
   Paris: ['ofo', 'mobike', 'obike', 'donkey', 'lime', 'coup'],
   Angers: ['pony', 'indigowheel'],
   // China
-  Shanghai: ['ofo', 'mobike', 'obike'],
+  Shanghai: ['ofo', 'mobike', 'obike', 'hello'],
   // UK
   London: ['ofo', 'mobike', 'obike', 'donkey'],
   Bristol: ['yobike'],

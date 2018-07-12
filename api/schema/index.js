@@ -6,8 +6,8 @@ import { byke } from './byke'
 import { coup } from './coup'
 import { donkey } from './donkey'
 import { gobeebike } from './gobee'
+import { hellobike } from './hellobike'
 import { indigowheel } from './indigowheel'
-import { inspect } from 'util'
 import { jump } from './jump'
 import { lime } from './lime'
 import { mobike } from './mobike'
@@ -42,6 +42,7 @@ export default new GraphQLSchema({
       coup,
       donkey,
       gobeebike,
+      hellobike,
       indigowheel,
       jump,
       lime,
