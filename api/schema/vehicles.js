@@ -13,6 +13,7 @@ import { BykeType, byke } from './byke'
 import { CoupType, coup } from './coup'
 import { DonkeyType, donkey } from './donkey'
 import { GobeeBikeType, gobeebike } from './gobee'
+import { HellobikeType, hellobike } from './hellobike'
 import { IndigoWheelType, indigowheel } from './indigowheel'
 import { JumpType, jump } from './jump'
 import { LimeType, lime } from './lime'
@@ -101,6 +102,9 @@ const VehicleType = new GraphQLInterfaceType({
         break
       case 'nextbike':
         type = NextbikeType
+        break
+      case 'hellobike':
+        type = HellobikeType
         break
     }
 
