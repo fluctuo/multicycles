@@ -43,8 +43,8 @@ test('get bicycles by positions', async t => {
 
   await mobike
     .getBicyclesByLatLng({
-      lat: 38.907192,
-      lng: -77.036871
+      lat: 31.23039,
+      lng: 121.473702
     })
     .then(result => {
       t.is(result.statusCode, 200)
