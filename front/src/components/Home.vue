@@ -131,7 +131,7 @@ export default {
           this.setGeolocation([position.coords.latitude, position.coords.longitude])
 
           if (!this.moved) {
-            this.map.center = [position.coords.latitude, position.coords.longitude]
+            this.map.center = JSON.parse(JSON.stringify([position.coords.latitude, position.coords.longitude]))
             this.getVehicles(this.map.center[0], this.map.center[1])
           }
         })
@@ -177,9 +177,10 @@ export default {
     },
     centerOnGeolocation() {
       const geolocation = this.$store.state.geolocation
+
       if (geolocation) {
         this.moved = false
-        this.map.center = geolocation
+        this.map.center = JSON.parse(JSON.stringify(geolocation))
       }
     },
     filterVehicles(vehicles) {
