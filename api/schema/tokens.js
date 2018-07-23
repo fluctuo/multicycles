@@ -12,8 +12,6 @@ import randomstring from 'randomstring'
 
 import { tokenStats, TokenStatsType } from './tokenStats'
 
-import utils from '../utils'
-import logger from '../logger'
 import db from '../db'
 import { requireScope } from '../auth'
 

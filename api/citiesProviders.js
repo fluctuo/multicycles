@@ -1,5 +1,16 @@
 import db from './db'
 import { reverseGeocode } from './geolocation'
+import { allProviders } from './utils'
+
+function flat(arr) {
+  return arr.reduce((r, a) => [...r, ...a])
+}
+
+function getProviders({ lat, lng }) {
+  return db('cities')
+    .whereRaw(`ST_Intersects(bbox, ST_Point(${lng}, ${lat}))`)
+    .then(cities => (cities.length ? [...new Set(flat(cities.map(c => c.providers)))] : allProviders))
+}
 
 function saveProvidersToCity(city, providers) {
   return db('cities')
@@ -47,4 +58,4 @@ async function updateCities(cities) {
   }
 }
 
-export { updateCities }
+export { getProviders, updateCities }

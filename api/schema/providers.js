@@ -8,7 +8,7 @@ import {
 } from 'graphql'
 
 import { reverseGeocode } from '../geolocation'
-import utils from '../utils'
+import { getProviders } from '../utils'
 import { requireAccessToken } from '../auth'
 
 const OsType = new GraphQLObjectType({
@@ -53,7 +53,7 @@ const providers = {
       lng: args.lng
     })
 
-    const availableProviders = utils.getProviders(city, country)
+    const availableProviders = getProviders(city, country)
 
     return Promise.all(availableProviders.map(p => import(`./${p}`))).then(modules =>
       modules.map(module => module.provider)
