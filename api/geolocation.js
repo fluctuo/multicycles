@@ -3,7 +3,7 @@ import MapboxClient from 'mapbox'
 const mapboxClient = new MapboxClient(process.env.MAPBOX_KEY)
 
 async function reverseGeocode({ lat, lng }) {
-  let country, city
+  let country, city, bbox
 
   try {
     const geocode = await mapboxClient.geocodeReverse(
@@ -24,6 +24,7 @@ async function reverseGeocode({ lat, lng }) {
 
       if (ac.place_type.includes('place')) {
         city = ac.text
+        bbox = ac.bbox
       }
     })
   } catch (err) {
@@ -32,7 +33,8 @@ async function reverseGeocode({ lat, lng }) {
 
   return {
     country,
-    city
+    city,
+    bbox
   }
 }
 
