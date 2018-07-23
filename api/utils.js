@@ -29,8 +29,4 @@ function getLanguage(country) {
   return languageCountry[country] || 'en'
 }
 
-function getProviders(city, country, defaultToAll) {
-  return providersLocations[city] || providersLocations[country] || (defaultToAll ? allProviders : [])
-}
-
-export { allProviders, getLanguage, getProviders }
+export { allProviders, getLanguage }
