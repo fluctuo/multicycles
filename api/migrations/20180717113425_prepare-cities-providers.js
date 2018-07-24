@@ -1,10 +1,10 @@
 function createCitiesTable(knex) {
   return knex.schema.createTable('cities', table => {
     table.increments()
-    table.string('city')
-    table.string('country')
+    table.string('city').notNullable()
+    table.string('country').notNullable()
     table.specificType('bbox', 'GEOMETRY(POLYGON)').notNullable()
-    table.specificType('providers', 'text[]')
+    table.specificType('providers', 'text[]').notNullable()
     table.timestamps(false, true)
   })
 }
@@ -12,9 +12,9 @@ function createCitiesTable(knex) {
 function createTempQueries(knex) {
   return knex.schema.createTable('temp_queries', table => {
     table.increments()
-    table.float('lat')
-    table.float('lng')
-    table.specificType('providers', 'text[]')
+    table.float('lat').notNullable()
+    table.float('lng').notNullable()
+    table.specificType('providers', 'text[]').notNullable()
     table.timestamps(false, true)
   })
 }

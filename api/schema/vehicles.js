@@ -1,11 +1,4 @@
-import {
-  GraphQLInterfaceType,
-  GraphQLNonNull,
-  GraphQLFloat,
-  GraphQLString,
-  GraphQLList,
-  GraphQLEnumType
-} from 'graphql'
+import { GraphQLInterfaceType, GraphQLNonNull, GraphQLFloat, GraphQLList } from 'graphql'
 import distance from '@turf/distance'
 import { point } from '@turf/helpers'
 
@@ -26,13 +19,12 @@ import { WhiteBikesType, whitebikes } from './whitebikes'
 import { YobikeType, yobike } from './yobike'
 import { BirdType, bird } from './bird'
 import { SpinType, spin } from './spin'
-import { ProviderType } from './providers'
-import { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType } from './vehicleDetailType'
+import { vehicleInterfaceType } from './vehicleDetailType'
 
 import { requireAccessToken } from '../auth'
-import { reverseGeocode } from '../geolocation'
 import db from '../db'
 import { getProviders } from '../citiesProviders'
+import { allProviders } from '../utils'
 
 function flat(arr) {
   return arr.reduce((r, a) => [...r, ...a])
@@ -134,9 +126,11 @@ const vehicles = {
     return availableProviders.length
       ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }, args, ctx, info)))
           .then(flat)
+          .then(vehicles => limitToRadius({ lat, lng }, vehicles, 400))
+      : Promise.all(allProviders.map(provider => eval(provider).resolve({ lat, lng }, args, ctx, info)))
+          .then(flat)
           .then(vehicles => saveCityProviders(vehicles, { lat, lng }))
           .then(vehicles => limitToRadius({ lat, lng }, vehicles, 400))
-      : []
   }
 }
 

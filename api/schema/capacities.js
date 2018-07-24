@@ -68,7 +68,7 @@ export default {
       logger.exception(err)
     }
 
-    const providers = await getProviders({ lat: args.lat, lng: args.lng })
+    const providers = await getProviders({ lat: args.lat, lng: args.lng }, true)
 
     return {
       location: country ? `${city && `${city}, `}${country}` : 'unknown',
