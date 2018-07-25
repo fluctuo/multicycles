@@ -9,7 +9,8 @@ import {
 } from 'graphql'
 import MapboxClient from 'mapbox'
 
-import utils from '../utils'
+import { getLanguage } from '../utils'
+import { getProviders } from '../citiesProviders'
 import logger from '../logger'
 import { requireAccessToken } from '../auth'
 
@@ -67,10 +68,12 @@ export default {
       logger.exception(err)
     }
 
+    const providers = await getProviders({ lat: args.lat, lng: args.lng }, true)
+
     return {
       location: country ? `${city && `${city}, `}${country}` : 'unknown',
-      defaultLanguage: utils.getLanguage(country),
-      providers: utils.getProviders(city, country, true)
+      defaultLanguage: getLanguage(country),
+      providers
     }
   }
 }
