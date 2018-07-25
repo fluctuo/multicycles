@@ -1,8 +1,20 @@
 import test from 'ava'
+import sinon from 'sinon'
 import capacities from '../schema/capacities'
+import * as CitiesProviders from '../citiesProviders'
+
+let getProvidersStub
+
+test.before(() => {
+  getProvidersStub = sinon.stub(CitiesProviders, 'getProviders')
+})
 
 test('Return capacitie for Paris', async t => {
-  const capacitie = await capacities.resolve(
+  getProvidersStub.callsFake(() => {
+    return ['ofo']
+  })
+
+  const capacity = await capacities.resolve(
     {},
     {
       lat: 48.852775,
@@ -11,79 +23,9 @@ test('Return capacitie for Paris', async t => {
     { state: { accessToken: 'ACCESS_TOKEN' } }
   )
 
-  t.deepEqual(capacitie, {
+  t.deepEqual(capacity, {
     location: 'Paris, France',
     defaultLanguage: 'fr',
-    providers: ['ofo', 'mobike', 'obike', 'donkey', 'lime', 'coup']
-  })
-})
-
-test('Return capacitie for Tokyo', async t => {
-  const capacitie = await capacities.resolve(
-    {},
-    {
-      lat: 35.689487,
-      lng: 139.691706
-    },
-    { state: { accessToken: 'ACCESS_TOKEN' } }
-  )
-
-  t.deepEqual(capacitie, {
-    location: 'Tokyo, Japan',
-    defaultLanguage: 'en',
-    providers: [
-      'bird',
-      'byke',
-      'coup',
-      'donkey',
-      'gobeebike',
-      'hellobike',
-      'indigowheel',
-      'jump',
-      'lime',
-      'mobike',
-      'nextbike',
-      'obike',
-      'ofo',
-      'pony',
-      'spin',
-      'whitebikes',
-      'yobike'
-    ]
-  })
-})
-
-test('Return capacitie for 0,0', async t => {
-  const capacitie = await capacities.resolve(
-    {},
-    {
-      lat: 0,
-      lng: 0
-    },
-    { state: { accessToken: 'ACCESS_TOKEN' } }
-  )
-
-  t.deepEqual(capacitie, {
-    location: 'unknown',
-    defaultLanguage: 'en',
-    providers: [
-      'bird',
-      'byke',
-      'coup',
-      'donkey',
-      'gobeebike',
-      'hellobike',
-      'indigowheel',
-      'jump',
-      'lime',
-      'mobike',
-      'nextbike',
-      'obike',
-      'ofo',
-      'pony',
-      'spin',
-      'whitebikes',
-      'yobike'
-    ]
+    providers: ['ofo']
   })
 })

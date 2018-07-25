@@ -37,7 +37,7 @@
     "cacheman": "2.2.1",
     "cacheman-redis": "2.0.0",
     "dotenv": "6.0.0",
-    "esm": "3.0.43",
+    "esm": "^3.0.72",
     "graphql": "0.12.3",
     "graphql-iso-date": "3.5.0",
     "graphql-type-json": "0.2.1",
@@ -60,9 +60,10 @@
     "cjs": true
   },
   "devDependencies": {
-    "ava": "0.25.0"
+    "ava": "0.25.0",
+    "sinon": "^6.1.4"
   },
   "ava": {
-    "require": ["esm"]
+    "require": ["esm", "dotenv/config"]
   }
 }

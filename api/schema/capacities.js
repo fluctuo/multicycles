@@ -10,7 +10,7 @@ import {
 import MapboxClient from 'mapbox'
 
 import { getLanguage } from '../utils'
-import { getProviders } from '../citiesProviders'
+import * as CitiesProviders from '../citiesProviders'
 import logger from '../logger'
 import { requireAccessToken } from '../auth'
 
@@ -68,7 +68,7 @@ export default {
       logger.exception(err)
     }
 
-    const providers = await getProviders({ lat: args.lat, lng: args.lng }, true)
+    const providers = await CitiesProviders.getProviders({ lat: args.lat, lng: args.lng }, true)
 
     return {
       location: country ? `${city && `${city}, `}${country}` : 'unknown',
