@@ -9,7 +9,15 @@ const AuthorizedError = createError('AuthorizedError', {
 })
 
 function requireScope(user, scope) {
-  if (!user || !user.scopes.includes(scope) || !user.roles.includes('admin')) {
+  if (user.roles && user.roles.includes('admin')) {
+    return
+  }
+
+  if (!user || !scope) {
+    throw new AuthenticatedError()
+  }
+
+  if (!user.scopes.includes(scope)) {
     throw new AuthenticatedError()
   }
 }
@@ -21,7 +29,7 @@ function requireAccessToken(accessToken) {
 }
 
 function requireAdmin(user) {
-  if (!user.roles.includes('admin')) {
+  if (!user || !user.roles.includes('admin')) {
     throw new AuthenticatedError()
   }
 }

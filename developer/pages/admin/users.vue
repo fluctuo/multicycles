@@ -110,7 +110,10 @@ export default {
         return { page: this.page }
       },
       update(data) {
-        return JSON.parse(JSON.stringify(data.users))
+        return data.users ? JSON.parse(JSON.stringify(data.users)) : data
+      },
+      error(err) {
+        this.$auth.logout();
       }
     }
   }
