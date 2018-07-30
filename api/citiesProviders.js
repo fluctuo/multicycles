@@ -38,8 +38,13 @@ function updateCity(city) {
         return reverseGeocode({
           lat: city.lat,
           lng: city.lng
-        }).then(geocode =>
-          db('cities')
+        }).then(geocode => {
+          if (!geocode.city || !geocode.country || !geocode.bbox) {
+            console.error('Can reverse geocode', city, geocode)
+            return Promise.resolve()
+          }
+
+          return db('cities')
             .insert({
               city: geocode.city,
               country: geocode.country,
@@ -49,7 +54,7 @@ function updateCity(city) {
             .catch(err => {
               console.log('err', city, geocode)
             })
-        )
+        })
       }
     })
 }
