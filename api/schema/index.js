@@ -23,6 +23,7 @@ import capacities from './capacities'
 import { tokens, createToken, deleteToken } from './tokens'
 import { tokenStats } from './tokenStats'
 import { users } from './users'
+import { cities } from './cities'
 import util from 'util'
 
 export default new GraphQLSchema({
@@ -36,6 +37,7 @@ export default new GraphQLSchema({
       tokens,
       tokenStats,
       users,
+      cities,
       /* Providers */
       bird,
       byke,

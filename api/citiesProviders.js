@@ -6,6 +6,12 @@ function flat(arr) {
   return arr.reduce((r, a) => [...r, ...a])
 }
 
+function getCities() {
+  return db('cities')
+    .select('*')
+    .select(db.raw('ST_AsGeoJSON(bbox) as geojson'))
+}
+
 function getProviders({ lat, lng }, defaultToAll) {
   return db('cities')
     .whereRaw(`ST_Intersects(bbox, ST_Point(${lng}, ${lat}))`)
@@ -65,4 +71,4 @@ async function updateCities(cities) {
   }
 }
 
-export { getProviders, updateCities }
+export { getProviders, updateCities, getCities }

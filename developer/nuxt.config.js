@@ -28,7 +28,8 @@ module.exports = {
   },
   env: {
     MULTICYCLES_API: process.env.MULTICYCLES_API,
-    MULTICYCLES_ACCESS_TOKEN: process.env.MULTICYCLES_ACCESS_TOKEN
+    MULTICYCLES_ACCESS_TOKEN: process.env.MULTICYCLES_ACCESS_TOKEN,
+    MAPBOX_KEY: process.env.MAPBOX_KEY
   },
   /*
   ** Customize the progress bar color
@@ -76,7 +77,8 @@ module.exports = {
     '@nuxtjs/google-analytics',
     '@nuxtjs/sentry',
     '@nuxtjs/apollo',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    'nuxt-leaflet'
   ],
   auth: {
     redirect: {
