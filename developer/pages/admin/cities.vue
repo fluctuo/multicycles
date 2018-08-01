@@ -15,6 +15,8 @@
       <b-col>
         {{ selectedCity.city }} {{ selectedCity.country }}
         {{ selectedCity.providers }}
+
+        <check-city-providers :city="selectedCity" />
       </b-col>
     </b-row>
   </b-container>
@@ -23,11 +25,13 @@
 <script>
 import gql from 'graphql-tag'
 import token from '~/components/Token.vue'
+import CheckCityProviders from '~/components/CheckCityProviders.vue'
 
 export default {
   middleware: ['auth'],
   components: {
-    token
+    token,
+    CheckCityProviders
   },
   data() {
     return {
