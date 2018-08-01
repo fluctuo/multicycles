@@ -5,9 +5,24 @@
         <b-button @click="checkCity">Check</b-button>
       </b-col>
       <b-col>
-        <ul>
-          <li v-for="(status, provider) in providers" :key="provider">{{ provider }} - <x-icon v-if="status === false" class="text-danger"/><check-icon v-else-if="status === true" class="text-success"/><refresh-cw-icon v-else class="text-muted"/></li>
-        </ul>
+        <table class="table table-striped table-sm table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Provider</th>
+              <th scope="col">Available ?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(status, provider) in providers" :key="provider">
+              <td>{{ provider }}</td>
+              <td class="text-center">
+                <x-icon v-if="status === false" class="text-danger"/>
+                <check-icon v-else-if="status === true" class="text-success"/>
+                <refresh-cw-icon v-else class="text-muted"/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </b-col>
     </b-row>
   </b-container>
