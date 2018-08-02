@@ -1,15 +1,16 @@
 <template>
   <b-container>
     <b-row>
-      <b-col>
-        <b-button @click="checkCity">Check</b-button>
+      <b-col cols="12">
+        Providers checker. Click on "check" button to check if this providers has vehicles in {{ city.city }}
+        <div class="text-right mt-1 mb-1"><b-button @click="checkCity">Check</b-button></div>
       </b-col>
       <b-col>
         <table class="table table-striped table-sm table-hover">
           <thead>
             <tr>
-              <th scope="col">Provider</th>
-              <th scope="col">Available ?</th>
+              <th>Provider</th>
+              <th>Available ?</th>
             </tr>
           </thead>
           <tbody>

@@ -1,8 +1,10 @@
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList } from 'graphql'
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList, GraphQLNonNull } from 'graphql'
 import GraphQLJSON from 'graphql-type-json'
 
+import db from '../db'
 import { getCities } from '../citiesProviders'
 import { requireAdmin } from '../auth'
+import { allProviders } from '../utils'
 
 const CityType = new GraphQLObjectType({
   name: 'City',
@@ -29,4 +31,29 @@ const cities = {
   }
 }
 
-export { cities }
+const updateCity = {
+  type: CityType,
+  args: {
+    id: { type: new GraphQLNonNull(GraphQLInt) },
+    providers: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) }
+  },
+  async resolve(root, args, ctx) {
+    requireAdmin(ctx.state.user)
+
+    args.providers.forEach(provider => {
+      if (!allProviders.includes(provider)) {
+        throw new Error('Unknown provider')
+      }
+    })
+
+    return await db('cities')
+      .where({ id: args.id })
+      .update({
+        providers: args.providers
+      })
+      .returning('*')
+      .get(0)
+  }
+}
+
+export { cities, updateCity }

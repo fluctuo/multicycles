@@ -23,8 +23,7 @@ import capacities from './capacities'
 import { tokens, createToken, deleteToken } from './tokens'
 import { tokenStats } from './tokenStats'
 import { users } from './users'
-import { cities } from './cities'
-import util from 'util'
+import { cities, updateCity } from './cities'
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -62,7 +61,8 @@ export default new GraphQLSchema({
     name: 'Mutation',
     fields: {
       createToken,
-      deleteToken
+      deleteToken,
+      updateCity
     }
   })
 })
