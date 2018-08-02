@@ -10,7 +10,7 @@ const allProviders = [
   'byke',
   'coup',
   'donkey',
-  'gobeebike',
+  // 'gobeebike',
   'hellobike',
   'indigowheel',
   'jump',

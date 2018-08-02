@@ -1,9 +1,17 @@
-import { requireAccessToken } from './auth'
+import { requireAccessToken, requireAdmin } from './auth'
 import logger from './logger'
 import cache from './cache'
 
 async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
-  requireAccessToken(ctx.state.accessToken)
+  try {
+    requireAccessToken(ctx.state.accessToken)
+  } catch (accessTokenError) {
+    try {
+      requireAdmin(ctx.state.user)
+    } catch (adminError) {
+      throw accessTokenError
+    }
+  }
 
   const provider = Provider.getProviderDetails()
 

@@ -31,6 +31,7 @@
     "graphql-tag": "^2.9.2",
     "moment": "^2.22.2",
     "nuxt": "^1.4.1",
+    "nuxt-leaflet": "0.0.10",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "vue-chartjs": "^3.3.2",

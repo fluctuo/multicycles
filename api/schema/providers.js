@@ -9,7 +9,8 @@ import {
 
 import { reverseGeocode } from '../geolocation'
 import { getProviders } from '../citiesProviders'
-import { requireAccessToken } from '../auth'
+import { requireAccessToken, requireAdmin } from '../auth'
+import { allProviders } from '../utils'
 
 const OsType = new GraphQLObjectType({
   name: 'OsLink',
@@ -38,17 +39,29 @@ const providers = {
   args: {
     lat: {
       description: 'The requested latitude',
-      type: new GraphQLNonNull(GraphQLFloat)
+      type: GraphQLFloat
     },
     lng: {
       description: 'The requested longitude',
-      type: new GraphQLNonNull(GraphQLFloat)
+      type: GraphQLFloat
     }
   },
   resolve: async (root, args, ctx) => {
-    requireAccessToken(ctx.state.accessToken)
+    try {
+      requireAccessToken(ctx.state.accessToken)
+    } catch (accessTokenError) {
+      try {
+        requireAdmin(ctx.state.user)
+      } catch (adminError) {
+        throw accessTokenError
+      }
+    }
 
-    const availableProviders = await getProviders({ lat: args.lat, lng: args.lng })
+    let availableProviders = allProviders
+
+    if (args.lat && args.lng) {
+      availableProviders = await getProviders({ lat: args.lat, lng: args.lng })
+    }
 
     return Promise.all(availableProviders.map(p => import(`./${p}`))).then(modules =>
       modules.map(module => module.provider)
