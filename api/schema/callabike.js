@@ -22,7 +22,6 @@ function mapVehicles({ body }) {
       id: o.objectId,
       lat: o.Position.Latitude,
       lng: o.Position.Longitude,
-      type: o.isStation ? 'STATION' : 'BIKE',
       provider: CallABike.getProviderDetails(),
       callabike_fields: {
         position: o.Position,
@@ -39,6 +38,18 @@ function mapVehicles({ body }) {
         city: o.city,
         freeBikes: o.FreeBikes
       }
+    }
+
+    if (o.isStation) {
+      // Classic station
+      if (o.maxSlots) {
+        data.type = 'STATION'
+      } else {
+        // Virtual station, set as BIKE if only one bike available
+        data.type = o.totalVehicles === 1 ? 'BIKE' : 'STATION'
+      }
+    } else {
+      data.type = 'BIKE'
     }
 
     if (data.type === 'STATION') {
