@@ -34,7 +34,7 @@ const BirdType = new GraphQLObjectType({
 
 const bird = {
   type: new GraphQLList(BirdType),
-  description: 'Get Bird scooters by postions',
+  description: 'Get Bird scooters by positions',
   args: {
     lat: {
       type: new GraphQLNonNull(GraphQLFloat)

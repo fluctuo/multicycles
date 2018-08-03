@@ -7,6 +7,7 @@
         "possibleTypes": [
           { "name": "Bird" },
           { "name": "Byke" },
+          { "name": "CallABike" },
           { "name": "Coup" },
           { "name": "Donkey" },
           { "name": "GobeeBike" },
@@ -24,7 +25,7 @@
           { "name": "Yobike" }
         ]
       },
-      { "kind": "INTERFACE", "name": "Station", "possibleTypes": [{ "name": "Nextbike" }] }
+      { "kind": "INTERFACE", "name": "Station", "possibleTypes": [{ "name": "CallABike" }, { "name": "Nextbike" }] }
     ]
   }
 }

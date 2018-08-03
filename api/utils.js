@@ -8,6 +8,7 @@ const languageCountry = {
 const allProviders = [
   'bird',
   'byke',
+  'callabike',
   'coup',
   'donkey',
   // 'gobeebike',

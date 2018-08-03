@@ -40,7 +40,7 @@ const CoupType = new GraphQLObjectType({
 
 const coup = {
   type: new GraphQLList(CoupType),
-  description: 'Get Coup vehicles by postions',
+  description: 'Get Coup vehicles by positions',
   args: {
     lat: {
       type: new GraphQLNonNull(GraphQLFloat)

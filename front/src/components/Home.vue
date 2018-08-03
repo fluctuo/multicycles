@@ -217,6 +217,7 @@ export default {
                 ... on Station {
                   available_vehicles
                   available_stands
+                  isVirtual
                 }
               }
             }

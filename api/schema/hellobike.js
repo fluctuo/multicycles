@@ -43,7 +43,7 @@ const HellobikeType = new GraphQLObjectType({
 
 const hellobike = {
   type: new GraphQLList(HellobikeType),
-  description: 'Get Hellobike vehicles by postions',
+  description: 'Get Hellobike vehicles by positions',
   args: {
     lat: {
       type: new GraphQLNonNull(GraphQLFloat)

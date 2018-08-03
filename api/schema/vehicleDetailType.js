@@ -1,4 +1,4 @@
-import { GraphQLString, GraphQLFloat, GraphQLList, GraphQLEnumType, GraphQLInt } from 'graphql'
+import { GraphQLString, GraphQLFloat, GraphQLList, GraphQLEnumType, GraphQLInt, GraphQLBoolean } from 'graphql'
 import { ProviderType } from './providers'
 
 const VehicleTypeEnumType = new GraphQLEnumType({
@@ -36,7 +36,13 @@ const vehicleInterfaceType = {
 const stationInterfaceType = {
   available_vehicles: { description: 'Number of available vehicles', type: GraphQLInt },
   available_stands: { description: 'Number of available free stands', type: GraphQLInt },
-  total_stands: { description: 'Total of stands', type: GraphQLInt }
+  total_stands: { description: 'Total of stands', type: GraphQLInt },
+  isVirtual: {
+    description:
+      'Virtual station are not specific stand for this provider. Could be a simple bikes stand or just a zone',
+    type: GraphQLBoolean
+  },
+  virtualRadius: { description: 'Radius of the virtual station. In meters.', type: GraphQLInt }
 }
 
 export { VehicleTypeEnumType, VehicleAttributeEnumType, vehicleInterfaceType, stationInterfaceType }

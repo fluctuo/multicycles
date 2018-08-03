@@ -67,6 +67,10 @@ export default {
     getVehicleTypeKey(vehicle) {
       let key = `vehicleType.${vehicle.type}`
 
+      if (vehicle.type === 'STATION' && vehicle.isVirtual) {
+        return 'vehicleType.VIRTUAL_STATION'
+      }
+
       if (vehicle.attributes && vehicle.attributes.includes('CARGO')) {
         return 'CARGO'
       }

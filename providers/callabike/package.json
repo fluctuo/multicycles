@@ -1,0 +1,19 @@
+{
+  "name": "@multicycles/callabike",
+  "version": "1.0.0-beta.1",
+  "description": "Call A Bike provider for multicycles",
+  "author": "Pierrick <mulotmail@gmail.com>",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "ava tests/*.js"
+  },
+  "license": "MIT",
+  "repository": "github:PierrickP/multicycles",
+  "dependencies": {
+    "fast-xml-parser": "^3.11.2",
+    "got": "^8.3.1"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0"
+  }
+}

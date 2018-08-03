@@ -3,6 +3,7 @@ import distance from '@turf/distance'
 import { point } from '@turf/helpers'
 
 import { BykeType, byke } from './byke'
+import { CallABikeType, callabike } from './callabike'
 import { CoupType, coup } from './coup'
 import { DonkeyType, donkey } from './donkey'
 import { GobeeBikeType, gobeebike } from './gobee'
@@ -49,6 +50,9 @@ const VehicleType = new GraphQLInterfaceType({
     switch (vehicle.provider.slug) {
       case 'byke':
         type = BykeType
+        break
+      case 'callabike':
+        type = CallABikeType
         break
       case 'donkey':
         type = DonkeyType

@@ -24,7 +24,7 @@ const {{ properCase provider}}Type = new GraphQLObjectType({
 
 const {{ totalyLower provider}} = {
   type: new GraphQLList({{ properCase provider}}Type),
-  description: 'Get {{ properCase provider}} vehicles by postions',
+  description: 'Get {{ properCase provider}} vehicles by positions',
   args: {
     lat: {
       type: new GraphQLNonNull(GraphQLFloat)

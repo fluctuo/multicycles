@@ -54,6 +54,7 @@ function mapVehicles({ body }) {
       data.available_vehicles = o.bikes
       data.available_stands = o.free_racks
       data.total_stands = o.bike_racks
+      data.isVirtual = false
     } else {
       const bikeType = o.bike_list[0].bike_type
       data.attributes = []
@@ -159,7 +160,7 @@ const NextbikeType = new GraphQLObjectType({
 
 const nextbike = {
   type: new GraphQLList(NextbikeType),
-  description: 'Get Nextbike vehicles by postions',
+  description: 'Get Nextbike vehicles by positions',
   args: {
     lat: {
       type: new GraphQLNonNull(GraphQLFloat)

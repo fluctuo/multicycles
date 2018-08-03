@@ -19,6 +19,7 @@ import { yobike } from './yobike'
 import { bird } from './bird'
 import { spin } from './spin'
 import { nextbike } from './nextbike'
+import { callabike } from './callabike'
 import capacities from './capacities'
 import { tokens, createToken, deleteToken } from './tokens'
 import { tokenStats } from './tokenStats'
@@ -40,6 +41,7 @@ export default new GraphQLSchema({
       /* Providers */
       bird,
       byke,
+      callabike,
       coup,
       donkey,
       gobeebike,

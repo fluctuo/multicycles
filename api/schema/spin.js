@@ -42,7 +42,7 @@ const SpinType = new GraphQLObjectType({
 
 const spin = {
   type: new GraphQLList(SpinType),
-  description: 'Get Spin vehicles by postions',
+  description: 'Get Spin vehicles by positions',
   args: {
     lat: {
       type: new GraphQLNonNull(GraphQLFloat)
