@@ -23,7 +23,7 @@ function mapVehicles({ body }) {
       lat: o.Position.Latitude,
       lng: o.Position.Longitude,
       provider: CallABike.getProviderDetails(),
-      callabike_fields: {
+      callabikeFields: {
         position: o.Position,
         description: o.Description,
         distance: o.Distance,
@@ -54,8 +54,11 @@ function mapVehicles({ body }) {
 
     if (data.type === 'STATION') {
       data.available_vehicles = o.totalVehicles
+      data.availableVehicles = o.totalVehicles
       data.available_stands = o.maxSlots ? o.maxSlots - o.totalVehicles : undefined
+      data.availableStands = o.maxSlots ? o.maxSlots - o.totalVehicles : undefined
       data.total_stands = o.maxSlots
+      data.totalStands = o.maxSlots
       data.isVirtual = true
       data.virtualRadius = o.virtStationRadius
     } else {
@@ -95,7 +98,7 @@ const CallABikeType = new GraphQLObjectType({
   fields: {
     ...vehicleInterfaceType,
     ...stationInterfaceType,
-    callabike_fields: { type: CallABikeFieldsType }
+    callabikeFields: { type: CallABikeFieldsType }
   }
 })
 

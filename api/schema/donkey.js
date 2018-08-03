@@ -4,35 +4,48 @@ import GraphQLJSON from 'graphql-type-json'
 import Donkey from '@multicycles/donkey'
 
 import { VehicleType } from './vehicles'
-import { vehicleInterfaceType } from './vehicleDetailType'
+import { StationType } from './stations'
+import { vehicleInterfaceType, stationInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
 
 function mapVehicles({ body }) {
-  return body.map(bike => ({
-    id: bike.id,
-    lat: bike.latitude,
-    lng: bike.longitude,
-    type: 'BIKE',
-    attributes: ['GEARS'],
-    provider: Donkey.getProviderDetails(),
-    name: bike.name,
-    radius: bike.radius,
-    available_bikes_count: bike.available_bikes_count,
-    thumbnail_url: bike.thumbnail_url,
-    country_code: bike.country_code,
-    currency: bike.currency,
-    price: bike.price
-  }))
+  return body.map(bike => {
+    const data = {
+      id: bike.id,
+      lat: bike.latitude,
+      lng: bike.longitude,
+      provider: Donkey.getProviderDetails(),
+      donkeyFields: {
+        name: bike.name,
+        radius: bike.radius,
+        available_bikes_count: bike.available_bikes_count,
+        thumbnail_url: bike.thumbnail_url,
+        country_code: bike.country_code,
+        currency: bike.currency,
+        price: bike.price
+      }
+    }
+
+    if (bike.available_bikes_count > 1) {
+      data.type = 'STATION'
+      data.isVirtual = true
+      data.virtualRadius = bike.radius
+      data.availableVehicles = bike.available_bikes_count
+    } else {
+      data.type = 'BIKE'
+      data.attributes = ['GEARS']
+    }
+
+    return data
+  })
 }
 
 const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-const DonkeyType = new GraphQLObjectType({
-  name: 'Donkey',
-  description: 'A Donkey bike',
-  interfaces: () => [VehicleType],
+const DonkeyFieldsType = new GraphQLObjectType({
+  name: 'DonkeyFields',
+  description: 'Specific fields for Donkey Republic',
   fields: {
-    ...vehicleInterfaceType,
     name: { type: GraphQLString },
     radius: { type: GraphQLInt },
     available_bikes_count: { type: GraphQLInt },
@@ -40,6 +53,17 @@ const DonkeyType = new GraphQLObjectType({
     country_code: { type: GraphQLString },
     currency: { type: GraphQLString },
     price: { type: GraphQLJSON }
+  }
+})
+
+const DonkeyType = new GraphQLObjectType({
+  name: 'Donkey',
+  description: 'A Donkey bike',
+  interfaces: () => [VehicleType, StationType],
+  fields: {
+    ...vehicleInterfaceType,
+    ...stationInterfaceType,
+    donkeyFields: { type: DonkeyFieldsType }
   }
 })
 

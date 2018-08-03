@@ -14,7 +14,7 @@ function mapVehicles({ body }) {
     type: 'BIKE',
     attributes: o.bikeType === 2 ? ['ELECTRIC'] : [],
     provider: Hellobike.getProviderDetails(),
-    hellobike_fields: { ...o }
+    hellobikeFields: { ...o }
   }))
 }
 
@@ -37,7 +37,7 @@ const HellobikeType = new GraphQLObjectType({
   interfaces: () => [VehicleType],
   fields: {
     ...vehicleInterfaceType,
-    hellobike_fields: { type: HellobikeFieldsType }
+    hellobikeFields: { type: HellobikeFieldsType }
   }
 })
 

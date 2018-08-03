@@ -34,9 +34,23 @@ const vehicleInterfaceType = {
 }
 
 const stationInterfaceType = {
-  available_vehicles: { description: 'Number of available vehicles', type: GraphQLInt },
-  available_stands: { description: 'Number of available free stands', type: GraphQLInt },
-  total_stands: { description: 'Total of stands', type: GraphQLInt },
+  available_vehicles: {
+    deprecationReason: 'Use camelCase instead',
+    description: 'Number of available vehicles',
+    type: GraphQLInt
+  },
+  availableVehicles: { description: 'Number of available vehicles', type: GraphQLInt },
+  available_stands: {
+    deprecationReason: 'Use camelCase instead',
+    description: 'Number of available free stands',
+    type: GraphQLInt
+  },
+  availableStands: {
+    description: 'Number of available free stands',
+    type: GraphQLInt
+  },
+  total_stands: { deprecationReason: 'Use camelCase instead', description: 'Total of stands', type: GraphQLInt },
+  totalStands: { description: 'Total of stands', type: GraphQLInt },
   isVirtual: {
     description:
       'Virtual station are not specific stand for this provider. Could be a simple bikes stand or just a zone',

@@ -5,7 +5,10 @@ const BASE_URL = 'https://stables.donkey.bike/api'
 class Donkey {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout && parseInt(timeout, 10)
+      timeout: timeout && parseInt(timeout, 10),
+      headers: {
+        Accept: 'application/com.donkeyrepublic.v2'
+      }
     }
   }
 
@@ -38,6 +41,7 @@ class Donkey {
         location: `${lat},${lng}`
       },
       timeout: this.config.timeout,
+      headers: this.config.headers,
       ...config
     })
   }

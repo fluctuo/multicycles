@@ -71,8 +71,9 @@ export default {
     }
     ... on Station {
 			total_stands
-			available_stands
-			available_vehicles
+			availableStands
+      availableVehicles
+      isVirtual
 		}
   }
 }`,
@@ -91,8 +92,9 @@ export default {
               "name": "Nextbike"
             },
             "total_stands": 15,
-            "available_stands": 6,
-            "available_vehicles": 5
+            "availableStands": 6,
+            "availableVehicles": 5,
+            "isVirtual": false
           },
           {
             "id": "8509239",
@@ -103,8 +105,8 @@ export default {
               "name": "Nextbike"
             },
             "total_stands": null,
-            "available_stands": null,
-            "available_vehicles": null
+            "availableStands": null,
+            "availableVehicles": null
           },
           {
             "id": "A810004051",

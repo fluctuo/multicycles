@@ -29,7 +29,7 @@
     <b-card v-if="selectedObject.fields">
       <h5>Fields</h5>
 
-      <b-table striped hover responsive :items="selectedObject.fields" :fields="fields">
+      <b-table striped hover responsive :items="removeDeprecated(selectedObject.fields)" :fields="fields">
         <template slot="type" slot-scope="data">
           <span v-html="renderType(data.value)"></span>
         </template>
@@ -78,6 +78,9 @@ export default {
 
   },
   methods: {
+    removeDeprecated(fields) {
+      return fields.filter(field => !field.isDeprecated)
+    },
     renderType(t) {
       let type;
 

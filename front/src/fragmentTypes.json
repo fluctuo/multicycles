@@ -25,7 +25,11 @@
           { "name": "Yobike" }
         ]
       },
-      { "kind": "INTERFACE", "name": "Station", "possibleTypes": [{ "name": "CallABike" }, { "name": "Nextbike" }] }
+      {
+        "kind": "INTERFACE",
+        "name": "Station",
+        "possibleTypes": [{ "name": "CallABike" }, { "name": "Donkey" }, { "name": "Nextbike" }]
+      }
     ]
   }
 }

@@ -31,7 +31,7 @@ function mapVehicles({ body }) {
       lng: o.lng,
       type: o.bike ? 'BIKE' : 'STATION',
       provider: Nextbike.getProviderDetails(),
-      nextbike_fields: {
+      nextbikeFields: {
         bike: o.bike,
         name: o.name,
         address: o.address,
@@ -52,8 +52,11 @@ function mapVehicles({ body }) {
 
     if (data.type === 'STATION') {
       data.available_vehicles = o.bikes
+      data.availableVehicles = o.bikes
       data.available_stands = o.free_racks
+      data.availableStands = o.free_racks
       data.total_stands = o.bike_racks
+      data.totalStands = o.bike_racks
       data.isVirtual = false
     } else {
       const bikeType = o.bike_list[0].bike_type
@@ -154,7 +157,7 @@ const NextbikeType = new GraphQLObjectType({
   fields: {
     ...vehicleInterfaceType,
     ...stationInterfaceType,
-    nextbike_fields: { type: NextbikeFieldsType }
+    nextbikeFields: { type: NextbikeFieldsType }
   }
 })
 

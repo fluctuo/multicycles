@@ -27,8 +27,8 @@
     "MOTORSCOOTERElectric": "Electric motor-scooter",
     "MOTORSCOOTERGears": "Motor-scooter",
     "MOTORSCOOTERElectricGears": "Electric motor-scooter",
-    "STATION": "Station with {available_vehicles} bikes and {available_stands} stands",
-    "VIRTUAL_STATION": "Virtual station with {available_vehicles} bikes",
+    "STATION": "Station with {availableVehicles} bikes and {availableStands} stands",
+    "VIRTUAL_STATION": "Virtual station with {availableVehicles} bikes",
     "CARGO": "Cargo bike",
     "TANDEM": "Tandem",
     "BIKEChildSeat": "Bike with child seat"
