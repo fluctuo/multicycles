@@ -3,6 +3,7 @@ import { vehicles } from './vehicles'
 import { providers } from './providers'
 
 import { byke } from './byke'
+import { cityscoot } from './cityscoot'
 import { coup } from './coup'
 import { donkey } from './donkey'
 import { gobeebike } from './gobee'
@@ -42,6 +43,7 @@ export default new GraphQLSchema({
       bird,
       byke,
       callabike,
+      cityscoot,
       coup,
       donkey,
       gobeebike,

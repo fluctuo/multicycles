@@ -46,5 +46,6 @@
       ]
     ],
     "plugins": ["add-module-exports", "@babel/plugin-proposal-object-rest-spread"]
-  }
+  },
+  "dependencies": {}
 }

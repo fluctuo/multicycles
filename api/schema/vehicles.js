@@ -4,6 +4,7 @@ import { point } from '@turf/helpers'
 
 import { BykeType, byke } from './byke'
 import { CallABikeType, callabike } from './callabike'
+import { CityscootType, cityscoot } from './cityscoot'
 import { CoupType, coup } from './coup'
 import { DonkeyType, donkey } from './donkey'
 import { GobeeBikeType, gobeebike } from './gobee'
@@ -101,6 +102,9 @@ const VehicleType = new GraphQLInterfaceType({
         break
       case 'hellobike':
         type = HellobikeType
+        break
+      case 'cityscoot':
+        type = CityscootType
         break
     }
 

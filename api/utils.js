@@ -9,6 +9,7 @@ const allProviders = [
   'bird',
   'byke',
   'callabike',
+  'cityscoot',
   'coup',
   'donkey',
   // 'gobeebike',
