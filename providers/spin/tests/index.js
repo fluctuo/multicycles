@@ -43,8 +43,8 @@ test('get bicycles by positions', async t => {
 
   await spin
     .getBicyclesByLatLng({
-      lat: 38.907192,
-      lng: -77.036871,
+      lat: 47.606209,
+      lng: -122.332069,
       distance: 1000
     })
     .then(result => {
