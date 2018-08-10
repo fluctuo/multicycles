@@ -52,7 +52,7 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test.skip('get bicycles by positions', async t => {
   await loggedBird
     .getBicyclesByLatLng({
       lat: 38.907192,
