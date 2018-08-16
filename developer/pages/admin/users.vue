@@ -96,6 +96,7 @@ export default {
               user_id
               tokens {
                 id
+                name
                 createdAt
                 stats {
                   date

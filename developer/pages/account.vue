@@ -9,7 +9,7 @@
         <b-row>
           <b-col>
             <div v-if="$apollo.loading" class="text-center"><img src="~/assets/loading.svg" alt="Loading..." width="80px" /></div>
-            <token v-for="token in tokens" :key="token.id" :token="token" :deleteToken="deleteToken" />
+            <token v-for="token in tokens" :key="token.id" :token="token" :deleteToken="deleteToken" :updateToken="updateToken" />
           </b-col>
         </b-row>
 
@@ -38,13 +38,33 @@ export default {
   methods: {
     createToken() {
       return this.$apollo.mutate({
-        mutation: gql`mutation {
-          createToken {
+        mutation: gql`mutation ($name: String) {
+          createToken (name: $name) {
+            name
             value
           }
-        }`
+        }`,
+        variables: {
+          name: `Token ${this.tokens.length + 1}`
+        }
       })
       .then(() => this.$apollo.queries.tokens.refetch())
+    },
+    updateToken(id, updatedToken) {
+      return this.$apollo.mutate({
+        mutation: gql`
+          mutation ($id: Int!, $name: String!) {
+            updateToken (id: $id, name: $name) {
+              id
+            }
+          }
+        `,
+        variables: {
+          id,
+          name: updatedToken.name
+        }
+      })
+     .then(() => this.$apollo.queries.tokens.refetch())
     },
     deleteToken(id) {
       return this.$apollo.mutate({
@@ -66,6 +86,7 @@ export default {
         query {
           tokens {
             id
+            name
             value
             createdAt
             stats {

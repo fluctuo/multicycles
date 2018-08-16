@@ -22,7 +22,7 @@ import { spin } from './spin'
 import { nextbike } from './nextbike'
 import { callabike } from './callabike'
 import capacities from './capacities'
-import { tokens, createToken, deleteToken } from './tokens'
+import { tokens, createToken, updateToken, deleteToken } from './tokens'
 import { tokenStats } from './tokenStats'
 import { users } from './users'
 import { cities, updateCity } from './cities'
@@ -65,6 +65,7 @@ export default new GraphQLSchema({
     name: 'Mutation',
     fields: {
       createToken,
+      updateToken,
       deleteToken,
       updateCity
     }

@@ -1,12 +1,4 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLList,
-  GraphQLInt,
-  GraphQLFloat,
-  GraphQLBoolean,
-  GraphQLNonNull
-} from 'graphql'
+import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt, GraphQLNonNull } from 'graphql'
 import { GraphQLDateTime } from 'graphql-iso-date'
 import randomstring from 'randomstring'
 
@@ -34,15 +26,17 @@ const tokenType = new GraphQLObjectType({
   description: 'The token access API',
   fields: {
     id: { type: GraphQLInt },
+    name: { type: GraphQLString },
     value: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     stats: { type: new GraphQLList(TokenStatsType), resolve: tokenStats.resolve }
   }
 })
 
-function formatToken({ id, value, created_at }) {
+function formatToken({ id, name, value, created_at }) {
   return {
     id,
+    name,
     value,
     createdAt: created_at
   }
@@ -56,12 +50,16 @@ const tokens = {
 
     return await db('tokens')
       .where('userId', root ? root.user_id : ctx.state.user.sub)
+      .orderBy('created_at')
       .then(tokens => tokens.map(formatToken))
   }
 }
 
 const createToken = {
   type: tokenType,
+  args: {
+    name: { type: GraphQLString }
+  },
   async resolve(root, args, ctx) {
     requireScope(ctx.state.user, 'create:tokens')
 
@@ -69,22 +67,52 @@ const createToken = {
 
     return await db('tokens')
       .insert({
-        userId: ctx.state.user.sub,
-        value
+        value,
+        name: args.name,
+        userId: ctx.state.user.sub
       })
       .then(formatToken)
   }
 }
 
-const deleteToken = {
+const updateToken = {
   type: new GraphQLObjectType({
-    name: 'DeletedToken',
+    name: 'UpdateToken',
     fields: {
       id: { type: GraphQLInt }
     }
   }),
   args: {
-    id: { type: GraphQLInt }
+    id: { type: new GraphQLNonNull(GraphQLInt) },
+    name: { type: new GraphQLNonNull(GraphQLString) }
+  },
+  async resolve(root, args, ctx) {
+    requireScope(ctx.state.user, 'update:tokens')
+
+    await db('tokens')
+      .where({
+        userId: ctx.state.user.sub,
+        id: args.id
+      })
+      .update({
+        name: args.name
+      })
+
+    return {
+      id: args.id
+    }
+  }
+}
+
+const deleteToken = {
+  type: new GraphQLObjectType({
+    name: 'DeleteToken',
+    fields: {
+      id: { type: GraphQLInt }
+    }
+  }),
+  args: {
+    id: { type: new GraphQLNonNull(GraphQLInt) }
   },
   async resolve(root, args, ctx) {
     requireScope(ctx.state.user, 'delete:tokens')
@@ -102,4 +130,4 @@ const deleteToken = {
   }
 }
 
-export { tokens, createToken, deleteToken }
+export { tokens, createToken, updateToken, deleteToken }
