@@ -51,7 +51,7 @@ test('get bicycles by positions', async t => {
       // t.truthy(result.body.data.bikes.length)
       t.pass()
     })
-    .catch(() => {
+    .catch(err => {
       console.log(err)
       t.fail()
     })
