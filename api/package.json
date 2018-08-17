@@ -56,7 +56,7 @@
     "randomstring": "1.1.5",
     "raven": "2.6.1",
     "redis": "2.8.0",
-    "sqreen": "1.19.0"
+    "sqreen": "^1.22.0"
   },
   "esm": {
     "cjs": true
