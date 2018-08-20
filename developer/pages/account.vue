@@ -4,7 +4,23 @@
       <b-col>
         <h3 class="display-4 pt-5 pb-4">Account</h3>
 
-        <h4>Token API</h4>
+        <h4>Plan</h4>
+
+        <b-row>
+          <b-col>
+            <h5>Slected plan -> <span class="text-muted">{{ $store.state.auth.user.plan.name }}</span></h5>
+
+            <h5>Tokens: <span class="text-muted float-right">{{ $store.state.auth.user.usage.tokens }} / {{ $store.state.auth.user.plan.limits.tokens }}</span></h5>
+            <b-progress :value="$store.state.auth.user.usage.tokens" :max="$store.state.auth.user.plan.limits.tokens" class="mb-3"></b-progress>
+
+            <h5>Hits per month<span class="text-muted float-right">{{ $store.state.auth.user.usage.hitsPerMonth }} / {{ $store.state.auth.user.plan.limits.hitsPerMonth }}</span></h5>
+            <b-progress :value="$store.state.auth.user.usage.hitsPerMonth" :max="$store.state.auth.user.plan.limits.hitsPerMonth" class="mb-3"></b-progress>
+          </b-col>
+        </b-row>
+
+        <hr>
+
+        <h4>API Tokens</h4>
 
         <b-row>
           <b-col>

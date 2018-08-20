@@ -18,9 +18,16 @@
 
           <b-nav-item-dropdown right v-if="$auth && $auth.$state.loggedIn" class="fix-dropdown-padding">
             <template slot="button-content">
-              <b-img blank blank-color="#677fb7" :src="$auth.user.picture" rounded="circle" width="30" height="30"/>
+              <b-img :src="$store.state.auth.user.picture" rounded="circle" width="30" height="30"/>
             </template>
             <b-dropdown-item href="/account">Account</b-dropdown-item>
+
+            <div v-if="$store.state.auth.user.roles && $store.state.auth.user.roles.includes('admin')">
+              <b-dropdown-divider/>
+              <b-dropdown-item href="/admin/users">Users</b-dropdown-item>
+              <b-dropdown-item href="/admin/cities">Cities</b-dropdown-item>
+            </div>
+            <b-dropdown-divider/>
             <b-dropdown-item @click="logout">Sign out</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-button variant="outline-primary" v-else @click="login">

@@ -34,4 +34,10 @@ function requireAdmin(user) {
   }
 }
 
-export { requireScope, requireAccessToken, requireAdmin }
+function requireUser(user) {
+  if (!user) {
+    throw new AuthenticatedError()
+  }
+}
+
+export { requireScope, requireAccessToken, requireAdmin, requireUser }

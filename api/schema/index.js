@@ -24,7 +24,7 @@ import { callabike } from './callabike'
 import capacities from './capacities'
 import { tokens, createToken, updateToken, deleteToken } from './tokens'
 import { tokenStats } from './tokenStats'
-import { users } from './users'
+import { users, me } from './users'
 import { cities, updateCity } from './cities'
 
 export default new GraphQLSchema({
@@ -39,6 +39,7 @@ export default new GraphQLSchema({
       tokenStats,
       users,
       cities,
+      me,
       /* Providers */
       bird,
       byke,
