@@ -42,8 +42,29 @@
       </b-row>
     </b-container>
 
+    <Contact />
+
   </div>
 </template>
+
+<script>
+import Contact from '~/components/Contact.vue'
+
+export default {
+  head () {
+    return {
+      title: 'Showcase - Open-API by Multicycles',
+      meta: [
+        { name: 'description', content: 'Great exemples of Open-API usage' }
+      ]
+    }
+  },
+  components: {
+    Contact
+  }
+}
+</script>
+
 
 <style lang="scss">
 @import '~/scss/app.scss';

@@ -1,8 +1,8 @@
 <template>
   <b-container>
     <b-row>
-      <b-col>
-        <h3 class="display-4 pt-5 pb-4">Account</h3>
+      <b-col class="mb-5 pt-5">
+        <h3 class="mb-4">Welcome to your account</h3>
 
         <h4>Plan</h4>
 

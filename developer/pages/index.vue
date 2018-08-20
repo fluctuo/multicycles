@@ -4,7 +4,7 @@
       <b-container>
         <h1 class="display-3">The Open API <br> for Bikes sharing</h1>
         <h2>
-          The only API for dockless bicycles and other shared vehicles<br>
+          The only API for dockless bicycles and other shared vehicles.<br>
           Explore and get instant vehicle positions in a single query.
         </h2>
 
@@ -17,21 +17,25 @@
 
     <features/>
 
-    <b-container class="mt-5">
-      <hr>
-    </b-container>
-
-    <pricing/>
+    <contact />
 
   </div>
 </template>
 
 <script>
-import pricing from '~/components/Pricing.vue'
 import features from '~/components/Features.vue'
+import Contact from '~/components/Contact.vue'
 
 export default {
-  components: { pricing, features }
+  components: { features, Contact },
+  head () {
+    return {
+      title: 'Open-API by Multicycles - The only API for dockless bicycles and other shared vehicles',
+      meta: [
+        { name: 'description', content: 'The only API for dockless bicycles and other shared vehicles. Explore and get instant vehicle positions in a single query.' }
+      ]
+    }
+  }
 }
 </script>
 

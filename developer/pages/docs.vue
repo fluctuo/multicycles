@@ -1,4 +1,5 @@
 <template>
+  <div>
     <b-container>
       <b-row class="mt-3">
         <b-col cols="3">
@@ -34,6 +35,10 @@
         </b-col>
       </b-row>
     </b-container>
+
+    <Contact />
+
+  </div>
 </template>
 
 <script>
@@ -41,11 +46,24 @@
 import { introspectionQuery } from 'graphql'
 import gql from 'graphql-tag';
 
+import Contact from '~/components/Contact.vue'
+
 const onlyQueries = ['vehicles', 'providers']
 const onlyTypes = ['Provider', 'Capacities', 'Bird', 'Byke', 'CallABike', 'Cityscoot', 'Coup', 'Donkey', 'GobeeBike', 'Hellobike', 'IndigoWheel', 'Jump', 'Lime', 'Mobike', 'Nextbike', 'Obike', 'Ofo', 'Pony', 'Spin', 'WhiteBikes', 'Yobike']
 const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
 export default {
+  head () {
+    return {
+      title: 'Documenations - Open-API by Multicycles',
+      meta: [
+        { name: 'description', content: 'Documentation for query Open-API API.' }
+      ]
+    }
+  },
+  components: {
+    Contact
+  },
   methods: {
     queries: (introspection) => {
       if (!introspection) {

@@ -28,7 +28,7 @@ html {
 }
 
 .push-footer {
-  margin-bottom: 250px;
+  margin-bottom: 175px;
 }
 </style>
 

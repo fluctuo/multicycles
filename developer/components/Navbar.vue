@@ -10,8 +10,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav>
-            <b-nav-item :to="{name: 'index'}" exact>Features</b-nav-item>
-            <b-nav-item :to="{name: 'index'}" exact>Pricing</b-nav-item>
+            <b-nav-item :to="{name: 'pricing'}" exact>Pricing</b-nav-item>
             <b-nav-item :to="{name: 'showcase'}" exact>Showcase</b-nav-item>
             <b-nav-item :to="{name: 'docs'}" exact>Documentation</b-nav-item>
           </b-navbar-nav>
