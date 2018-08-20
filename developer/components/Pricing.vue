@@ -22,7 +22,7 @@
           <li>Require attribution badge</li>
         </ul>
 
-        <b-button slot="footer" size="lg" variant="primary" href="/login">Sign up</b-button>
+        <b-button slot="footer" size="lg" variant="primary" :to="{name: 'login'}">Sign up</b-button>
       </b-card>
       <b-card header="Enterprise" header-class="display-4">
         <h1 class="card-title pricing-card-title">Contact us</h1>

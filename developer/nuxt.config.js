@@ -81,6 +81,7 @@ module.exports = {
     'nuxt-leaflet'
   ],
   auth: {
+    plugins: ['~/plugins/me.js'],
     redirect: {
       home: '/account',
       callback: '/callback'
