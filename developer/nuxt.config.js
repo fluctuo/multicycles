@@ -43,6 +43,11 @@ module.exports = {
     ** Run ESLint on save
     */
     extend(config, { isDev, isClient }) {
+      config.module.rules.push({
+        test: /\.flow$/,
+        loader: 'ignore-loader'
+      })
+
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -65,10 +70,11 @@ module.exports = {
       }
     },
     babel: {
-      plugins: ['transform-react-jsx']
+      plugins: ['transform-react-jsx'],
+      ignore: ['*.flow']
     }
   },
-  plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy', { src: '~/plugins/react', ssr: false }],
+  plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy', '~/plugins/react'],
   modules: [
     '@nuxtjs/dotenv',
     ['bootstrap-vue/nuxt', { css: false }],
