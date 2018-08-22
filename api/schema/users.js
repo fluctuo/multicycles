@@ -1,24 +1,49 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graphql'
 
 import { tokens } from './tokens'
+import { plan, planType } from './plans'
+import { usage, usageType } from './usages'
 
-import { getUsers } from '../auth0'
-import { requireAdmin } from '../auth'
+import { getUsers, getUser } from '../controllers/users'
+import { requireAdmin, requireUser } from '../auth'
+
+function camelCase(s) {
+  return s.replace(/_\w/g, m => m[1].toUpperCase())
+}
+
+function formatUser(user) {
+  const formatedUser = {}
+
+  for (const key in user) {
+    if (user.hasOwnProperty(key)) {
+      if (key === 'app_metadata' && user.app_metadata.roles) {
+        formatedUser.roles = user.app_metadata.roles
+      }
+
+      formatedUser[camelCase(key)] = user[key]
+    }
+  }
+
+  return formatedUser
+}
 
 const userType = new GraphQLObjectType({
   name: 'User',
   description: 'Open-API user',
   fields: {
-    created_at: { type: GraphQLString },
+    createdAt: { type: GraphQLString },
     email: { type: GraphQLString },
-    html_url: { type: GraphQLString },
-    last_ip: { type: GraphQLString },
-    last_login: { type: GraphQLString },
+    htmlUrl: { type: GraphQLString },
+    lastIp: { type: GraphQLString },
+    lastLogin: { type: GraphQLString },
     name: { type: GraphQLString },
     nickname: { type: GraphQLString },
     picture: { type: GraphQLString },
-    user_id: { type: GraphQLString },
-    tokens: { type: tokens.type, resolve: tokens.resolve }
+    userId: { type: GraphQLString },
+    roles: { type: new GraphQLList(GraphQLString) },
+    tokens: { type: tokens.type, resolve: tokens.resolve },
+    plan: { type: planType, resolve: plan.resolve },
+    usage: { type: usageType, resolve: usage.resolve }
   }
 })
 
@@ -52,9 +77,21 @@ const users = {
       page: page + 1,
       limit: resp.limit,
       total: resp.total,
-      users: resp.users
+      users: resp.users.map(u => formatUser(u))
     }))
   }
 }
 
-export { users }
+const me = {
+  type: userType,
+  description: 'Get own detail',
+  async resolve(root, args, ctx) {
+    requireUser(ctx.state.user)
+
+    const user = await getUser(ctx.state.user.sub)
+
+    return formatUser(user)
+  }
+}
+
+export { users, me }

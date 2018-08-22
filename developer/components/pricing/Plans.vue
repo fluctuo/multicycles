@@ -1,35 +1,29 @@
 <template>
-  <b-container id="pricing">
-    <h3 class="display-4 text-center pt-5 pb-4">Pricing</h3>
-
-    <b-row align-v="center">
+  <b-container>
+    <b-row>
       <b-col>
-        <p class="lead text-center pb-5">Made with open-source software spirit, Open-API are free for non-profit OSS projets, whithout limitation.<br>
-        <a href="mailto:contact@multicycles.org">Contact us</a> for business projects. We can develop specific providers, use Open-API on premise.
-        </p>
+        <h3 class="mb-3">Simple pricings</h3>
       </b-col>
     </b-row>
-
-
     <b-card-group deck class="mb-3 text-center">
-      <b-card header="Free" header-class="display-4">
+      <b-card header="Free" header-class="display-5" header-bg-variant="primary" header-text-variant="white">
         <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
         <p>For non-profit projects</p>
         <ul class="list-unstyled mt-3 mb-4">
           <li>All providers</li>
-          <li>Unlimited requests</li>
+          <li>Fair-use requests</li>
           <li>Basic support</li>
           <li>Require attribution badge</li>
         </ul>
 
-        <b-button slot="footer" size="lg" variant="primary" href="/login">Sign up</b-button>
+        <b-button slot="footer" size="lg" variant="primary" :to="{name: 'login'}">Sign up</b-button>
       </b-card>
-      <b-card header="Enterprise" header-class="display-4">
+      <b-card header="Commercial" header-class="display-5" header-bg-variant="primary" header-text-variant="white">
         <h1 class="card-title pricing-card-title">Contact us</h1>
-        <p>For business projects.</p>
+        <p>For commercials projects.</p>
         <ul class="list-unstyled mt-3 mb-4">
           <li>All providers</li>
-          <li>Unlimited requests</li>
+          <li>50,000 requests / months</li>
           <li>Premium support</li>
         </ul>
 

@@ -1,10 +1,26 @@
 <template>
   <b-container>
     <b-row>
-      <b-col>
-        <h3 class="display-4 pt-5 pb-4">Account</h3>
+      <b-col class="mb-5 pt-5">
+        <h3 class="mb-4">Welcome to your account</h3>
 
-        <h4>Token API</h4>
+        <h4>Plan</h4>
+
+        <b-row>
+          <b-col>
+            <h5>Slected plan -> <span class="text-muted">{{ $store.state.auth.user.plan.name }}</span></h5>
+
+            <h5>Tokens: <span class="text-muted float-right">{{ $store.state.auth.user.usage.tokens }} / {{ $store.state.auth.user.plan.limits.tokens }}</span></h5>
+            <b-progress :value="$store.state.auth.user.usage.tokens" :max="$store.state.auth.user.plan.limits.tokens" class="mb-3"></b-progress>
+
+            <h5>Hits per month<span class="text-muted float-right">{{ $store.state.auth.user.usage.hitsPerMonth }} / {{ $store.state.auth.user.plan.limits.hitsPerMonth }}</span></h5>
+            <b-progress :value="$store.state.auth.user.usage.hitsPerMonth" :max="$store.state.auth.user.plan.limits.hitsPerMonth" class="mb-3"></b-progress>
+          </b-col>
+        </b-row>
+
+        <hr>
+
+        <h4>API Tokens</h4>
 
         <b-row>
           <b-col>
@@ -13,6 +29,7 @@
           </b-col>
         </b-row>
 
+        <b-alert class="mt-2 mb-2" fade :show="dismissCountDown" dismissible @dismiss-count-down="countDownChanged" variant="danger">{{ updateError }}</b-alert>
         <b-button variant="primary" class="mt-2" @click="createToken">Create token</b-button>
 
       </b-col>
@@ -32,7 +49,10 @@ export default {
   },
   data() {
     return {
-      tokens: []
+      tokens: [],
+      updateError: false,
+      dismissSecs: 5,
+      dismissCountDown: 0
     }
   },
   methods: {
@@ -48,7 +68,11 @@ export default {
           name: `Token ${this.tokens.length + 1}`
         }
       })
-      .then(() => this.$apollo.queries.tokens.refetch())
+      .then((resp) => this.$apollo.queries.tokens.refetch())
+      .catch((err) => {
+        this.dismissCountDown = this.dismissSecs
+        this.updateError = err.message
+      })
     },
     updateToken(id, updatedToken) {
       return this.$apollo.mutate({
@@ -78,6 +102,9 @@ export default {
         }
       })
       .then(() => this.$apollo.queries.tokens.refetch())
+    },
+    countDownChanged (dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
     }
   },
   apollo: {

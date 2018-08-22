@@ -8,17 +8,17 @@
             <b-img rounded="circle" width="50" height="50" :src="row.item.picture" ></b-img>
           </template>
           <template slot="name" slot-scope="row">
-            <a :href="row.item.html_url">{{ row.item.name }}</a>
+            <a :href="row.item.htmlUrl">{{ row.item.name }}</a>
           </template>
           <template slot="email" slot-scope="row">
             <a href="mailto:"></a>
             <a :href="`mailto:${row.item.email}`">{{ row.item.email }}</a>
           </template>
-          <template slot="created_at" slot-scope="row">
-            {{ row.item.created_at | ago }}
+          <template slot="createdAt" slot-scope="row">
+            {{ row.item.createdAt | ago }}
           </template>
-          <template slot="last_login" slot-scope="row">
-            {{ row.item.last_login | ago }}
+          <template slot="lastLogin" slot-scope="row">
+            {{ row.item.lastLogin | ago }}
           </template>
           <template slot="actions" slot-scope="row">
             <b-button variant="primary" v-if="row.item.tokens.length" size="sm" @click.stop="row.toggleDetails">
@@ -65,9 +65,9 @@ export default {
       }, {
         key: 'email', tdClass: 'align-middle'
       }, {
-        key: 'last_login', tdClass: 'align-middle'
+        key: 'lastLogin', tdClass: 'align-middle'
       }, {
-        key: 'created_at', tdClass: 'align-middle'
+        key: 'createdAt', tdClass: 'align-middle'
       },{
         key: 'actions', tdClass: 'align-middle'
       }],
@@ -85,15 +85,15 @@ export default {
             limit
             total
             users {
-              created_at
+              createdAt
               email
-              html_url
-              last_ip
-              last_login
+              htmlUrl
+              lastIp
+              lastLogin
               name
               nickname
               picture
-              user_id
+              userId
               tokens {
                 id
                 name
