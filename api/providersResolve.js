@@ -1,3 +1,4 @@
+import tunnel from 'tunnel-agent'
 import { requireAccessToken, requireAdmin } from './auth'
 import logger from './logger'
 import cache from './cache'
@@ -21,8 +22,20 @@ async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
     if (cached) {
       return cached
     }
+    const options = {}
 
-    const result = await client.getBicyclesByLatLng({ lat, lng })
+    // Bird IPs filter fix
+    if (provider.slug === 'bird' && process.env.PROXY_HOST) {
+      options.agent = tunnel.httpsOverHttp({
+        proxy: {
+          host: process.env.PROXY_HOST,
+          port: process.env.PROXY_PORT,
+          proxyAuth: process.env.PROXY_AUTH
+        }
+      })
+    }
+
+    const result = await client.getBicyclesByLatLng({ lat, lng }, options)
     const formatedResult = mapVehicles(result)
 
     if (formatedResult.length > 0) {

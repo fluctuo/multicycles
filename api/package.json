@@ -56,7 +56,8 @@
     "ratelimiter": "^3.2.0",
     "raven": "2.6.1",
     "redis": "2.8.0",
-    "sqreen": "^1.22.0"
+    "sqreen": "^1.22.0",
+    "tunnel-agent": "^0.6.0"
   },
   "esm": {
     "cjs": true
