@@ -1,7 +1,7 @@
 import { promisify } from 'util'
 import Limiter from 'ratelimiter'
 import redis from './redis'
-import { getLimit } from './controllers/tokens'
+import { getLimits } from './controllers/tokens'
 
 export default async (ctx, next) => {
   if (ctx.state.user && ctx.state.user.roles && ctx.state.user.roles.includes('admin')) {
@@ -20,7 +20,7 @@ export default async (ctx, next) => {
       max: process.env.REQS_PER_MINUTES || 10
     })
   } else {
-    const { hitsPerMin } = await getLimit(token.id)
+    const { hitsPerMin } = await getLimits(token.id)
 
     limiter = new Limiter({
       db: redis,

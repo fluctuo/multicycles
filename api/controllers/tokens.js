@@ -1,6 +1,6 @@
 import db from '../db'
 
-function getLimit(tokenId) {
+function getLimits(tokenId) {
   return db('tokens')
     .first(['users.overwrited_limits', 'plans.limits'])
     .innerJoin('users', function() {
@@ -16,4 +16,4 @@ function getLimit(tokenId) {
     }))
 }
 
-export { getLimit }
+export { getLimits }

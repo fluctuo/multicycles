@@ -43,4 +43,17 @@ function getUser(userId) {
   })
 }
 
-export { getUsers, getUser }
+function getLimits(userId) {
+  return db('users')
+    .first(['users.overwrited_limits', 'plans.limits'])
+    .innerJoin('plans', function() {
+      this.on('plans.id', '=', 'users.plan_id')
+    })
+    .where('users.user_id', userId)
+    .then(result => ({
+      ...result.limits,
+      ...result.overwrited_limits
+    }))
+}
+
+export { getUsers, getUser, getLimits }

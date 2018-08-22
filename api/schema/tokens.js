@@ -3,6 +3,8 @@ import { GraphQLDateTime } from 'graphql-iso-date'
 import randomstring from 'randomstring'
 
 import { tokenStats, TokenStatsType } from './tokenStats'
+import { tokensCount } from '../controllers/usages'
+import { getLimits } from '../controllers/users'
 
 import db from '../db'
 import { requireScope } from '../auth'
@@ -62,6 +64,13 @@ const createToken = {
   },
   async resolve(root, args, ctx) {
     requireScope(ctx.state.user, 'create:tokens')
+
+    const limits = await getLimits(ctx.state.user.sub)
+    const createdTokens = await tokensCount(ctx.state.user.sub)
+
+    if (limits.tokens <= createdTokens) {
+      throw new Error('Tokens limit reach')
+    }
 
     const value = await generateToken()
 

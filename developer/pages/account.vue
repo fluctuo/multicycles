@@ -29,6 +29,7 @@
           </b-col>
         </b-row>
 
+        <b-alert class="mt-2 mb-2" fade :show="dismissCountDown" dismissible @dismiss-count-down="countDownChanged" variant="danger">{{ updateError }}</b-alert>
         <b-button variant="primary" class="mt-2" @click="createToken">Create token</b-button>
 
       </b-col>
@@ -48,7 +49,10 @@ export default {
   },
   data() {
     return {
-      tokens: []
+      tokens: [],
+      updateError: false,
+      dismissSecs: 5,
+      dismissCountDown: 0
     }
   },
   methods: {
@@ -64,7 +68,11 @@ export default {
           name: `Token ${this.tokens.length + 1}`
         }
       })
-      .then(() => this.$apollo.queries.tokens.refetch())
+      .then((resp) => this.$apollo.queries.tokens.refetch())
+      .catch((err) => {
+        this.dismissCountDown = this.dismissSecs
+        this.updateError = err.message
+      })
     },
     updateToken(id, updatedToken) {
       return this.$apollo.mutate({
@@ -94,6 +102,9 @@ export default {
         }
       })
       .then(() => this.$apollo.queries.tokens.refetch())
+    },
+    countDownChanged (dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
     }
   },
   apollo: {
