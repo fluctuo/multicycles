@@ -22,8 +22,6 @@ function mapVehicles({ body }) {
 }
 
 const client = new Spin({
-  email: process.env.SPIN_AUTH_EMAIL,
-  password: process.env.SPIN_AUTH_PASSWORD,
   timeout: process.env.PROVIDER_TIMEOUT || 3000
 })
 
