@@ -50,7 +50,5 @@ export default async (ctx, next) => {
   ctx.set('Retry-After', after)
 
   ctx.status = 429
-  ctx.body = `Rate limit exceeded, retry in ${ms(delta, { long: true })}.`
-
-  ctx.throw(ctx.status, ctx.body, { headers })
+  ctx.body = `Rate limit exceeded, retry in ${Math.round(delta / 1000)} seconds.`
 }
