@@ -1,5 +1,65 @@
 import test from 'ava'
+import nock from 'nock'
 import Cityscoot from '../lib'
+
+nock('https://api-v3.cityscoot.eu/api')
+  .get('/v1/city')
+  .times(5)
+  .reply(200, {
+    success: true,
+    reason: 1,
+    comment: 'No comment specified',
+    data: {
+      hash: 'e720526787a24028ff408a5cd9ac6ada',
+      cities: [
+        {
+          id: 4,
+          name: 'Paris',
+          icon: 1,
+          position: {
+            latitude: 48.856614,
+            longitude: 2.352222
+          },
+          polygon: [[49.04417, 2.65392], [48.65871, 2.65392], [48.65871, 2.01324], [49.04417, 2.01324]]
+        }
+      ]
+    }
+  })
+
+nock('https://e192rk8dx7.execute-api.eu-west-2.amazonaws.com')
+  .get('/dev/api/scooters/public/city/4')
+  .times(3)
+  .reply(200, {
+    success: true,
+    reason: 1,
+    comment: 'Scooter list',
+    data: {
+      scooters: [
+        {
+          id: 884,
+          name: 'scoot 684',
+          geohash: 'u09wj9esh',
+          geocoding: '79 Boulevard de Magenta, 75010 Paris, France',
+          battery: 40,
+          autonomy: 40,
+          plate: 'EJ 573 SL',
+          latitude: 48.87613833333334,
+          longitude: 2.356093333333333,
+          id_availability: 1,
+          number: 684
+        }
+      ]
+    }
+  })
+
+test('Get cities', async t => {
+  const cityscoot = new Cityscoot()
+
+  await cityscoot.getCities().then(() => {
+    t.truthy(cityscoot.cities.length)
+    t.pass()
+  })
+})
 
 test('overwrite timeout on constructor', async t => {
   const cityscoot = new Cityscoot({ timeout: 1 })

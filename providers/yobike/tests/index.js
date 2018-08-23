@@ -1,5 +1,22 @@
 import test from 'ava'
+import nock from 'nock'
 import Yobike from '../lib'
+
+nock('https://en.api.ohbike.com')
+  .post('/v1/vehicle/', /lat=51.456734&lng=-2.591292/gi)
+  .reply(200, {
+    errcode: 0,
+    message: 'ok',
+    data: [
+      {
+        latitude: 51.429616,
+        longitude: -2.62513,
+        plate_no: '7702465',
+        discount: -0.5,
+        outside: 1
+      }
+    ]
+  })
 
 test('overwrite timeout on constructor', async t => {
   const yobike = new Yobike({ timeout: 1 })

@@ -5,9 +5,7 @@ import jwt from 'jsonwebtoken'
 const BASE_URL = 'https://web.spin.pm/api'
 
 class Spin {
-  constructor({ timeout, email, password } = {}) {
-    this.email = email
-    this.password = password
+  constructor({ timeout } = {}) {
     this.config = {
       timeout: timeout && parseInt(timeout, 10)
     }

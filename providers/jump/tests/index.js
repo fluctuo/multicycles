@@ -1,5 +1,27 @@
 import test from 'ava'
+import nock from 'nock'
 import Jump from '../lib'
+
+nock('https://dc.jumpmobility.com/opendata')
+  .get('/free_bike_status.json')
+  .times(3)
+  .reply(200, {
+    last_updated: 1535019173,
+    ttl: 180,
+    data: {
+      bikes: [
+        {
+          bike_id: 'bike_16488',
+          name: 'JUMP DC-0214',
+          lon: -76.96841166666667,
+          lat: 38.92384333333333,
+          is_reserved: 0,
+          is_disabled: 0,
+          jump_ebike_battery_level: '91%'
+        }
+      ]
+    }
+  })
 
 test('overwrite timeout on constructor', async t => {
   const jump = new Jump({ timeout: 1 })

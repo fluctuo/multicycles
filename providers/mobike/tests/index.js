@@ -1,5 +1,32 @@
 import test from 'ava'
+import nock from 'nock'
 import Mobike from '../lib'
+
+nock('https://mwx.mobike.com/mobike-api')
+  .post('/rent/nearbyBikesInfo.do', {
+    latitude: 31.23039,
+    longitude: 121.473702
+  })
+  .reply(200, {
+    code: 0,
+    message: '',
+    biketype: 0,
+    autoZoom: true,
+    radius: 150,
+    object: [
+      {
+        distId: '0216729683',
+        distX: 121.47473058,
+        distY: 31.23069014,
+        distNum: 1,
+        distance: '103',
+        bikeIds: '0216729683#',
+        biketype: 1,
+        type: 0,
+        boundary: null
+      }
+    ]
+  })
 
 test('overwrite timeout on constructor', async t => {
   const mobike = new Mobike({ timeout: 1 })

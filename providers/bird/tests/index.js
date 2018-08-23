@@ -1,18 +1,39 @@
 import test from 'ava'
+import nock from 'nock'
 import Bird from '../lib'
 
-let loggedBird
+let bird = new Bird()
 
-test.before(async t => {
-  loggedBird = new Bird()
+test('login', async t => {
+  nock('https://api.bird.co')
+    .post('/user/login', {
+      email: 'jaimelesloutres@gmail.com'
+    })
+    .reply(200, {
+      id: '8d78b6e3-e9f6-45c6-b050-39f8e7dbcd7c',
+      token: 'tokentoken'
+    })
 
-  await loggedBird.login({
-    email: `jaimelesloutres${Math.round(Math.random() * 1000)}@gmail.com`
+  await bird.login({ email: 'jaimelesloutres@gmail.com' }).then(result => {
+    t.is(result.statusCode, 200)
+    t.is(bird.config.headers['Authorization'], 'Bird tokentoken')
+    t.pass()
   })
 })
 
-test.after(async t => {
-  await loggedBird.logout()
+test('logout', async t => {
+  const newBird = new Bird()
+  newBird.config.headers['Authorization'] = 'Bird tokentoken'
+
+  nock('https://api.bird.co')
+    .post('/user/logout')
+    .reply(200, 'true')
+
+  await newBird.logout().then(result => {
+    t.is(result.statusCode, 200)
+    t.falsy(newBird.config.headers['Authorization'])
+    t.pass()
+  })
 })
 
 test('overwrite timeout on constructor', async t => {
@@ -52,8 +73,29 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test.skip('get bicycles by positions', async t => {
-  await loggedBird
+test('get bicycles by positions', async t => {
+  nock('https://api.bird.co')
+    .get('/bird/nearby')
+    .query({
+      latitude: 38.907192,
+      longitude: -77.036871,
+      radius: 1500
+    })
+    .reply(200, {
+      birds: [
+        {
+          location: {
+            latitude: 48.857246,
+            longitude: 2.350357
+          },
+          id: '40eed490-9814-46b9-9d7c-4bbba5143192',
+          code: 'TPXVE',
+          battery_level: 86
+        }
+      ]
+    })
+
+  await bird
     .getBicyclesByLatLng({
       lat: 38.907192,
       lng: -77.036871,

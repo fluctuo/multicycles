@@ -64,11 +64,16 @@ class Bird {
   }
 
   logout() {
-    return got.post(`${BASE_URL}/user/logout`, {
-      headers: {
-        ...this.config.headers
-      }
-    })
+    return got
+      .post(`${BASE_URL}/user/logout`, {
+        headers: {
+          ...this.config.headers
+        }
+      })
+      .then(result => {
+        delete this.config.headers['Authorization']
+        return result
+      })
   }
 
   getBicyclesByLatLng({ lat: latitude, lng: longitude, radius = 500 } = {}, config = {}) {

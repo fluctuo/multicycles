@@ -12,7 +12,7 @@
     "watch":
       "lerna exec --ignore '@multicycles/{api,front,developer}' --parallel -- babel -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
     "prepare": "npm run clean && npm run transpile",
-    "test": "lerna run test",
+    "test": "lerna run --parallel test",
     "generate": "plop",
     "dev:api": "cd api && npm start",
     "dev:front": "cd front && npm run dev",

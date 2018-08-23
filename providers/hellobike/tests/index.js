@@ -1,5 +1,30 @@
 import test from 'ava'
+import nock from 'nock'
 import Hellobike from '../lib'
+
+nock('https://api.ttbike.com.cn/api')
+  .post('', {
+    version: '4.20.0',
+    action: 'user.ride.nearBikes',
+    lat: 31.23039,
+    lng: 121.473702,
+    cityCode: 0,
+    currentLat: 31.23039,
+    currentLng: 121.473702
+  })
+  .reply(200, {
+    code: 0,
+    data: [
+      {
+        bikeNo: '2200000094',
+        lat: '45.755686',
+        lng: '126.598653',
+        price: '1元',
+        time: '半小时',
+        bikeType: 0
+      }
+    ]
+  })
 
 test('overwrite timeout on constructor', async t => {
   const hellobike = new Hellobike({ timeout: 1 })
