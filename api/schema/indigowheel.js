@@ -1,26 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 
-import IndigoWheel from '@multicycles/indigowheel'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return body.data.map(bike => ({
-    id: bike.plate_no,
-    lat: bike.latitude,
-    lng: bike.longitude,
-    type: 'BIKE',
-    attributes: ['GEARS'],
-    provider: IndigoWheel.getProviderDetails(),
-    plate_no: bike.plate_no,
-    discount: bike.discount,
-    outside: bike.outside
-  }))
-}
-
-const client = new IndigoWheel({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { IndigoWheel, client, mapVehicles } from '../controllers/providers/indigowheel'
 
 const IndigoWheelType = new GraphQLObjectType({
   name: 'IndigoWheel',

@@ -1,28 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLBoolean, GraphQLNonNull } from 'graphql'
 
-import Pony from '@multicycles/pony'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles(result) {
-  return result.filter(bike => bike.status === 'AVAILABLE').map(bike => ({
-    id: bike.physicalId,
-    lat: bike.latitude,
-    lng: bike.longitude,
-    type: 'BIKE',
-    attributes: [],
-    provider: Pony.getProviderDetails(),
-    manualLocation: bike.manualLocation,
-    reason: bike.reason,
-    region: bike.region,
-    status: bike.status,
-    userId: bike.userId
-  }))
-}
-
-const client = new Pony()
+import { Pony, client, mapVehicles } from '../controllers/providers/pony'
 
 const PonyType = new GraphQLObjectType({
   name: 'Pony',

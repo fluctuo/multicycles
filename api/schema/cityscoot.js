@@ -1,35 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 
-import Cityscoot from '@multicycles/cityscoot'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return body.data.scooters.map(o => {
-    return {
-      id: o.id,
-      lat: o.latitude,
-      lng: o.longitude,
-      type: 'MOTORSCOOTER',
-      attributes: ['ELECTRIC'],
-      provider: Cityscoot.getProviderDetails(),
-      cityscootFields: {
-        name: o.name,
-        geohash: o.geohash,
-        geocoding: o.geocoding,
-        battery: o.battery,
-        autonomy: o.autonomy,
-        plate: o.plate,
-        id_availability: o.id_availability,
-        number: o.number
-      }
-    }
-  })
-}
-
-const client = new Cityscoot({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { Cityscoot, client, mapVehicles } from '../controllers/providers/cityscoot'
 
 const CityscootFieldsType = new GraphQLObjectType({
   name: 'CityscootFields',
