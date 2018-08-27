@@ -1,16 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 
-import {{ properCase provider}} from '@multicycles/{{ totalyLower provider}}'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return // @TODO map results
-}
-
-const client = new {{ properCase provider}}({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { {{ properCase provider}}, client, mapVehicles } from '../controllers/providers/{{ totalyLower provider}}'
 
 const {{ properCase provider}}Type = new GraphQLObjectType({
   name: '{{ properCase provider}}',

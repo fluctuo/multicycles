@@ -1,5 +1,16 @@
 import test from 'ava'
+import nock from 'nock'
 import {{ properCase provider }} from '../lib'
+
+nock('https://PROVIDER_URL')
+  .get('/PATH')
+  .query({
+    // QUERY_STRING
+  })
+  .times(3)
+  .reply(200, {
+    // RESULT
+  })
 
 test('overwrite timeout on constructor', async t => {
   const {{ camelCase provider }} = new {{ properCase provider }}({ timeout: 1 })
