@@ -14,4 +14,14 @@ function mapVehicles({ body }) {
 
 const client = new Hellobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
-export { Hellobike, client, mapVehicles }
+function checkWorking() {
+  const positions = [{ lat: 45.803776, lng: 126.534966 }]
+  const start = new Date()
+
+  return client.getBicyclesByLatLng(positions[0]).then(result => ({
+    working: !!mapVehicles(result).length,
+    latency: new Date() - start
+  }))
+}
+
+export { Hellobike, client, mapVehicles, checkWorking }

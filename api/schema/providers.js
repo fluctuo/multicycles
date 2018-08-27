@@ -11,6 +11,7 @@ import { reverseGeocode } from '../geolocation'
 import { getProviders } from '../citiesProviders'
 import { requireAccessToken, requireAdmin } from '../auth'
 import { allProviders } from '../utils'
+import { providersRequestsTotal } from '../metrics'
 
 const OsType = new GraphQLObjectType({
   name: 'OsLink',
@@ -62,6 +63,8 @@ const providers = {
     if (args.lat && args.lng) {
       availableProviders = await getProviders({ lat: args.lat, lng: args.lng })
     }
+
+    providersRequestsTotal.labels([args.lat && args.lng]).inc()
 
     return Promise.all(availableProviders.map(p => import(`./${p}`))).then(modules =>
       modules.map(module => module.provider)

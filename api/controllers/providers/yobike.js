@@ -16,4 +16,14 @@ function mapVehicles({ body }) {
   }))
 }
 
-export { Yobike, client, mapVehicles }
+function checkWorking() {
+  const positions = [{ lat: 51.454514, lng: -2.58791 }]
+  const start = new Date()
+
+  return client.getBicyclesByLatLng(positions[0]).then(result => ({
+    working: !!mapVehicles(result).length,
+    latency: new Date() - start
+  }))
+}
+
+export { Yobike, client, mapVehicles, checkWorking }

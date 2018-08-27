@@ -2,6 +2,7 @@ import tunnel from 'tunnel-agent'
 import { requireAccessToken, requireAdmin } from './auth'
 import logger from './logger'
 import cache from './cache'
+import { vehiclesRequestsTotal, vehiclesRequestsDurationSeconds } from './metrics'
 
 async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
   try {
@@ -18,6 +19,7 @@ async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
 
   try {
     const cached = await cache.get(`${provider.slug}|${lat}|${lng}`)
+    vehiclesRequestsTotal.labels(provider.slug, !!cached).inc()
 
     if (cached) {
       return cached
@@ -34,8 +36,9 @@ async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
         }
       })
     }
-
+    const start = new Date()
     const result = await client.getBicyclesByLatLng({ lat, lng }, options)
+    vehiclesRequestsDurationSeconds.labels(provider.slug).observe((new Date() - start) / 1000)
     const formatedResult = mapVehicles(result)
 
     if (formatedResult.length > 0) {

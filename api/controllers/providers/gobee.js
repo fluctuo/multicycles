@@ -20,4 +20,11 @@ function mapVehicles({ body }) {
   }))
 }
 
-export { GobeeBike, client, mapVehicles }
+function checkWorking() {
+  return Promise.resolve({
+    working: false,
+    latency: -1
+  })
+}
+
+export { GobeeBike, client, mapVehicles, checkWorking }

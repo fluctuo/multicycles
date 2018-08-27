@@ -17,4 +17,14 @@ function mapVehicles({ body }) {
   }))
 }
 
-export { Jump, client, mapVehicles }
+function checkWorking() {
+  const positions = [{ lat: 38.907192, lng: -77.036871 }]
+  const start = new Date()
+
+  return client.getBicyclesByLatLng(positions[0]).then(result => ({
+    working: !!mapVehicles(result).length,
+    latency: new Date() - start
+  }))
+}
+
+export { Jump, client, mapVehicles, checkWorking }

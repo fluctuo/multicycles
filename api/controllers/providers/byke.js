@@ -24,4 +24,14 @@ function mapVehicles({ body }) {
   }))
 }
 
-export { client, Byke, mapVehicles }
+function checkWorking() {
+  const positions = [{ lat: 52.520008, lng: 13.404954 }]
+  const start = new Date()
+
+  return client.getBicyclesByLatLng(positions[0]).then(result => ({
+    working: !!mapVehicles(result).length,
+    latency: new Date() - start
+  }))
+}
+
+export { client, Byke, mapVehicles, checkWorking }

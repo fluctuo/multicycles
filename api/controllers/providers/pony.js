@@ -18,4 +18,14 @@ function mapVehicles(result) {
   }))
 }
 
-export { Pony, client, mapVehicles }
+function checkWorking() {
+  const positions = [{ lat: 51.752022, lng: -1.257726 }]
+  const start = new Date()
+
+  return client.getBicyclesByLatLng(positions[0]).then(result => ({
+    working: !!mapVehicles(result).length,
+    latency: new Date() - start
+  }))
+}
+
+export { Pony, client, mapVehicles, checkWorking }
