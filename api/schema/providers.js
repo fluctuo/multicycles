@@ -64,7 +64,7 @@ const providers = {
       availableProviders = await getProviders({ lat: args.lat, lng: args.lng })
     }
 
-    providersRequestsTotal.labels([args.lat && args.lng]).inc()
+    providersRequestsTotal.labels([!!(args.lat && args.lng)]).inc()
 
     return Promise.all(availableProviders.map(p => import(`./${p}`))).then(modules =>
       modules.map(module => module.provider)
