@@ -1,26 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLNonNull } from 'graphql'
 
-import Ofo from '@multicycles/ofo'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return body.values.cars.map(bike => ({
-    id: bike.carno,
-    lat: bike.lat,
-    lng: bike.lng,
-    type: 'BIKE',
-    attributes: ['GEARS'],
-    provider: Ofo.getProviderDetails(),
-    carno: bike.carno,
-    bomNum: bike.bomNum,
-    userIdLast: bike.userIdLast
-  }))
-}
-
-const client = new Ofo({ token: process.env.OFO_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { Ofo, client, mapVehicles } from '../controllers/providers/ofo'
 
 const OfoType = new GraphQLObjectType({
   name: 'Ofo',

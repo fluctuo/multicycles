@@ -1,24 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 
-import Hellobike from '@multicycles/hellobike'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return body.data.map(o => ({
-    id: o.bikeNo,
-    lat: o.lat,
-    lng: o.lng,
-    type: 'BIKE',
-    attributes: o.bikeType === 2 ? ['ELECTRIC'] : [],
-    provider: Hellobike.getProviderDetails(),
-    hellobikeFields: { ...o }
-  }))
-}
-
-const client = new Hellobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { Hellobike, client, mapVehicles } from '../controllers/providers/hellobike'
 
 const HellobikeFieldsType = new GraphQLObjectType({
   name: 'HellobikeFields',

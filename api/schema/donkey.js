@@ -1,46 +1,11 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 import GraphQLJSON from 'graphql-type-json'
 
-import Donkey from '@multicycles/donkey'
-
 import { VehicleType } from './vehicles'
 import { StationType } from './stations'
 import { vehicleInterfaceType, stationInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return body.map(bike => {
-    const data = {
-      id: bike.id,
-      lat: bike.latitude,
-      lng: bike.longitude,
-      provider: Donkey.getProviderDetails(),
-      donkeyFields: {
-        name: bike.name,
-        radius: bike.radius,
-        available_bikes_count: bike.available_bikes_count,
-        thumbnail_url: bike.thumbnail_url,
-        country_code: bike.country_code,
-        currency: bike.currency,
-        price: bike.price
-      }
-    }
-
-    if (bike.available_bikes_count > 1) {
-      data.type = 'STATION'
-      data.isVirtual = true
-      data.virtualRadius = bike.radius
-      data.availableVehicles = bike.available_bikes_count
-    } else {
-      data.type = 'BIKE'
-      data.attributes = ['GEARS']
-    }
-
-    return data
-  })
-}
-
-const client = new Donkey({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { Donkey, client, mapVehicles } from '../controllers/providers/donkey'
 
 const DonkeyFieldsType = new GraphQLObjectType({
   name: 'DonkeyFields',

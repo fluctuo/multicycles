@@ -1,26 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 
-import Yobike from '@multicycles/yobike'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return body.data.map(bike => ({
-    id: bike.plate_no,
-    lat: bike.latitude,
-    lng: bike.longitude,
-    type: 'BIKE',
-    attributes: ['GEARS'],
-    provider: Yobike.getProviderDetails(),
-    plate_no: bike.plate_no,
-    discount: bike.discount,
-    outside: bike.outside
-  }))
-}
-
-const client = new Yobike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { Yobike, client, mapVehicles } from '../controllers/providers/yobike'
 
 const YobikeType = new GraphQLObjectType({
   name: 'Yobike',

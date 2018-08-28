@@ -28,6 +28,11 @@ module.exports = plop => {
         path: 'api/schema/{{ totalyLower provider}}.js',
         templateFile: 'templates/api/schema.js'
       },
+      {
+        type: 'add',
+        path: 'api/controllers/providers/{{ totalyLower provider}}.js',
+        templateFile: 'templates/api/controllers.js'
+      },
       function customAction(answers) {
         return [
           'Go to work now:',
@@ -36,6 +41,10 @@ module.exports = plop => {
           ' ',
           '= Api =',
           '+ Add type to `api/schema/index.js`',
+          plop.renderString(
+            '+ Complete functions on `api/controllers/providers/{{ totalyLower provider }}.js`',
+            answers
+          ),
           '+ Add new provider to `resolveType` in `api/schema/vehicles.js`',
           '+ Add new provider in `api/utils.js`',
           ' ',
@@ -51,8 +60,8 @@ module.exports = plop => {
             answers
           ),
           ' ',
-          '= Developer =',
-          '+ Add new provider type in `developer/pages/docs.js`'
+          '= Status =',
+          '+ Add new components on status website'
         ].join('\n')
       }
     ]

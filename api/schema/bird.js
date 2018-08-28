@@ -1,25 +1,9 @@
 import { GraphQLObjectType, GraphQLList, GraphQLFloat, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 
-import Bird from '@multicycles/bird'
-
 import { VehicleType } from './vehicles'
 import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
-
-function mapVehicles({ body }) {
-  return body.birds.map(bike => ({
-    id: bike.id,
-    lat: bike.location.latitude,
-    lng: bike.location.longitude,
-    type: 'SCOOTER',
-    attributes: ['ELECTRIC'],
-    provider: Bird.getProviderDetails(),
-    code: bike.code,
-    battery_level: bike.battery_level
-  }))
-}
-
-const client = new Bird({ token: process.env.BIRD_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+import { Bird, client, mapVehicles } from '../controllers/providers/bird'
 
 const BirdType = new GraphQLObjectType({
   name: 'Bird',
