@@ -1,4 +1,5 @@
 import Bird from '@multicycles/bird'
+import tunnel from 'tunnel-agent'
 
 const client = new Bird({ token: process.env.BIRD_AUTH_TOKEN, timeout: process.env.PROVIDER_TIMEOUT || 3000 })
 
@@ -19,10 +20,20 @@ function checkWorking() {
   const positions = [{ lat: 48.856613, lng: 2.352222 }]
   const start = new Date()
 
-  return client.getBicyclesByLatLng(positions[0]).then(result => ({
-    working: !!mapVehicles(result).length,
-    latency: new Date() - start
-  }))
+  return client
+    .getBicyclesByLatLng(positions[0], {
+      agent: tunnel.httpsOverHttp({
+        proxy: {
+          host: process.env.PROXY_HOST,
+          port: process.env.PROXY_PORT,
+          proxyAuth: process.env.PROXY_AUTH
+        }
+      })
+    })
+    .then(result => ({
+      working: !!mapVehicles(result).length,
+      latency: new Date() - start
+    }))
 }
 
 export { Bird, client, mapVehicles, checkWorking }
