@@ -6,7 +6,7 @@ stages:
 language: node_js
 
 node_js:
-  - "8"
+  - '8'
 
 jobs:
   include:
@@ -19,14 +19,11 @@ jobs:
       services:
         - docker
       script:
-        - docker build -t multicycles/api api;
-          docker build -t multicycles/front front;
-          docker build -t multicycles/developer developer;
+        - sh build.sh
       after_success:
-        - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-          docker push multicycles/api;
-          docker push multicycles/front;
-          docker push multicycles/developer;
+        - sh push.sh
 
 notifications:
-  email: false
+  email:
+    on_success: never
+    on_failure: always
