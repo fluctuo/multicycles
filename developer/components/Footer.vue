@@ -11,6 +11,20 @@
           <a title="Never Compromise on Identity" href="http://auth0.com"><img src="/auth0.png" alt="Auth0 Logo"></a>
         </b-col>
         <b-col align="center">
+          <h5>Links</h5>
+          <ul class="list-unstyled">
+            <li>
+              <a href="https://status.multicycles.org/">
+                Status
+                <status-badge />
+              </a>
+            </li>
+            <li>
+              <nuxt-link :to="{name: 'docs'}" exact>Documentation</nuxt-link>
+            </li>
+          </ul>
+        </b-col>
+        <b-col align="center">
           <h5>Contact</h5>
           <ul class="list-unstyled">
             <li>
@@ -30,10 +44,11 @@
 
 <script>
 import logo from '~/components/Logo.vue'
+import StatusBadge from '~/components/StatusBadge.vue'
 import { TwitterIcon, MailIcon } from 'vue-feather-icons'
 
 export default {
-  components: { logo, TwitterIcon, MailIcon }
+  components: { logo, StatusBadge, TwitterIcon, MailIcon }
 }
 </script>
 
