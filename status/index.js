@@ -1,4 +1,11 @@
+import Raven from 'raven'
 import got from 'got'
+
+const useRaven = !!(process.env.SENTRY_KEY && process.env.NODE_ENV === 'production')
+
+if (useRaven) {
+  Raven.config(process.env.SENTRY_KEY).install()
+}
 
 const client = got.extend({
   baseUrl: process.env.CACHET_URL,
@@ -49,5 +56,6 @@ Promise.all([getComponents(), checkProviders()]).then(([components, providers]) 
 })
 
 process.on('unhandledRejection', error => {
+  Raven.captureException(error)
   console.error(error)
 })
