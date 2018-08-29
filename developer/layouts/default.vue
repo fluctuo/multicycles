@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="content">
     <navbar/>
-    <nuxt class="push-footer"/>
+    <nuxt class="all-height"/>
     <my-footer/>
   </div>
 </template>
@@ -27,8 +27,14 @@ html {
   min-height: 100%;
 }
 
-.push-footer {
-  margin-bottom: 175px;
+.content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.all-height {
+  flex-grow: 1;
 }
 </style>
 

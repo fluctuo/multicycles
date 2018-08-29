@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" class="mt-5 pt-5 pb-5 bg-dark">
+  <footer id="footer" class="pt-5 pb-5 bg-dark">
     <b-container>
       <b-row align="center">
         <b-col>
@@ -42,8 +42,6 @@ export default {
 @import '~/scss/app.scss';
 
 #footer {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   color: $light;
 }
