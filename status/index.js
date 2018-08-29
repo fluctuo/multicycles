@@ -26,8 +26,11 @@ function hasDifferentStatus({ status }, { working }) {
 
 function setComponentStatus(component, working) {
   return client.put(`/components/${component.id}`, {
-    component_id: component.id,
-    status: working ? 1 : 3
+    json: true,
+    body: {
+      component_id: component.id,
+      status: working ? 1 : 3
+    }
   })
 }
 
