@@ -227,7 +227,7 @@ export default {
           return { lat: this.location.lat, lng: this.location.lng }
         },
         update(data) {
-          return data.vehicles
+          return data.vehicles ? data.vehicles : []
         }
       }
     }
