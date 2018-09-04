@@ -2,7 +2,7 @@
   <div class="flex-container">
     <div class="map-container">
       <v-progress v-if="fetchingVehicles !== 0" />
-      <l-map ref="map" :zoom=map.zoom :center=map.center @moveend="moveCenter" @dragstart="moveStart" @zoomend="zoomEnd" style="height: 100%">
+      <l-map ref="map" :zoom=map.zoom :minZoom=map.minZoom :center=map.center @moveend="moveCenter" @dragstart="moveStart" @zoomend="zoomEnd" style="height: 100%">
         <l-tile-layer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></l-tile-layer >
         <l-tile-layer v-else url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" :options="options" :attribution="attribution"></l-tile-layer>
 
@@ -82,7 +82,8 @@ export default {
       },
       map: {
         center: this.$store.state.geolocation,
-        zoom: 18,
+        zoom: 17,
+        minZoom: 15,
         detectRetina: true
       },
       vehicles: []
