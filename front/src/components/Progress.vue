@@ -6,14 +6,13 @@
 
 <style lang="scss">
 .progress {
-  position: relative;
+  position: absolute;
   height: 4px;
   display: block;
   width: 100%;
-  background-color: #12a80b;
   background-clip: padding-box;
   overflow: hidden;
-  margin-top: -4px;
+  z-index: 1000;
 }
 
 .progress .indeterminate {

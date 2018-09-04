@@ -39,7 +39,11 @@ const state = {
   ],
   disabledProviders: disabledProviders || [],
   selectedVehicle: false,
-  drawerEnable: true
+  drawerEnable: true,
+  moved: false,
+  map: {
+    center: position || [48.852775, 2.369336]
+  }
 }
 
 const getters = {
@@ -88,6 +92,15 @@ const actions = {
   },
   setDrawerEnable({ commit }, enable) {
     commit('drawerEnable', !!enable)
+  },
+  centerOnGeolocation({ commit }) {
+    commit('centerOnGeolocation')
+  },
+  setMoved({ commit }, moved) {
+    commit('setMoved', moved)
+  },
+  setCenter({ commit }, center) {
+    commit('setCenter', center)
   }
 }
 
@@ -127,6 +140,20 @@ const mutations = {
   },
   drawerEnable(state, enable) {
     state.drawerEnable = enable
+  },
+  centerOnGeolocation(state) {
+    const geolocation = state.geolocation
+
+    if (geolocation) {
+      state.moved = false
+      state.map.center = JSON.parse(JSON.stringify(geolocation))
+    }
+  },
+  setMoved(state, moved) {
+    state.moved = moved
+  },
+  setCenter(state, center) {
+    state.map.center = center
   }
 }
 

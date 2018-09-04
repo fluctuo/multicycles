@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper">
     <div class="top">
-      <menu-icon @click="open" class="menu" />
+      <menu-icon @click="open" class="icon" />
+      <compass-icon class="icon" @click="centerOnGeolocation"/>
     </div>
     <local-map />
   </div>
@@ -9,20 +10,21 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { MenuIcon } from 'vue-feather-icons'
+import { MenuIcon, CompassIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 
 export default {
   name: 'Home',
   components: {
     MenuIcon,
+    CompassIcon,
     LocalMap
   },
   mounted() {
     this.setDrawerEnable(false)
   },
   methods: {
-    ...mapActions(['setDrawerEnable']),
+    ...mapActions(['setDrawerEnable', 'centerOnGeolocation']),
     open() {
       this.setDrawerEnable(true)
       this.$parent.toggle()
@@ -44,13 +46,17 @@ export default {
 
 .top {
   position: absolute;
+  width: 100%;
   z-index: 1000;
   display: flex;
-  margin: 15px 20px;
+  justify-content: space-between;
+  margin: 15px 0;
+  padding: 0 20px;
 
-  .menu {
+  .icon {
     height: 50px;
     width: 50px;
+    cursor: pointer;
   }
 }
 </style>
