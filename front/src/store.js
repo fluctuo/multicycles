@@ -38,12 +38,14 @@ const state = {
     'yobike'
   ],
   disabledProviders: disabledProviders || [],
-  selectedVehicle: false
+  selectedVehicle: false,
+  drawerEnable: true
 }
 
 const getters = {
   isProviderDisabled: state => provider => state.disabledProviders.includes(provider),
-  enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider))
+  enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider)),
+  drawerEnable: state => state.drawerEnable
 }
 
 const actions = {
@@ -83,6 +85,9 @@ const actions = {
   },
   selectVehicle({ commit }, vehicle) {
     commit('selectVehicle', vehicle)
+  },
+  setDrawerEnable({ commit }, enable) {
+    commit('drawerEnable', !!enable)
   }
 }
 
@@ -119,6 +124,9 @@ const mutations = {
   },
   selectVehicle(state, vehicle) {
     state.selectedVehicle = vehicle
+  },
+  drawerEnable(state, enable) {
+    state.drawerEnable = enable
   }
 }
 

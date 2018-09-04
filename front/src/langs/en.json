@@ -1,4 +1,7 @@
 {
+  "home": {
+    "map": "Map"
+  },
   "about": {
     "title": "About",
     "one":

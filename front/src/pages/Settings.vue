@@ -1,37 +1,41 @@
 <template>
-  <transition name="fade">
-    <div class="settings-panel" v-show="$store.state.settingPanel">
-      <h2>{{ $t('settings.title')}}</h2>
-      <div class="install" v-if="hasInstallPromptEvent">
-        <button @click="installApp()">
-          <arrow-down-circle-icon></arrow-down-circle-icon>
-          {{ $t('settings.installApp')}}
-        </button>
-      </div>
-      <form>
-        <label for="lang">{{ $t('settings.lang') }}:</label>
-        <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
-          <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
-        </select>
-
-        <label for="lang">{{ $t('settings.providers') }}:</label>
-
-        <div v-for="provider in $store.state.providers" :key="provider" class="provider">
-          <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
-          <span>{{ provider }}</span>
-        </div>
-      </form>
+  <div class="settings-panel">
+    <h2>
+      <router-link to="/">
+        <arrow-left-circle-icon />
+      </router-link>
+      {{ $t('settings.title')}}
+    </h2>
+    <div class="install" v-if="hasInstallPromptEvent">
+      <button @click="installApp()">
+        <arrow-down-circle-icon></arrow-down-circle-icon>
+        {{ $t('settings.installApp')}}
+      </button>
     </div>
-  </transition>
+    <form>
+      <label for="lang">{{ $t('settings.lang') }}:</label>
+      <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
+        <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
+      </select>
+
+      <label for="lang">{{ $t('settings.providers') }}:</label>
+
+      <div v-for="provider in $store.state.providers" :key="provider" class="provider">
+        <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
+        <span>{{ provider }}</span>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { ArrowDownCircleIcon } from 'vue-feather-icons'
+import { ArrowLeftCircleIcon, ArrowDownCircleIcon } from 'vue-feather-icons'
 
 export default {
-  name: 'SettingsPanel',
+  name: 'Settings',
   components: {
+    ArrowLeftCircleIcon,
     ArrowDownCircleIcon
   },
   data() {

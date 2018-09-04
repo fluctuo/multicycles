@@ -10,6 +10,7 @@ import VueApollo from 'vue-apollo'
 import ToggleButton from 'vue-js-toggle-button'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
+import DrawerLayout from 'vue-drawer-layout'
 
 import App from './App'
 import router from './router'
@@ -55,6 +56,7 @@ Vue.use(
   })
 )
 
+Vue.use(DrawerLayout)
 Vue.use(ToggleButton)
 
 /* eslint-disable no-new */

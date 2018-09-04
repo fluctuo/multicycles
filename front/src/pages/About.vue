@@ -1,7 +1,12 @@
 <template>
   <div class="flex-container">
     <div class="content">
-      <h1>{{ $t('about.title') }}</h1>
+      <h1>
+        <router-link to="/">
+          <arrow-left-circle-icon />
+        </router-link>
+        {{ $t('about.title') }}
+      </h1>
       <p v-html="$t('about.one')"></p>
       <p v-html="$t('about.two')"></p>
       <p v-html="$t('about.three')"></p>
@@ -11,11 +16,13 @@
 </template>
 
 <script>
-import Footer from './Footer'
+import { ArrowLeftCircleIcon } from 'vue-feather-icons'
+import Footer from '../components/Footer'
 
 export default {
   name: 'About',
   components: {
+    ArrowLeftCircleIcon,
     Footer
   }
 }
