@@ -17,6 +17,8 @@ import { mapActions, mapGetters } from 'vuex'
 import { MenuIcon, CompassIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 
+import store from '../store'
+
 export default {
   name: 'Home',
   components: {
@@ -24,11 +26,18 @@ export default {
     CompassIcon,
     LocalMap
   },
+  beforeRouteEnter(to, from, next) {
+    if (to.query && to.query.l) {
+      store.state.map.center = to.query.l.split(',')
+      store.state.moved = true
+    }
+    next()
+  },
   mounted() {
     this.setDrawerEnable(false)
   },
   methods: {
-    ...mapActions(['setDrawerEnable', 'centerOnGeolocation']),
+    ...mapActions(['setDrawerEnable', 'centerOnGeolocation', 'setCenter']),
     open() {
       this.setDrawerEnable(true)
       this.$parent.toggle()

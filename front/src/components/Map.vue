@@ -122,10 +122,12 @@ export default {
         console.warn('haha navigator.geolocation doesnt exist')
       } else {
         navigator.geolocation.getCurrentPosition(position => {
-          this.setCenter([position.coords.latitude, position.coords.longitude])
-          this.setGeolocation(this.center)
-          this.getVehicles(this.center[0], this.center[1])
-          this.getCapacities({ lat: this.center[0], lng: this.center[1] })
+          if (!this.$store.state.moved) {
+            this.setCenter([position.coords.latitude, position.coords.longitude])
+            this.setGeolocation(this.center)
+            this.getVehicles(this.center[0], this.center[1])
+            this.getCapacities({ lat: this.center[0], lng: this.center[1] })
+          }
         })
         geolocationWatcher = navigator.geolocation.watchPosition(position => {
           this.setGeolocation([position.coords.latitude, position.coords.longitude])
@@ -150,6 +152,7 @@ export default {
       }
     },
     moveCenter(event) {
+      this.$router.push({ name: 'Home', query: { l: this.$refs.map.center.join(',') } })
       this.setCenter(this.$refs.map.center)
       this.getVehicles(this.center[0], this.center[1])
     },
