@@ -2,6 +2,10 @@
   <div class="wrapper">
     <div class="top">
       <menu-icon @click="open" class="icon" />
+      <router-link to="/search">
+        <input type="text" placeholder="Address" class="adress-picker">
+      </router-link>
+
       <compass-icon class="icon" @click="centerOnGeolocation"/>
     </div>
     <local-map />
@@ -57,6 +61,13 @@ export default {
     height: 50px;
     width: 50px;
     cursor: pointer;
+  }
+
+  .adress-picker {
+    border-radius: 5px;
+
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

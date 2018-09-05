@@ -43,7 +43,8 @@ const state = {
   moved: false,
   map: {
     center: position || [48.852775, 2.369336]
-  }
+  },
+  selectedAddress: null
 }
 
 const getters = {
@@ -101,6 +102,9 @@ const actions = {
   },
   setCenter({ commit }, center) {
     commit('setCenter', center)
+  },
+  setAddress({ commit }, address) {
+    commit('setAddress', address)
   }
 }
 
@@ -154,6 +158,10 @@ const mutations = {
   },
   setCenter(state, center) {
     state.map.center = center
+  },
+  setAddress(state, address) {
+    const position = address.geometry.coordinates
+    state.selectedAddress = { name: address.place_name, position: position.reverse() }
   }
 }
 

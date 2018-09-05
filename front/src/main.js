@@ -59,6 +59,12 @@ Vue.use(
 Vue.use(DrawerLayout)
 Vue.use(ToggleButton)
 
+Vue.directive('focus', {
+  inserted(el) {
+    el.focus()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

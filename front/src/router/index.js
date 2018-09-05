@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
+import Search from '@/pages/Search'
 import Settings from '@/pages/Settings'
 import About from '@/pages/About'
 
@@ -13,6 +14,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Search
     },
     {
       path: '/settings',
