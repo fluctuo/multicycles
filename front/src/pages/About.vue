@@ -1,12 +1,16 @@
 <template>
-  <div class="flex-container">
-    <div class="content">
+  <div class="page">
+    <div class="header">
+      <router-link to="/">
+        <arrow-left-circle-icon />
+      </router-link>
+
       <h1>
-        <router-link to="/">
-          <arrow-left-circle-icon />
-        </router-link>
         {{ $t('about.title') }}
       </h1>
+    </div>
+
+    <div class="content">
       <p v-html="$t('about.one')"></p>
       <p v-html="$t('about.two')"></p>
       <p v-html="$t('about.three')"></p>

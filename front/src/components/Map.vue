@@ -1,6 +1,9 @@
 <template>
   <div class="flex-container">
     <div class="map-container">
+      <transition name="fade">
+        <img src="../assets/crosshair.svg" class="crosshair" v-if="$store.state.moved">
+      </transition>
       <v-progress v-if="fetchingVehicles !== 0" />
       <l-map ref="map" :zoom=map.zoom :minZoom=map.minZoom :center=center @moveend="moveCenter" @dragstart="moveStart" @zoomend="zoomEnd" :options=map.options style="height: 100%">
         <l-tile-layer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></l-tile-layer >
@@ -249,6 +252,18 @@ export default {
 
 .map-container {
   flex: 1;
+}
+
+.crosshair {
+  $crosshairsize: 50px;
+
+  position: absolute;
+  z-index: 401;
+  width: $crosshairsize;
+  top: 50%;
+  left: 50%;
+  margin-top: ($crosshairsize / 2) * -1;
+  margin-left: ($crosshairsize / 2) * -1;
 }
 </style>
 

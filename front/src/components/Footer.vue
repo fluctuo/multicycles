@@ -11,9 +11,11 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../app.scss';
+
 .footer {
   text-align: center;
   font-size: 0.8em;
-  color: gray;
+  color: lighten($mainColor, 20);
 }
 </style>

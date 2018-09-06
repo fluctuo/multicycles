@@ -43,5 +43,8 @@
     "useDiscountCode": "Je profite d'une offre avec ",
     "discountLink": "ce lien",
     "discountCode": "ce code"
+  },
+  "search": {
+    "search": "Recherche"
   }
 }

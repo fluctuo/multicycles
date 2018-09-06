@@ -5,6 +5,8 @@
 </template>
 
 <style lang="scss">
+@import '../app.scss';
+
 .progress {
   position: absolute;
   height: 4px;
@@ -16,7 +18,7 @@
 }
 
 .progress .indeterminate {
-  background-color: lighten(#12a80b, 25%);
+  background-color: lighten($mainColor, 25%);
 }
 
 .progress .indeterminate:before {

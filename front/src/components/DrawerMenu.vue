@@ -6,17 +6,17 @@
       </li>
       <li>
         <router-link to="/" @click.native="handleToggleDrawer">
-          {{ $t('home.map') }}
+          <globe-icon /> {{ $t('home.map') }}
         </router-link>
       </li>
       <li>
         <router-link to="/settings" @click.native="handleToggleDrawer">
-          {{ $t('settings.title') }}
+          <settings-icon /> {{ $t('settings.title') }}
         </router-link>
       </li>
       <li>
         <router-link to="/about" @click.native="handleToggleDrawer">
-          {{ $t('about.title') }}
+          <info-icon /> {{ $t('about.title') }}
         </router-link>
       </li>
     </ul>
@@ -24,7 +24,14 @@
 </template>
 
 <script>
+import { GlobeIcon, SettingsIcon, InfoIcon } from 'vue-feather-icons'
+
 export default {
+  components: {
+    GlobeIcon,
+    SettingsIcon,
+    InfoIcon
+  },
   methods: {
     handleToggleDrawer() {
       this.$parent.toggle()
@@ -41,8 +48,7 @@ export default {
   background: $mainColor;
   height: 100%;
 
-  text-align: center;
-  font-size: 3em;
+  font-size: 2em;
 
   .logo {
     height: 100px;
@@ -55,10 +61,18 @@ export default {
     li {
       list-style: none;
       padding: 10px 0;
+
+      a {
+        padding: 0 20px;
+      }
+    }
+
+    li:first-child {
+      text-align: center;
     }
 
     li + li {
-      border-top: 1px solid rgba(255, 255, 255, 0.5);
+      border-top: 1px solid lighten($mainColor, 10%);
     }
   }
 
@@ -73,6 +87,8 @@ export default {
     &:hover {
       background-color: #ffffff40;
       border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
     }
   }
 }

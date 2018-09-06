@@ -3,7 +3,7 @@
     <div class="top">
       <menu-icon @click="open" class="icon" />
       <router-link to="/search">
-        <input type="text" placeholder="Address" class="adress-picker">
+        <input v-model="$store.state.selectedAddress.name" type="text" :placeholder="$t('search.search')"  class="adress-picker">
       </router-link>
 
       <compass-icon class="icon" @click="centerOnGeolocation"/>
@@ -47,6 +47,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../app.scss';
+
 .wrapper {
   height: 100%;
   display: flex;
@@ -60,16 +62,22 @@ export default {
 .top {
   position: absolute;
   width: 100%;
-  z-index: 1000;
+  z-index: 402;
   display: flex;
   justify-content: space-between;
   margin: 15px 0;
-  padding: 0 20px;
+  padding: 0 15px;
 
   .icon {
-    height: 50px;
-    width: 50px;
+    height: $iconSize;
+    width: $iconSize;
     cursor: pointer;
+
+    background: #ffffff;
+    border-radius: 50%;
+    color: green;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    padding: 5px;
   }
 
   .adress-picker {
@@ -77,6 +85,9 @@ export default {
 
     width: 100%;
     height: 100%;
+
+    box-shadow: none;
+    border: 2px solid $mainColor;
   }
 }
 </style>

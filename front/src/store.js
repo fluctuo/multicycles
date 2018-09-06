@@ -14,7 +14,6 @@ const position = localStorage.getItem('position') && JSON.parse(localStorage.get
 
 const state = {
   lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
-  settingPanel: false,
   geolocation: position || [48.852775, 2.369336],
   providers: (capacities && capacities.providers) || [
     'bird',
@@ -44,7 +43,9 @@ const state = {
   map: {
     center: position || [48.852775, 2.369336]
   },
-  selectedAddress: null
+  selectedAddress: {
+    name: ''
+  }
 }
 
 const getters = {
@@ -54,9 +55,6 @@ const getters = {
 }
 
 const actions = {
-  toggleSettingPanel({ commit }) {
-    commit('toggleSettingPanel')
-  },
   setLang({ commit }, event) {
     commit('setLang', event.target.value)
   },
@@ -109,9 +107,6 @@ const actions = {
 }
 
 const mutations = {
-  toggleSettingPanel(state) {
-    state.settingPanel = !state.settingPanel
-  },
   setLang(state, lang) {
     localStorage.setItem('lang', lang)
     i18n.locale = lang

@@ -5,7 +5,7 @@
         <arrow-left-icon class="icon"/>
       </router-link>
 
-      <input v-model="searchedAdress" @input="getList" placeholder="Address" type="text" class="search-input" v-focus>
+      <input v-model="searchedAdress" @input="getList" :placeholder="$t('search.search')" type="text" class="search-input" v-focus>
 
       <search-icon class="icon"/>
 
@@ -17,6 +17,7 @@
       <li v-for="address in addresses" :key="address.id" @click="selectAddress(address)">
         {{ address.place_name }}
       </li>
+      <search-icon v-if="!addresses.length" class="background"/>
     </ul>
   </div>
 </template>
@@ -62,27 +63,35 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../app.scss';
 
 a {
   color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
 }
 
 .input-wrapper {
   background-color: $mainColor;
   color: #fff;
-  padding: 10px 20px;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 70px;
 
   .search-input {
+    height: 40px;
+    box-shadow: none;
     border-radius: 5px;
   }
 
   .icon {
-    width: 50px;
-    height: 50px;
+    height: $iconSize;
+    width: $iconSize;
   }
 }
 
@@ -106,6 +115,16 @@ a {
 
   li + li {
     border-top: 1px solid #ccc;
+  }
+
+  .background {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    height: 50%;
+    width: 50%;
+    margin-left: -25%;
+    color: #ededed;
   }
 }
 </style>

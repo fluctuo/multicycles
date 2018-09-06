@@ -40,5 +40,8 @@
     "useDiscountCode": "Get free rides with ",
     "discountLink": "this link",
     "discountCode": "this code"
+  },
+  "search": {
+    "search": "Search"
   }
 }
