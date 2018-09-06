@@ -14,6 +14,7 @@
       <p v-html="$t('about.one')"></p>
       <p v-html="$t('about.two')"></p>
       <p v-html="$t('about.three')"></p>
+      <p v-html="$t('about.four')"></p>
     </div>
     <Footer />
   </div>

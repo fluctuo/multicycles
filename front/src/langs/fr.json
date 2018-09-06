@@ -5,11 +5,13 @@
   "about": {
     "title": "À propos",
     "one":
-      "<a href=\"https://multicycles.org/\">Multicycles</a> est une application permettant de regrouper en un seul coup d'oeil les différents services de location de vélo (VLS, vélos en libre-service).",
+      "<a href=\"https://multicycles.org/\">Multicycles</a> est une application permettant de regrouper en un seul coup d'oeil les différents services de location de vélo (VLS, vélos en libre-service) ainsi que les autres vehicules partagés.",
     "two":
       "L'utilisation de l'application est <span class=\"important\">gratuite</span> et <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
     "three":
-      "Lancée début 2018, peu de services sont disponibles, mais la liste augmente régulièrement.<br>Vous pouvez contacter l'initiateur du projet sur <a href=\"https://twitter.com/le_mulot\">twitter</a>"
+      "Lancée début 2018, peu de services sont disponibles, mais la liste augmente régulièrement.<br>Vous pouvez contacter l'initiateur du projet sur <a href=\"https://twitter.com/le_mulot\">twitter</a>",
+    "four":
+      "Interessé par les données ? L'API est disponible sous forme de service. Plus d'info sur <a href=\"https://developer.multicycles.org/\">https://developer.multicycles.org/</a>"
   },
   "settings": {
     "title": "Paramètres",
