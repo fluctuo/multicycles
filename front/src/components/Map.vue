@@ -136,8 +136,10 @@ export default {
           this.setGeolocation([position.coords.latitude, position.coords.longitude])
 
           if (!this.$store.state.moved) {
-            this.setCenter(JSON.parse(JSON.stringify([position.coords.latitude, position.coords.longitude])))
-            this.getVehicles(this.center[0], this.center[1])
+            this.$nextTick(() => {
+              this.setCenter(JSON.parse(JSON.stringify([position.coords.latitude, position.coords.longitude])))
+              this.getVehicles(this.center[0], this.center[1])
+            })
           }
         })
       }
