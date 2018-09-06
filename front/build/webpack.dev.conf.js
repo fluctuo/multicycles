@@ -54,7 +54,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true
     }),
     new GenerateSW({
-      globDirectory: config.build.assetsRoot,
       clientsClaim: true,
       skipWaiting: true
     })
