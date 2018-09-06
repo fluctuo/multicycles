@@ -20,7 +20,7 @@
       </div>
 
       <div v-if="detail" class="flex-container detail" style="width: 100%; flex-direction: row; margin: 20px 0;">
-        <div v-if="isAndroid || isiOs" class="w50 txtcenter item-center">
+        <div v-if="showDeeplink()" class="w50 txtcenter item-center">
           {{ $t('selectedVehicle.ihaveanaccount') }}
           <div>
             <a v-if="isiOs && vehicle.provider.deepLink.ios" :href="vehicle.provider.deepLink.ios">{{ $t('selectedVehicle.openApp') }}</a>
@@ -101,6 +101,11 @@ export default {
       return discount.match(/^http/)
         ? `<a href="${discount}">${this.$i18n.t('selectedVehicle.discountLink')}</a>`
         : `${this.$i18n.t('selectedVehicle.discountCode')} <span class="discountCode">${discount}</span>`
+    },
+    showDeeplink() {
+      return (
+        (this.isAndroid && this.vehicle.provider.deepLink.android) || (this.isiOs && this.vehicle.provider.deepLink.ios)
+      )
     }
   }
 }

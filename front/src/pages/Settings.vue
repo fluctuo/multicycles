@@ -1,7 +1,16 @@
 <template>
-  <transition name="fade">
-    <div class="settings-panel" v-show="$store.state.settingPanel">
-      <h2>{{ $t('settings.title')}}</h2>
+  <div class="page">
+    <div class="header">
+      <router-link to="/">
+        <arrow-left-circle-icon />
+      </router-link>
+
+      <h1>
+        {{ $t('settings.title')}}
+      </h1>
+    </div>
+
+    <div class="content">
       <div class="install" v-if="hasInstallPromptEvent">
         <button @click="installApp()">
           <arrow-down-circle-icon></arrow-down-circle-icon>
@@ -22,16 +31,17 @@
         </div>
       </form>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { ArrowDownCircleIcon } from 'vue-feather-icons'
+import { ArrowLeftCircleIcon, ArrowDownCircleIcon } from 'vue-feather-icons'
 
 export default {
-  name: 'SettingsPanel',
+  name: 'Settings',
   components: {
+    ArrowLeftCircleIcon,
     ArrowDownCircleIcon
   },
   data() {
@@ -52,35 +62,7 @@ export default {
 
 
 <style lang="scss">
-.settings-panel {
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-content: center;
-  align-items: center;
-
-  padding: 25px 10px;
-
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background-color: rgb(18, 168, 11);
-  color: #ffffff;
-
-  text-align: center;
-
-  .provider {
-    justify-content: start;
-    display: flex;
-
-    span {
-      margin-left: 5px;
-      text-transform: capitalize;
-    }
-  }
-}
+@import '../app.scss';
 
 form {
   display: flex;
@@ -88,12 +70,13 @@ form {
 }
 
 .install button {
-  margin: 15px 0;
+  margin: 15px auto;
   background: #fff;
   padding: 10px 50px;
   display: block;
   border-radius: 5px;
   text-decoration: none;
+  color: $mainColor;
 
   svg {
     margin-bottom: -6px;

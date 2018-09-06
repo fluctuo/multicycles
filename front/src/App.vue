@@ -1,39 +1,31 @@
 <template>
-  <div class="wrapper">
-    <settings-panel />
-    <div class="header">
-      <img src="/static/bicyclist.svg" alt="mutlicycles logo" style="height: 30px">
-      &nbsp;
-      <router-link to="/">
-        Multicycles
-      </router-link>
-      &nbsp;|&nbsp;
-      <router-link to="/about">
-        {{ $t('about.title') }}
-      </router-link>
-
-      <a @click="toggleSettingPanel" class="settings">
-        <settings-icon></settings-icon>
-      </a>
-
+  <vue-drawer-layout :enable="drawerEnable" @slide-end="fixEnable">
+    <drawer-menu slot="drawer" />
+    <div slot="content" class="wrapper">
+      <router-view/>
     </div>
-    <router-view/>
-  </div>
+  </vue-drawer-layout>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { SettingsIcon } from 'vue-feather-icons'
-
-import settingsPanel from './components/SettingsPanel'
+import { mapActions, mapGetters } from 'vuex'
+import DrawerMenu from './components/DrawerMenu'
 
 export default {
   name: 'app',
   components: {
-    settingsPanel,
-    SettingsIcon
+    DrawerMenu
   },
-  methods: mapActions(['toggleSettingPanel'])
+  computed: mapGetters(['drawerEnable']),
+  methods: {
+    ...mapActions(['setDrawerEnable']),
+    fixEnable(visible) {
+      // if drawer closed and still on map, disable it
+      if (this.$route.path === '/' && !visible) {
+        this.setDrawerEnable(false)
+      }
+    }
+  }
 }
 </script>
 
@@ -75,12 +67,5 @@ body {
   justify-content: flex-start;
   align-content: flex-start;
   align-items: stretch;
-}
-
-.settings {
-  z-index: 10001;
-  position: absolute;
-  right: 10px;
-  line-height: 1;
 }
 </style>

@@ -10,6 +10,7 @@ import VueApollo from 'vue-apollo'
 import ToggleButton from 'vue-js-toggle-button'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
+import DrawerLayout from 'vue-drawer-layout'
 
 import App from './App'
 import router from './router'
@@ -17,7 +18,7 @@ import apolloProvider from './apollo'
 import i18n from './i18n'
 import store from './store'
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js').catch(registrationError => {
       console.log('SW registration failed: ', registrationError)
@@ -55,7 +56,14 @@ Vue.use(
   })
 )
 
+Vue.use(DrawerLayout)
 Vue.use(ToggleButton)
+
+Vue.directive('focus', {
+  inserted(el) {
+    el.focus()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

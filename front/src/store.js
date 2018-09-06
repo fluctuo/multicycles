@@ -14,7 +14,6 @@ const position = localStorage.getItem('position') && JSON.parse(localStorage.get
 
 const state = {
   lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
-  settingPanel: false,
   geolocation: position || [48.852775, 2.369336],
   providers: (capacities && capacities.providers) || [
     'bird',
@@ -38,18 +37,24 @@ const state = {
     'yobike'
   ],
   disabledProviders: disabledProviders || [],
-  selectedVehicle: false
+  selectedVehicle: false,
+  drawerEnable: true,
+  moved: false,
+  map: {
+    center: position || [48.852775, 2.369336]
+  },
+  selectedAddress: {
+    name: ''
+  }
 }
 
 const getters = {
   isProviderDisabled: state => provider => state.disabledProviders.includes(provider),
-  enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider))
+  enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider)),
+  drawerEnable: state => state.drawerEnable
 }
 
 const actions = {
-  toggleSettingPanel({ commit }) {
-    commit('toggleSettingPanel')
-  },
   setLang({ commit }, event) {
     commit('setLang', event.target.value)
   },
@@ -83,13 +88,25 @@ const actions = {
   },
   selectVehicle({ commit }, vehicle) {
     commit('selectVehicle', vehicle)
+  },
+  setDrawerEnable({ commit }, enable) {
+    commit('drawerEnable', !!enable)
+  },
+  centerOnGeolocation({ commit }) {
+    commit('centerOnGeolocation')
+  },
+  setMoved({ commit }, moved) {
+    commit('setMoved', moved)
+  },
+  setCenter({ commit }, center) {
+    commit('setCenter', center)
+  },
+  setAddress({ commit }, address) {
+    commit('setAddress', address)
   }
 }
 
 const mutations = {
-  toggleSettingPanel(state) {
-    state.settingPanel = !state.settingPanel
-  },
   setLang(state, lang) {
     localStorage.setItem('lang', lang)
     i18n.locale = lang
@@ -119,6 +136,27 @@ const mutations = {
   },
   selectVehicle(state, vehicle) {
     state.selectedVehicle = vehicle
+  },
+  drawerEnable(state, enable) {
+    state.drawerEnable = enable
+  },
+  centerOnGeolocation(state) {
+    const geolocation = state.geolocation
+
+    if (geolocation) {
+      state.moved = false
+      state.map.center = JSON.parse(JSON.stringify(geolocation))
+    }
+  },
+  setMoved(state, moved) {
+    state.moved = moved
+  },
+  setCenter(state, center) {
+    state.map.center = center
+  },
+  setAddress(state, address) {
+    const position = address.geometry.coordinates
+    state.selectedAddress = { name: address.place_name, position: position.reverse() }
   }
 }
 

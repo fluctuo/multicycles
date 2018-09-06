@@ -1,12 +1,17 @@
 {
+  "home": {
+    "map": "Map"
+  },
   "about": {
     "title": "关于",
     "one":
-      "<a href=\"https://multicycles.org/\">Multicycles</a> is an application that allows you to group together at a glance the different bicycle rental services (bicycle-sharing system).",
+      "<a href=\"https://multicycles.org/\">Multicycles</a> is an application that allows you to group together at a glance the different bicycle rental services (bicycle-sharing system) and other shared vehicles.",
     "two":
       "Use of the application is <span class=\"important\">free</span> and <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
     "three":
-      "Launched in early 2018, few services are available, but the list is growing steadily.<br>You can contact the initiator of the project on <a href=\"https://twitter.com/le_mulot\">twitter</a>"
+      "Launched in early 2018, few services are available, but the list is growing steadily.<br>You can contact the initiator of the project on <a href=\"https://twitter.com/le_mulot\">twitter</a>",
+    "four":
+      "Interested by data ? The API is available as a service. More information on <a href=\"https://developer.multicycles.org/\">https://developer.multicycles.org/</a>"
   },
   "settings": {
     "title": "设置",
@@ -40,5 +45,8 @@
     "useDiscountCode": "Get free rides with ",
     "discountLink": "this link",
     "discountCode": "this code"
+  },
+  "search": {
+    "search": "Search"
   }
 }
