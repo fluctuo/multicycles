@@ -18,7 +18,7 @@ import apolloProvider from './apollo'
 import i18n from './i18n'
 import store from './store'
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js').catch(registrationError => {
       console.log('SW registration failed: ', registrationError)
