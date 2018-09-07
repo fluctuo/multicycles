@@ -26,7 +26,7 @@ function checkWorking() {
 
   return Promise.all(
     positions.map(position =>
-      client.getBicyclesByLatLng(positions[0]).then(result => ({
+      client.getBicyclesByLatLng(position).then(result => ({
         working: !!mapVehicles(result).length,
         latency: new Date() - start
       }))
