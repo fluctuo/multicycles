@@ -24,6 +24,7 @@ const allProviders = [
   'pony',
   'spin',
   'whitebikes',
+  'wind',
   'yobike'
 ]
 

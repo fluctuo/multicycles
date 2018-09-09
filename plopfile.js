@@ -31,7 +31,7 @@ module.exports = plop => {
       {
         type: 'add',
         path: 'api/controllers/providers/{{ totalyLower provider}}.js',
-        templateFile: 'templates/api/controllers.js'
+        templateFile: 'templates/api/controller.js'
       },
       function customAction(answers) {
         return [
@@ -59,6 +59,9 @@ module.exports = plop => {
             '+ Create `front/src/assets/providers/{{ totalyLower provider }}.jpg` logo 50px x 50px ',
             answers
           ),
+          ' ',
+          '= Developer',
+          '+ Add to Type developer/pages/docs.vue',
           ' ',
           '= Status =',
           '+ Add new components on status website'

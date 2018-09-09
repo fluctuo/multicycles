@@ -5,12 +5,21 @@ import { vehicleInterfaceType } from './vehicleDetailType'
 import resolve from '../providersResolve'
 import { {{ properCase provider}}, client, mapVehicles } from '../controllers/providers/{{ totalyLower provider}}'
 
+const {{ properCase provider}}FieldsType = new GraphQLObjectType({
+  name: '{{ properCase provider}}Fields',
+  description: 'Specific fields for {{ properCase provider}}',
+  fields: {
+
+  }
+})
+
 const {{ properCase provider}}Type = new GraphQLObjectType({
   name: '{{ properCase provider}}',
   description: 'A {{ properCase provider}} vehicle',
   interfaces: () => [VehicleType],
   fields: {
     ...vehicleInterfaceType,
+    {{ totalyLower provider}}FieldsType: { type: {{ properCase provider}}FieldsType },
     // @TODO Add custom types
   }
 })

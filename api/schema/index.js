@@ -20,6 +20,7 @@ import { yobike } from './yobike'
 import { bird } from './bird'
 import { spin } from './spin'
 import { nextbike } from './nextbike'
+import { wind } from './wind'
 import { callabike } from './callabike'
 import capacities from './capacities'
 import { tokens, createToken, updateToken, deleteToken } from './tokens'
@@ -59,6 +60,7 @@ export default new GraphQLSchema({
       pony,
       spin,
       whitebikes,
+      wind,
       yobike
     })
   }),

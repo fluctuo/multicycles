@@ -34,6 +34,7 @@ const state = {
     'pony',
     'spin',
     'whitebikes',
+    'wind',
     'yobike'
   ],
   disabledProviders: disabledProviders || [],

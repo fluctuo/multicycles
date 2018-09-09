@@ -49,7 +49,7 @@ import gql from 'graphql-tag';
 import Contact from '~/components/Contact.vue'
 
 const onlyQueries = ['vehicles', 'providers']
-const onlyTypes = ['Provider', 'Capacities', 'Bird', 'Byke', 'CallABike', 'Cityscoot', 'Coup', 'Donkey', 'GobeeBike', 'Hellobike', 'IndigoWheel', 'Jump', 'Lime', 'Mobike', 'Nextbike', 'Obike', 'Ofo', 'Pony', 'Spin', 'WhiteBikes', 'Yobike']
+const onlyTypes = ['Provider', 'Capacities', 'Bird', 'Byke', 'CallABike', 'Cityscoot', 'Coup', 'Donkey', 'GobeeBike', 'Hellobike', 'IndigoWheel', 'Jump', 'Lime', 'Mobike', 'Nextbike', 'Obike', 'Ofo', 'Pony', 'Spin', 'WhiteBikes', 'Wind', 'Yobike']
 const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
 export default {

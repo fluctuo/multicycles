@@ -21,6 +21,7 @@ import { WhiteBikesType, whitebikes } from './whitebikes'
 import { YobikeType, yobike } from './yobike'
 import { BirdType, bird } from './bird'
 import { SpinType, spin } from './spin'
+import { WindType, wind } from './wind'
 import { vehicleInterfaceType } from './vehicleDetailType'
 
 import { requireAccessToken } from '../auth'
@@ -105,6 +106,9 @@ const VehicleType = new GraphQLInterfaceType({
         break
       case 'cityscoot':
         type = CityscootType
+        break
+      case 'wind':
+        type = WindType
         break
     }
 
