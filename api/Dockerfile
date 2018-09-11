@@ -2,11 +2,11 @@ FROM node:8.9
 
 WORKDIR /app
 
-ADD package.json /app/
+COPY package*.json ./
 
 RUN npm install --production
 
-ADD . /app/
+COPY . .
 
 EXPOSE 3000
 

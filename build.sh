@@ -2,9 +2,11 @@
 
 echo '[BUILD]';
 
-IMAGEID=$(docker build -q -t multicycles/api api) && echo "api image id: $IMAGEID" &
-IMAGEID=$(docker build -q -t multicycles/front front) && echo "front image id: $IMAGEID"  &
-IMAGEID=$(docker build -q -t multicycles/developer developer) && echo "developer image id: $IMAGEID"  &
-IMAGEID=$(docker build -q -t multicycles/status status) && echo "status image id: $IMAGEID" &
+TAG=$(git log -1 --pretty=%h)
+
+IMAGEID=$(docker build -q -t multicycles/api:$TAG api) && docker tag multicycles/api:$TAG multicycles/api:latest && echo "multicycles/api:$TAG - $IMAGEID" &
+IMAGEID=$(docker build -q -t multicycles/front:$TAG front) && docker tag multicycles/front:$TAG multicycles/front:latest && echo "multicycles/front:$TAG - $IMAGEID"  &
+IMAGEID=$(docker build -q -t multicycles/developer:$TAG developer) && docker tag multicycles/developer:$TAG multicycles/developer:latest && echo "multicycles/developer:$TAG - $IMAGEID"  &
+IMAGEID=$(docker build -q -t multicycles/status:$TAG status) && docker tag multicycles/status:$TAG multicycles/status:latest && echo "multicycles/status:$TAG - $IMAGEID"  &
 
 wait

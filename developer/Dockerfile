@@ -2,11 +2,11 @@ FROM node:8.9
 
 WORKDIR /app
 
-ADD package.json /app/
+COPY package*.json ./
 
 RUN npm install
 
-ADD . /app/
+COPY . .
 
 ENV HOST 0.0.0.0
 ENV NODE_ENV production
