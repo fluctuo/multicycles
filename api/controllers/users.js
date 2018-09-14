@@ -1,5 +1,6 @@
 import auth0 from '../auth0'
 import db from '../db'
+import mailing from '../mailing'
 
 function getUsers(params) {
   return auth0.users.getAll(params).then(result => {
@@ -15,6 +16,21 @@ function getUsers(params) {
   })
 }
 
+function createUser(userId, auth0User) {
+  return db('users')
+    .insert({
+      user_id: userId
+    })
+    .returning(['user_id', 'plan_id', 'overwrited_limits'])
+    .get(0)
+    .then(user =>
+      mailing.addToList(auth0User.email).then(() => ({
+        ...auth0User,
+        ...user
+      }))
+    )
+}
+
 function getUser(userId) {
   return auth0.users.get({ id: userId }).then(auth0User => {
     return db('users')
@@ -28,16 +44,7 @@ function getUser(userId) {
             ...user
           }
         } else {
-          return db('users')
-            .insert({
-              user_id: userId
-            })
-            .returning(['user_id', 'plan_id', 'overwrited_limits'])
-            .get(0)
-            .then(user => ({
-              ...auth0User,
-              ...user
-            }))
+          return createUser(userId, auth0User)
         }
       })
   })
