@@ -6,12 +6,14 @@
     <b-alert :show="!!selectedObject.isDeprecated" variant="danger">{{ selectedObject.deprecationReason }}</b-alert>
 
     <div v-if="selectedObject.args">
-      <div class="prototype" v-html="renderPrototype(selectedObject)"></div>
+      <div class="prototype" >
+        <prototype :object="selectedObject" v-if="selectedObject && selectedObject.args"/>
+      </div>
 
       <h5>Fields</h5>
       <b-table striped hover responsive :items="selectedObject.args" :fields="fields">
         <template slot="type" slot-scope="data">
-          {{ renderType(data.value) }}
+          <type :type="data.value" />
         </template>
       </b-table>
     </div>
@@ -31,7 +33,7 @@
 
       <b-table striped hover responsive :items="removeDeprecated(selectedObject.fields)" :fields="fields">
         <template slot="type" slot-scope="data">
-          <span v-html="renderType(data.value)"></span>
+          <type :type="data.value" />
         </template>
       </b-table>
     </b-card>
@@ -55,7 +57,11 @@
 </template>
 
 <script>
+import Type from '~/components/Type.vue'
+import Prototype from '~/components/Prototype.vue'
+
 export default {
+  components: { Type, Prototype },
   data: () => ({
     fields: ['name', 'type', 'description'],
     enumFields: ['name', 'description'],
@@ -80,37 +86,6 @@ export default {
   methods: {
     removeDeprecated(fields) {
       return fields.filter(field => !field.isDeprecated)
-    },
-    renderType(t) {
-      let type;
-
-      switch (t.kind) {
-        case 'LIST':
-          type = `[${this.renderType(t.ofType)}]`
-          break;
-        case 'NON_NULL':
-          type = `${this.renderType(t.ofType)}!`
-          break;
-        case 'OBJECT':
-        case 'ENUM':
-        case 'INTERFACE':
-          type = `<a href="/docs/${t.kind.toLowerCase().replace(/^\w/, c => c.toUpperCase())}/${t.name}">${t.name}</a>`
-          break;
-        default:
-          type = `${t.name}`
-          break;
-      }
-
-      return type;
-    },
-    renderPrototype(o) {
-      if (!o || !o.args) {
-        return;
-      }
-
-      const args = o.args.map((arg) => `${arg.name}: ${this.renderType(arg.type)}`)
-
-      return `${o.name}(${args}): ${this.renderType(o.type)}`
     }
   }
 }
