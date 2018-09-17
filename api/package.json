@@ -8,7 +8,7 @@
   "scripts": {
     "prestart": "knex migrate:latest",
     "start": "node -r esm -r sqreen -r dotenv/config index.js",
-    "test": "ava tests/*.js"
+    "test": "ava tests/"
   },
   "license": "MIT",
   "dependencies": {
@@ -52,6 +52,7 @@
     "koa-graphql": "0.7.3",
     "koa-jwt": "3.3.2",
     "koa-router": "7.3.0",
+    "mailchimp-api-v3": "^1.12.0",
     "mapbox": "1.0.0-beta10",
     "pg": "7.4.3",
     "prom-client": "^11.1.1",
@@ -67,6 +68,7 @@
   },
   "devDependencies": {
     "ava": "0.25.0",
+    "mock-knex": "^0.4.2",
     "sinon": "^6.1.4"
   },
   "ava": {
