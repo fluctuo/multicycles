@@ -1,6 +1,10 @@
 <template>
   <footer id="footer" class="pt-5 pb-5 bg-dark">
     <b-container>
+      <b-row class="justify-content-center mb-5" align="center">
+        <mailchimp />
+      </b-row>
+
       <b-row align="center">
         <b-col>
           <logo/>
@@ -45,10 +49,11 @@
 <script>
 import logo from '~/components/Logo.vue'
 import StatusBadge from '~/components/StatusBadge.vue'
+import Mailchimp from '~/components/Mailchimp.vue'
 import { TwitterIcon, MailIcon } from 'vue-feather-icons'
 
 export default {
-  components: { logo, StatusBadge, TwitterIcon, MailIcon }
+  components: { logo, StatusBadge, TwitterIcon, MailIcon, Mailchimp }
 }
 </script>
 
