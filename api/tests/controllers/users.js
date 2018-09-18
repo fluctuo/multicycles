@@ -29,10 +29,8 @@ test('Create user with getUsers()', async t => {
   mailchimpPostStub.callsFake((url, object) => {
     t.deepEqual(url, `/lists/${process.env.MAILCHIMP_DEFAULT_LIST}/members`)
     t.deepEqual(object, {
-      body: {
-        email_address: 'user_a@gmail.com',
-        status: 'subscribed'
-      }
+      email_address: 'user_a@gmail.com',
+      status: 'subscribed'
     })
 
     return Promise.resolve()
