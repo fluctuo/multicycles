@@ -174,17 +174,10 @@ export default {
       let iconUrl = `/static/marker-${vehicle.provider.slug}.png`
       let iconRetinaUrl = `/static/marker-${vehicle.provider.slug}-2x.png`
 
-      if (vehicle.provider.slug === 'mobike') {
-        iconUrl = vehicle.attributes.includes('GEARS') ? '/static/marker-mobike-2.png' : '/static/marker-mobike.png'
-        iconRetinaUrl = vehicle.attributes.includes('GEARS')
-          ? '/static/marker-mobike-2-2x.png'
-          : '/static/marker-mobike-2x.png'
-      }
-
       return L.icon({
         iconUrl,
         iconRetinaUrl,
-        iconSize: [24, 37]
+        iconSize: [24, 40]
       })
     },
     filterVehicles(vehicles) {
