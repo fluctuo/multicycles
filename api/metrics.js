@@ -11,7 +11,7 @@ const vehiclesRequestsTotal = new client.Counter({
 const vehiclesRequestsDurationSeconds = new client.Histogram({
   name: 'api_vehicles_requests_duration_seconds',
   help: 'Vehicles query duration in seconds',
-  labelNames: ['provider'],
+  labelNames: ['provider', 'cached'],
   buckets: [0.5, 1, 2, 3, 5, 5]
 })
 
