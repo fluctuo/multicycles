@@ -5,7 +5,7 @@ import Nextbike from '../lib'
 
 const citiesMock = nock('https://api.nextbike.net')
   .get('/maps/nextbike-live.json')
-  .times(6)
+  .times(5)
   .reply(200, {
     countries: [
       {

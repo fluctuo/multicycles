@@ -52,7 +52,7 @@ class Nextbike {
           })
         })
 
-        await this.datastore.store.set(`cityscoot|cities`, cities, this.datastore.ttl.cities)
+        await this.datastore.store.set(`nextbike|cities`, cities, this.datastore.ttl.cities)
         return cities
       })
     }
@@ -60,7 +60,7 @@ class Nextbike {
 
   async getCity({ lat, lng }, config) {
     let city
-    let cities = await this.datastore.store.get(`cityscoot|cities`)
+    let cities = await this.datastore.store.get(`nextbike|cities`)
 
     if (!cities) {
       cities = await this.getCities(config)
