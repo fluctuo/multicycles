@@ -1,9 +1,17 @@
 import Pony from '@multicycles/pony'
+import cache from '../../cache'
 
-const client = new Pony()
+const client = new Pony({
+  datastore: {
+    store: cache,
+    ttl: {
+      vehicles: 2 * 60
+    }
+  }
+})
 
-function mapVehicles(result) {
-  return result.filter(bike => bike.status === 'AVAILABLE').map(bike => ({
+function mapVehicles({ body }) {
+  return body.filter(bike => bike.status === 'AVAILABLE').map(bike => ({
     id: bike.physicalId,
     lat: bike.latitude,
     lng: bike.longitude,
