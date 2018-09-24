@@ -1,6 +1,15 @@
 import Nextbike from '@multicycles/nextbike'
+import cache from '../../cache'
 
-const client = new Nextbike({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Nextbike({
+  timeout: process.env.PROVIDER_TIMEOUT || 3000,
+  datastore: {
+    store: cache,
+    ttl: {
+      cities: 1 * 60 * 60
+    }
+  }
+})
 
 function mapVehicles({ body }) {
   let city

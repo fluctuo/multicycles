@@ -38,7 +38,9 @@ async function resolve({ lat, lng }, ctx, info, Provider, client, mapVehicles) {
     }
     const start = new Date()
     const result = await client.getBicyclesByLatLng({ lat, lng }, options)
-    vehiclesRequestsDurationSeconds.labels(provider.slug).observe((new Date() - start) / 1000)
+    vehiclesRequestsDurationSeconds
+      .labels(provider.slug, result.statusCode === 304)
+      .observe((new Date() - start) / 1000)
     const formatedResult = mapVehicles(result)
 
     if (formatedResult.length > 0) {

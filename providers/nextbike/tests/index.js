@@ -1,10 +1,11 @@
 import test from 'ava'
 import nock from 'nock'
+import Cacheman from 'cacheman'
 import Nextbike from '../lib'
 
-nock('https://api.nextbike.net')
+const citiesMock = nock('https://api.nextbike.net')
   .get('/maps/nextbike-live.json')
-  .times(4)
+  .times(6)
   .reply(200, {
     countries: [
       {
@@ -99,9 +100,9 @@ nock('https://api.nextbike.net')
     ]
   })
 
-nock('https://api.nextbike.net')
+const vehiclesMock = nock('https://api.nextbike.net')
   .get('/maps/nextbike-live.json')
-  .times(3)
+  .times(4)
   .query({
     city: 362
   })
@@ -232,6 +233,11 @@ nock('https://api.nextbike.net')
     ]
   })
 
+test.after(t => {
+  t.true(citiesMock.isDone())
+  t.true(vehiclesMock.isDone())
+})
+
 test('overwrite timeout on constructor', async t => {
   const nextbike = new Nextbike({ timeout: 1 })
 
@@ -295,6 +301,28 @@ test('get bicycles by positions', async t => {
       console.log(err)
       t.fail()
     })
+})
+
+test('share the same cache', async t => {
+  const cache = new Cacheman()
+  const instanceA = new Nextbike({ datastore: { store: cache } })
+  const instanceB = new Nextbike({ datastore: { store: cache } })
+
+  await instanceA
+    .getBicyclesByLatLng({
+      lat: 52.520007,
+      lng: 13.404954
+    })
+    .then(result => {
+      t.is(result.statusCode, 200)
+    })
+    .catch(err => {
+      console.log(err)
+      t.fail()
+    })
+
+  const cities = await instanceB.getCities()
+  t.truthy(cities.length)
 })
 
 test('get bicycles at 0,0', async t => {

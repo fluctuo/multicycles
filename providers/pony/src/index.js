@@ -2,8 +2,13 @@ import firebase from 'firebase'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 import { point } from '@turf/helpers'
+import Cacheman from 'cacheman'
 
 const DATABASE_URL = 'https://pony-bikes-f8cf9.firebaseio.com'
+
+firebase.initializeApp({
+  databaseURL: DATABASE_URL
+})
 
 function boundsFromLatLng(lat, lng) {
   const latMin = lat - 0.045
@@ -15,10 +20,13 @@ function boundsFromLatLng(lat, lng) {
 }
 
 class Pony {
-  constructor() {
-    firebase.initializeApp({
-      databaseURL: DATABASE_URL
-    })
+  constructor({ datastore = {} } = {}) {
+    this.datastore = {
+      store: datastore.store || new Cacheman(),
+      ttl: {
+        vehicles: (datastore.ttl && datastore.ttl.vehicles) || 2 * 60
+      }
+    }
 
     this.database = firebase.database()
   }
@@ -40,24 +48,42 @@ class Pony {
     }
   }
 
-  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
+  async getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
     let bounds
 
     if (lat && lng) {
       bounds = boundsFromLatLng(lat, lng)
     }
 
-    return this.database
-      .ref('/rest/bicycles')
-      .once('value')
-      .then(snapshot => {
-        const values = snapshot.val()
-        const bikes = Object.keys(values).map(key => values[key])
+    const vehicles = await this.datastore.store.get(`pony|vehicles`)
 
-        return lat && lng
-          ? bikes.filter(bike => booleanPointInPolygon(point([bike.latitude, bike.longitude]), bounds))
-          : bikes
+    if (!vehicles || config.force) {
+      return this.database
+        .ref('/rest/bicycles')
+        .once('value')
+        .then(async snapshot => {
+          const values = snapshot.val()
+          const bikes = Object.keys(values).map(key => values[key])
+
+          await this.datastore.store.set(`pony|vehicles`, bikes, this.datastore.ttl.vehicles)
+
+          return {
+            statusCode: 200,
+            body:
+              lat && lng
+                ? bikes.filter(bike => booleanPointInPolygon(point([bike.latitude, bike.longitude]), bounds))
+                : bikes
+          }
+        })
+    } else {
+      return Promise.resolve({
+        statusCode: 304,
+        body:
+          lat && lng
+            ? vehicles.filter(bike => booleanPointInPolygon(point([bike.latitude, bike.longitude]), bounds))
+            : vehicles
       })
+    }
   }
 }
 

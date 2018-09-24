@@ -1,6 +1,16 @@
+import cache from '../../cache'
 import Cityscoot from '@multicycles/cityscoot'
 
-const client = new Cityscoot({ timeout: process.env.PROVIDER_TIMEOUT || 3000 })
+const client = new Cityscoot({
+  timeout: process.env.PROVIDER_TIMEOUT || 3000,
+  datastore: {
+    store: cache,
+    ttl: {
+      cities: 1 * 60 * 60,
+      vehicles: 2 * 60
+    }
+  }
+})
 
 function mapVehicles({ body }) {
   return body.data.scooters.map(o => {
