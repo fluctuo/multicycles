@@ -25,15 +25,18 @@ import Contact from '~/components/Contact.vue'
 
 export default {
   components: { PricingPlans, PricingServices, Contact },
-  head: {
-    title: 'Pricings - Open-API by Multicycles',
-    meta: [
-      {
-        name: 'description',
-        content:
-          'Open-API come with differents pricing plans. Made with open-source software spirit, Open-API are free for non-profit OSS projets, with fair use and simple pricing for commercials projets'
-      }
-    ]
+  head() {
+    return {
+      title: 'Pricings',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            'Open-API come with differents pricing plans. Made with open-source software spirit, Open-API are free for non-profit OSS projets, with fair use and simple pricing for commercials projets.'
+        }
+      ]
+    }
   }
 }
 </script>

@@ -84,7 +84,7 @@ export default {
   head() {
     return {
       title: 'Documenations - Open-API by Multicycles',
-      meta: [{ name: 'description', content: 'Documentation for query Open-API API.' }]
+      meta: [{ hid: 'description', name: 'description', content: 'Documentation for query Open-API API.' }]
     }
   },
   components: {

@@ -50,8 +50,15 @@ import Contact from '~/components/Contact.vue'
 export default {
   head() {
     return {
-      title: 'Showcase - Open-API by Multicycles',
-      meta: [{ name: 'description', content: 'Great exemples of Open-API usage' }]
+      title: 'Showcase, build with Open-API',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            'Mobility applications, Multimodal applications, Google or Alexa assistants, they made great applications with our shared Vehicle API.'
+        }
+      ]
     }
   },
   components: {

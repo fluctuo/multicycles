@@ -26,19 +26,7 @@ import features from '~/components/Features.vue'
 import Contact from '~/components/Contact.vue'
 
 export default {
-  components: { features, Contact },
-  head() {
-    return {
-      title: 'Open-API by Multicycles - The only API for dockless bicycles and other shared vehicles',
-      meta: [
-        {
-          name: 'description',
-          content:
-            'The only API for dockless bicycles and other shared vehicles. Explore and get instant vehicle positions in a single query.'
-        }
-      ]
-    }
-  }
+  components: { features, Contact }
 }
 </script>
 
