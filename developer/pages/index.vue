@@ -4,8 +4,7 @@
       <b-container>
         <h1 class="display-3">The Open API <br> for Bikes sharing</h1>
         <h2>
-          The only API for dockless bicycles and other shared vehicles.<br>
-          Explore and get instant vehicle positions in a single query.
+          The only API for dockless bicycles and other shared vehicles.<br> Explore and get instant vehicle positions in a single query.
         </h2>
 
         <div class="mt-5">
@@ -28,11 +27,15 @@ import Contact from '~/components/Contact.vue'
 
 export default {
   components: { features, Contact },
-  head () {
+  head() {
     return {
       title: 'Open-API by Multicycles - The only API for dockless bicycles and other shared vehicles',
       meta: [
-        { name: 'description', content: 'The only API for dockless bicycles and other shared vehicles. Explore and get instant vehicle positions in a single query.' }
+        {
+          name: 'description',
+          content:
+            'The only API for dockless bicycles and other shared vehicles. Explore and get instant vehicle positions in a single query.'
+        }
       ]
     }
   }
@@ -43,7 +46,7 @@ export default {
 @import '~/scss/app.scss';
 
 .titi {
-  background-image: url('~/assets/home-background-bike.jpg');
+  background-image: url('~assets/home-background-bike.jpg');
   background-size: cover;
   background-position: center;
 

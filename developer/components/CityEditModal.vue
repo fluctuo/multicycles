@@ -23,7 +23,7 @@
             <tfoot>
               <tr>
                 <td>
-                  <input type="text" v-model="providerToAdd">
+                  <input v-model="providerToAdd" type="text">
                 </td>
                 <td class="text-center">
                   <b-btn variant="warning" size="sm" @click="addProvider(providerToAdd)">Add</b-btn>
@@ -31,8 +31,10 @@
               </tr>
             </tfoot>
           </table>
-          <b-alert fade :show="dismissCountDown" dismissible @dismiss-count-down="countDownChanged" variant="danger">{{ updateError }} {{ dismissCountDown }}</b-alert>
-          <div class="text-right"><b-btn :disabled=isUpdating variant="success" @click="update">Update</b-btn></div>
+          <b-alert :show="dismissCountDown" fade dismissible variant="danger" @dismiss-count-down="countDownChanged">{{ updateError }} {{ dismissCountDown }}</b-alert>
+          <div class="text-right">
+            <b-btn :disabled="isUpdating" variant="success" @click="update">Update</b-btn>
+          </div>
         </b-col>
         <b-col>
           <check-city-providers :city="city" />
@@ -50,10 +52,15 @@ import { XIcon } from 'vue-feather-icons'
 import CheckCityProviders from '~/components/CheckCityProviders.vue'
 
 export default {
-  props: ['city'],
   components: {
     XIcon,
     CheckCityProviders
+  },
+  props: {
+    city: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {
@@ -73,29 +80,30 @@ export default {
   methods: {
     update() {
       this.isUpdating = true
-      this.$apollo.mutate({
-        mutation: gql`
-          mutation ($id: Int!, $providers: [String]!) {
-            updateCity (id: $id, providers: $providers) {
-              id
-              providers
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($id: Int!, $providers: [String]!) {
+              updateCity(id: $id, providers: $providers) {
+                id
+                providers
+              }
             }
+          `,
+          variables: {
+            id: this.city.id,
+            providers: this.providers
           }
-        `,
-        variables: {
-          id: this.city.id,
-          providers: this.providers
-        }
-      })
-      .then((resp) => {
-        this.isUpdating = false
-        this.city.providers = resp.data.updateCity.providers
-      })
-      .catch(err => {
-        this.isUpdating = false
-        this.dismissCountDown = this.dismissSecs
-        this.updateError = err.message
-      })
+        })
+        .then(resp => {
+          this.isUpdating = false
+          this.city.providers = resp.data.updateCity.providers
+        })
+        .catch(err => {
+          this.isUpdating = false
+          this.dismissCountDown = this.dismissSecs
+          this.updateError = err.message
+        })
     },
     addProvider() {
       this.providers.push(this.providerToAdd)
@@ -104,10 +112,9 @@ export default {
     removeProvider(index) {
       this.providers.splice(index, 1)
     },
-    countDownChanged (dismissCountDown) {
+    countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     }
   }
 }
 </script>
-

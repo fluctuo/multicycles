@@ -10,7 +10,7 @@
           <logo/>
         </b-col>
         <b-col align="center">
-          <a title="Realtime application protection" href="https://www.sqreen.io/?utm_source=badge"><img style="width:109px;height:36px" src="https://s3-eu-west-1.amazonaws.com/sqreen-assets/badges/20171107/sqreen-light-badge.svg" alt="Sqreen | Runtime Application Protection" /></a>
+          <a title="Realtime application protection" href="https://www.sqreen.io/?utm_source=badge"><img style="width:109px;height:36px" src="https://s3-eu-west-1.amazonaws.com/sqreen-assets/badges/20171107/sqreen-light-badge.svg" alt="Sqreen | Runtime Application Protection"></a>
           <a title="Error Tracking Software — JavaScript, Python, PHP, Ruby, more" href="https://sentry.io"><img src="/sentry.png" alt="Sentry Logo"></a>
           <a title="Never Compromise on Identity" href="http://auth0.com"><img src="/auth0.png" alt="Auth0 Logo"></a>
         </b-col>
@@ -36,7 +36,7 @@
                 <twitter-icon />
               </a>&nbsp;
               <a href="mailto:contact@multicycles.org">
-                <mail-icon class="custom-class"></mail-icon>
+                <mail-icon class="custom-class" />
               </a>
             </li>
           </ul>

@@ -9,7 +9,7 @@
       </b-container>
     </div>
 
-    <pricing-plans class="mt-5"/>
+    <pricing-plans class="mt-5" />
 
     <pricing-services />
 
@@ -30,7 +30,8 @@ export default {
     meta: [
       {
         name: 'description',
-        content: 'Open-API come with differents pricing plans. Made with open-source software spirit, Open-API are free for non-profit OSS projets, with fair use and simple pricing for commercials projets'
+        content:
+          'Open-API come with differents pricing plans. Made with open-source software spirit, Open-API are free for non-profit OSS projets, with fair use and simple pricing for commercials projets'
       }
     ]
   }
@@ -41,7 +42,7 @@ export default {
 @import '~/scss/app.scss';
 
 .titi {
-  background-image: url('~/assets/home-background-bike.jpg');
+  background-image: url('~assets/home-background-bike.jpg');
   background-size: cover;
   background-position: center;
 

@@ -9,8 +9,8 @@
       <b-col class="text-center">
         <h4>Many providers, worldwide</h4>
         <p>
-          Implements many bike sharing suppliers like Mobike or Ofo and other shared vehicles (scooters, cars). <span class="font-weight-bold">More than 20 providers</span> are already implemented and we regularly add some. <br>
-          Available wordwide, no coutries locks.
+          Implements many bike sharing suppliers like Mobike or Ofo and other shared vehicles (scooters, cars).
+          <span class="font-weight-bold">More than 20 providers</span> are already implemented and we regularly add some. <br> Available wordwide, no coutries locks.
         </p>
       </b-col>
     </b-row>
@@ -19,7 +19,8 @@
       <b-col class="text-center">
         <h4>Standardized</h4>
         <p>
-          Return <span class="font-weight-bold">standardized data</span> (like type, attributes, mobile app link) and providers specific fields. Backward compatibilty guarantee.
+          Return
+          <span class="font-weight-bold">standardized data</span> (like type, attributes, mobile app link) and providers specific fields. Backward compatibilty guarantee.
         </p>
       </b-col>
       <b-col class="text-center">
@@ -34,8 +35,9 @@
       <b-col class="text-center">
         <h4>Easy to implement</h4>
         <p>
-          Open-API use latest technologies. Our api offer a <span class="font-weight-bold">GraphQL endpoint</span>. You can exactly what you want in a single query.<br>
-          See <nuxt-link to="docs">documentation</nuxt-link>. You can't do easier.
+          Open-API use latest technologies. Our api offer a
+          <span class="font-weight-bold">GraphQL endpoint</span>. You can exactly what you want in a single query.<br> See
+          <nuxt-link to="docs">documentation</nuxt-link>. You can't do easier.
         </p>
       </b-col>
     </b-row>

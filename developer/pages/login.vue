@@ -4,9 +4,8 @@
       <b-col align="center">
         <h3 class="display-4 pt-5 pb-4">Login or sign in</h3>
 
-        <b-btn size="lg" @click="$auth.loginWith('auth0')" variant="primary">
-          <github-icon class="ajust-line" />
-          Login with Github
+        <b-btn size="lg" variant="primary" @click="$auth.loginWith('auth0')">
+          <github-icon class="ajust-line" /> Login with Github
         </b-btn>
       </b-col>
     </b-row>

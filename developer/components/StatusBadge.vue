@@ -1,5 +1,5 @@
 <template>
-  <span class="dot" :class="statusClass"></span>
+  <span :class="statusClass" class="dot" />
 </template>
 
 <script>
@@ -9,30 +9,34 @@ export default {
       status: 1
     }
   },
-  mounted () {
-    this.getStatus()
-  },
   computed: {
     statusClass() {
       return {
-        ok: this.status === 1, medium: this.status === 2, high: this.status === 3
+        ok: this.status === 1,
+        medium: this.status === 2,
+        high: this.status === 3
       }
     }
   },
+  mounted() {
+    this.getStatus()
+  },
   methods: {
-    getStatus () {
-      return this.$axios.get('https://status.multicycles.org/api/v1/components?per_page=50')
-      .then((res) => {
-        const statuses = res.data.data.reduce((acc, c) => {
-          acc[c.status]++;
+    getStatus() {
+      return this.$axios.get('https://status.multicycles.org/api/v1/components?per_page=50').then(res => {
+        const statuses = res.data.data.reduce(
+          (acc, c) => {
+            acc[c.status]++
 
-          return acc
-        }, {
-          1: 0,
-          2: 0,
-          3: 0,
-          4: 0
-        });
+            return acc
+          },
+          {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0
+          }
+        )
 
         if (statuses[4]) {
           this.status = 4
@@ -68,5 +72,3 @@ export default {
   }
 }
 </style>
-
-

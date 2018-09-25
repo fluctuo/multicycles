@@ -7,7 +7,9 @@
     </b-row>
     <b-card-group deck class="mb-3 text-center">
       <b-card header="Free" header-class="display-5" header-bg-variant="primary" header-text-variant="white">
-        <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+        <h1 class="card-title pricing-card-title">$0
+          <small class="text-muted">/ mo</small>
+        </h1>
         <p>For non-profit projects</p>
         <ul class="list-unstyled mt-3 mb-4">
           <li>All providers</li>
@@ -16,7 +18,7 @@
           <li>Require attribution badge</li>
         </ul>
 
-        <b-button slot="footer" size="lg" variant="primary" :to="{name: 'login'}">Sign up</b-button>
+        <b-button slot="footer" :to="{name: 'login'}" size="lg" variant="primary">Sign up</b-button>
       </b-card>
       <b-card header="Commercial" header-class="display-5" header-bg-variant="primary" header-text-variant="white">
         <h1 class="card-title pricing-card-title">Contact us</h1>

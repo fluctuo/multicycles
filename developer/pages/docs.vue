@@ -4,9 +4,15 @@
       <b-row class="mt-3">
         <b-col cols="3">
           <ul class="list-unstyled">
-            <li><nuxt-link to="/docs">Introduction</nuxt-link></li>
-            <li><nuxt-link to="/docs/auth">Authentication</nuxt-link></li>
-            <li><nuxt-link to="/docs/recipes">Recipes</nuxt-link></li>
+            <li>
+              <nuxt-link to="/docs">Introduction</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/docs/auth">Authentication</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/docs/recipes">Recipes</nuxt-link>
+            </li>
           </ul>
 
           <h4>Queries</h4>
@@ -42,51 +48,77 @@
 </template>
 
 <script>
-
 import { introspectionQuery } from 'graphql'
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
 import Contact from '~/components/Contact.vue'
 
 const onlyQueries = ['vehicles', 'providers']
-const onlyTypes = ['Provider', 'Capacities', 'Bird', 'Byke', 'CallABike', 'Cityscoot', 'Coup', 'Donkey', 'GobeeBike', 'Hellobike', 'IndigoWheel', 'Jump', 'Lime', 'Mobike', 'Nextbike', 'Obike', 'Ofo', 'Pony', 'Spin', 'WhiteBikes', 'Wind', 'Yobike']
+const onlyTypes = [
+  'Provider',
+  'Capacities',
+  'Bird',
+  'Byke',
+  'CallABike',
+  'Cityscoot',
+  'Coup',
+  'Donkey',
+  'GobeeBike',
+  'Hellobike',
+  'IndigoWheel',
+  'Jump',
+  'Lime',
+  'Mobike',
+  'Nextbike',
+  'Obike',
+  'Ofo',
+  'Pony',
+  'Spin',
+  'WhiteBikes',
+  'Wind',
+  'Yobike'
+]
 const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 
 export default {
-  head () {
+  head() {
     return {
       title: 'Documenations - Open-API by Multicycles',
-      meta: [
-        { name: 'description', content: 'Documentation for query Open-API API.' }
-      ]
+      meta: [{ name: 'description', content: 'Documentation for query Open-API API.' }]
     }
   },
   components: {
     Contact
   },
   methods: {
-    queries: (introspection) => {
+    queries: introspection => {
       if (!introspection) {
         return []
       }
 
-      const q = introspection.__schema && introspection.__schema.types.filter((type) => type.name === 'Query');
+      const q = introspection.__schema && introspection.__schema.types.filter(type => type.name === 'Query')
 
-      return Array.isArray(q) && q[0].fields.filter((f) => onlyQueries.includes(f.name))
+      return Array.isArray(q) && q[0].fields.filter(f => onlyQueries.includes(f.name))
     },
-    types: (introspection) => {
+    types: introspection => {
       if (!introspection) {
         return []
       }
 
-      return introspection.__schema && introspection.__schema.types.filter((type) => type.kind === 'OBJECT').filter((f) => onlyTypes.includes(f.name));
+      return (
+        introspection.__schema &&
+        introspection.__schema.types.filter(type => type.kind === 'OBJECT').filter(f => onlyTypes.includes(f.name))
+      )
     },
-    enums: (introspection) => {
+    enums: introspection => {
       if (!introspection) {
         return []
       }
 
-      return introspection.__schema && introspection.__schema.types.filter((type) => type.kind === 'ENUM').filter((f) => !excludedEnums.includes(f.name));
+      return (
+        introspection.__schema &&
+        introspection.__schema.types.filter(type => type.kind === 'ENUM').filter(f => !excludedEnums.includes(f.name))
+      )
     }
   },
   apollo: {

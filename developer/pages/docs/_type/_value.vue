@@ -6,12 +6,12 @@
     <b-alert :show="!!selectedObject.isDeprecated" variant="danger">{{ selectedObject.deprecationReason }}</b-alert>
 
     <div v-if="selectedObject.args">
-      <div class="prototype" >
-        <prototype :object="selectedObject" v-if="selectedObject && selectedObject.args"/>
+      <div class="prototype">
+        <prototype v-if="selectedObject && selectedObject.args" :object="selectedObject" />
       </div>
 
       <h5>Fields</h5>
-      <b-table striped hover responsive :items="selectedObject.args" :fields="fields">
+      <b-table :items="selectedObject.args" :fields="fields" striped hover responsive>
         <template slot="type" slot-scope="data">
           <type :type="data.value" />
         </template>
@@ -31,7 +31,7 @@
     <b-card v-if="selectedObject.fields">
       <h5>Fields</h5>
 
-      <b-table striped hover responsive :items="removeDeprecated(selectedObject.fields)" :fields="fields">
+      <b-table :items="removeDeprecated(selectedObject.fields)" :fields="fields" striped hover responsive>
         <template slot="type" slot-scope="data">
           <type :type="data.value" />
         </template>
@@ -51,7 +51,7 @@
     <b-card v-if="selectedObject.enumValues">
       <h5>Values</h5>
 
-      <b-table striped hover responsive :items="selectedObject.enumValues" :fields="enumFields"></b-table>
+      <b-table :items="selectedObject.enumValues" :fields="enumFields" striped hover responsive/>
     </b-card>
   </div>
 </template>
@@ -70,18 +70,21 @@ export default {
   computed: {
     selectedObject() {
       if (!this.$store.state.introspection) {
-        return;
+        return
       }
 
-      const f = this.$store.state.introspection.__schema && this.$store.state.introspection.__schema.types.find((t) => t.name === this.$route.params.type || t.name === this.$route.params.value)
+      const f =
+        this.$store.state.introspection.__schema &&
+        this.$store.state.introspection.__schema.types.find(
+          t => t.name === this.$route.params.type || t.name === this.$route.params.value
+        )
 
       if (this.$route.params.type !== 'Query') {
-        return f;
+        return f
       } else {
-        return f.fields.find((field) => field.name === this.$route.params.value)
+        return f.fields.find(field => field.name === this.$route.params.value)
       }
     }
-
   },
   methods: {
     removeDeprecated(fields) {

@@ -39,9 +39,6 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    /*
-    ** Run ESLint on save
-    */
     extend(config, { isDev, isClient }) {
       config.module.rules.push({
         test: /\.flow$/,
@@ -58,7 +55,9 @@ module.exports = {
       }
 
       const vueLoader = config.module.rules.find(rule => rule.loader === 'vue-loader')
-      vueLoader.options.transformToRequire = {
+      vueLoader.options.transformAssetUrls = {
+        video: ['src', 'poster'],
+        source: 'src',
         img: 'src',
         image: 'xlink:href',
         'b-img': 'src',

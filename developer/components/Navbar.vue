@@ -1,13 +1,13 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="dark" >
+  <b-navbar toggleable="md" type="dark" variant="dark">
     <b-container>
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav_collapse" />
 
       <b-navbar-brand :to="{name: 'index'}">
         <logo/>
       </b-navbar-brand>
 
-      <b-collapse is-nav id="nav_collapse">
+      <b-collapse id="nav_collapse" is-nav>
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav>
             <b-nav-item :to="{name: 'pricing'}" exact>Pricing</b-nav-item>
@@ -15,9 +15,9 @@
             <b-nav-item :to="{name: 'docs'}" exact>Documentation</b-nav-item>
           </b-navbar-nav>
 
-          <b-nav-item-dropdown right v-if="$auth.loggedIn" class="fix-dropdown-padding">
+          <b-nav-item-dropdown v-if="$auth.loggedIn" right class="fix-dropdown-padding">
             <template slot="button-content">
-              <b-img :src="$store.state.auth.user.picture" rounded="circle" width="30" height="30"/>
+              <b-img :src="$store.state.auth.user.picture" rounded="circle" width="30" height="30" />
             </template>
             <b-dropdown-item :to="{name: 'account'}">Account</b-dropdown-item>
 
@@ -29,7 +29,7 @@
             <b-dropdown-divider/>
             <b-dropdown-item @click="logout">Sign out</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-button variant="outline-primary" v-else @click="login">
+          <b-button v-else variant="outline-primary" @click="login">
             Sign in
           </b-button>
         </b-navbar-nav>

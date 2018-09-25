@@ -1,19 +1,30 @@
 <template>
   <div id="graphiql">
-    <GraphiQL :fetcher="graphQLFetcher" :query="query" :variables="variables" :response="response">
-
-    </GraphiQL>
+    <GraphiQL :fetcher="graphQLFetcher" :query="query" :variables="variables" :response="response" />
   </div>
 </template>
 
 <script>
-
-
 export default {
-  props: ['query', 'variables', 'response' ],
+  props: {
+    query: {
+      type: String,
+      required: true
+    },
+    variables: {
+      type: String,
+      required: true
+    },
+    response: {
+      type: String,
+      required: true
+    }
+  },
   methods: {
     graphQLFetcher(graphQLParams) {
-      return this.$axios.post(`${process.env.MULTICYCLES_API}?access_token=${process.env.MULTICYCLES_ACCESS_TOKEN}`, graphQLParams).then(response => response.data);
+      return this.$axios
+        .post(`${process.env.MULTICYCLES_API}?access_token=${process.env.MULTICYCLES_ACCESS_TOKEN}`, graphQLParams)
+        .then(response => response.data)
     }
   }
 }
@@ -43,4 +54,3 @@ export default {
   }
 }
 </style>
-

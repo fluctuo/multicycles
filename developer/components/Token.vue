@@ -3,13 +3,13 @@
     <b-row align-v="center">
       <b-col>
         {{ token.name }}
-        <a href="#" @click="modalShow = !modalShow" v-if="token.value">
-          <edit-2-icon class="icon-right"/>
+        <a v-if="token.value" href="#" @click="modalShow = !modalShow">
+          <edit-2-icon class="icon-right" />
         </a>
-        <div class="access-token bg-light" v-if="token.value">
+        <div v-if="token.value" class="access-token bg-light">
           {{ token.value }}
-          <a href="#" v-clipboard:copy="token.value">
-            <copy-icon class="icon-right"/>
+          <a v-clipboard:copy="token.value" href="#">
+            <copy-icon class="icon-right" />
           </a>
         </div>
         <div class="sub">
@@ -18,16 +18,15 @@
         </div>
       </b-col>
       <b-col :md="token.value ? 5 : 12" sm="12">
-        <token-stats-chart :chart-data="token.stats" class="chart"/>
+        <token-stats-chart :chart-data="token.stats" class="chart" />
       </b-col>
     </b-row>
     <b-modal v-model="modalShow" title="Update token" ok-title="Update" @ok="updateToken(token.id, updatedToken)">
       <h3>Give a name to your token</h3>
       <p>Set a name to your token to help associate it with a project.</p>
-      <b-form >
+      <b-form>
         <b-form-group label="Token name" label-for="tokenName" description="64 chars maximum.">
-          <b-form-input id="tokenName" type="text" v-model="updatedToken.name" required placeholder="token name" maxlength="64">
-          </b-form-input>
+          <b-form-input id="tokenName" v-model="updatedToken.name" type="text" required placeholder="token name" maxlength="64" />
         </b-form-group>
       </b-form>
     </b-modal>
@@ -41,7 +40,20 @@ import TokenStatsChart from './TokenStatsChart.vue'
 
 export default {
   components: { CopyIcon, Edit2Icon, TokenStatsChart },
-  props: ['token', 'updateToken', 'deleteToken'],
+  props: {
+    token: {
+      type: Object,
+      required: true
+    },
+    updateToken: {
+      type: Function,
+      required: true
+    },
+    deleteToken: {
+      type: Function,
+      required: true
+    }
+  },
   data() {
     return {
       modalShow: false,
@@ -53,7 +65,7 @@ export default {
   methods: {
     promptDeleteToken(id) {
       if (confirm('Are-you sure to delete this token ?')) {
-        this.deleteToken(id);
+        this.deleteToken(id)
       }
     }
   }
@@ -94,5 +106,3 @@ export default {
   }
 }
 </style>
-
-
