@@ -72,7 +72,8 @@ module.exports = {
       { rel: 'manifest', href: '/site.webmanifest' },
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#151a26' },
       { name: 'msapplication-TileColor', content: '#151a26' },
-      { name: 'theme-color', content: '#151a26' }
+      { name: 'theme-color', content: '#151a26' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Oswald:300' }
     ]
   },
   env: {
