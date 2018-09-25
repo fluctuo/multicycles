@@ -4,7 +4,9 @@
     <b-row>
       <b-col md="3">
         <div v-if="selectedCity">
-          <h4>{{ selectedCity.city }} <span class="text-muted">- {{ selectedCity.country }}</span></h4>
+          <h4>{{ selectedCity.city }}
+            <span class="text-muted">- {{ selectedCity.country }}</span>
+          </h4>
 
           <h5>Providers</h5>
           <ul>
@@ -21,9 +23,9 @@
       </b-col>
       <b-col>
         <no-ssr>
-          <l-map ref="map" :zoom=map.zoom :center=map.center style="height: 400px">
-            <l-tile-layer url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" :options="options" :attribution="attribution"></l-tile-layer>
-            <l-geo-json v-for="city in cities" :geojson="city.geojson" @click="detailCity(city)" color="#ff00ff" :key="city.id"></l-geo-json>
+          <l-map ref="map" :zoom="map.zoom" :center="map.center" style="height: 400px">
+            <l-tile-layer :options="options" :attribution="attribution" url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" />
+            <l-geo-json v-for="city in cities" :geojson="city.geojson" :key="city.id" color="#ff00ff" @click="detailCity(city)" />
           </l-map>
         </no-ssr>
       </b-col>
@@ -76,7 +78,7 @@ export default {
         return data.cities ? JSON.parse(JSON.stringify(data.cities)) : data
       },
       error(err) {
-        this.$auth.logout();
+        this.$auth.logout()
       }
     }
   },

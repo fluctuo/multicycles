@@ -1,13 +1,13 @@
 <template>
-  <span v-if="this.object">
-    {{ object.name }}
-    (
-      <span v-for="(arg, index) in object.args" :key="arg.name">
-        {{ arg.name }}: <type :type="arg.type" />
-        <span v-if="index + 1 < object.args.length ">, </span>
-      </span>
+  <span v-if="object">
+    {{ object.name }} (
+    <span v-for="(arg, index) in object.args" :key="arg.name">
+      {{ arg.name }}:
+      <type :type="arg.type" />
+      <span v-if="index + 1 < object.args.length ">, </span>
+    </span>
     ) :
-    <type :type="this.object.type" />
+    <type :type="object.type" />
   </span>
 </template>
 
@@ -15,9 +15,13 @@
 import Type from '~/components/Type.vue'
 
 export default {
-  name: 'prototype',
+  name: 'Prototype',
   components: { Type },
-  props: ['object']
+  props: {
+    object: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>
-
