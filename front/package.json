@@ -8,7 +8,8 @@
     "fragments": "node updateFragments.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.2.9",
@@ -34,6 +35,8 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@storybook/addon-knobs": "^3.4.11",
+    "@storybook/vue": "^3.4.11",
     "autoprefixer": "^7.2.5",
     "babel-core": "^6.22.1",
     "babel-loader": "^7.1.1",
