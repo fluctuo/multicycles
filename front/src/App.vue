@@ -1,5 +1,5 @@
 <template>
-  <vue-drawer-layout :enable="drawerEnable" @slide-end="fixEnable">
+  <vue-drawer-layout ref="drawerLayout" :enable="drawerEnable" @slide-end="fixEnable" @mask-click="handleMaskClick">
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
       <router-view/>
@@ -24,6 +24,9 @@ export default {
       if (this.$route.path === '/' && !visible) {
         this.setDrawerEnable(false)
       }
+    },
+    handleMaskClick() {
+      this.$refs.drawerLayout.toggle(false)
     }
   }
 }
