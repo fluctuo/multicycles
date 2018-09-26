@@ -27,7 +27,6 @@
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
-import { CompassIcon } from 'vue-feather-icons'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
@@ -60,8 +59,7 @@ export default {
     LTileLayer,
     LMarker,
     'v-progress': Progress,
-    SelectedVehicle,
-    CompassIcon
+    SelectedVehicle
   },
   data() {
     return {
