@@ -95,6 +95,7 @@ const actions = {
   },
   centerOnGeolocation({ commit }) {
     commit('centerOnGeolocation')
+    commit('clearAddress')
   },
   setMoved({ commit }, moved) {
     commit('setMoved', moved)
@@ -158,6 +159,9 @@ const mutations = {
   setAddress(state, address) {
     const position = address.geometry.coordinates
     state.selectedAddress = { name: address.place_name, position: position.reverse() }
+  },
+  clearAddress(state) {
+    state.selectedAddress = { name: '' }
   }
 }
 
