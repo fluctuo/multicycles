@@ -6,17 +6,17 @@
       </li>
       <li>
         <router-link to="/" @click.native="handleToggleDrawer">
-          <globe-icon /> {{ $t('home.map') }}
+          <globe-icon />&nbsp;{{ $t('home.map') }}
         </router-link>
       </li>
       <li>
         <router-link to="/settings" @click.native="handleToggleDrawer">
-          <settings-icon /> {{ $t('settings.title') }}
+          <settings-icon />&nbsp;{{ $t('settings.title') }}
         </router-link>
       </li>
       <li>
         <router-link to="/about" @click.native="handleToggleDrawer">
-          <info-icon /> {{ $t('about.title') }}
+          <info-icon />&nbsp;{{ $t('about.title') }}
         </router-link>
       </li>
     </ul>
@@ -48,7 +48,7 @@ export default {
   background: $mainColor;
   height: 100%;
 
-  font-size: 2em;
+  font-size: 1.5em;
 
   .logo {
     height: 100px;
@@ -56,7 +56,7 @@ export default {
   }
 
   ul {
-    padding: 0 40px;
+    padding: 0 10px;
 
     li {
       list-style: none;
@@ -64,6 +64,19 @@ export default {
 
       a {
         padding: 0 20px;
+        display: flex;
+        align-items: center;
+        height: 45px;
+        text-decoration: none;
+        color: #fff;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: #ffffff40;
+          border-radius: 5px;
+          color: #fff;
+          text-decoration: none;
+        }
       }
     }
 
@@ -73,22 +86,6 @@ export default {
 
     li + li {
       border-top: 1px solid lighten($mainColor, 10%);
-    }
-  }
-
-  a {
-    text-decoration: none;
-    color: #fff;
-    width: 100%;
-    display: inline-block;
-    height: 100%;
-    transition: 0.3s;
-
-    &:hover {
-      background-color: #ffffff40;
-      border-radius: 10px;
-      color: #fff;
-      text-decoration: none;
     }
   }
 }
