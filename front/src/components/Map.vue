@@ -250,7 +250,7 @@ export default {
 }
 
 .crosshair {
-  $crosshairsize: 50px;
+  $crosshairsize: 28px;
 
   position: absolute;
   z-index: 401;
