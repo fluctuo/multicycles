@@ -49,6 +49,7 @@ export default {
   height: 100%;
 
   font-size: 2.4rem;
+  max-width: 400px;
 
   .logo {
     height: 100px;

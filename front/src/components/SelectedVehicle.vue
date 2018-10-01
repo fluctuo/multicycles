@@ -113,7 +113,7 @@ $border-radius: 5px;
 
   width: 100%;
   bottom: 0;
-  z-index: 9999;
+  z-index: 817;
 
   .no-shrink {
     flex-shrink: 0;
@@ -121,7 +121,6 @@ $border-radius: 5px;
   }
 
   .block {
-    z-index: 9999;
     background-color: $mainColor;
     color: #fff;
 
