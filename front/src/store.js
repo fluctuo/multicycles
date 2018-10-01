@@ -88,7 +88,14 @@ const actions = {
     commit('toggleProvider', provider)
   },
   selectVehicle({ commit }, vehicle) {
-    commit('selectVehicle', vehicle)
+    if (!vehicle) {
+      commit('selectVehicle', null)
+    } else if (!state.selectedVehicle || vehicle.id !== state.selectedVehicle.id) {
+      commit('selectVehicle', null)
+      setTimeout(() => {
+        commit('selectVehicle', vehicle)
+      }, 100)
+    }
   },
   setDrawerEnable({ commit }, enable) {
     commit('drawerEnable', !!enable)
