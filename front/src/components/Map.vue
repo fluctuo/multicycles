@@ -258,6 +258,10 @@ export default {
   margin-top: ($crosshairsize / 2) * -1;
   margin-left: ($crosshairsize / 2) * -1;
 }
+
+.leaflet-bottom {
+  z-index: 800 !important;
+}
 </style>
 
 

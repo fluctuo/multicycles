@@ -15,7 +15,7 @@ export default {
 
 .footer {
   text-align: center;
-  font-size: 0.8em;
+  font-size: 1.2rem;
   color: lighten($mainColor, 20);
 }
 </style>

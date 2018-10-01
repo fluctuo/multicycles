@@ -48,7 +48,7 @@ export default {
   background: $mainColor;
   height: 100%;
 
-  font-size: 1.5em;
+  font-size: 2.4rem;
 
   .logo {
     height: 100px;

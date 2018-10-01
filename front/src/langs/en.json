@@ -21,30 +21,15 @@
   },
   "vehicleType": {
     "BIKE": "Bike",
-    "BIKEElectric": "Electric bike",
-    "BIKEGears": "Bike with gears",
-    "BIKEElectricGears": "Electric bike with gears",
     "SCOOTER": "Scooter",
-    "SCOOTERElectric": "Electric scooter",
-    "SCOOTERGears": "Scooter with gears",
-    "SCOOTERElectricGears": "Electric scooter with gears",
     "MOTORSCOOTER": "Motor-scooter",
-    "MOTORSCOOTERElectric": "Electric motor-scooter",
-    "MOTORSCOOTERGears": "Motor-scooter",
-    "MOTORSCOOTERElectricGears": "Electric motor-scooter",
-    "STATION": "Station with {availableVehicles} bikes and {availableStands} stands",
-    "VIRTUAL_STATION": "Virtual station with {availableVehicles} bikes",
     "CARGO": "Cargo bike",
-    "TANDEM": "Tandem",
-    "BIKEChildSeat": "Bike with child seat"
+    "TANDEM": "Tandem"
   },
   "selectedVehicle": {
-    "ihaveanaccount": "I have a account",
-    "openApp": "Open App",
-    "downloadApp": "Download app",
-    "useDiscountCode": "Get free rides with ",
-    "discountLink": "this link",
-    "discountCode": "this code"
+    "bikes": "bikes",
+    "docks": "docks",
+    "unlockInTheApp": "Unlock in the app"
   },
   "search": {
     "search": "Search"

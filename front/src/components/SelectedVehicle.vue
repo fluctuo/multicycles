@@ -1,43 +1,45 @@
 <template>
   <div class="selected-vehicle">
-    <div class="bloc">
-      <div class="column">
-        <img :src="logoSrc(vehicle.provider)" alt="logo" class="logo">
-      </div>
-      <div class="column">
-        <div class="provider">
-          {{ vehicle.provider.name }}
+    <div class="block">
+      <div class="detail">
+        <div>
+          <div class="provider">
+            <img v-if="logoSrc(vehicle.provider)" :src="logoSrc(vehicle.provider)" alt="logo" class="logo">
+            {{ vehicle.provider.name }}
+          </div>
         </div>
-        <div class="kind">
-          {{ $t(getVehicleTypeKey(vehicle), vehicle)}}
-        </div>
-      </div>
-      <div class="column">
-        <a @click="detail = !detail" class="ride" href="#">
-          Ride
-          <arrow-right-circle-icon></arrow-right-circle-icon>
-        </a>
-      </div>
+        <div>
+          <div v-if="vehicle.type == 'STATION'" class="no-shrink">
+            <div class="available-vehicles">
+              <span>{{ vehicle.availableVehicles }}</span>&nbsp;{{ $t('selectedVehicle.bikes') }}
+            </div>
+            <div v-if="vehicle.availableStands && !vehicle.isVirtual" class="available-stands">
+              <span>{{ vehicle.availableStands }}</span>&nbsp;{{ $t('selectedVehicle.docks') }}
+            </div>
+          </div>
+          <div v-else class="type-attributes">
+            <span class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
 
-      <div v-if="detail" class="flex-container detail" style="width: 100%; flex-direction: row; margin: 20px 0;">
-        <div v-if="showDeeplink()" class="w50 txtcenter item-center">
-          {{ $t('selectedVehicle.ihaveanaccount') }}
-          <div>
-            <a v-if="isiOs && vehicle.provider.deepLink.ios" :href="vehicle.provider.deepLink.ios">{{ $t('selectedVehicle.openApp') }}</a>
-            <a v-if="isAndroid && vehicle.provider.deepLink.android" :href="vehicle.provider.deepLink.android">{{ $t('selectedVehicle.openApp') }}</a>
+            <div class="attributes">
+              <img v-if="vehicle.attributes && vehicle.attributes.includes('ELECTRIC')" src="../assets/lightning.svg" class="attribute"/>
+              <img v-if="vehicle.attributes && vehicle.attributes.includes('GEARS')" src="../assets/cog.svg" class="attribute"/>
+            </div>
           </div>
         </div>
 
-        <div class="w50 txtcenter item-center">
-          <div v-if="vehicle.provider.discountCode">
-            {{ $t('selectedVehicle.useDiscountCode') }}<br/>
-            <span v-html="renderDiscountCode(vehicle.provider.discountCode)"></span>
-          </div>
-          {{ $t('selectedVehicle.downloadApp') }}
-          <div>
-            <a v-if="(isComputer || isiOs) && vehicle.provider.app.ios" :href="vehicle.provider.app.ios"><img src="../assets/ios-badge.png" alt=""></a>
-            <a v-if="(isComputer || isAndroid) && vehicle.provider.app.android" :href="vehicle.provider.app.android"><img src="../assets/android-badge.png" alt=""></a>
-          </div>
+      </div>
+      <div class="subdetail">
+        <div>
+          <a v-if="isMobileAndDeeplink('ios')" :href="vehicle.provider.deepLink.ios" class="open-native">
+            {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
+            <external-link-icon />
+          </a>
+          <a v-if="isMobileAndDeeplink('android')" :href="vehicle.provider.deepLink.android" class="open-native">
+            {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
+            <external-link-icon />
+          </a>
+          <a v-if="(isComputer && vehicle.provider.app.ios) || (isMobileAndDeeplink('ios', true))" :href="vehicle.provider.app.ios"><img src="../assets/ios-badge.png" alt=""></a>
+          <a v-if="(isComputer && vehicle.provider.app.android) || (isMobileAndDeeplink('android', true))" :href="vehicle.provider.app.android"><img src="../assets/android-badge.png" alt=""></a>
         </div>
       </div>
     </div>
@@ -47,14 +49,12 @@
 <script>
 import { mapActions } from 'vuex'
 import MobileDetect from 'mobile-detect'
-import { ArrowRightCircleIcon } from 'vue-feather-icons'
+import { ExternalLinkIcon } from 'vue-feather-icons'
 
 const md = new MobileDetect(window.navigator.userAgent)
 
 export default {
-  components: {
-    ArrowRightCircleIcon
-  },
+  components: { ExternalLinkIcon },
   props: ['vehicle'],
   data: () => ({
     detail: false,
@@ -72,40 +72,29 @@ export default {
       }
 
       if (vehicle.attributes && vehicle.attributes.includes('CARGO')) {
-        return 'CARGO'
+        return 'vehicleType.CARGO'
       }
 
       if (vehicle.attributes && vehicle.attributes.includes('TANDEM')) {
-        return 'TANDEM'
-      }
-
-      if (vehicle.attributes && vehicle.attributes.includes('TANDEM')) {
-        key += 'ChildSeat'
-        return key
-      }
-
-      if (vehicle.attributes && vehicle.attributes.includes('ELECTRIC')) {
-        key += 'Electric'
-      }
-
-      if (vehicle.attributes && vehicle.attributes.includes('GEARS')) {
-        key += 'Gears'
+        return 'vehicleType.TANDEM'
       }
 
       return key
     },
     logoSrc(provider) {
-      return require(`../assets/providers/${provider.slug}.jpg`)
+      let logo
+      try {
+        logo = require(`../assets/providers/${provider.slug}.jpg`)
+      } catch (e) {
+
+      }
+
+      return logo
     },
-    renderDiscountCode(discount) {
-      return discount.match(/^http/)
-        ? `<a href="${discount}">${this.$i18n.t('selectedVehicle.discountLink')}</a>`
-        : `${this.$i18n.t('selectedVehicle.discountCode')} <span class="discountCode">${discount}</span>`
-    },
-    showDeeplink() {
-      return (
-        (this.isAndroid && this.vehicle.provider.deepLink.android) || (this.isiOs && this.vehicle.provider.deepLink.ios)
-      )
+    isMobileAndDeeplink(os, shouldMissingDeeplink) {
+      const isMobile = md.is(os === 'android' ? 'AndroidOS': 'iOS')
+      const deeplink = (shouldMissingDeeplink) ? !this.vehicle.provider.deepLink[os] : this.vehicle.provider.deepLink[os]
+      return  isMobile && deeplink
     }
   }
 }
@@ -113,6 +102,8 @@ export default {
 
 <style lang="scss">
 @import '../app.scss';
+
+$border-radius: 5px;
 
 .selected-vehicle {
   position: absolute;
@@ -124,73 +115,101 @@ export default {
   bottom: 0;
   z-index: 9999;
 
-  .logo {
-    width: 50px;
+  .no-shrink {
+    flex-shrink: 0;
+    line-height: 22px;
   }
 
-  .bloc {
+  .block {
     z-index: 9999;
     background-color: $mainColor;
     color: #fff;
 
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
 
-    border-radius: 5px;
-    padding: 20px;
+    border-radius: $border-radius;
     margin: 0 10px 10px;
 
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: space-between;
-
-    .provider {
-      font-size: 1.4em;
-      font-weight: bold;
-    }
-
-    .kind {
-      font-size: 0.85em;
-    }
-
-    .column {
-      align-self: center;
-    }
-
-    .column:nth-child(2) {
-      flex: 1 1 auto;
-      margin: 0 15px;
-    }
-
-    .column:nth-child(3) {
-      flex: 0 1 auto;
-      text-align: end;
-
-      a {
-        display: block;
-      }
-    }
-
-    .ride {
-      border: 2px solid;
-      padding: 12px;
-      border-radius: 100px;
-      color: #fff;
-      text-decoration: none;
-
-      svg {
-        margin-bottom: -7px;
-      }
-    }
+    flex-direction: column;
 
     .detail {
-      border-top: 1px solid #fff;
-      padding-top: 10px;
+      padding: 10px;
 
-      a {
-        color: #fff;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+
+      .provider {
+        font-size: 2.6rem;
         font-weight: bold;
+        align-items: center;
+        display: flex;
+      }
+
+      .logo {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
+
+      .type-attributes {
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        font-size: 1.8rem;
+
+        .attributes {
+          display: flex;
+
+          .attribute {
+            padding-left: 5px;
+            height: 20px;
+          }
+        }
+      }
+
+      .available-vehicles {
+        font-size: 1.6rem;
+
+        span {
+          font-weight: bold;
+          font-size: 2.2rem;
+        }
+      }
+
+      .available-stands {
+        font-size: 1.2rem;
+
+        span {
+          font-weight: bold;
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    .subdetail {
+      padding: 10px 10px;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      background-color: lighten($mainColor, 20%);
+
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+
+      .open-native {
+        color: $mainColor;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+        background: #fff;
+        border-radius: $border-radius;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        display: flex;
       }
     }
   }
