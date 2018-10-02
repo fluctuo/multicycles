@@ -21,30 +21,15 @@
   },
   "vehicleType": {
     "BIKE": "Vélo",
-    "BIKEElectric": "Vélo électrique",
-    "BIKEGears": "Vélo avec vitesses",
-    "BIKEElectricGears": "Vélo électrique avec vitesses",
-    "SCOOTER": "trottinette",
-    "SCOOTERElectric": "Trottinette électrique",
-    "SCOOTERGears": "Trottinette avec vitesses",
-    "SCOOTERElectricGears": "rottinette électrique avec vitesses",
+    "SCOOTER": "Trottinette",
     "MOTORSCOOTER": "Scooter",
-    "MOTORSCOOTERElectric": "Scooter électrique",
-    "MOTORSCOOTERGears": "Scooter avec vitesses",
-    "MOTORSCOOTERElectricGears": "Scooter électrique avec vitesses",
-    "STATION": "Station avec {availableVehicles} vélos et {availableStands} places",
-    "VIRTUAL_STATION": "Station virtuelle avec {availableVehicles} vélos",
     "CARGO": "Vélo cargo",
-    "TANDEM": "Tandem <3",
-    "BIKEChildSeat": "Vélo avec siège enfant"
+    "TANDEM": "Tandem"
   },
   "selectedVehicle": {
-    "ihaveanaccount": "J'ai un compte",
-    "openApp": "Ouvrir l'app",
-    "downloadApp": "Télécharger l'application",
-    "useDiscountCode": "Je profite d'une offre avec ",
-    "discountLink": "ce lien",
-    "discountCode": "ce code"
+    "bikes": "vélos",
+    "docks": "docks",
+    "unlockInTheApp": "déverrouiller dans l'app"
   },
   "search": {
     "search": "Recherche"

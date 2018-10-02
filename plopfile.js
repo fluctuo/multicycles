@@ -50,7 +50,6 @@ module.exports = plop => {
           ' ',
           '= Front =',
           '+ run `npm run fragments`',
-          '+ Add new provider in `front/src/store.js`',
           plop.renderString(
             '+ Create `front/static/marker-{{ totalyLower provider }}.png` & `front/static/marker-{{ totalyLower provider }}-2x.png`',
             answers

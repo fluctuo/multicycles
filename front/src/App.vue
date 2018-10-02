@@ -1,5 +1,5 @@
 <template>
-  <vue-drawer-layout :enable="drawerEnable" @slide-end="fixEnable">
+  <vue-drawer-layout ref="drawerLayout" :enable="drawerEnable" @slide-end="fixEnable" @mask-click="handleMaskClick">
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
       <router-view/>
@@ -17,13 +17,19 @@ export default {
     DrawerMenu
   },
   computed: mapGetters(['drawerEnable']),
+  created() {
+    this.getProviders()
+  },
   methods: {
-    ...mapActions(['setDrawerEnable']),
+    ...mapActions(['getProviders', 'setDrawerEnable']),
     fixEnable(visible) {
       // if drawer closed and still on map, disable it
       if (this.$route.path === '/' && !visible) {
         this.setDrawerEnable(false)
       }
+    },
+    handleMaskClick() {
+      this.$refs.drawerLayout.toggle(false)
     }
   }
 }
@@ -47,7 +53,7 @@ body {
   background-color: $mainColor;
   color: #fff;
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1.3rem;
 
   a {
     text-decoration: none;

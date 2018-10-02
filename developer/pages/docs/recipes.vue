@@ -8,6 +8,18 @@
 
     <graphql-playground :query="vehicles.query" :variables="vehicles.variables" :response="vehicles.response" />
 
+    <h4 class="mt-5">Get all providers</h4>
+
+    <p>This query return all implemented providers. For restrict to only available at the position see next recipe</p>
+
+    <graphql-playground :query="allProviders.query" :variables="allProviders.variables" :response="allProviders.response" />
+
+    <h4 class="mt-5">Available providers</h4>
+
+    <p>Get available providers at the location.</p>
+
+    <graphql-playground :query="providers.query" :variables="vehicles.variables" :response="allProviders.response" />
+
     <h4 class="mt-5">Get vehicles with stations</h4>
 
     <p>
@@ -71,6 +83,40 @@ export default {
         2
       )
     },
+    allProviders: {
+      query: `query {
+  providers {
+    name
+    slug
+    website
+  }
+}`,
+      variables: '{}',
+      response: JSON.stringify(
+        {
+          data: {
+            providers: [
+              {
+                name: 'Bird',
+                slug: 'bird',
+                website: 'https://www.bird.co/'
+              }
+            ]
+          }
+        },
+        null,
+        2
+      )
+    },
+    providers: {
+      query: `query ($lat: Float!, $lng: Float!) {
+  providers (lat: $lat, lng: $lng) {
+    name
+    slug
+    website
+  }
+}`
+    },
     stations: {
       query: `query ($lat: Float!, $lng: Float!) {
   vehicles (lat: $lat, lng: $lng) {
@@ -82,7 +128,7 @@ export default {
       name
     }
     ... on Station {
-			total_stands
+			totalStands
 			availableStands
       availableVehicles
       isVirtual

@@ -6,7 +6,7 @@
         <input v-model="$store.state.selectedAddress.name" type="text" :placeholder="$t('search.search')"  class="adress-picker">
       </router-link>
 
-      <compass-icon class="icon" @click="centerOnGeolocation"/>
+      <crosshair-icon class="icon" @click="centerOnGeolocation"/>
     </div>
     <local-map />
   </div>
@@ -14,7 +14,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { MenuIcon, CompassIcon } from 'vue-feather-icons'
+import { MenuIcon, CrosshairIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 
 import store from '../store'
@@ -23,7 +23,7 @@ export default {
   name: 'Home',
   components: {
     MenuIcon,
-    CompassIcon,
+    CrosshairIcon,
     LocalMap
   },
   beforeRouteEnter(to, from, next) {

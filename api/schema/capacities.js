@@ -28,6 +28,7 @@ const capacitiesType = new GraphQLObjectType({
 export default {
   type: capacitiesType,
   description: 'Query capacities according to location',
+  deprecationReason: 'Use `providers` query to get all available providers.',
   args: {
     lat: {
       description: 'The requested latitude',

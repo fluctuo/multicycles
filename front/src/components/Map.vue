@@ -27,7 +27,6 @@
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
-import { CompassIcon } from 'vue-feather-icons'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
@@ -60,8 +59,7 @@ export default {
     LTileLayer,
     LMarker,
     'v-progress': Progress,
-    SelectedVehicle,
-    CompassIcon
+    SelectedVehicle
   },
   data() {
     return {
@@ -104,7 +102,7 @@ export default {
     $route: 'getVehicles'
   },
   methods: {
-    ...mapActions(['getCapacities', 'setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
+    ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
     roundLocation(l) {
       return Math.round(l * 1000) / 1000
     },
@@ -129,7 +127,6 @@ export default {
             this.setCenter([position.coords.latitude, position.coords.longitude])
             this.setGeolocation(this.center)
             this.getVehicles(this.center[0], this.center[1])
-            this.getCapacities({ lat: this.center[0], lng: this.center[1] })
           }
         })
         geolocationWatcher = navigator.geolocation.watchPosition(position => {
@@ -250,7 +247,7 @@ export default {
 }
 
 .crosshair {
-  $crosshairsize: 50px;
+  $crosshairsize: 28px;
 
   position: absolute;
   z-index: 401;
@@ -259,6 +256,10 @@ export default {
   left: 50%;
   margin-top: ($crosshairsize / 2) * -1;
   margin-left: ($crosshairsize / 2) * -1;
+}
+
+.leaflet-bottom {
+  z-index: 800 !important;
 }
 </style>
 
