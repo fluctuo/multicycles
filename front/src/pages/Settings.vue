@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       hasInstallPromptEvent: !!window.installPromptEvent,
-      langs: [{ text: 'Français', value: 'fr' }, { text: 'English', value: 'en' }, { text: '中文', value: 'cn' }]
+      langs: [{ text: 'Français', value: 'fr' }, { text: 'English', value: 'en' }, { text: '中文', value: 'cn' }, { text: 'German', value: 'de'}]
     }
   },
   computed: mapGetters(['isProviderDisabled']),

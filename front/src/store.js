@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 
 import i18n from './i18n'
 import apolloProvider from './apollo'
+import getlanguage from './language'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,7 @@ const disabledProviders =
 const position = localStorage.getItem('position') && JSON.parse(localStorage.getItem('position'))
 
 const state = {
-  lang: localStorage.getItem('lang') || (capacities && capacities.defaultLanguage) || 'en',
+  lang: getlanguage(),
   geolocation: position || [48.852775, 2.369336],
   providers: (capacities && capacities.providers) || [
     'bird',
@@ -69,7 +70,6 @@ const actions = {
           query: gql`
             query($lat: Float!, $lng: Float!) {
               capacities(lat: $lat, lng: $lng) {
-                defaultLanguage
                 providers
               }
             }
@@ -127,10 +127,6 @@ const mutations = {
   },
   setCapacities(state, capacities) {
     localStorage.setItem('capacities', JSON.stringify(capacities))
-
-    if (!localStorage.getItem('lang')) {
-      i18n.locale = capacities.defaultLanguage
-    }
 
     state.providers = capacities.providers
   },
