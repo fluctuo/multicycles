@@ -21,15 +21,19 @@ function checkWorking() {
   const start = new Date()
 
   return client
-    .getBicyclesByLatLng(positions[0], {
-      agent: tunnel.httpsOverHttp({
-        proxy: {
-          host: process.env.PROXY_HOST,
-          port: process.env.PROXY_PORT,
-          proxyAuth: process.env.PROXY_AUTH
-        }
-      })
-    })
+    .getBicyclesByLatLng(
+      positions[0],
+      {
+        agent: tunnel.httpsOverHttp({
+          proxy: {
+            host: process.env.PROXY_HOST,
+            port: process.env.PROXY_PORT,
+            proxyAuth: process.env.PROXY_AUTH
+          }
+        })
+      },
+      { timeout: 5000 }
+    )
     .then(result => ({
       working: !!mapVehicles(result).length,
       latency: new Date() - start

@@ -65,8 +65,8 @@ router.get('/checkproviders', ctx => {
           provider,
           ...(await module.checkWorking())
         }))
-        .catch(e => {
-          console.error('checkWorking', provider, e)
+        .catch(err => {
+          logger.exception(err, { tags: { provider: `${provider}` } })
           return Promise.resolve({
             provider,
             working: false,

@@ -22,7 +22,7 @@ function checkWorking() {
   const positions = [{ lat: 48.148598, lng: 17.107748 }]
   const start = new Date()
 
-  return client.getBicyclesByLatLng(positions[0]).then(result => ({
+  return client.getBicyclesByLatLng(positions[0], { timeout: 5000 }).then(result => ({
     working: !!mapVehicles(result).length,
     latency: new Date() - start
   }))
