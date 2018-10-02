@@ -56,7 +56,6 @@ import Contact from '~/components/Contact.vue'
 const onlyQueries = ['vehicles', 'providers']
 const onlyTypes = [
   'Provider',
-  'Capacities',
   'Bird',
   'Byke',
   'CallABike',

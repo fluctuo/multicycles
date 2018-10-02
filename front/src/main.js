@@ -7,7 +7,6 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAnalytics from 'vue-analytics'
 import VueApollo from 'vue-apollo'
-import ToggleButton from 'vue-js-toggle-button'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 import DrawerLayout from 'vue-drawer-layout'
@@ -57,7 +56,6 @@ Vue.use(
 )
 
 Vue.use(DrawerLayout)
-Vue.use(ToggleButton)
 
 Vue.directive('focus', {
   inserted(el) {

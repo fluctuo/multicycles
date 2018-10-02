@@ -17,8 +17,11 @@ export default {
     DrawerMenu
   },
   computed: mapGetters(['drawerEnable']),
+  created() {
+    this.getProviders()
+  },
   methods: {
-    ...mapActions(['setDrawerEnable']),
+    ...mapActions(['getProviders', 'setDrawerEnable']),
     fixEnable(visible) {
       // if drawer closed and still on map, disable it
       if (this.$route.path === '/' && !visible) {

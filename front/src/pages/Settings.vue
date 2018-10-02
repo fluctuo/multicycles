@@ -25,9 +25,10 @@
 
         <label for="lang">{{ $t('settings.providers') }}:</label>
 
-        <div v-for="provider in $store.state.providers" :key="provider" class="provider">
-          <toggle-button :value="!isProviderDisabled(provider)" @change="toggleProvider(provider)"/>
-          <span>{{ provider }}</span>
+        <div class="providers">
+          <div v-for="provider in $store.state.providers" :key="provider.slug" v-bind:class="{disabled: isProviderDisabled(provider.slug)}" @click="toggleProvider(provider.slug)">
+            <img v-if="logoSrc(provider)" :src="logoSrc(provider)" alt="logo" class="logo">
+          </div>
         </div>
       </form>
     </div>
@@ -55,6 +56,16 @@ export default {
     ...mapActions(['setLang', 'toggleProvider']),
     installApp() {
       window.installPromptEvent.prompt()
+    },
+    logoSrc(provider) {
+      let logo
+      try {
+        logo = require(`../assets/providers/${provider.slug}.jpg`)
+      } catch (e) {
+
+      }
+
+      return logo
     }
   }
 }
@@ -67,6 +78,12 @@ export default {
 form {
   display: flex;
   flex-direction: column;
+
+  label {
+    font-size: 2.4rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .install button {
@@ -81,6 +98,21 @@ form {
   svg {
     margin-bottom: -6px;
     margin-right: 5px;
+  }
+}
+
+.providers {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: -5px -5px;
+
+  &>div {
+    margin: 5px;
+
+    &.disabled {
+      filter: opacity(0.6) grayscale(1);
+    }
   }
 }
 </style>

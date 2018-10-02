@@ -102,7 +102,7 @@ export default {
     $route: 'getVehicles'
   },
   methods: {
-    ...mapActions(['getCapacities', 'setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
+    ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
     roundLocation(l) {
       return Math.round(l * 1000) / 1000
     },
@@ -127,7 +127,6 @@ export default {
             this.setCenter([position.coords.latitude, position.coords.longitude])
             this.setGeolocation(this.center)
             this.getVehicles(this.center[0], this.center[1])
-            this.getCapacities({ lat: this.center[0], lng: this.center[1] })
           }
         })
         geolocationWatcher = navigator.geolocation.watchPosition(position => {
