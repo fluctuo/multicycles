@@ -1,4 +1,4 @@
-import { GraphQLInterfaceType, GraphQLNonNull, GraphQLFloat, GraphQLList } from 'graphql'
+import { GraphQLInterfaceType, GraphQLNonNull, GraphQLFloat, GraphQLList, GraphQLString } from 'graphql'
 import distance from '@turf/distance'
 import { point } from '@turf/helpers'
 
@@ -127,13 +127,25 @@ const vehicles = {
     lng: {
       description: 'The requested longitude',
       type: new GraphQLNonNull(GraphQLFloat)
+    },
+    excludeProviders: {
+      description: 'List of excluded providers. Array of slug, eg: ["mobike", "ofo"].',
+      type: new GraphQLList(GraphQLString)
     }
   },
   resolve: async (root, args, ctx, info) => {
     requireAccessToken(ctx.state.accessToken)
 
     const { lat, lng } = roundPosition(args)
-    const availableProviders = await getProviders({ lat, lng })
+    let availableProviders = await getProviders({ lat, lng })
+
+    if (args.excludeProviders) {
+      availableProviders = availableProviders.filter(p => !args.excludeProviders.includes(p))
+
+      if (availableProviders.length === 0) {
+        return Promise.resolve([])
+      }
+    }
 
     return availableProviders.length
       ? Promise.all(availableProviders.map(provider => eval(provider).resolve({ lat, lng }, args, ctx, info)))
