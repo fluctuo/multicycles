@@ -11,7 +11,7 @@
 
         <l-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
 
-        <l-marker v-for="vehicle in filterVehicles(vehicles)" :lat-lng="[vehicle.lat, vehicle.lng]" :icon="getIconByProvider(vehicle)" :key="vehicle.id" @click="selectVehicle(vehicle)"></l-marker>
+        <l-marker v-for="vehicle in vehicles" :lat-lng="[vehicle.lat, vehicle.lng]" :icon="getIconByProvider(vehicle)" :key="vehicle.id" @click="selectVehicle(vehicle)"></l-marker>
       </l-map>
       <transition name="custom-classes-transition"
         enter-active-class="fadeInUp"
@@ -87,6 +87,9 @@ export default {
   computed: {
     center() {
       return this.$store.state.map.center
+    },
+    excludeProviders() {
+      return this.$store.state.disabledProviders
     }
   },
   created() {
@@ -176,9 +179,6 @@ export default {
         iconRetinaUrl,
         iconSize: [24, 40]
       })
-    },
-    filterVehicles(vehicles) {
-      return vehicles.filter(v => !this.$store.state.disabledProviders.includes(v.provider.slug))
     }
   },
   apollo: {
@@ -187,8 +187,8 @@ export default {
         loadingKey: 'fetchingVehicles',
         query() {
           return gql`
-            query($lat: Float!, $lng: Float!) {
-              vehicles(lat: $lat, lng: $lng) {
+            query($lat: Float!, $lng: Float!, $excludeProviders: [String]) {
+              vehicles(lat: $lat, lng: $lng, excludeProviders: $excludeProviders) {
                 id
                 lat
                 lng
@@ -218,7 +218,7 @@ export default {
           `
         },
         variables() {
-          return { lat: this.location.lat, lng: this.location.lng }
+          return { lat: this.location.lat, lng: this.location.lng, excludeProviders: this.excludeProviders }
         },
         update(data) {
           return data.vehicles ? data.vehicles : []

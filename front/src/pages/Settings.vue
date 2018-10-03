@@ -27,7 +27,9 @@
 
         <div class="providers">
           <div v-for="provider in $store.state.providers" :key="provider.slug" v-bind:class="{disabled: isProviderDisabled(provider.slug)}" @click="toggleProvider(provider.slug)">
-            <img v-if="logoSrc(provider)" :src="logoSrc(provider)" alt="logo" class="logo">
+            <a href="#" :title="provider.name">
+              <img v-if="logoSrc(provider)" :src="logoSrc(provider)" :alt="provider.name" class="logo">
+            </a>
           </div>
         </div>
       </form>
