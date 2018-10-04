@@ -34,8 +34,8 @@ Run `npm run generate`
 
 ### Run services
 
-Set `{api,developer}/.env` files
-Use `npm run dev:SERVICE` with SERVICE as `api` / `front` / `developer`
+Set `{developer}/.env` files
+Use `npm run dev:SERVICE` with SERVICE as `front` / `developer`
 
 ## Contact
 
