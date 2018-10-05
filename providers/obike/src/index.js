@@ -71,16 +71,24 @@ class Obike {
       throw new Error('Missing lat/lng')
     }
 
-    return got.post(`${this.config.baseURL}/bike/list`, {
-      json: true,
-      headers: this.config.headers,
-      body: encodeBody({
-        lat,
-        lng
-      }),
-      timeout: this.config.timeout,
-      ...config
-    })
+    return got
+      .post(`${this.config.baseURL}/bike/list`, {
+        json: true,
+        headers: this.config.headers,
+        body: encodeBody({
+          lat,
+          lng
+        }),
+        timeout: this.config.timeout,
+        ...config
+      })
+      .then(resp => {
+        if (!resp.body.success) {
+          throw new Error('Provider error', resp)
+        } else {
+          return resp
+        }
+      })
   }
 }
 
