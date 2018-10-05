@@ -21,7 +21,7 @@ test('overwrite timeout on constructor', async t => {
   const whiteBikes = new WhiteBikes({ timeout: 1 })
 
   await whiteBikes
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.148596,
       lng: 17.107748
     })
@@ -38,7 +38,7 @@ test('overwrite timeout on method', async t => {
   const whiteBikes = new WhiteBikes()
 
   await whiteBikes
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.148596,
         lng: 17.107748
@@ -58,7 +58,7 @@ test('get all bicycles', async t => {
   const whiteBikes = new WhiteBikes()
 
   await whiteBikes
-    .getBicyclesByLatLng()
+    .getObjects()
     .then(result => {
       t.truthy(result.length)
       t.pass()
@@ -69,11 +69,11 @@ test('get all bicycles', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const whiteBikes = new WhiteBikes()
 
   await whiteBikes
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.148596,
       lng: 17.107748
     })

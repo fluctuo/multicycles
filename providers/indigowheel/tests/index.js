@@ -22,7 +22,7 @@ test('overwrite timeout on constructor', async t => {
   const indigoWheel = new IndigoWheel({ timeout: 1 })
 
   await indigoWheel
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 51.456734,
       lng: -2.591292
     })
@@ -39,7 +39,7 @@ test('overwrite timeout on method', async t => {
   const indigoWheel = new IndigoWheel()
 
   await indigoWheel
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 51.456734,
         lng: -2.591292
@@ -55,11 +55,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const indigoWheel = new IndigoWheel()
 
   await indigoWheel
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 45.764043,
       lng: 4.835659
     })

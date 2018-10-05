@@ -242,7 +242,7 @@ test('overwrite timeout on constructor', async t => {
   const nextbike = new Nextbike({ timeout: 1 })
 
   await nextbike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 52.520007,
       lng: 13.404954
     })
@@ -259,7 +259,7 @@ test('overwrite timeout on method', async t => {
   const nextbike = new Nextbike()
 
   await nextbike
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 52.520007,
         lng: 13.404954
@@ -275,11 +275,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const nextbike = new Nextbike()
 
   await nextbike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 52.520007,
       lng: 13.404954
     })
@@ -309,7 +309,7 @@ test('share the same cache', async t => {
   const instanceB = new Nextbike({ datastore: { store: cache } })
 
   await instanceA
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 52.520007,
       lng: 13.404954
     })
@@ -329,7 +329,7 @@ test('get bicycles at 0,0', async t => {
   const nextbike = new Nextbike()
 
   await nextbike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 0.1,
       lng: 0.1
     })

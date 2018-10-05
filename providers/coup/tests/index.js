@@ -258,7 +258,7 @@ test('overwrite timeout on constructor', async t => {
   const coup = new Coup({ timeout: 1 })
 
   await coup
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -275,7 +275,7 @@ test('overwrite timeout on method', async t => {
   const coup = new Coup()
 
   await coup
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.856614,
         lng: 2.352222
@@ -291,11 +291,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const coup = new Coup()
 
   await coup
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -314,7 +314,7 @@ test('return not covered at 0,0', async t => {
   const coup = new Coup()
 
   await coup
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 0.1,
       lng: 0.1
     })

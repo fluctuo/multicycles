@@ -1,4 +1,3 @@
-import querystring from 'querystring'
 import got from 'got'
 
 const BASE_URL = 'https://api-prod.ibyke.io'
@@ -27,7 +26,7 @@ class Byke {
     }
   }
 
-  getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}, config = {}) {
+  getObjects({ lat: latitude, lng: longitude } = {}, config = {}) {
     if (!latitude || !longitude) {
       throw new Error('Missing lat/lng')
     }

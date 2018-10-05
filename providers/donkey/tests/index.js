@@ -31,7 +31,7 @@ test('overwrite timeout on constructor', async t => {
   const donkey = new Donkey({ timeout: 1 })
 
   await donkey
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.9,
       lng: 2.4
     })
@@ -48,7 +48,7 @@ test('overwrite timeout on method', async t => {
   const donkey = new Donkey()
 
   await donkey
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.9,
         lng: 2.4
@@ -64,11 +64,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const donkey = new Donkey()
 
   await donkey
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222,
       radius: 1000

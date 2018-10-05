@@ -48,7 +48,7 @@ class Pony {
     }
   }
 
-  async getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
+  async getObjects({ lat, lng } = {}, config = {}) {
     let bounds
 
     if (lat && lng) {

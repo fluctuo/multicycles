@@ -26,12 +26,12 @@ class {{ properCase provider }} {
     }
   }
 
-  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
+  getObjects({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }
 
-    // @TODO custom getBicyclesByLatLng
+    // @TODO custom getObjects
     return got.get(`${BASE_URL}`, {
       json: true,
       query: {

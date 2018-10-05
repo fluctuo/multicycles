@@ -16,7 +16,7 @@ test('overwrite timeout on constructor', async t => {
   const {{ camelCase provider }} = new {{ properCase provider }}({ timeout: 1 })
 
   await {{ camelCase provider }}
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 52.520007,
       lng: 13.404954
     })
@@ -33,7 +33,7 @@ test('overwrite timeout on method', async t => {
   const {{ camelCase provider }} = new {{ properCase provider }}()
 
   await {{ camelCase provider }}
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 52.520007,
         lng: 13.404954
@@ -53,7 +53,7 @@ test('get bicycles by positions', async t => {
   const {{ camelCase provider }} = new {{ properCase provider }}()
 
   await {{ camelCase provider }}
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 52.520007,
       lng: 13.404954
     })

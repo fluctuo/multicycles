@@ -6,7 +6,7 @@ const pony = new Pony()
 
 test('get all bicycles', async t => {
   await pony
-    .getBicyclesByLatLng()
+    .getObjects()
     .then(result => {
       t.truthy(result.body.length)
       t.pass()
@@ -17,9 +17,9 @@ test('get all bicycles', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   await pony
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 47.478419, // angers pos
       lng: -0.563166
     })
@@ -39,7 +39,7 @@ test('share the same cache', async t => {
   const instanceB = new Pony({ datastore: { store: cache } })
 
   await instanceA
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -52,7 +52,7 @@ test('share the same cache', async t => {
     })
 
   await instanceB
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -67,7 +67,7 @@ test('force bypass cache', async t => {
   const instanceB = new Pony({ datastore: { store: cache } })
 
   await instanceA
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -80,7 +80,7 @@ test('force bypass cache', async t => {
     })
 
   await instanceB
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.856614,
         lng: 2.352222

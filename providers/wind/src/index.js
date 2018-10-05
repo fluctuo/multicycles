@@ -26,7 +26,7 @@ class Wind {
     }
   }
 
-  getBicyclesByLatLng({ lat: latitude, lng: longitude } = {}, config = {}) {
+  getObjects({ lat: latitude, lng: longitude } = {}, config = {}) {
     if (!latitude || !longitude) {
       throw new Error('Missing lat/lng')
     }

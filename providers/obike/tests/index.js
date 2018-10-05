@@ -25,14 +25,15 @@ nock('https://mobile.o.bike/api/v2')
           helmet: 0
         }
       ]
-    }
+    },
+    success: true
   })
 
 test('overwrite timeout on constructor', async t => {
   const obike = new Obike({ timeout: 1 })
 
   await obike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.852775,
       lng: 2.369336
     })
@@ -49,7 +50,7 @@ test('overwrite timeout on method', async t => {
   const obike = new Obike()
 
   await obike
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.852775,
         lng: 2.369336
@@ -65,11 +66,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const obike = new Obike()
 
   await obike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.852775,
       lng: 2.369336
     })

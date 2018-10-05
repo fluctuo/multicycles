@@ -25,7 +25,7 @@ module.exports = plop => {
         return [
           'Go to work now:',
           '= Provider =',
-          '+ Customise provider `getBicyclesByLatLng`',
+          '+ Customise provider `getObjects`',
           ' ',
           '= Front =',
           '+ run `npm run fragments`',

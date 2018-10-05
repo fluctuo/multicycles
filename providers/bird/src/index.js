@@ -76,7 +76,7 @@ class Bird {
       })
   }
 
-  getBicyclesByLatLng({ lat: latitude, lng: longitude, radius = 500 } = {}, config = {}) {
+  getObjects({ lat: latitude, lng: longitude, radius = 500 } = {}, config = {}) {
     if (!latitude || !longitude) {
       throw new Error('Missing lat/lng')
     }

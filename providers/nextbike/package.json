@@ -1,6 +1,6 @@
 {
   "name": "@multicycles/nextbike",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "Nextbike provider for multicycles",
   "author": "Pierrick <mulotmail@gmail.com>",
   "main": "lib/index.js",

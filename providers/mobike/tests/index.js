@@ -32,7 +32,7 @@ test('overwrite timeout on constructor', async t => {
   const mobike = new Mobike({ timeout: 1 })
 
   await mobike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 38.907192,
       lng: -77.036871
     })
@@ -49,7 +49,7 @@ test('overwrite timeout on method', async t => {
   const mobike = new Mobike()
 
   await mobike
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 38.907192,
         lng: -77.036871
@@ -65,11 +65,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const mobike = new Mobike()
 
   await mobike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 31.23039,
       lng: 121.473702
     })

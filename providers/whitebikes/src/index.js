@@ -38,7 +38,7 @@ class WhiteBikes {
     }
   }
 
-  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
+  getObjects({ lat, lng } = {}, config = {}) {
     let bounds
 
     if (lat && lng) {

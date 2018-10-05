@@ -82,7 +82,7 @@ class Spin {
     }
   }
 
-  async getBicyclesByLatLng({ lat, lng, distance = 500 } = {}, config = {}) {
+  async getObjects({ lat, lng, distance = 500 } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }

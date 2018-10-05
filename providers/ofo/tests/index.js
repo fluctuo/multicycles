@@ -44,7 +44,7 @@ test('overwrite timeout on constructor', async t => {
   const ofo = new Ofo({ timeout: 1 })
 
   await ofo
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.852775,
       lng: 2.369336
     })
@@ -61,7 +61,7 @@ test('overwrite timeout on method', async t => {
   const ofo = new Ofo({})
 
   await ofo
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.852775,
         lng: 2.369336
@@ -77,11 +77,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const ofo = new Ofo({ token: 'my-token' })
 
   await ofo
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.852775,
       lng: 2.369336
     })
@@ -100,7 +100,7 @@ test('get bicycles without token', async t => {
   const ofo = new Ofo()
 
   await ofo
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.852775,
       lng: 2.369336
     })

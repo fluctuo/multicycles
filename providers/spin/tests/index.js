@@ -49,7 +49,7 @@ test('overwrite timeout on constructor', async t => {
   const spin = new Spin({ timeout: 1 })
 
   await spin
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 34.052234,
       lng: -118.243685
     })
@@ -66,7 +66,7 @@ test('overwrite timeout on method', async t => {
   const spin = new Spin()
 
   await spin
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 34.052234,
         lng: -118.243685
@@ -82,11 +82,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const spin = new Spin()
 
   await spin
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 47.606209,
       lng: -122.332069,
       distance: 1000

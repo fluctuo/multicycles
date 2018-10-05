@@ -29,7 +29,7 @@ class Donkey {
     }
   }
 
-  getBicyclesByLatLng({ lat, lng, radius = 400 } = {}, config = {}) {
+  getObjects({ lat, lng, radius = 400 } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }

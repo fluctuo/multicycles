@@ -71,7 +71,7 @@ test('overwrite timeout on constructor', async t => {
   const cityscoot = new Cityscoot({ timeout: 1 })
 
   await cityscoot
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -88,7 +88,7 @@ test('overwrite timeout on method', async t => {
   const cityscoot = new Cityscoot()
 
   await cityscoot
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.856614,
         lng: 2.352222
@@ -104,11 +104,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const cityscoot = new Cityscoot()
 
   await cityscoot
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -127,7 +127,7 @@ test('Get vehicle from cache', async t => {
   const cityscoot = new Cityscoot()
 
   await cityscoot
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -136,7 +136,7 @@ test('Get vehicle from cache', async t => {
       t.truthy(result.body.data.scooters.length)
 
       return cityscoot
-        .getBicyclesByLatLng({
+        .getObjects({
           lat: 48.856614,
           lng: 2.352222
         })
@@ -156,7 +156,7 @@ test('Force bypass cache', async t => {
   const cityscoot = new Cityscoot()
 
   await cityscoot
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -164,7 +164,7 @@ test('Force bypass cache', async t => {
       t.is(result.statusCode, 200)
 
       return cityscoot
-        .getBicyclesByLatLng(
+        .getObjects(
           {
             lat: 48.856614,
             lng: 2.352222
@@ -189,7 +189,7 @@ test('share the same cache', async t => {
   const instanceB = new Cityscoot({ datastore: { store: cache } })
 
   await instanceA
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856614,
       lng: 2.352222
     })
@@ -209,7 +209,7 @@ test('return not covered at 0,0', async t => {
   const cityscoot = new Cityscoot()
 
   await cityscoot
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 0.1,
       lng: 0.1
     })

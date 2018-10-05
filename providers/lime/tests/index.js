@@ -52,7 +52,7 @@ test('overwrite timeout on constructor', async t => {
   })
 
   await lime
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 38,
       lng: -77
     })
@@ -74,7 +74,7 @@ test('overwrite timeout on method', async t => {
   })
 
   await lime
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 38,
         lng: -77
@@ -90,7 +90,7 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const lime = new Lime({
     auth: {
       token: process.env.LIME_AUTH_TOKEN,
@@ -99,7 +99,7 @@ test('get bicycles by positions', async t => {
   })
 
   await lime
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 38.907192, // Washintown, DC
       lng: -77.036871
     })
@@ -118,7 +118,7 @@ test('get bicycles without auth', async t => {
   const lime = new Lime()
 
   await lime
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.852775,
       lng: 2.369336
     })

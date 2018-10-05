@@ -47,11 +47,11 @@ test('overwrite timeout on constructor', async t => {
   const wind = new Wind({ timeout: 1 })
 
   await wind
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856613,
       lng: 2.352222
     })
-    .then(() => {
+    .then(r => {
       t.fail()
     })
     .catch(err => {
@@ -64,7 +64,7 @@ test('overwrite timeout on method', async t => {
   const wind = new Wind()
 
   await wind
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 48.856613,
         lng: 2.352222
@@ -80,11 +80,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const wind = new Wind()
 
   await wind
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.856613,
       lng: 2.352222
     })

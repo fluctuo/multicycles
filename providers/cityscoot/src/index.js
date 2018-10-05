@@ -70,7 +70,7 @@ class Cityscoot {
     return city
   }
 
-  async getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
+  async getObjects({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }

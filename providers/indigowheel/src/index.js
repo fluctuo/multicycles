@@ -25,8 +25,8 @@ class IndigoWheel {
     }
   }
 
-  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
-    return this.yobike.getBicyclesByLatLng({ lat, lng }, config)
+  getObjects({ lat, lng } = {}, config = {}) {
+    return this.yobike.getObjects({ lat, lng }, config)
   }
 }
 

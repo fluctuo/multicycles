@@ -66,7 +66,7 @@ class Obike {
     }
   }
 
-  getBicyclesByLatLng({ lat, lng } = {}, config = {}) {
+  getObjects({ lat, lng } = {}, config = {}) {
     if (!lat || !lng) {
       throw new Error('Missing lat/lng')
     }

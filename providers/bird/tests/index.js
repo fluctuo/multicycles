@@ -40,7 +40,7 @@ test('overwrite timeout on constructor', async t => {
   const bird = new Bird({ timeout: 1 })
 
   await bird
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 38.907192,
       lng: -77.036871
     })
@@ -57,7 +57,7 @@ test('overwrite timeout on method', async t => {
   const bird = new Bird()
 
   await bird
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 38.907192,
         lng: -77.036871
@@ -73,7 +73,7 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   nock('https://api.bird.co')
     .get('/bird/nearby')
     .query({
@@ -96,7 +96,7 @@ test('get bicycles by positions', async t => {
     })
 
   await bird
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 38.907192,
       lng: -77.036871,
       radius: 1500

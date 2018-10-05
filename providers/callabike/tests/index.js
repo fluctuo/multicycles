@@ -6,7 +6,7 @@ test('overwrite timeout on constructor', async t => {
   const callABike = new CallABike({ timeout: 1 })
 
   await callABike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 52.520007,
       lng: 13.404954
     })
@@ -23,7 +23,7 @@ test('overwrite timeout on method', async t => {
   const callABike = new CallABike()
 
   await callABike
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 52.520007,
         lng: 13.404954
@@ -39,7 +39,7 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const callABike = new CallABike()
 
   nock('https://www.callabike-interaktiv.de')
@@ -94,7 +94,7 @@ test('get bicycles by positions', async t => {
     })
 
   await callABike
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 52.520007,
       lng: 13.404954,
       radius: 1000

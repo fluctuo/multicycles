@@ -27,7 +27,7 @@ test('overwrite timeout on constructor', async t => {
   const jump = new Jump({ timeout: 1 })
 
   await jump
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 38.907192,
       lng: -77.036871
     })
@@ -44,7 +44,7 @@ test('overwrite timeout on method', async t => {
   const jump = new Jump()
 
   await jump
-    .getBicyclesByLatLng(
+    .getObjects(
       {
         lat: 38.907192,
         lng: -77.036871
@@ -60,11 +60,11 @@ test('overwrite timeout on method', async t => {
     })
 })
 
-test('get bicycles by positions', async t => {
+test('get objects', async t => {
   const jump = new Jump()
 
   await jump
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 38.907192,
       lng: -77.036871
     })
@@ -83,7 +83,7 @@ test('return error on no available city', async t => {
   const jump = new Jump()
 
   await jump
-    .getBicyclesByLatLng({
+    .getObjects({
       lat: 48.852775,
       lng: 2.369336
     })
