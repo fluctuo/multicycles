@@ -1,5 +1,3 @@
-const path = require('path')
-
 module.exports = plop => {
   plop.addHelper('totalyLower', name => {
     return name.toLowerCase().replace(' ', '')
@@ -23,30 +21,11 @@ module.exports = plop => {
         force: true,
         abortOnFail: true
       },
-      {
-        type: 'add',
-        path: 'api/schema/{{ totalyLower provider}}.js',
-        templateFile: 'templates/api/schema.js'
-      },
-      {
-        type: 'add',
-        path: 'api/controllers/providers/{{ totalyLower provider}}.js',
-        templateFile: 'templates/api/controller.js'
-      },
       function customAction(answers) {
         return [
           'Go to work now:',
           '= Provider =',
           '+ Customise provider `getBicyclesByLatLng`',
-          ' ',
-          '= Api =',
-          '+ Add type to `api/schema/index.js`',
-          plop.renderString(
-            '+ Complete functions on `api/controllers/providers/{{ totalyLower provider }}.js`',
-            answers
-          ),
-          '+ Add new provider to `resolveType` in `api/schema/vehicles.js`',
-          '+ Add new provider in `api/utils.js`',
           ' ',
           '= Front =',
           '+ run `npm run fragments`',
