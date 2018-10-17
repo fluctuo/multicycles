@@ -2,25 +2,6 @@
   <b-container>
     <h3 class="mt-5">Saved cities - {{ cities.length }} in total</h3>
     <b-row>
-      <b-col md="3">
-        <div v-if="selectedCity">
-          <h4>{{ selectedCity.city }}
-            <span class="text-muted">- {{ selectedCity.country }}</span>
-          </h4>
-
-          <h5>Providers</h5>
-          <ul>
-            <li v-for="provider in selectedCity.providers" :key="provider">{{ provider }}</li>
-          </ul>
-
-          <b-btn v-b-modal.editModal variant="outline-warning">Edit</b-btn>
-
-          <CityEditModal :city="selectedCity" />
-        </div>
-        <div v-else>
-          <h4>Click on the map to select a provider</h4>
-        </div>
-      </b-col>
       <b-col>
         <no-ssr>
           <l-map ref="map" :zoom="map.zoom" :center="map.center" style="height: 400px">
@@ -31,19 +12,28 @@
       </b-col>
 
     </b-row>
+
+    <b-row v-if="selectedCity" class="mt-5 mb-5">
+      <b-col>
+        <h4>{{ selectedCity.city }}
+          <span class="text-muted">- {{ selectedCity.country }}</span>
+        </h4>
+        <city-edit :city="selectedCity"/>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import token from '~/components/Token.vue'
-import CityEditModal from '~/components/CityEditModal.vue'
+import CityEdit from '~/components/CityEdit.vue'
 
 export default {
   middleware: ['auth'],
   components: {
     token,
-    CityEditModal
+    CityEdit
   },
   data() {
     return {
@@ -70,12 +60,21 @@ export default {
             city
             country
             geojson
-            providers
+            providers {
+              slug
+              source
+            }
           }
         }
       `,
       update(data) {
-        return data.cities ? JSON.parse(JSON.stringify(data.cities)) : data
+        const cities = data.cities ? JSON.parse(JSON.stringify(data.cities)) : data
+
+        if (this.$route.params && this.$route.params.city) {
+          this.selectedCity = cities.find(c => c.id === parseInt(this.$route.params.city, 10))
+        }
+
+        return cities
       },
       error(err) {
         this.$auth.logout()
@@ -84,7 +83,8 @@ export default {
   },
   methods: {
     detailCity(city) {
-      this.selectedCity = city
+      window.history.pushState({}, '', `/admin/cities/${city.id}`)
+      this.selectedCity = this.cities.find(c => c.id === city.id)
     }
   }
 }
