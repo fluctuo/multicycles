@@ -69,7 +69,7 @@
     "webpack-bundle-analyzer": "^2.10.0",
     "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.4",
-    "workbox-webpack-plugin": "^3.6.2"
+    "workbox-webpack-plugin": "4.0.0-alpha.0"
   },
   "engines": {
     "node": ">= 4.0.0",
