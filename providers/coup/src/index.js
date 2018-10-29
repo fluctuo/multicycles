@@ -8,7 +8,10 @@ class Coup {
   constructor({ timeout } = {}) {
     this.markets = []
     this.config = {
-      timeout: timeout && parseInt(timeout, 10)
+      timeout: timeout && parseInt(timeout, 10),
+      headers: {
+        'User-Agent': 'AndroidUserAgent 2.1.2'
+      }
     }
   }
 
@@ -86,6 +89,7 @@ class Coup {
     return got.get(`${BASE_URL}/v3/markets/${market.id}/scooters`, {
       json: true,
       timeout: this.config.timeout,
+      headers: this.config.headers,
       ...config
     })
   }
