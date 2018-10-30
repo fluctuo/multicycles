@@ -85,16 +85,14 @@ export default {
       let logo
       try {
         logo = require(`../assets/providers/${provider.slug}.jpg`)
-      } catch (e) {
-
-      }
+      } catch (e) {}
 
       return logo
     },
     isMobileAndDeeplink(os, shouldMissingDeeplink) {
-      const isMobile = md.is(os === 'android' ? 'AndroidOS': 'iOS')
-      const deeplink = (shouldMissingDeeplink) ? !this.vehicle.provider.deepLink[os] : this.vehicle.provider.deepLink[os]
-      return  isMobile && deeplink
+      const isMobile = md.is(os === 'android' ? 'AndroidOS' : 'iOS')
+      const deeplink = shouldMissingDeeplink ? !this.vehicle.provider.deepLink[os] : this.vehicle.provider.deepLink[os]
+      return isMobile && deeplink
     }
   }
 }

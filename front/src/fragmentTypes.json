@@ -11,6 +11,7 @@
           { "name": "Cityscoot" },
           { "name": "Coup" },
           { "name": "Donkey" },
+          { "name": "Ford" },
           { "name": "GobeeBike" },
           { "name": "Hellobike" },
           { "name": "IndigoWheel" },
@@ -30,7 +31,7 @@
       {
         "kind": "INTERFACE",
         "name": "Station",
-        "possibleTypes": [{ "name": "CallABike" }, { "name": "Donkey" }, { "name": "Nextbike" }]
+        "possibleTypes": [{ "name": "CallABike" }, { "name": "Donkey" }, { "name": "Ford" }, { "name": "Nextbike" }]
       }
     ]
   }
