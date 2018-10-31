@@ -76,11 +76,6 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Oswald:300' }
     ]
   },
-  env: {
-    MULTICYCLES_API: process.env.MULTICYCLES_API,
-    MULTICYCLES_ACCESS_TOKEN: process.env.MULTICYCLES_ACCESS_TOKEN,
-    MAPBOX_KEY: process.env.MAPBOX_KEY
-  },
   /*
   ** Customize the progress bar color
   */
@@ -126,6 +121,12 @@ module.exports = {
   plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy', '~/plugins/react'],
   modules: [
     '@nuxtjs/dotenv',
+    [
+      'nuxt-env',
+      {
+        keys: ['MULTICYCLES_API', 'MULTICYCLES_ACCESS_TOKEN', 'SENTRY_KEY', 'ANALYTICS_KEY']
+      }
+    ],
     ['bootstrap-vue/nuxt', { css: false }],
     '@nuxtjs/axios',
     '@nuxtjs/auth',

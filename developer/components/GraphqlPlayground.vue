@@ -23,7 +23,7 @@ export default {
   methods: {
     graphQLFetcher(graphQLParams) {
       return this.$axios
-        .post(`${process.env.MULTICYCLES_API}?access_token=${process.env.MULTICYCLES_ACCESS_TOKEN}`, graphQLParams)
+        .post(`${this.$env.MULTICYCLES_API}?access_token=${this.$env.MULTICYCLES_ACCESS_TOKEN}`, graphQLParams)
         .then(response => response.data)
     }
   }

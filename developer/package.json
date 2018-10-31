@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "prestart": "npm run build",
     "start": "nuxt-start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
@@ -32,6 +31,7 @@
     "ignore-loader": "^0.1.2",
     "moment": "^2.22.2",
     "nuxt": "^2.0.0",
+    "nuxt-env": "0.0.4",
     "nuxt-leaflet": "0.0.10",
     "nuxt-start": "^2.0.0",
     "react": "^16.4.1",

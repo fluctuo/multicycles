@@ -1,5 +1,3 @@
-import gql from 'graphql-tag'
-
 export const state = () => ({
   selectedObject: null,
   introspection: null
@@ -14,5 +12,11 @@ export const mutations = {
   },
   user(state, user) {
     state.auth.user = user
+  }
+}
+
+export const actions = {
+  nuxtServerInit({ state }, { req }) {
+    state.env = this.$env
   }
 }
