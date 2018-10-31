@@ -3,67 +3,20 @@
     <h3>Introduction</h3>
 
     <p>
-      Open-API by Multicycles is a GraphQL API.<br> The docs in the sidedar are generated from the endpoint. Use these docs to find out what data you can call.
+      The era of micro-mobility has developed considerably in recent years. The world's major cities have seen the arrival of several systems for the same type of transport.<br>
+      Each system is different, with its own format. All this brings a real complexity to creating multi-modality applications on top of it.
     </p>
 
     <p>
-      All GraphQL should use the endpoint
-      <code>https://api.Multicycles.org/v1</code>. Requests should be authenticated, see
-      <nuxt-link to="/docs/auth">authentication</nuxt-link>
+      <nuxt-link to="/">Open-API</nuxt-link> aggregates more than 20 services around the world and return them under a single, standardized and easy-to-use API.
     </p>
 
-    <h4>Basic Exemple</h4>
+    <p>
+      In this documentation you will learn how to use the Open-API GraphQL API, authenticate yourself and get the data you need.
+    </p>
 
-    <graphql-playground :query="query" :variables="variables" :response="response" />
+    <p>
+      Keep reading the documentation (<nuxt-link to="/docs/providers">Providers</nuxt-link>) or <nuxt-link to="/api">explore the API</nuxt-link>.
+    </p>
   </div>
 </template>
-
-<script>
-import GraphqlPlayground from '~/components/GraphqlPlayground.vue'
-export default {
-  components: { GraphqlPlayground },
-  data: () => ({
-    query: `query ($lat: Float!, $lng: Float!) {
-  vehicles (lat: $lat, lng: $lng) {
-    id
-    type
-    attributes
-    lat
-    lng
-    provider {
-      name
-    }
-  }
-}`,
-    variables: JSON.stringify(
-      {
-        lat: 48.829698,
-        lng: 2.387919
-      },
-      null,
-      2
-    ),
-    response: JSON.stringify(
-      {
-        data: {
-          vehicles: [
-            {
-              id: '0lye9Z',
-              type: 'BIKE',
-              attributes: ['GEARS'],
-              lat: 48.829906421796,
-              lng: 2.3879092641104,
-              carno: '0lye9Z',
-              provider: {
-                name: 'Ofo'
-              }
-            }
-          ]
-        }
-      },
-      null,
-      2
-    )
-  })
-}
-</script>

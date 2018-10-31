@@ -23,7 +23,7 @@
 
       <ul>
         <li v-for="i in selectedObject.interfaces" :key="i.name">
-          <nuxt-link :to="{ name: 'docs-type-value', params: { type: 'Type', value: i.name }}">{{ i.name }}</nuxt-link>
+          <nuxt-link :to="{ name: 'api-type-value', params: { type: 'Type', value: i.name }}">{{ i.name }}</nuxt-link>
         </li>
       </ul>
     </div>
@@ -43,7 +43,7 @@
 
       <ul>
         <li v-for="possibleType in selectedObject.possibleTypes" :key="possibleType.name">
-          <nuxt-link :to="{ name: 'docs-type-value', params: { type: 'Type', value: possibleType.name }}">{{ possibleType.name }}</nuxt-link>
+          <nuxt-link :to="{ name: 'api-type-value', params: { type: 'Type', value: possibleType.name }}">{{ possibleType.name }}</nuxt-link>
         </li>
       </ul>
     </div>
