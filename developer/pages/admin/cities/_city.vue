@@ -40,7 +40,7 @@ export default {
       cities: [],
       selectedCity: null,
       options: {
-        mapboxKey: process.env.MAPBOX_KEY
+        mapboxKey: this.$env.MAPBOX_KEY
       },
       attribution:
         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',

@@ -124,7 +124,7 @@ module.exports = {
     [
       'nuxt-env',
       {
-        keys: ['MULTICYCLES_API', 'MULTICYCLES_ACCESS_TOKEN', 'SENTRY_KEY', 'ANALYTICS_KEY']
+        keys: ['MULTICYCLES_API', 'MULTICYCLES_ACCESS_TOKEN', 'SENTRY_KEY', 'ANALYTICS_KEY', 'MAPBOX_KEY']
       }
     ],
     ['bootstrap-vue/nuxt', { css: false }],

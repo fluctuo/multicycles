@@ -39,7 +39,13 @@ export default {
   head() {
     return {
       title: 'Documentation - Objects - Open-API by Multicycles',
-      meta: [{ hid: 'description', name: 'description', content: 'Query available bikes, stations and other vehicles with the API.' }]
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Query available bikes, stations and other vehicles with the API.'
+        }
+      ]
     }
   }
 }
