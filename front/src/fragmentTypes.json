@@ -5,6 +5,7 @@
         "kind": "INTERFACE",
         "name": "Vehicle",
         "possibleTypes": [
+          { "name": "Bcycle" },
           { "name": "Bird" },
           { "name": "Byke" },
           { "name": "CallABike" },
@@ -31,7 +32,13 @@
       {
         "kind": "INTERFACE",
         "name": "Station",
-        "possibleTypes": [{ "name": "CallABike" }, { "name": "Donkey" }, { "name": "Ford" }, { "name": "Nextbike" }]
+        "possibleTypes": [
+          { "name": "Bcycle" },
+          { "name": "CallABike" },
+          { "name": "Donkey" },
+          { "name": "Ford" },
+          { "name": "Nextbike" }
+        ]
       }
     ]
   }
