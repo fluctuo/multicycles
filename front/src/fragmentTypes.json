@@ -23,6 +23,7 @@
           { "name": "Obike" },
           { "name": "Ofo" },
           { "name": "Pony" },
+          { "name": "SocialBicycles" },
           { "name": "Spin" },
           { "name": "WhiteBikes" },
           { "name": "Wind" },
@@ -37,7 +38,8 @@
           { "name": "CallABike" },
           { "name": "Donkey" },
           { "name": "Ford" },
-          { "name": "Nextbike" }
+          { "name": "Nextbike" },
+          { "name": "SocialBicycles" }
         ]
       }
     ]

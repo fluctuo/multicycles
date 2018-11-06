@@ -76,6 +76,7 @@ const onlyTypes = [
   'Obike',
   'Ofo',
   'Pony',
+  'SocialBicycles',
   'Spin',
   'WhiteBikes',
   'Wind',
