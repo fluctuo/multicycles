@@ -118,7 +118,13 @@ module.exports = {
       ignore: ['*.flow']
     }
   },
-  plugins: ['~/plugins/highlight', '~/plugins/filters', '~/plugins/copy', '~/plugins/react'],
+  plugins: [
+    { src: '~plugins/ga.js', ssr: false },
+    '~/plugins/highlight',
+    '~/plugins/filters',
+    '~/plugins/copy',
+    '~/plugins/react'
+  ],
   modules: [
     '@nuxtjs/dotenv',
     [
@@ -130,7 +136,6 @@ module.exports = {
     ['bootstrap-vue/nuxt', { css: false }],
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    '@nuxtjs/google-analytics',
     '@nuxtjs/sentry',
     '@nuxtjs/apollo',
     '@nuxtjs/moment',
@@ -150,9 +155,6 @@ module.exports = {
         token_key: 'id_token'
       }
     }
-  },
-  'google-analytics': {
-    id: process.env.ANALYTICS_KEY || 'UA-000000-1'
   },
   sentry: {
     dsn: process.env.SENTRY_KEY

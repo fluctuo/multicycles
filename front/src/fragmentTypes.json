@@ -5,11 +5,17 @@
         "kind": "INTERFACE",
         "name": "Vehicle",
         "possibleTypes": [
+          { "name": "Bcycle" },
           { "name": "Bird" },
+          { "name": "BlueBikes" },
           { "name": "Byke" },
           { "name": "CallABike" },
+          { "name": "CapitalBikeshare" },
+          { "name": "CitiBike" },
           { "name": "Cityscoot" },
+          { "name": "CoGo" },
           { "name": "Coup" },
+          { "name": "Divvy" },
           { "name": "Donkey" },
           { "name": "Ford" },
           { "name": "GobeeBike" },
@@ -19,9 +25,11 @@
           { "name": "Lime" },
           { "name": "Mobike" },
           { "name": "Nextbike" },
+          { "name": "NiceRide" },
           { "name": "Obike" },
           { "name": "Ofo" },
           { "name": "Pony" },
+          { "name": "SocialBicycles" },
           { "name": "Spin" },
           { "name": "WhiteBikes" },
           { "name": "Wind" },
@@ -31,7 +39,20 @@
       {
         "kind": "INTERFACE",
         "name": "Station",
-        "possibleTypes": [{ "name": "CallABike" }, { "name": "Donkey" }, { "name": "Ford" }, { "name": "Nextbike" }]
+        "possibleTypes": [
+          { "name": "Bcycle" },
+          { "name": "BlueBikes" },
+          { "name": "CallABike" },
+          { "name": "CapitalBikeshare" },
+          { "name": "CitiBike" },
+          { "name": "CoGo" },
+          { "name": "Divvy" },
+          { "name": "Donkey" },
+          { "name": "Ford" },
+          { "name": "Nextbike" },
+          { "name": "NiceRide" },
+          { "name": "SocialBicycles" }
+        ]
       }
     ]
   }

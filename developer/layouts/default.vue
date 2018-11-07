@@ -14,6 +14,11 @@ export default {
   components: {
     navbar,
     myFooter
+  },
+  mounted() {
+    if (this.$ga) {
+      this.$ga.page(this.$router)
+    }
   }
 }
 </script>
