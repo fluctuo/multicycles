@@ -20,12 +20,6 @@
               <b-img :src="$store.state.auth.user.picture" rounded="circle" width="30" height="30" />
             </template>
             <b-dropdown-item :to="{name: 'account'}">Account</b-dropdown-item>
-
-            <div v-if="$store.state.auth.user.roles && $store.state.auth.user.roles.includes('admin')">
-              <b-dropdown-divider/>
-              <b-dropdown-item :to="{name: 'admin-users'}">Users</b-dropdown-item>
-              <b-dropdown-item :to="{name: 'admin-cities-city'}">Cities</b-dropdown-item>
-            </div>
             <b-dropdown-divider/>
             <b-dropdown-item @click="logout">Sign out</b-dropdown-item>
           </b-nav-item-dropdown>
