@@ -9,7 +9,10 @@ export default function(context) {
         query: gql`
           query {
             me {
+              userId
               name
+              organization
+              email
               picture
               roles
               plan {

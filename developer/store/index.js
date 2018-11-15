@@ -10,6 +10,9 @@ export const mutations = {
   introspection(state, i) {
     state.introspection = i
   },
+  updateMe(state, updated) {
+    state.auth.user = Object.assign({}, state.auth.user, updated)
+  },
   user(state, user) {
     state.auth.user = user
   }
