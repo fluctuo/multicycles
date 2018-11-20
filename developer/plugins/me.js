@@ -16,9 +16,17 @@ export default function(context) {
               picture
               roles
               plan {
+                id
                 name
                 support
                 limits
+              }
+              payementInformation {
+                id
+                brand
+                expMonth
+                expYear
+                last4
               }
               usage {
                 tokens

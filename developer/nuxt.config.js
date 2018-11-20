@@ -74,7 +74,8 @@ module.exports = {
       { name: 'msapplication-TileColor', content: '#151a26' },
       { name: 'theme-color', content: '#151a26' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Oswald:300' }
-    ]
+    ],
+    script: [{ src: 'https://js.stripe.com/v3/' }]
   },
   /*
   ** Customize the progress bar color
@@ -130,7 +131,14 @@ module.exports = {
     [
       'nuxt-env',
       {
-        keys: ['MULTICYCLES_API', 'MULTICYCLES_ACCESS_TOKEN', 'SENTRY_KEY', 'ANALYTICS_KEY', 'MAPBOX_KEY']
+        keys: [
+          'MULTICYCLES_API',
+          'MULTICYCLES_ACCESS_TOKEN',
+          'SENTRY_KEY',
+          'ANALYTICS_KEY',
+          'MAPBOX_KEY',
+          'STRIPE_PUBLIC_KEY'
+        ]
       }
     ],
     ['bootstrap-vue/nuxt', { css: false }],

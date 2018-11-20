@@ -27,6 +27,24 @@
           </b-col>
         </b-row>
 
+        <b-row class="mt-3">
+          <b-col>
+            <b-card title="Billing">
+              <h4 class="pt-3">Current plan</h4>
+              <plan-card-detail :plan="$store.state.auth.user.plan" />
+
+              <h4 class="pt-3">Payment information</h4>
+              <payment-information :payement-information="$store.state.auth.user.payementInformation"/>
+
+              <b-modal id="creditCard" ref="creditCardModal" title="Add credit card" hide-footer @open-credit-card-modal="openCreditCardModal">
+                <no-ssr>
+                  <credit-card-form />
+                </no-ssr>
+              </b-modal>
+            </b-card>
+          </b-col>
+        </b-row>
+
       </b-col>
     </b-row>
   </b-container>
@@ -35,10 +53,13 @@
 <script>
 import gql from 'graphql-tag'
 import { mapMutations } from 'vuex'
+import PlanCardDetail from '~/components/PlanCardDetail'
+import PaymentInformation from '~/components/PaymentInformation'
+import CreditCardForm from '~/components/CreditCardForm.vue'
 
 export default {
   middleware: ['auth'],
-  components: {},
+  components: { PlanCardDetail, PaymentInformation, CreditCardForm },
   data() {
     return {
       updateError: false,
@@ -50,6 +71,11 @@ export default {
         email: this.$store.state.auth.user.email
       }
     }
+  },
+  created() {
+    this.$root.$on('openCreditCardModal', () => {
+      this.openCreditCardModal()
+    })
   },
   methods: {
     ...mapMutations(['updateMe']),
@@ -83,6 +109,9 @@ export default {
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
+    },
+    openCreditCardModal() {
+      this.$refs.creditCardModal.show()
     }
   }
 }

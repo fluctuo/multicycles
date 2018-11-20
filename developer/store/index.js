@@ -1,3 +1,5 @@
+import gql from 'graphql-tag'
+
 export const state = () => ({
   selectedObject: null,
   introspection: null
@@ -15,11 +17,75 @@ export const mutations = {
   },
   user(state, user) {
     state.auth.user = user
+  },
+  updatePlan(state, plan) {
+    state.auth.user = Object.assign({}, state.auth.user, { plan })
+  },
+  addPayementInformation(state, payementInformation) {
+    state.auth.user = Object.assign({}, state.auth.user, { payementInformation })
+  },
+  removePayementInformation(state) {
+    state.auth.user = Object.assign({}, state.auth.user, { payementInformation: null })
   }
 }
 
 export const actions = {
   nuxtServerInit({ state }, { req }) {
     state.env = this.$env
+  },
+  updatePlan({ commit }, planId) {
+    const client = this.app.apolloProvider.defaultClient
+
+    return client
+      .mutate({
+        mutation: gql`
+          mutation($planId: Int!) {
+            updatePlan(planId: $planId) {
+              id
+              name
+              support
+              limits
+            }
+          }
+        `,
+        variables: { planId }
+      })
+      .then(resp => commit('updatePlan', resp.data.updatePlan))
+  },
+  addPayementInformation({ commit }, stripeCardId) {
+    const client = this.app.apolloProvider.defaultClient
+
+    return client
+      .mutate({
+        mutation: gql`
+          mutation($stripeCardId: String!) {
+            addPayementInformation(stripeCardId: $stripeCardId) {
+              id
+              brand
+              expMonth
+              expYear
+              last4
+            }
+          }
+        `,
+        variables: { stripeCardId }
+      })
+      .then(resp => commit('addPayementInformation', resp.data.addPayementInformation))
+  },
+  removePayementInformation({ commit }, stripeCardId) {
+    const client = this.app.apolloProvider.defaultClient
+
+    return client
+      .mutate({
+        mutation: gql`
+          mutation($stripeCardId: String!) {
+            removePayementInformation(stripeCardId: $stripeCardId) {
+              id
+            }
+          }
+        `,
+        variables: { stripeCardId }
+      })
+      .then(resp => commit('removePayementInformation'))
   }
 }
