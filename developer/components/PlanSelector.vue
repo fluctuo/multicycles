@@ -52,12 +52,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updatePlan']),
+    ...mapActions(['updateSubscription']),
     isCurrentPlan(planId) {
       return this.currentPlan && this.currentPlan.id === planId
     },
     updateToPlan(planId) {
-      this.updatePlan(planId).then(() => {
+      this.updateSubscription(planId).then(() => {
         if (planId === 2 && !this.$store.state.auth.user.payementInformation) {
           this.$root.$emit('openCreditCardModal')
         } else {

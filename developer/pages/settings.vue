@@ -31,7 +31,7 @@
           <b-col>
             <b-card title="Billing">
               <h4 class="pt-3">Current plan</h4>
-              <plan-card-detail :plan="$store.state.auth.user.plan" />
+              <subscription-detail :subscription="$store.state.auth.user.subscription" />
 
               <h4 class="pt-3">Payment information</h4>
               <payment-information :payement-information="$store.state.auth.user.payementInformation"/>
@@ -53,13 +53,13 @@
 <script>
 import gql from 'graphql-tag'
 import { mapMutations } from 'vuex'
-import PlanCardDetail from '~/components/PlanCardDetail'
+import SubscriptionDetail from '~/components/SubscriptionDetail'
 import PaymentInformation from '~/components/PaymentInformation'
 import CreditCardForm from '~/components/CreditCardForm.vue'
 
 export default {
   middleware: ['auth'],
-  components: { PlanCardDetail, PaymentInformation, CreditCardForm },
+  components: { SubscriptionDetail, PaymentInformation, CreditCardForm },
   data() {
     return {
       updateError: false,

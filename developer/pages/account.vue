@@ -9,18 +9,18 @@
         <b-row>
           <b-col>
             <h5>Slected plan ->
-              <span class="text-muted">{{ $store.state.auth.user.plan.name }}</span>
+              <span class="text-muted">{{ $store.state.auth.user.subscription.plan.name }}</span>
             </h5>
 
             <h5>Tokens:
-              <span class="text-muted float-right">{{ $store.state.auth.user.usage.tokens }} / {{ $store.state.auth.user.plan.limits.tokens }}</span>
+              <span class="text-muted float-right">{{ $store.state.auth.user.usage.tokens }} / {{ $store.state.auth.user.subscription.limits.tokens }}</span>
             </h5>
-            <b-progress :value="$store.state.auth.user.usage.tokens" :max="$store.state.auth.user.plan.limits.tokens" class="mb-3" />
+            <b-progress :value="$store.state.auth.user.usage.tokens" :max="$store.state.auth.user.subscription.limits.tokens" class="mb-3" />
 
             <h5>Hits per month
-              <span class="text-muted float-right">{{ $store.state.auth.user.usage.hitsPerMonth }} / {{ $store.state.auth.user.plan.limits.hitsPerMonth }}</span>
+              <span class="text-muted float-right">{{ $store.state.auth.user.usage.hitsPerMonth }} / {{ $store.state.auth.user.subscription.limits.hitsPerMonth }}</span>
             </h5>
-            <b-progress :value="$store.state.auth.user.usage.hitsPerMonth" :max="$store.state.auth.user.plan.limits.hitsPerMonth" class="mb-3" />
+            <b-progress :value="$store.state.auth.user.usage.hitsPerMonth" :max="$store.state.auth.user.subscription.limits.hitsPerMonth" class="mb-3" />
           </b-col>
         </b-row>
 

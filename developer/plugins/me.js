@@ -15,10 +15,12 @@ export default function(context) {
               email
               picture
               roles
-              plan {
-                id
-                name
-                support
+              subscription {
+                plan {
+                  id
+                  name
+                  support
+                }
                 limits
               }
               payementInformation {

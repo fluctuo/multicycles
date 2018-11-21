@@ -18,7 +18,7 @@ export const mutations = {
   user(state, user) {
     state.auth.user = user
   },
-  updatePlan(state, plan) {
+  updateSubscription(state, plan) {
     state.auth.user = Object.assign({}, state.auth.user, { plan })
   },
   addPayementInformation(state, payementInformation) {
@@ -33,14 +33,14 @@ export const actions = {
   nuxtServerInit({ state }, { req }) {
     state.env = this.$env
   },
-  updatePlan({ commit }, planId) {
+  updateSubscription({ commit }, planId) {
     const client = this.app.apolloProvider.defaultClient
 
     return client
       .mutate({
         mutation: gql`
           mutation($planId: Int!) {
-            updatePlan(planId: $planId) {
+            updateSubscription(planId: $planId) {
               id
               name
               support
@@ -50,7 +50,7 @@ export const actions = {
         `,
         variables: { planId }
       })
-      .then(resp => commit('updatePlan', resp.data.updatePlan))
+      .then(resp => commit('updateSubscription', resp.data.updateSubscription))
   },
   addPayementInformation({ commit }, stripeCardId) {
     const client = this.app.apolloProvider.defaultClient
