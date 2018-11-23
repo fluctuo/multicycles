@@ -81,7 +81,7 @@ export default {
       return variant
     },
     gotoInvoice(invoice) {
-      this.$router.push({ name: 'invoices-id', params: { id: invoice.id } })
+      this.$router.push({ name: 'account-invoices-id', params: { id: invoice.id } })
     }
   },
   apollo: {

@@ -2,6 +2,7 @@
   <b-container>
     <b-row>
       <b-col class="mb-5 pt-5">
+        <b-breadcrumb :items="breadcrumb" class="d-print-none"/>
         <h3 class="mb-4">Settings</h3>
 
         <b-row>
@@ -62,6 +63,16 @@ export default {
   components: { SubscriptionDetail, PaymentInformation, CreditCardForm },
   data() {
     return {
+      breadcrumb: [
+        {
+          text: 'Account',
+          href: '/account'
+        },
+        {
+          text: `Settings`,
+          active: true
+        }
+      ],
       updateError: false,
       dismissSecs: 5,
       dismissCountDown: 0,

@@ -105,7 +105,7 @@ export default {
         },
         {
           text: 'Invoices',
-          href: '/invoices'
+          href: '/account/invoices'
         },
         {
           text: `Invoice`,
