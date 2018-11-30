@@ -6,31 +6,47 @@
       </b-col>
     </b-row>
     <b-card-group deck class="mb-3 text-center">
-      <b-card header="Free" header-class="display-5" header-bg-variant="primary" header-text-variant="white">
-        <h1 class="card-title pricing-card-title">$0
-          <small class="text-muted">/ mo</small>
+      <b-card
+        header="Free"
+        header-class="h1"
+        header-bg-variant="primary"
+        header-text-variant="white"
+      >
+        <h1 class="card-title pricing-card-title">0 €
+          <br>
+          <small class="text-muted">forever</small>
         </h1>
-        <p>For non-profit projects</p>
+        <p>Perfect for hobbies, low traffic and demo applications.</p>
         <ul class="list-unstyled mt-3 mb-4">
           <li>All providers</li>
           <li>Fair-use requests</li>
           <li>Basic support</li>
-          <li>Require attribution badge</li>
         </ul>
 
-        <b-button slot="footer" :to="{name: 'login'}" size="lg" variant="primary">Sign up</b-button>
+        <b-button slot="footer" :to="{name: 'login'}" size="lg" variant="success">Explore</b-button>
       </b-card>
-      <b-card header="Commercial" header-class="display-5" header-bg-variant="primary" header-text-variant="white">
-        <h1 class="card-title pricing-card-title">Contact us</h1>
-        <p>For commercials projects.</p>
+      <b-card
+        header="For work"
+        header-class="h1"
+        header-bg-variant="primary"
+        header-text-variant="white"
+      >
+        <h1 class="card-title pricing-card-title">0.80 €
+          <br>
+          <small class="text-muted">per 1000 units</small>
+        </h1>
+        <p>For commercials projects or heavy applications.</p>
         <ul class="list-unstyled mt-3 mb-4">
           <li>All providers</li>
-          <li>50,000 requests / months</li>
+          <li>No limitations</li>
           <li>Premium support</li>
         </ul>
 
-        <b-button slot="footer" size="lg" variant="outline-primary" href="mailto:contact@multicycles.org">Contact us</b-button>
+        <b-button slot="footer" :to="{name: 'login'}" size="lg" variant="success">Sign up</b-button>
       </b-card>
     </b-card-group>
+    <b-alert variant="light" show>For units descriptions, see
+      <nuxt-link to="/docs/limits">Units & Limits</nuxt-link>&nbsp;documentation.
+    </b-alert>
   </b-container>
 </template>
