@@ -33,7 +33,7 @@
       >
         <h1 class="card-title pricing-card-title">0.80 €
           <br>
-          <small class="text-muted">per 1000 units</small>
+          <small class="text-muted">per 10.000 units</small>
         </h1>
         <p>For commercials projects or heavy applications.</p>
         <ul class="list-unstyled mt-3 mb-4">

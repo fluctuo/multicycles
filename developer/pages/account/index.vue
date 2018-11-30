@@ -8,19 +8,24 @@
 
         <b-row>
           <b-col>
-            <h5>Slected plan ->
-              <span class="text-muted">{{ $store.state.auth.user.subscription.plan.name }}</span>
+            <h5>
+              Slected plan&nbsp;
+              <span
+                class="text-muted"
+              >{{ $store.state.auth.user.subscription.plan.name }}</span>
+              <nuxt-link
+                v-if="$store.state.auth.user.subscription.plan.id !== 2"
+                to="/account/settings"
+                class="btn btn-warning"
+              >Upgrade</nuxt-link>
             </h5>
 
-            <h5>Tokens:
-              <span class="text-muted float-right">{{ $store.state.auth.user.usage.tokens }} / {{ $store.state.auth.user.subscription.limits.tokens }}</span>
+            <h5>
+              Units consumed this month&nbsp;
+              <span
+                class="text-muted"
+              >{{ $store.state.auth.user.usage.unitsPerMonth }} {{ $store.state.auth.user.subscription.limits.unitsPerMonth ? ` / ${$store.state.auth.user.subscription.limits.unitsPerMonth}` : '' }}</span>
             </h5>
-            <b-progress :value="$store.state.auth.user.usage.tokens" :max="$store.state.auth.user.subscription.limits.tokens" class="mb-3" />
-
-            <h5>Hits per month
-              <span class="text-muted float-right">{{ $store.state.auth.user.usage.hitsPerMonth }} / {{ $store.state.auth.user.subscription.limits.hitsPerMonth }}</span>
-            </h5>
-            <b-progress :value="$store.state.auth.user.usage.hitsPerMonth" :max="$store.state.auth.user.subscription.limits.hitsPerMonth" class="mb-3" />
           </b-col>
         </b-row>
 
@@ -30,14 +35,28 @@
 
         <b-row>
           <b-col>
-            <div v-if="$apollo.loading" class="text-center"><img src="~/assets/loading.svg" alt="Loading..." width="80px"></div>
-            <token v-for="token in tokens" :key="token.id" :token="token" :delete-token="deleteToken" :update-token="updateToken" />
+            <div v-if="$apollo.loading" class="text-center">
+              <img src="~/assets/loading.svg" alt="Loading..." width="80px">
+            </div>
+            <token
+              v-for="token in tokens"
+              :key="token.id"
+              :token="token"
+              :delete-token="deleteToken"
+              :update-token="updateToken"
+            />
           </b-col>
         </b-row>
 
-        <b-alert :show="dismissCountDown" class="mt-2 mb-2" fade dismissible variant="danger" @dismiss-count-down="countDownChanged">{{ updateError }}</b-alert>
+        <b-alert
+          :show="dismissCountDown"
+          class="mt-2 mb-2"
+          fade
+          dismissible
+          variant="danger"
+          @dismiss-count-down="countDownChanged"
+        >{{ updateError }}</b-alert>
         <b-button variant="primary" class="mt-2" @click="createToken">Create token</b-button>
-
       </b-col>
     </b-row>
   </b-container>
@@ -133,7 +152,7 @@ export default {
             createdAt
             stats {
               date
-              hits
+              units
             }
           }
         }

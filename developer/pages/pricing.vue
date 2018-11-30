@@ -3,18 +3,17 @@
     <div class="titi">
       <b-container>
         <h1 class="display-3">Pricing</h1>
-        <h2>
-          Made with open-source software spirit, Open-API are free for non-profit OSS projets, with fair use and simple pricing for commercials projets
+        <h2>Start using Open-API for free.
+          <br>Price per use are available for commercials projects and heavy applications.
         </h2>
       </b-container>
     </div>
 
-    <pricing-plans class="mt-5" />
+    <pricing-plans class="mt-5"/>
 
-    <pricing-services />
+    <pricing-services/>
 
-    <contact />
-
+    <contact/>
   </div>
 </template>
 
@@ -33,7 +32,7 @@ export default {
           hid: 'description',
           name: 'description',
           content:
-            'Open-API come with differents pricing plans. Made with open-source software spirit, Open-API are free for non-profit OSS projets, with fair use and simple pricing for commercials projets.'
+            'Open-API come with two differents pricing plans. Start using Open-API for free. Price per use are available for commercials projects and heavy applications.'
         }
       ]
     }

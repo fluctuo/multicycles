@@ -32,7 +32,7 @@ export default function(context) {
               }
               usage {
                 tokens
-                hitsPerMonth
+                unitsPerMonth
               }
             }
           }
