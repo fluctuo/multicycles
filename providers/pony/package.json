@@ -1,6 +1,6 @@
 {
   "name": "@multicycles/pony",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0-beta.10",
   "description": "Pony provider for multicycles",
   "author": "Pierrick <mulotmail@gmail.com>",
   "main": "lib/index.js",
@@ -14,7 +14,7 @@
     "@turf/boolean-point-in-polygon": "^6.0.0",
     "@turf/helpers": "^6.1.1",
     "cacheman": "^2.2.1",
-    "firebase": "^4.11.0"
+    "firebase": "5.6.0"
   },
   "devDependencies": {
     "ava": "^0.24.0"
