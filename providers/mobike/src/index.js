@@ -1,12 +1,16 @@
 import querystring from 'querystring'
 import got from 'got'
 
-const BASE_URL = 'https://mwx.mobike.com/mobike-api'
+const BASE_URL = 'https://app.mobike.com/api'
 
 class Mobike {
   constructor({ timeout } = {}) {
     this.config = {
-      timeout: timeout && parseInt(timeout, 10)
+      timeout: timeout && parseInt(timeout, 10),
+      headers: {
+        version: '8.7.1',
+        platform: '1'
+      }
     }
   }
 
@@ -33,7 +37,7 @@ class Mobike {
       throw new Error('Missing lat/lng')
     }
 
-    return got.post(`${BASE_URL}/rent/nearbyBikesInfo.do`, {
+    return got.post(`${BASE_URL}/nearby/v4/nearbyBikeInfo`, {
       json: true,
       form: true,
       body: {
@@ -41,6 +45,7 @@ class Mobike {
         longitude
       },
       timeout: this.config.timeout,
+      headers: this.config.headers,
       ...config
     })
   }
