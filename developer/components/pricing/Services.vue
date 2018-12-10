@@ -7,7 +7,7 @@
         <ul>
           <li>Integrations</li>
           <li>Develop specific providers</li>
-          <li>Open-API on premise</li>
+          <li>Multicycles API on premise</li>
           <li>Consulting on shared vehicles's APIs</li>
         </ul>
       </b-col>

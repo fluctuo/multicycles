@@ -2,8 +2,8 @@
   <div>
     <h3>Authentication</h3>
 
-    <p>
-      To use Open-API by Multicycles.org, you'll need an access token. We use this access token to associate GraphQL request to your account.<br> You can find your access tokens, create new or delete existing ones on your
+    <p>To use Multicycles API, you'll need an access token. We use this access token to associate GraphQL request to your account.
+      <br>You can find your access tokens, create new or delete existing ones on your
       <nuxt-link to="/account">account</nuxt-link>
     </p>
 

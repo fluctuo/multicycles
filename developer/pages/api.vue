@@ -97,8 +97,8 @@ const excludedEnums = ['__TypeKind', '__DirectiveLocation']
 export default {
   head() {
     return {
-      title: 'API references - Open-API by Multicycles',
-      meta: [{ hid: 'description', name: 'description', content: 'API references for query Open-API API.' }]
+      title: 'API references - Multicycles API',
+      meta: [{ hid: 'description', name: 'description', content: 'API references for query Multicycles API.' }]
     }
   },
   components: {

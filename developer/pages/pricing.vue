@@ -3,7 +3,7 @@
     <div class="titi">
       <b-container>
         <h1 class="display-3">Pricing</h1>
-        <h2>Start using Open-API for free.
+        <h2>Start using Multicycles API for free.
           <br>Price per use are available for commercials projects and heavy applications.
         </h2>
       </b-container>
@@ -32,7 +32,7 @@ export default {
           hid: 'description',
           name: 'description',
           content:
-            'Open-API come with two differents pricing plans. Start using Open-API for free. Price per use are available for commercials projects and heavy applications.'
+            'Multicycles API come with two differents pricing plans. Start using this API for free. Price per use are available for commercials projects and heavy applications.'
         }
       ]
     }

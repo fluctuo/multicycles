@@ -1,7 +1,7 @@
 {
   "name": "@multicycles/developer",
   "version": "1.0.0",
-  "description": "Multicycles Open API - Developer portal",
+  "description": "Multicycles API - Developer portal",
   "author": "Pierrick <mulotmail@gmail.com>",
   "private": true,
   "scripts": {

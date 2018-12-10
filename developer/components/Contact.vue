@@ -4,11 +4,12 @@
       <b-row>
         <b-col md="6" offset-md="6">
           <h3>We are here for you</h3>
-          <p>
-            For any questions about Open-API, multicycles, integration, usage or just want to chat?
-          </p>
-          <b-button variant="outline-light" class="ml-2" href="mailto:contact@multicycles.org">Contact us</b-button>
-
+          <p>For any questions about API, Multicycles, integration, usage or just want to chat?</p>
+          <b-button
+            variant="outline-light"
+            class="ml-2"
+            href="mailto:contact@multicycles.org"
+          >Contact us</b-button>
         </b-col>
       </b-row>
     </b-container>
