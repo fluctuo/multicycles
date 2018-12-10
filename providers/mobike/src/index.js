@@ -9,7 +9,9 @@ class Mobike {
       timeout: timeout && parseInt(timeout, 10),
       headers: {
         version: '8.7.1',
-        platform: '1'
+        platform: '1',
+        'User-Agent':
+          'Mozilla/5.0 (Android 7.1.2; Pixel Build/NHG47Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.9 NTENTBrowser/3.7.0.496 (IWireless-US) Mobile Safari/537.36'
       }
     }
   }
