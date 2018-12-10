@@ -18,8 +18,8 @@ export const mutations = {
   user(state, user) {
     state.auth.user = user
   },
-  updateSubscription(state, plan) {
-    state.auth.user = Object.assign({}, state.auth.user, { plan })
+  updateSubscription(state, subscription) {
+    state.auth.user = Object.assign({}, state.auth.user, { subscription })
   },
   addPayementInformation(state, payementInformation) {
     state.auth.user = Object.assign({}, state.auth.user, { payementInformation })
@@ -41,9 +41,11 @@ export const actions = {
         mutation: gql`
           mutation($planId: Int!) {
             updateSubscription(planId: $planId) {
-              id
-              name
-              support
+              plan {
+                id
+                name
+                support
+              }
               limits
             }
           }
