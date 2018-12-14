@@ -5,16 +5,22 @@
         <b-breadcrumb :items="breadcrumb" class="d-print-none"/>
         <h3 class="mb-4">Invoices</h3>
 
-        <b-table :items="invoices.invoices" :fields="fields" :per-page="invoices.limit" show-empty striped hover stacked="sm" head-variant="dark" @row-clicked="gotoInvoice">
+        <b-table
+          :items="invoices.invoices"
+          :fields="fields"
+          :per-page="invoices.limit"
+          show-empty
+          striped
+          hover
+          stacked="sm"
+          head-variant="dark"
+          @row-clicked="gotoInvoice"
+        >
           <template slot="status" slot-scope="row">
             <b-badge :variant="getBadgeVariant(row.item.status)">{{ row.item.status.toLowerCase() }}</b-badge>
           </template>
-          <template slot="period" slot-scope="row">
-            {{ row.item.period | currentMonth }}
-          </template>
-          <template slot="total" slot-scope="row">
-            {{ Number(row.item.total / 100).toFixed(2) }} €
-          </template>
+          <template slot="period" slot-scope="row">{{ row.item.period | currentMonth }}</template>
+          <template slot="total" slot-scope="row">{{ Number(row.item.total / 100).toFixed(2) }} €</template>
         </b-table>
       </b-col>
     </b-row>
@@ -112,13 +118,9 @@ export default {
         return data.invoices ? JSON.parse(JSON.stringify(data.invoices)) : data
       },
       error(err) {
-        console.log('ICI', err)
-        // this.$auth.logout()
+        this.$auth.logout()
       }
     }
   }
 }
 </script>
-
-<style>
-</style>

@@ -9,26 +9,33 @@
           </b-col>
           <b-col>
             <b-btn variant="info" class="float-right d-print-none" @click="print()">
-              <printer-icon />
+              <printer-icon/>
             </b-btn>
           </b-col>
         </b-row>
         <b-row>
           <b-col>
-            <p v-html="invoice.payableTo && invoice.payableTo.join('<br>')" />
+            <p v-html="invoice.payableTo && invoice.payableTo.join('<br>')"/>
           </b-col>
           <b-col>
-            <p v-html="invoice.billTo && invoice.billTo.join('<br>')" />
+            <p v-html="invoice.billTo && invoice.billTo.join('<br>')"/>
           </b-col>
         </b-row>
         <b-row>
           <b-col>
             <p>
-              <b>Reference</b> #{{ invoice.id }}<br>
-              <b>Status</b> {{ invoice.status }}<br>
-              <b>Invoice date</b> {{ invoice.createdAt | format('DD/MM/YYYY') }}<br>
+              <b>Reference</b>
+              #{{ invoice.id }}
+              <br>
+              <b>Status</b>
+              {{ invoice.status }}
+              <br>
+              <b>Invoice date</b>
+              {{ invoice.createdAt | format('DD/MM/YYYY') }}
+              <br>
               <span v-if="invoice.status === 'PAID'">
-                <b>Paid date</b> {{ invoice.paidAt | format('DD/MM/YYYY HH:mm') }}
+                <b>Paid date</b>
+                {{ invoice.paidAt | format('DD/MM/YYYY HH:mm') }}
               </span>
             </p>
           </b-col>
@@ -48,28 +55,25 @@
                 <tr v-for="line in invoice.lines" :key="line.product">
                   <td>{{ line.product }}</td>
                   <td class="text-center">{{ line.count }}</td>
-                  <td class="text-center">{{ line.unitPrice | money }} per {{ line.unitCount }}</td>
+                  <td class="text-center">{{ line.unitPrice | money }} per {{ line.unitCount }}</td>
                   <td class="text-right">{{ line.price | money }}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr v-if="invoice.taxPercent !== 0">
-                  <td colspan="3" class="text-right font-weight-bold">
-                    Subtotal
-                  </td>
+                  <td colspan="3" class="text-right font-weight-bold">Subtotal</td>
                   <td class="text-right">{{ invoice.subtotal | money }}</td>
                 </tr>
                 <tr v-if="invoice.taxPercent !== 0">
-                  <td colspan="3" class="text-right font-weight-bold">
-                    Tax ({{ invoice.taxPercent }}%)
-                  </td>
+                  <td
+                    colspan="3"
+                    class="text-right font-weight-bold"
+                  >Tax ({{ invoice.taxPercent }}%)</td>
                   <td class="text-right">{{ invoice.tax | money }}</td>
                 </tr>
                 <tr>
-                  <td colspan="3" class="text-right font-weight-bold">
-                    Total
-                  </td>
-                  <td class="text-right font-weight-bold">{{ invoice.total | money }}</td>
+                  <td colspan="3" class="text-right font-weight-bold">Total</td>
+                  <td class="text-right font-weight-bold">{{ invoice.total | money }}</td>
                 </tr>
               </tfoot>
               <caption v-if="invoice.taxPercent === 0">Exempt from VAT</caption>
@@ -171,13 +175,9 @@ export default {
         return { invoiceId: this.$route.params.id }
       },
       error(err) {
-        console.log('ICI', err)
-        // this.$auth.logout()
+        this.$auth.logout()
       }
     }
   }
 }
 </script>
-
-<style>
-</style>

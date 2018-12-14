@@ -9,7 +9,7 @@
         <b-row>
           <b-col>
             <h5>
-              Slected plan&nbsp;
+              Selected plan&nbsp;
               <span
                 class="text-muted"
               >{{ $store.state.auth.user.subscription.plan.name }}</span>

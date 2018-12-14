@@ -1,13 +1,15 @@
 <template>
   <div v-if="subscription">
-    <b>{{ subscription.plan.name | capitalize }}</b><br>
-    {{ subscription.plan.support | capitalize }} support<br>
+    <b>{{ subscription.plan.name | capitalize }}</b>
+    <br>
+    {{ subscription.plan.support | capitalize }} support
+    <br>
 
-    <b-table :items="limits" thead-class="d-none" striped hover />
+    <b-table :items="limits" thead-class="d-none" striped hover/>
 
     <b-btn v-b-modal.planSelector variant="primary">Change plan</b-btn>
     <b-modal id="planSelector" ref="planSelectorModal" title="Choose plan" hide-footer>
-      <plan-selector :current-plan="subscription.plan" />
+      <plan-selector :current-plan="subscription.plan"/>
     </b-modal>
   </div>
 </template>
@@ -16,7 +18,8 @@
 const limitToDescription = {
   tokens: 'Maximum tokens',
   hitsPerMin: 'Queries per minutes',
-  hitsPerMonth: 'Maximum query per month'
+  hitsPerMonth: 'Maximum query per month',
+  unitsPerMonth: 'Maximum units per month'
 }
 
 import PlanSelector from './PlanSelector.vue'
