@@ -4,7 +4,7 @@
 
 [Multicycles.org](http://multicycles.org) aggregates on one map, different "free-floating" bike rental services.
 
-See [Open-API](https://developer.multicycles.org/) for the API endpoint.
+See [API](https://developer.multicycles.org/) for the API endpoint.
 
 ## Supported Providers
 

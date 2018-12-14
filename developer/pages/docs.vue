@@ -14,17 +14,21 @@
             <li>
               <nuxt-link to="/docs/objects">Objects</nuxt-link>
             </li>
+            <li>
+              <nuxt-link to="/docs/limits">Units & Limits</nuxt-link>
+            </li>
           </ul>
-          <nuxt-link to="/api"><h2>API Reference</h2></nuxt-link>
+          <nuxt-link to="/api">
+            <h2>API Reference</h2>
+          </nuxt-link>
         </b-col>
         <b-col cols="9" class="documentation">
-          <nuxt-child />
+          <nuxt-child/>
         </b-col>
       </b-row>
     </b-container>
 
-    <Contact />
-
+    <Contact/>
   </div>
 </template>
 
@@ -34,8 +38,8 @@ import Contact from '~/components/Contact.vue'
 export default {
   head() {
     return {
-      title: 'Documentions - Open-API by Multicycles',
-      meta: [{ hid: 'description', name: 'description', content: 'Documentation for Open-API API.' }]
+      title: 'Documentions - Multicycles API',
+      meta: [{ hid: 'description', name: 'description', content: 'Documentation for Multicycles API.' }]
     }
   },
   components: {

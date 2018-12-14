@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" class="pt-5 pb-5 bg-dark">
+  <footer id="footer" class="pt-5 pb-5 bg-dark d-print-none">
     <b-container>
       <b-row class="justify-content-center mb-5" align="center">
         <mailchimp />

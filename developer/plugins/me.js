@@ -9,17 +9,30 @@ export default function(context) {
         query: gql`
           query {
             me {
+              userId
               name
+              organization
+              email
               picture
               roles
-              plan {
-                name
-                support
+              subscription {
+                plan {
+                  id
+                  name
+                  support
+                }
                 limits
+              }
+              payementInformation {
+                id
+                brand
+                expMonth
+                expYear
+                last4
               }
               usage {
                 tokens
-                hitsPerMonth
+                unitsPerMonth
               }
             }
           }

@@ -2,22 +2,27 @@
   <div>
     <div class="titi">
       <b-container>
-        <h1 class="display-3">The Open API <br> for Bikes sharing</h1>
-        <h2>
-          The only API for dockless bicycles and other shared vehicles.<br> Explore and get instant vehicle positions in a single query.
+        <h1 class="display-3">The true API
+          <br>for shared mobility
+        </h1>
+        <h2>Get all data about shared vehicles arround the word in a single request.
+          <br>Find the position and book the vehicles closest to you.
         </h2>
 
         <div class="mt-5">
           <b-button size="lg" variant="primary" href="/account">Start exploring</b-button>
-          <b-button variant="outline-light" class="ml-2" href="mailto:contact@multicycles.org">Contact us</b-button>
+          <b-button
+            variant="outline-light"
+            class="ml-2"
+            href="mailto:contact@multicycles.org"
+          >Contact us</b-button>
         </div>
       </b-container>
     </div>
 
     <features/>
 
-    <contact />
-
+    <contact/>
   </div>
 </template>
 

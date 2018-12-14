@@ -18,9 +18,9 @@ export default {
         }),
         datasets: [
           {
-            label: 'Requests per day',
+            label: 'Units per day',
             backgroundColor: '#677fb7',
-            data: this.chartData.map(d => d.hits),
+            data: this.chartData.map(d => d.units),
             fill: false
           }
         ]

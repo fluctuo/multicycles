@@ -7,10 +7,8 @@
     "precommit": "lint-staged",
     "#</git hooks>": "handled by husky",
     "clean": "rm -rf providers/*/lib",
-    "transpile":
-      "lerna exec --ignore '@multicycles/{front,developer}' -- babel src --optional runtime --out-dir lib --ignore \"__tests__\"",
-    "watch":
-      "lerna exec --ignore '@multicycles/{front,developer}' --parallel -- babel -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
+    "transpile": "lerna exec --ignore '@multicycles/{front,developer}' -- babel src --optional runtime --out-dir lib --ignore \"__tests__\"",
+    "watch": "lerna exec --ignore '@multicycles/{front,developer}' --parallel -- babel -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
     "prepare": "npm run clean && npm run transpile",
     "test": "lerna run --parallel test",
     "generate": "plop",
@@ -18,20 +16,23 @@
     "dev:developer": "cd developer && HOST=0.0.0.0 PORT=8081 npm run dev"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.42",
-    "@babel/core": "^7.0.0-beta.42",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.42",
-    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-prettier": "^2.7.0",
     "husky": "^0.14.3",
-    "lerna": "^2.5.1",
-    "lint-staged": "^6.0.0",
-    "plop": "^2.0.0",
-    "prettier": "^1.9.2"
+    "lerna": "^2.11.0",
+    "lint-staged": "^6.1.1",
+    "plop": "^2.1.0",
+    "prettier": "^1.15.2"
   },
   "babel": {
     "presets": [
@@ -44,7 +45,10 @@
         }
       ]
     ],
-    "plugins": ["add-module-exports", "@babel/plugin-proposal-object-rest-spread"]
+    "plugins": [
+      "add-module-exports",
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
   },
   "dependencies": {}
 }

@@ -5,8 +5,8 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'The only API for dockless bicycles and other shared vehicles',
-    titleTemplate: '%s - Open-API by Multicycles',
+    title: 'The true API for shared mobility',
+    titleTemplate: '%s - Multicycles API',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -14,7 +14,7 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content:
-          'Open-API is the only API for find dockless bicycles and other shared vehicles like scooters. Explore and get instant vehicles positions in a single query. Available wordwide, the api return standardized data.'
+          'The true API for shared mobility. Get all data about shared vehicles arround the word in a single request. Find the position and book the vehicles closest to you.'
       },
       {
         hid: 'twitter:card',
@@ -24,13 +24,13 @@ module.exports = {
       {
         hid: 'twitter:title',
         name: 'twitter:title',
-        content: 'The only API for dockless bicycles and other shared vehicles - Open-API by Multicycles'
+        content: 'The true API for shared mobility - Multicycles API'
       },
       {
         hid: 'twitter:description',
         name: 'twitter:description',
         content:
-          'Open-API is the only API for find dockless bicycles and other shared vehicles like scooters. Explore and get instant vehicles positions in a single query. Available wordwide, the api return standardized data.'
+          'The true API for shared mobility. Get all data about shared vehicles arround the word in a single request. Find the position and book the vehicles closest to you.'
       },
       {
         hid: 'twitter:site',
@@ -40,18 +40,18 @@ module.exports = {
       {
         hid: 'og:title',
         name: 'og:title',
-        content: 'The only API for dockless bicycles and other shared vehicles - Open-API by Multicycles'
+        content: 'The true API for shared mobility - Multicycles API'
       },
       {
         hid: 'og:site_name',
         name: 'og:site_name',
-        content: 'The only API for dockless bicycles and other shared vehicles - Open-API by Multicycles'
+        content: 'The true API for shared mobility - Multicycles API'
       },
       {
         hid: 'og:description',
         name: 'og:description',
         content:
-          'Open-API is the only API for find dockless bicycles and other shared vehicles like scooters. Explore and get instant vehicles positions in a single query. Available wordwide, the api return standardized data.'
+          'The true API for shared mobility. Get all data about shared vehicles arround the word in a single request. Find the position and book the vehicles closest to you.'
       },
       {
         hid: 'og:locale',
@@ -74,7 +74,8 @@ module.exports = {
       { name: 'msapplication-TileColor', content: '#151a26' },
       { name: 'theme-color', content: '#151a26' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Oswald:300' }
-    ]
+    ],
+    script: [{ src: 'https://js.stripe.com/v3/' }]
   },
   /*
   ** Customize the progress bar color
@@ -130,7 +131,14 @@ module.exports = {
     [
       'nuxt-env',
       {
-        keys: ['MULTICYCLES_API', 'MULTICYCLES_ACCESS_TOKEN', 'SENTRY_KEY', 'ANALYTICS_KEY', 'MAPBOX_KEY']
+        keys: [
+          'MULTICYCLES_API',
+          'MULTICYCLES_ACCESS_TOKEN',
+          'SENTRY_KEY',
+          'ANALYTICS_KEY',
+          'MAPBOX_KEY',
+          'STRIPE_PUBLIC_KEY'
+        ]
       }
     ],
     ['bootstrap-vue/nuxt', { css: false }],
