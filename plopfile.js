@@ -30,7 +30,7 @@ module.exports = plop => {
           '= Front =',
           '+ run `npm run fragments`',
           plop.renderString(
-            '+ Create `front/static/marker-{{ totalyLower provider }}.png` & `front/static/marker-{{ totalyLower provider }}-2x.png`',
+            '+ Create `front/src/assets/markers/{{ totalyLower provider }}.png` & `front/assets/markers/{{ totalyLower provider }}-2x.png`',
             answers
           ),
           plop.renderString(
