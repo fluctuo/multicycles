@@ -1,8 +1,15 @@
 <template>
-  <vue-drawer-layout ref="drawerLayout" :enable="drawerEnable" @slide-end="fixEnable" @mask-click="handleMaskClick">
-    <drawer-menu slot="drawer" />
+  <vue-drawer-layout
+    ref="drawerLayout"
+    :enable="drawerEnable"
+    @slide-end="fixEnable"
+    @mask-click="handleMaskClick"
+  >
+    <drawer-menu slot="drawer"/>
     <div slot="content" class="wrapper">
-      <router-view/>
+      <navigation>
+        <router-view></router-view>
+      </navigation>
     </div>
   </vue-drawer-layout>
 </template>

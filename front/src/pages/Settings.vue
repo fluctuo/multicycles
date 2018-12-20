@@ -1,13 +1,11 @@
 <template>
   <div class="page">
     <div class="header">
-      <router-link to="/">
-        <arrow-left-circle-icon />
+      <router-link :to="getPreviousPage()">
+        <arrow-left-circle-icon/>
       </router-link>
 
-      <h1>
-        {{ $t('settings.title')}}
-      </h1>
+      <h1>{{ $t('settings.title')}}</h1>
     </div>
 
     <div class="content">
@@ -19,16 +17,31 @@
       </div>
       <form>
         <label for="lang">{{ $t('settings.lang') }}:</label>
-        <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
+        <select
+          v-model="$store.state.lang"
+          :class="[$store.state.lang]"
+          @change="setLang"
+          id="lang"
+        >
           <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
         </select>
 
         <label for="lang">{{ $t('settings.providers') }}:</label>
 
         <div class="providers">
-          <div v-for="provider in $store.state.providers" :key="provider.slug" v-bind:class="{disabled: isProviderDisabled(provider.slug)}" @click="toggleProvider(provider.slug)">
+          <div
+            v-for="provider in $store.state.providers"
+            :key="provider.slug"
+            v-bind:class="{disabled: isProviderDisabled(provider.slug)}"
+            @click="toggleProvider(provider.slug)"
+          >
             <a href="#" :title="provider.name">
-              <img v-if="logoSrc(provider)" :src="logoSrc(provider)" :alt="provider.name" class="logo">
+              <img
+                v-if="logoSrc(provider)"
+                :src="logoSrc(provider)"
+                :alt="provider.name"
+                class="logo"
+              >
             </a>
           </div>
         </div>
@@ -68,6 +81,10 @@ export default {
       }
 
       return logo
+    },
+    getPreviousPage() {
+      const previousHome = this.$store.state.navigation.routes[this.$store.state.navigation.routes.length - 2]
+      return previousHome ? `/?VNK=${previousHome.replace('Home?', '')}` : '/'
     }
   }
 }

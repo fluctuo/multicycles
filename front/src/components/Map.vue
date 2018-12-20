@@ -189,7 +189,8 @@ export default {
       }
     },
     moveCenter(event) {
-      this.$router.push({ name: 'Home', query: { l: this.$refs.map.center.join(',') } })
+      // this.$router.push({ name: 'Home', query: { l: this.$refs.map.center.join(','), VNK: this.$route.params.VNK } })
+      history.pushState(null, null, `/?l=${this.$refs.map.center.join(',')}`);
       this.setCenter(this.$refs.map.center)
       this.getVehicles(this.center[0], this.center[1])
     },

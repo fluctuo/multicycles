@@ -1,11 +1,18 @@
 <template>
   <div>
     <div class="input-wrapper">
-      <router-link to="/">
+      <router-link :to="getPreviousPage()">
         <arrow-left-icon class="icon"/>
       </router-link>
 
-      <input v-model="searchedAdress" @input="getList" :placeholder="$t('search.search')" type="text" class="search-input" v-focus>
+      <input
+        v-model="searchedAdress"
+        @input="getList"
+        :placeholder="$t('search.search')"
+        type="text"
+        class="search-input"
+        v-focus
+      >
 
       <search-icon class="icon"/>
 
@@ -14,9 +21,11 @@
       </div>
     </div>
     <ul class="results">
-      <li v-for="address in addresses" :key="address.id" @click="selectAddress(address)">
-        {{ address.place_name }}
-      </li>
+      <li
+        v-for="address in addresses"
+        :key="address.id"
+        @click="selectAddress(address)"
+      >{{ address.place_name }}</li>
       <search-icon v-if="!addresses.length" class="background"/>
     </ul>
   </div>
@@ -57,6 +66,10 @@ export default {
     selectAddress(address) {
       this.setAddress(address)
       this.$router.push({ name: 'Home', query: { l: this.$store.state.selectedAddress.position.join(',') } })
+    },
+    getPreviousPage() {
+      const previousHome = this.$store.state.navigation.routes[this.$store.state.navigation.routes.length - 2]
+      return previousHome ? `/?VNK=${previousHome.replace('Home?', '')}` : '/'
     }
   }
 }
