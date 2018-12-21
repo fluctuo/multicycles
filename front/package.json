@@ -28,6 +28,7 @@
     "vue-drawer-layout": "^0.3.2",
     "vue-feather-icons": "^4.7.1",
     "vue-i18n": "^8.1.0",
+    "vue-navigation": "^1.1.4",
     "vue-router": "^3.0.1",
     "vue2-animate": "^2.1.0",
     "vue2-leaflet": "^1.0.2",
@@ -75,5 +76,9 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

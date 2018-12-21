@@ -1,13 +1,11 @@
 <template>
   <div class="page">
     <div class="header">
-      <router-link to="/">
-        <arrow-left-circle-icon />
+      <router-link :to="getPreviousPage()">
+        <arrow-left-circle-icon/>
       </router-link>
 
-      <h1>
-        {{ $t('about.title') }}
-      </h1>
+      <h1>{{ $t('about.title') }}</h1>
     </div>
 
     <div class="content">
@@ -16,7 +14,7 @@
       <p v-html="$t('about.three')"></p>
       <p v-html="$t('about.four')"></p>
     </div>
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
@@ -29,6 +27,12 @@ export default {
   components: {
     ArrowLeftCircleIcon,
     Footer
+  },
+  methods: {
+    getPreviousPage() {
+      const previousHome = this.$store.state.navigation.routes[this.$store.state.navigation.routes.length - 2]
+      return previousHome ? `/?VNK=${previousHome.replace('Home?', '')}` : '/'
+    }
   }
 }
 </script>

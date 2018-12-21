@@ -4,20 +4,52 @@
       <transition name="fade">
         <img src="../assets/crosshair.svg" class="crosshair" v-if="$store.state.moved">
       </transition>
-      <v-progress v-if="fetchingVehicles !== 0" />
-      <l-map ref="map" :zoom=map.zoom :minZoom=map.minZoom :center=center @moveend="moveCenter" @dragstart="moveStart" @zoomend="zoomEnd" :options=map.options style="height: 100%">
-        <l-tile-layer v-if="$store.state.lang === 'cn'" url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"></l-tile-layer >
-        <l-tile-layer v-else url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}" :options="options" :attribution="attribution"></l-tile-layer>
+      <v-progress v-if="fetchingVehicles !== 0"/>
+      <l-map
+        ref="map"
+        :zoom="map.zoom"
+        :minZoom="map.minZoom"
+        :center="center"
+        @moveend="moveCenter"
+        @dragstart="moveStart"
+        @zoomend="zoomEnd"
+        :options="map.options"
+        style="height: 100%"
+      >
+        <l-tile-layer
+          v-if="$store.state.lang === 'cn'"
+          url="http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965"
+        ></l-tile-layer>
+        <l-tile-layer
+          v-else
+          url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}"
+          :options="options"
+          :attribution="attribution"
+        ></l-tile-layer>
 
-        <l-marker v-if="$store.state.geolocation" :lat-lng="$store.state.geolocation" :icon="getIconByProvider('geo')" />
+        <l-marker
+          v-if="$store.state.geolocation"
+          :lat-lng="$store.state.geolocation"
+          :icon="getIconByProvider('geo')"
+        />
 
-        <l-marker v-for="vehicle in vehicles" :lat-lng="[vehicle.lat, vehicle.lng]" :icon="getIconByProvider(vehicle)" :key="vehicle.id" @click="selectVehicle(vehicle)"></l-marker>
+        <l-marker
+          v-for="vehicle in vehicles"
+          :lat-lng="[vehicle.lat, vehicle.lng]"
+          :icon="getIconByProvider(vehicle)"
+          :key="vehicle.id"
+          @click="selectVehicle(vehicle)"
+        ></l-marker>
       </l-map>
-      <transition name="custom-classes-transition"
+      <transition
+        name="custom-classes-transition"
         enter-active-class="fadeInUp"
         leave-active-class="fadeOutDown"
       >
-        <selected-vehicle v-if="$store.state.selectedVehicle" :vehicle="$store.state.selectedVehicle"></selected-vehicle>
+        <selected-vehicle
+          v-if="$store.state.selectedVehicle"
+          :vehicle="$store.state.selectedVehicle"
+        ></selected-vehicle>
       </transition>
     </div>
   </div>
@@ -157,7 +189,8 @@ export default {
       }
     },
     moveCenter(event) {
-      this.$router.push({ name: 'Home', query: { l: this.$refs.map.center.join(',') } })
+      // this.$router.push({ name: 'Home', query: { l: this.$refs.map.center.join(','), VNK: this.$route.params.VNK } })
+      history.pushState(null, null, `/?l=${this.$refs.map.center.join(',')}`);
       this.setCenter(this.$refs.map.center)
       this.getVehicles(this.center[0], this.center[1])
     },
@@ -171,8 +204,16 @@ export default {
       }
 
       let glyph = ''
-      let iconUrl = `/static/marker-${vehicle.provider.slug}.png`
-      let iconRetinaUrl = `/static/marker-${vehicle.provider.slug}-2x.png`
+      let iconUrl
+      let iconRetinaUrl
+
+      try {
+        iconUrl = require(`../assets/markers/${vehicle.provider.slug}.png`)
+        iconRetinaUrl = require(`../assets/markers/${vehicle.provider.slug}-2x.png`)
+      } catch (e) {
+        iconUrl = require(`../assets/markers/default.png`)
+        iconRetinaUrl = require(`../assets/markers/default-2x.png`)
+      }
 
       return L.icon({
         iconUrl,
