@@ -7,7 +7,7 @@
     "precommit": "lint-staged",
     "#</git hooks>": "handled by husky",
     "clean": "rm -rf providers/*/lib",
-    "transpile": "lerna exec --ignore '@multicycles/{front,developer}' -- babel src --optional runtime --out-dir lib --ignore \"__tests__\"",
+    "transpile": "lerna exec --ignore '@multicycles/{front,developer}' -- babel --root-mode upward src --optional runtime --out-dir lib --ignore \"__tests__\"",
     "watch": "lerna exec --ignore '@multicycles/{front,developer}' --parallel -- babel -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
     "prepare": "npm run clean && npm run transpile",
     "test": "lerna run --parallel test",
@@ -22,9 +22,10 @@
     ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.6",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.1.6",
     "babel-plugin-add-module-exports": "^0.2.1",
     "eslint-plugin-prettier": "^2.7.0",
@@ -33,22 +34,6 @@
     "lint-staged": "^6.1.1",
     "plop": "^2.1.0",
     "prettier": "^1.15.2"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "8"
-          }
-        }
-      ]
-    ],
-    "plugins": [
-      "add-module-exports",
-      "@babel/plugin-proposal-object-rest-spread"
-    ]
   },
   "dependencies": {}
 }

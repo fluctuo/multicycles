@@ -1,4 +1,3 @@
-import querystring from 'querystring'
 import got from 'got'
 
 const BASE_URL = 'https://app.mobike.com/api'

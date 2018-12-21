@@ -2,28 +2,26 @@ import test from 'ava'
 import nock from 'nock'
 import Mobike from '../lib'
 
-nock('https://mwx.mobike.com/mobike-api')
-  .post('/rent/nearbyBikesInfo.do', {
+nock('https://app.mobike.com/api')
+  .post('/nearby/v4/nearbyBikeInfo', {
     latitude: 31.23039,
     longitude: 121.473702
   })
   .reply(200, {
     code: 0,
     message: '',
-    biketype: 0,
-    autoZoom: true,
-    radius: 150,
-    object: [
+    bike: [
       {
-        distId: '0216729683',
-        distX: 121.47473058,
-        distY: 31.23069014,
+        distId: 'A766045548',
+        distX: 2.353139,
+        distY: 48.856437,
         distNum: 1,
-        distance: '103',
-        bikeIds: '0216729683#',
-        biketype: 1,
+        distance: '69',
+        bikeIds: 'A766045548#',
+        biketype: 2,
         type: 0,
-        boundary: null
+        boundary: null,
+        operateType: 2
       }
     ]
   })
@@ -75,7 +73,7 @@ test('get objects', async t => {
     })
     .then(result => {
       t.is(result.statusCode, 200)
-      t.truthy(result.body.object.length)
+      t.truthy(result.body.bike.length)
       t.pass()
     })
     .catch(err => {
