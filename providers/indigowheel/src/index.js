@@ -1,8 +1,8 @@
-import Yobike from '@multicycles/yobike'
+import SharingOS from '@multicycles/sharingos'
 
 class IndigoWheel {
   constructor({ timeout } = {}) {
-    this.yobike = new Yobike({
+    this.sharingos = new SharingOS({
       timeout: timeout && parseInt(timeout, 10),
       appKey: 'NaDl8eR81njaT7FRMNn2oqH020bAfUG7d7Iqa2kMvZm8qCga5cg_QIlk_XZVZvWI'
     })
@@ -26,7 +26,10 @@ class IndigoWheel {
   }
 
   getObjects({ lat, lng } = {}, config = {}) {
-    return this.yobike.getObjects({ lat, lng }, config)
+    return Promise.all([
+      this.sharingos.getVehicules({ lat, lng }, config),
+      this.sharingos.getScooters({ lat, lng }, config)
+    ])
   }
 }
 

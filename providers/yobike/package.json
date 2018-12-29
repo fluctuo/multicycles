@@ -1,6 +1,6 @@
 {
   "name": "@multicycles/yobike",
-  "version": "1.0.0-beta.12",
+  "version": "1.0.0-beta.13",
   "description": "Yobike provider for multicycles",
   "author": "Pierrick <mulotmail@gmail.com>",
   "main": "lib/index.js",
@@ -10,10 +10,10 @@
   "license": "MIT",
   "repository": "github:PierrickP/multicycles",
   "dependencies": {
-    "got": "^8.3.1"
+    "@multicycles/sharingos": "^1.0.0-beta.1"
   },
   "devDependencies": {
-    "ava": "^0.24.0",
+    "ava": "^1.0.1",
     "nock": "^9.6.1"
   }
 }

@@ -18,6 +18,22 @@ nock('https://en.api.ohbike.com')
     ]
   })
 
+nock('https://en.api.ohbike.com')
+  .post('/v1/scooter/', /lat=45.764043&lng=4.835659/gi)
+  .reply(200, {
+    errcode: 0,
+    message: 'ok',
+    data: [
+      {
+        latitude: 51.429616,
+        longitude: -2.62513,
+        plate_no: '7702465',
+        discount: -0.5,
+        outside: 1
+      }
+    ]
+  })
+
 test('overwrite timeout on constructor', async t => {
   const indigoWheel = new IndigoWheel({ timeout: 1 })
 
@@ -64,8 +80,9 @@ test('get objects', async t => {
       lng: 4.835659
     })
     .then(result => {
-      t.is(result.statusCode, 200)
-      t.truthy(result.body.data.length)
+      t.is(result.length, 2)
+      t.truthy(result[0].body.data.length)
+      t.truthy(result[1].body.data.length)
       t.pass()
     })
     .catch(err => {
