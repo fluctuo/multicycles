@@ -4,14 +4,10 @@
   },
   "about": {
     "title": "关于",
-    "one":
-      "<a href=\"https://multicycles.org/\">Multicycles是一个自行车应用程序，简单明了和一目了然的地组合不同的自行车租赁服务（VLS，自助自行车）和其它共用车辆。",
-    "two":
-      "该应用程序的使用是 <span class=\"important\">免费</span> et <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
-    "three":
-      "2018年初推出的服务很少，但是名单正在逐步稳定的增长 .<br>您可以联系项目的发起人<a href=\"https://twitter.com/le_mulot\">twitter</a>",
-    "four":
-      "对数据感兴趣吗？ L'API可作为您提供服务。 想要获得更多信息如下<a href=\"https://developer.multicycles.org/\">https://developer.multicycles.org/</a>"
+    "one": "<a href=\"https://multicycles.org/\">Multicycles是一个自行车应用程序，简单明了和一目了然的地组合不同的自行车租赁服务（VLS，自助自行车）和其它共用车辆。",
+    "two": "该应用程序的使用是 <span class=\"important\">免费</span> et <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
+    "three": "2018年初推出的服务很少，但是名单正在逐步稳定的增长 .<br>您可以联系项目的发起人<a href=\"https://twitter.com/le_mulot\">twitter</a>",
+    "four": "对数据感兴趣吗？ L'API可作为您提供服务。 想要获得更多信息如下<a href=\"https://developer.multicycles.org/\">https://developer.multicycles.org/</a>"
   },
   "settings": {
     "title": "参数",
@@ -24,7 +20,8 @@
     "SCOOTER": "小汽车",
     "MOTORSCOOTER": "底座小摩托车",
     "CARGO": "前座载人自行车",
-    "TANDEM": "双座双人骑自行车"
+    "TANDEM": "双座双人骑自行车",
+    "CAR": "汽车"
   },
   "selectedVehicle": {
     "bikes": "自行车",

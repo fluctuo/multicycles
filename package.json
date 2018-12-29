@@ -8,7 +8,7 @@
     "#</git hooks>": "handled by husky",
     "clean": "rm -rf providers/*/lib",
     "transpile": "lerna exec --ignore '@multicycles/{front,developer}' -- babel --root-mode upward src --optional runtime --out-dir lib --ignore \"__tests__\"",
-    "watch": "lerna exec --ignore '@multicycles/{front,developer}' --parallel -- babel -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
+    "watch": "lerna exec --ignore '@multicycles/{front,developer}' --parallel -- babel --root-mode upward src -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
     "prepare": "npm run clean && npm run transpile",
     "test": "lerna run --parallel test",
     "generate": "plop",

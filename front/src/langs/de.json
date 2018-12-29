@@ -4,14 +4,10 @@
   },
   "about": {
     "title": "Info",
-    "one":
-      "<a href=\"https://multicycles.org/  \">Multicycles</a> zeigt dir Leihfahrrad-Systeme und andere Mobilitätsangebote in deiner Nähe.",
-    "two":
-      "Die Nutzung von Multicycles ist <span class=\"important\">kostenlos</span>, das Projekt wird als <span class=\"important\">open-source</span> zur Verfügung gestellt.(<a href=\"https://github.com/PierrickP/multicycles … …\">https://github.com/PierrickP/multicycles … …</a>)",
-    "three":
-      "Wir sind 2018 gestartet und erweitern unsere Liste an unterstützten Mobilitätsdiensten kontinuierlich<br>Sie können mit dem Initiator des Projekts auf <a href=\"https://twitter.com/le_mulot  \">twitter</a> in Kontakt treten.",
-    "four":
-      "Sind sie an Daten interessiert? Wir stellen auch eine API zur Verfügung. Mehr Informationen unter <a href=\"https://developer.multicycles.org/  \">https://developer.multicycles.org/  </a>"
+    "one": "<a href=\"https://multicycles.org/  \">Multicycles</a> zeigt dir Leihfahrrad-Systeme und andere Mobilitätsangebote in deiner Nähe.",
+    "two": "Die Nutzung von Multicycles ist <span class=\"important\">kostenlos</span>, das Projekt wird als <span class=\"important\">open-source</span> zur Verfügung gestellt.(<a href=\"https://github.com/PierrickP/multicycles … …\">https://github.com/PierrickP/multicycles … …</a>)",
+    "three": "Wir sind 2018 gestartet und erweitern unsere Liste an unterstützten Mobilitätsdiensten kontinuierlich<br>Sie können mit dem Initiator des Projekts auf <a href=\"https://twitter.com/le_mulot  \">twitter</a> in Kontakt treten.",
+    "four": "Sind sie an Daten interessiert? Wir stellen auch eine API zur Verfügung. Mehr Informationen unter <a href=\"https://developer.multicycles.org/  \">https://developer.multicycles.org/  </a>"
   },
   "settings": {
     "title": "Einstellungen",
@@ -24,7 +20,8 @@
     "SCOOTER": "Scooter",
     "MOTORSCOOTER": "Motorroller",
     "CARGO": "Lastenfahrrad",
-    "TANDEM": "Tandem"
+    "TANDEM": "Tandem",
+    "CAR": "Auto"
   },
   "selectedVehicle": {
     "bikes": "Fahrräder",

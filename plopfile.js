@@ -39,7 +39,7 @@ module.exports = plop => {
           ),
           ' ',
           '= Developer',
-          '+ Add to Type developer/pages/docs.vue',
+          '+ Add to Type developer/pages/api.vue',
           ' ',
           '= Status =',
           '+ Add new components on status website'
