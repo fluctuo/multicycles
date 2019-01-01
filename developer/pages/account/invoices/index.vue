@@ -94,8 +94,8 @@ export default {
     invoices: {
       fetchPolicy: 'cache-first',
       query: gql`
-        query($page: Int) {
-          invoices(page: $page) {
+        query($page: Int, $userId: String) {
+          invoices(page: $page, userId: $userId) {
             page
             total
             limit
@@ -112,7 +112,7 @@ export default {
         }
       `,
       variables() {
-        return { page: this.page }
+        return { page: this.page, userId: this.$store.state.auth.user.userId }
       },
       update(data) {
         return data.invoices ? JSON.parse(JSON.stringify(data.invoices)) : data
