@@ -2,6 +2,20 @@ import got from 'got'
 
 const BASE_URL = 'https://web-production.lime.bike/api/rider'
 
+function boundsFromLatLng(lat, lng) {
+  const latMin = lat - 0.045
+  const latMax = lat + 0.045
+  const lngMin = lng - 0.045 / Math.cos((lat * Math.PI) / 180)
+  const lngMax = lng + 0.045 / Math.cos((lat * Math.PI) / 180)
+
+  return {
+    latMin,
+    lngMin,
+    latMax,
+    lngMax
+  }
+}
+
 class Lime {
   constructor({ timeout, auth } = {}) {
     this.config = {
@@ -58,14 +72,19 @@ class Lime {
       throw new Error('Missing lat/lng')
     }
 
-    return got.get(`${BASE_URL}/v1/views/main`, {
+    const bounds = boundsFromLatLng(lat, lng)
+
+    return got.get(`${BASE_URL}/v1/views/map`, {
       json: true,
       headers: this.config.headers,
       query: {
-        map_center_latitude: lat,
-        map_center_longitude: lng,
+        ne_lat: bounds.latMax,
+        ne_lng: bounds.lngMax,
+        sw_lat: bounds.latMin,
+        sw_lng: bounds.lngMin,
         user_latitude: lat,
-        user_longitude: lng
+        user_longitude: lng,
+        zoom: 16
       },
       timeout: this.config.timeout,
       ...config
