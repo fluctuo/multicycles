@@ -22,6 +22,15 @@
             </li>
           </ul>
 
+          <h3>Mutations</h3>
+          <ul class="list-unstyled">
+            <li v-for="mutation in mutations(this.$store.state.introspection)" :key="mutation.name">
+              <nuxt-link
+                :to="{ name: 'api-type-value', params: { type: 'Mutation', value: mutation.name }}"
+              >{{ mutation.name }}</nuxt-link>
+            </li>
+          </ul>
+
           <h3>Types</h3>
           <ul class="list-unstyled">
             <li v-for="t in types(this.$store.state.introspection)" :key="t.name">
@@ -56,7 +65,21 @@ import gql from 'graphql-tag'
 
 import Contact from '~/components/Contact.vue'
 
-const onlyQueries = ['vehicles', 'providers']
+const onlyQueries = ['vehicles', 'providers', 'getAccounts', 'getAccount']
+const onlyMutations = [
+  'createAccount',
+  'updateAccount',
+  'deleteAccount',
+  'linkSubAccount',
+  'limeLogin',
+  'limeLoginOTP',
+  'limeLoginRefresh',
+  'limeLoginRefreshOTP',
+  'birdLogin',
+  'birdLoginOTP',
+  'birdLoginRefresh',
+  'birdLoginRefreshOTP'
+]
 const onlyTypes = [
   'Provider',
   'Bcycle',
@@ -113,6 +136,15 @@ export default {
       const q = introspection.__schema && introspection.__schema.types.filter(type => type.name === 'Query')
 
       return Array.isArray(q) && q[0].fields.filter(f => onlyQueries.includes(f.name))
+    },
+    mutations: introspection => {
+      if (!introspection) {
+        return []
+      }
+
+      const q = introspection.__schema && introspection.__schema.types.filter(type => type.name === 'Mutation')
+
+      return Array.isArray(q) && q[0].fields.filter(f => onlyMutations.includes(f.name))
     },
     types: introspection => {
       if (!introspection) {
