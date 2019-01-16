@@ -9,6 +9,9 @@
               <nuxt-link to="/docs">Introduction</nuxt-link>
             </li>
             <li>
+              <nuxt-link to="/docs/auth">Auhentication</nuxt-link>
+            </li>
+            <li>
               <nuxt-link to="/docs/providers">Providers</nuxt-link>
             </li>
             <li>

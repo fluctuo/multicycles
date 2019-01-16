@@ -48,15 +48,11 @@
           </b-col>
         </b-row>
 
-        <b-alert
-          :show="dismissCountDown"
-          class="mt-2 mb-2"
-          fade
-          dismissible
-          variant="danger"
-          @dismiss-count-down="countDownChanged"
-        >{{ updateError }}</b-alert>
-        <b-button variant="primary" class="mt-2" @click="createToken">Create token</b-button>
+        <create-token
+          v-if="tokens.length"
+          :tokens-count="tokens.length"
+          :on-new-token="refetchTokens"
+        />
       </b-col>
     </b-row>
   </b-container>
@@ -66,44 +62,22 @@
 import gql from 'graphql-tag'
 import { Trash2Icon, CopyIcon } from 'vue-feather-icons'
 import token from '~/components/Token.vue'
+import CreateToken from '~/components/CreateToken.vue'
 
 export default {
   middleware: ['auth'],
   components: {
     Trash2Icon,
     CopyIcon,
-    token
+    token,
+    CreateToken
   },
   data() {
     return {
-      tokens: [],
-      updateError: false,
-      dismissSecs: 5,
-      dismissCountDown: 0
+      tokens: []
     }
   },
   methods: {
-    createToken() {
-      return this.$apollo
-        .mutate({
-          mutation: gql`
-            mutation($name: String) {
-              createToken(name: $name) {
-                name
-                value
-              }
-            }
-          `,
-          variables: {
-            name: `Token ${this.tokens.length + 1}`
-          }
-        })
-        .then(resp => this.$apollo.queries.tokens.refetch())
-        .catch(err => {
-          this.dismissCountDown = this.dismissSecs
-          this.updateError = err.message
-        })
-    },
     updateToken(id, updatedToken) {
       return this.$apollo
         .mutate({
@@ -135,10 +109,10 @@ export default {
             id
           }
         })
-        .then(() => this.$apollo.queries.tokens.refetch())
+        .then(() => this.refetchTokens())
     },
-    countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
+    refetchTokens() {
+      this.$apollo.queries.tokens.refetch()
     }
   },
   apollo: {
@@ -149,6 +123,7 @@ export default {
             id
             name
             value
+            scopes
             createdAt
             stats {
               date

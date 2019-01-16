@@ -11,9 +11,6 @@
             <li>
               <nuxt-link to="/api">Introduction</nuxt-link>
             </li>
-            <li>
-              <nuxt-link to="/api/auth">Authentication</nuxt-link>
-            </li>
           </ul>
 
           <h3>Queries</h3>

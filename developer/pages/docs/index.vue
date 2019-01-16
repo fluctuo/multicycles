@@ -7,7 +7,7 @@
     </p>
 
     <p>
-      <nuxt-link to="/">Multicycles API</nuxt-link>aggregates more than 40 services around the world and return them under a single, standardized and easy-to-use API.
+      <nuxt-link to="/">Multicycles API</nuxt-link>&nbsp;aggregates more than 40 services around the world and return them under a single, standardized and easy-to-use API.
     </p>
 
     <p>In this documentation you will learn how to use the Multicycles API, authenticate yourself and get the data you need.</p>
