@@ -1,13 +1,13 @@
 <template>
   <b-container>
     <b-row>
-      <b-col v-if="costs" cols="3" align="center">
+      <b-col v-if="costs" md="3" sm="6" align="center">
         <b-alert show variant="success">
           <h4 class="alert-heading">Costs</h4>
           <p>{{ costs }} units</p>
         </b-alert>
       </b-col>
-      <b-col v-if="scope" cols="3" align="center">
+      <b-col v-if="scope" md="3" sm="6" align="center">
         <b-alert show variant="ligth">
           <h4 class="alert-heading">Scope</h4>
           <p>
