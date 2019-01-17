@@ -1,0 +1,25 @@
+{
+  "name": "@multicycles/app-server",
+  "version": "1.0.0",
+  "description": "Server for front application on multicycles.org",
+  "author": "Pierrick <mulotmail@gmail.com>",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config index.js",
+    "dev": "nodemon -r dotenv/config index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.3.1",
+    "apollo-server-koa": "^2.3.1",
+    "dotenv": "^6.2.0",
+    "graphql": "^14.1.1",
+    "koa": "^2.6.2",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}

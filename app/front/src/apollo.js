@@ -7,7 +7,7 @@ import VueApollo from 'vue-apollo'
 import introspectionQueryResultData from './fragmentTypes.json'
 
 const httpLink = new HttpLink({
-  uri: `${process.env.API_URL}/v1?access_token=${process.env.MULTICYCLES_ACCESS_TOKEN}`
+  uri: `${process.env.API_URL}/graphql`
 })
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
