@@ -25,7 +25,8 @@ const state = {
   },
   selectedAddress: {
     name: ''
-  }
+  },
+  myAccount: null
 }
 
 const getters = {
@@ -85,6 +86,31 @@ const actions = {
   },
   setAddress({ commit }, address) {
     commit('setAddress', address)
+  },
+  login({ commit }) {
+    if (localStorage.getItem('token')) {
+      apolloProvider.defaultClient
+        .query({
+          query: gql`
+            query {
+              getMyAccount {
+                id
+                name
+                subAccounts {
+                  puid
+                  status
+                  provider {
+                    name
+                  }
+                }
+              }
+            }
+          `
+        })
+        .then(result => {
+          commit('setMyAccount', result.data.getMyAccount)
+        })
+    }
   }
 }
 
@@ -136,6 +162,9 @@ const mutations = {
   },
   clearAddress(state) {
     state.selectedAddress = { name: '' }
+  },
+  setMyAccount(state, myAccount) {
+    state.myAccount = myAccount
   }
 }
 

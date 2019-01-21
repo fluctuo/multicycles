@@ -13,7 +13,8 @@
     "title": "Settings",
     "lang": "Language",
     "providers": "Providers",
-    "installApp": "Install App"
+    "installApp": "Install App",
+    "account": "Account"
   },
   "vehicleType": {
     "BIKE": "Bike",
@@ -30,5 +31,18 @@
   },
   "search": {
     "search": "Search"
+  },
+  "account": {
+    "title": "My Account",
+    "intro": "Combine all your accounts in a single application. Link your accounts to take full advantage of Multicycles. You'll never have to switch from one app to another to find the right vehicle for you again.",
+    "linkedAccount": "Linked account",
+    "login": "Login"
+  },
+  "LinkSubaccountModal": {
+    "title": "Login and link my {provider} account",
+    "limeStep1": "To link your Lime account, set your phone number. You ll receive a message with a password. Please use internationnal format.",
+    "limeStep2": "Put the received code number on you phone.",
+    "birdStep1": "To link your Bird account, set your email. You ll receive a message with a token at the bottom.",
+    "birdStep2": "Put the token received by email"
   }
 }

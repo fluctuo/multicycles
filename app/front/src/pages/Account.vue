@@ -5,30 +5,50 @@
         <arrow-left-circle-icon/>
       </router-link>
 
-      <h1>{{ $t('about.title') }}</h1>
+      <h1>{{ $t('account.title') }}</h1>
     </div>
 
     <div class="content">
-      <p v-html="$t('about.one')"></p>
-      <p v-html="$t('about.two')"></p>
-      <p v-html="$t('about.three')"></p>
-      <p v-html="$t('about.four')"></p>
+      <p>{{ $t('account.intro') }}</p>
+      <my-account v-if="isLogged"/>
+      <login v-else/>
     </div>
     <Footer/>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { ArrowLeftCircleIcon } from 'vue-feather-icons'
+import Login from '../components/Login'
+import MyAccount from '../components/MyAccount'
 import Footer from '../components/Footer'
 
 export default {
-  name: 'About',
+  name: 'Account',
   components: {
     ArrowLeftCircleIcon,
+    Login,
+    MyAccount,
     Footer
   },
+  created() {
+    if (window.location.search) {
+      const hashParsed = window.location.search.match(/jwt=(.+?)(?:&|$)/m)
+
+      if (hashParsed[1]) {
+        window.localStorage.setItem('token', hashParsed[1])
+        this.login()
+      }
+    }
+  },
+  computed: {
+    isLogged() {
+      return this.$store.state.myAccount !== null
+    }
+  },
   methods: {
+    ...mapActions(['login']),
     getPreviousPage() {
       const previousHome = this.$store.state.navigation.routes[this.$store.state.navigation.routes.length - 2]
       return previousHome ? `/?VNK=${previousHome.replace('Home?', '')}` : '/'
@@ -49,7 +69,8 @@ export default {
 }
 
 .content {
-  margin: 5px 25px;
+  max-width: 576px;
+  margin: 5px auto !important;
   flex: 1;
 }
 

@@ -6,17 +6,26 @@
       </li>
       <li>
         <router-link to="/" @click.native="handleToggleDrawer">
-          <globe-icon />&nbsp;{{ $t('home.map') }}
+          <globe-icon/>
+          &nbsp;{{ $t('home.map') }}
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/account" @click.native="handleToggleDrawer">
+          <user-icon/>
+          &nbsp;{{ $t('settings.account') }}
         </router-link>
       </li>
       <li>
         <router-link to="/settings" @click.native="handleToggleDrawer">
-          <settings-icon />&nbsp;{{ $t('settings.title') }}
+          <settings-icon/>
+          &nbsp;{{ $t('settings.title') }}
         </router-link>
       </li>
       <li>
         <router-link to="/about" @click.native="handleToggleDrawer">
-          <info-icon />&nbsp;{{ $t('about.title') }}
+          <info-icon/>
+          &nbsp;{{ $t('about.title') }}
         </router-link>
       </li>
     </ul>
@@ -24,13 +33,14 @@
 </template>
 
 <script>
-import { GlobeIcon, SettingsIcon, InfoIcon } from 'vue-feather-icons'
+import { GlobeIcon, SettingsIcon, InfoIcon, UserIcon } from 'vue-feather-icons'
 
 export default {
   components: {
     GlobeIcon,
     SettingsIcon,
-    InfoIcon
+    InfoIcon,
+    UserIcon
   },
   methods: {
     handleToggleDrawer() {

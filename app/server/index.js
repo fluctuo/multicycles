@@ -2,9 +2,23 @@ const Koa = require('koa')
 const { ApolloServer } = require('apollo-server-koa')
 const { HttpLink } = require('apollo-link-http')
 const fetch = require('node-fetch')
-const { introspectSchema, makeRemoteExecutableSchema, FilterRootFields, transformSchema } = require('apollo-server')
+const {
+  introspectSchema,
+  makeRemoteExecutableSchema,
+  FilterRootFields,
+  transformSchema,
+  mergeSchemas
+} = require('apollo-server')
+const bodyParser = require('koa-bodyparser')
+const jwt = require('jsonwebtoken')
+const passport = require('./passport')
+const schema = require('./schema')
 
 const app = new Koa()
+
+app.use(bodyParser())
+
+passport(app)
 
 const multicyclesPrivateLink = new HttpLink({
   uri: `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
@@ -12,20 +26,46 @@ const multicyclesPrivateLink = new HttpLink({
 })
 
 async function init() {
-  const schema = await introspectSchema(multicyclesPrivateLink)
+  const multicyclesApiSchema = await introspectSchema(multicyclesPrivateLink)
 
   const executableSchema = makeRemoteExecutableSchema({
-    schema,
-    multicyclesPrivateLink
+    schema: multicyclesApiSchema,
+    link: multicyclesPrivateLink
   })
 
   const transformedSchema = transformSchema(executableSchema, [
     new FilterRootFields((operation, rootField) => {
-      return ['providers', 'vehicles'].includes(rootField)
+      return [
+        'providers',
+        'vehicles',
+        'limeLogin',
+        'birdLogin',
+        'limeLoginOTP',
+        'birdLoginOTP',
+        'linkSubAccount'
+      ].includes(rootField)
     })
   ])
 
-  const server = new ApolloServer({ schema: transformedSchema })
+  const server = new ApolloServer({
+    schema: mergeSchemas({
+      schemas: [transformedSchema, schema]
+    }),
+    context: ({ ctx }) => {
+      if (ctx.request.header && ctx.request.header.authorization) {
+        let user
+        try {
+          user = jwt.verify(ctx.request.header.authorization.replace('Bearer ', ''), process.env.JWT_SECRET)
+        } catch (err) {
+          console.log('INVALID JWT', err)
+        }
+
+        return {
+          user
+        }
+      }
+    }
+  })
 
   server.applyMiddleware({ app })
 
@@ -33,3 +73,7 @@ async function init() {
 }
 
 init()
+
+process.on('unhandledRejection', err => {
+  console.error(err)
+})

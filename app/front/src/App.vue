@@ -25,10 +25,11 @@ export default {
   },
   computed: mapGetters(['drawerEnable']),
   created() {
+    this.login()
     this.getProviders()
   },
   methods: {
-    ...mapActions(['getProviders', 'setDrawerEnable']),
+    ...mapActions(['getProviders', 'setDrawerEnable', 'login']),
     fixEnable(visible) {
       // if drawer closed and still on map, disable it
       if (this.$route.path === '/' && !visible) {

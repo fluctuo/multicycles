@@ -66,7 +66,7 @@ import SelectedVehicle from './SelectedVehicle.vue'
 let geolocationWatcher
 
 function degreesToRadians(degrees) {
-  return degrees * Math.PI / 180
+  return (degrees * Math.PI) / 180
 }
 
 function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
@@ -190,7 +190,7 @@ export default {
     },
     moveCenter(event) {
       // this.$router.push({ name: 'Home', query: { l: this.$refs.map.center.join(','), VNK: this.$route.params.VNK } })
-      history.pushState(null, null, `/?l=${this.$refs.map.center.join(',')}`);
+      history.pushState(null, null, `/?l=${this.$refs.map.center.join(',')}`)
       this.setCenter(this.$refs.map.center)
       this.getVehicles(this.center[0], this.center[1])
     },
@@ -270,9 +270,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '../../node_modules/leaflet/dist/leaflet.css';
-
+<style lang="scss" scoped>
 .flex-container {
   height: 100%;
   display: flex;

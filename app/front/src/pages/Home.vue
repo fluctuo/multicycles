@@ -1,14 +1,19 @@
 <template>
   <div class="wrapper">
     <div class="top">
-      <menu-icon @click="open" class="icon" />
+      <menu-icon @click="open" class="icon"/>
       <router-link to="/search">
-        <input v-model="$store.state.selectedAddress.name" type="text" :placeholder="$t('search.search')"  class="adress-picker">
+        <input
+          v-model="$store.state.selectedAddress.name"
+          type="text"
+          :placeholder="$t('search.search')"
+          class="adress-picker"
+        >
       </router-link>
 
       <crosshair-icon class="icon" @click="centerOnGeolocation"/>
     </div>
-    <local-map />
+    <local-map/>
   </div>
 </template>
 
@@ -47,6 +52,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../node_modules/leaflet/dist/leaflet.css';
 @import '../app.scss';
 
 .wrapper {

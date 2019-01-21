@@ -4,6 +4,7 @@ import Home from '@/pages/Home'
 import Search from '@/pages/Search'
 import Settings from '@/pages/Settings'
 import About from '@/pages/About'
+import Account from '@/pages/Account'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: Account
     }
   ]
 })
