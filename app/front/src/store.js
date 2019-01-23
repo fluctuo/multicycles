@@ -26,7 +26,8 @@ const state = {
   selectedAddress: {
     name: ''
   },
-  myAccount: null
+  myAccount: null,
+  activeRides: []
 }
 
 const getters = {
@@ -87,7 +88,7 @@ const actions = {
   setAddress({ commit }, address) {
     commit('setAddress', address)
   },
-  login({ commit }) {
+  login({ commit, dispatch }) {
     if (localStorage.getItem('token')) {
       apolloProvider.defaultClient
         .query({
@@ -109,6 +110,29 @@ const actions = {
         })
         .then(result => {
           commit('setMyAccount', result.data.getMyAccount)
+          dispatch('getActiveRides')
+        })
+    }
+  },
+  getActiveRides({ commit }) {
+    if (localStorage.getItem('token')) {
+      apolloProvider.defaultClient
+        .query({
+          query: gql`
+            query {
+              getMyActiveRides {
+                id
+                startedAt
+                provider {
+                  name
+                  slug
+                }
+              }
+            }
+          `
+        })
+        .then(result => {
+          commit('setActiveRides', result.data.getMyActiveRides)
         })
     }
   }
@@ -165,6 +189,9 @@ const mutations = {
   },
   setMyAccount(state, myAccount) {
     state.myAccount = myAccount
+  },
+  setActiveRides(state, rides) {
+    state.activeRides = rides
   }
 }
 

@@ -44,5 +44,12 @@
     "limeStep2": "Put the received code number on you phone.",
     "birdStep1": "To link your Bird account, set your email. You ll receive a message with a token at the bottom.",
     "birdStep2": "Put the token received by email"
+  },
+  "ActiveRide": {
+    "riding": "Currently riding ... 🚴🏻‍",
+    "clickToDetail": "See details"
+  },
+  "ActiveRideModal": {
+    "header": "Currently riding ... 🚴🏻‍"
   }
 }

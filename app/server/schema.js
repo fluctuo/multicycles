@@ -1,4 +1,4 @@
-const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLList } = require('graphql')
+const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLInt } = require('graphql')
 const api = require('./api')
 const db = require('./db')
 
@@ -46,6 +46,24 @@ const MyAccountType = new GraphQLObjectType({
   }
 })
 
+const MyActiveRidesType = new GraphQLObjectType({
+  name: 'MyActiveRides',
+  fields: {
+    id: { type: GraphQLString },
+    startedAt: { type: GraphQLInt },
+    provider: {
+      type: new GraphQLObjectType({
+        name: 'MyActiveRidesProvider',
+        description: 'A provider detail. A provider refer to a company or a service that rents vehicles.',
+        fields: {
+          name: { type: GraphQLString, description: 'Provider name' },
+          slug: { type: GraphQLString, description: 'Provider slug, can be used as a key' }
+        }
+      })
+    }
+  }
+})
+
 module.exports = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
@@ -60,6 +78,28 @@ module.exports = new GraphQLSchema({
           return db
             .findById(ctx.user.userId)
             .then(user => api.getAccount(user.account_id).then(data => data.getAccount))
+        }
+      },
+      getMyActiveRides: {
+        type: new GraphQLList(MyActiveRidesType),
+        resolve: (root, args, ctx) => {
+          if (!ctx.user) {
+            throw new Error('not logged')
+          }
+
+          return db.findById(ctx.user.userId).then(user =>
+            api.getActiveRides(user.account_id).then(data => {
+              if (data.getRides.total > 0) {
+                return data.getRides.nodes.map(r => ({
+                  id: r.id,
+                  startedAt: r.startedAt,
+                  provider: r.provider
+                }))
+              } else {
+                return null
+              }
+            })
+          )
         }
       }
     }

@@ -44,8 +44,33 @@ function getAccount(accountId) {
   )
 }
 
+function getActiveRides(accountId) {
+  return request(
+    `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
+    `
+    query getRides($accountId: String!) {
+      getRides(accountId: $accountId, status: ["riding"], limit: 2) {
+        total
+        nodes {
+          id
+          startedAt
+          provider {
+            name
+            slug
+          }
+        }
+      }
+    }
+  `,
+    {
+      accountId
+    }
+  )
+}
+
 module.exports = {
   request,
   createAccount,
-  getAccount
+  getAccount,
+  getActiveRides
 }

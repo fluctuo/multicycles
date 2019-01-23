@@ -7,6 +7,7 @@
   >
     <drawer-menu slot="drawer"/>
     <div slot="content" class="wrapper">
+      <active-ride/>
       <navigation>
         <router-view></router-view>
       </navigation>
@@ -17,11 +18,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import DrawerMenu from './components/DrawerMenu'
+import ActiveRide from './components/ActiveRide'
 
 export default {
   name: 'app',
   components: {
-    DrawerMenu
+    DrawerMenu,
+    ActiveRide
   },
   computed: mapGetters(['drawerEnable']),
   created() {
