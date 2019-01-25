@@ -7,7 +7,10 @@
             <h3>{{ $t('ActiveRideModal.header') }}</h3>
           </div>
 
-          <div class="modal-body">{{ startFromNow }}</div>
+          <div class="modal-body">
+            <p>{{ startFromNow }}</p>
+            <button class="btn--success" @click="stop()">Stop ride</button>
+          </div>
         </div>
       </div>
     </div>
@@ -47,7 +50,7 @@ export default {
     this.stopUpdater()
   },
   created() {
-    const seconds = (new Date().valueOf() - this.activeRide.startedAt) / 1000
+    const seconds = new Date().valueOf() / 1000 - this.activeRide.startedAt
     this.startFromNow = fancyTimeFormat(seconds)
   },
   computed: {
@@ -56,10 +59,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['login', 'stopMyRide']),
     startUpdater() {
       this.updater = setInterval(() => {
-        const seconds = (new Date().valueOf() - this.activeRide.startedAt) / 1000
+        const seconds = new Date().valueOf() / 1000 - this.activeRide.startedAt
         this.startFromNow = fancyTimeFormat(seconds)
       }, 1000)
     },
@@ -69,10 +72,8 @@ export default {
       this.updater = null
     },
 
-    close(e) {
-      if (e.path.indexOf('div.modal-container') === -1) {
-        this.$emit('close')
-      }
+    stop() {
+      this.stopMyRide(this.activeRide.id).then(() => this.$emit('close'))
     }
   }
 }

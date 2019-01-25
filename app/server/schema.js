@@ -1,4 +1,12 @@
-const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLBoolean, GraphQLList, GraphQLInt } = require('graphql')
+const {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLList,
+  GraphQLInt,
+  GraphQLNonNull
+} = require('graphql')
 const api = require('./api')
 const db = require('./db')
 
@@ -100,6 +108,44 @@ module.exports = new GraphQLSchema({
               }
             })
           )
+        }
+      }
+    }
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+      startMyRide: {
+        type: MyActiveRidesType,
+        args: {
+          provider: { type: new GraphQLNonNull(GraphQLString) },
+          token: { type: new GraphQLNonNull(GraphQLString) }
+        },
+        resolve(root, args, ctx) {
+          if (!ctx.user) {
+            throw new Error('not logged')
+          }
+
+          return db
+            .findById(ctx.user.userId)
+            .then(user => api.startRide(user.account_id, args))
+            .then(data => data.startRide)
+        }
+      },
+      stopMyRide: {
+        type: MyActiveRidesType,
+        args: {
+          rideId: { type: new GraphQLNonNull(GraphQLString) }
+        },
+        resolve(root, args, ctx) {
+          if (!ctx.user) {
+            throw new Error('not logged')
+          }
+
+          return db
+            .findById(ctx.user.userId)
+            .then(user => api.stopRide(user.account_id, args))
+            .then(data => data.stopRide)
         }
       }
     }

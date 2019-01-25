@@ -51,6 +51,7 @@
           :vehicle="$store.state.selectedVehicle"
         ></selected-vehicle>
       </transition>
+      <qrcode-scanner v-if="!hasActiveRides"/>
     </div>
   </div>
 </template>
@@ -58,10 +59,11 @@
 <script>
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import gql from 'graphql-tag'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
+import QrcodeScanner from './QrcodeScanner'
 
 let geolocationWatcher
 
@@ -91,7 +93,8 @@ export default {
     LTileLayer,
     LMarker,
     'v-progress': Progress,
-    SelectedVehicle
+    SelectedVehicle,
+    QrcodeScanner
   },
   data() {
     return {
@@ -116,14 +119,11 @@ export default {
       vehicles: []
     }
   },
-  computed: {
-    center() {
-      return this.$store.state.map.center
-    },
-    excludeProviders() {
-      return this.$store.state.disabledProviders
-    }
-  },
+  computed: mapState({
+    hasActiveRides: state => !!(state.activeRides && state.activeRides.length),
+    center: state => state.map.center,
+    excludeProviders: state => state.disabledProviders
+  }),
   created() {
     this.startGeolocation()
     this.getVehicles(this.center[0], this.center[1])
@@ -263,6 +263,9 @@ export default {
         },
         update(data) {
           return data.vehicles ? data.vehicles : []
+        },
+        skip() {
+          return !this.location.lat || !this.location.lng
         }
       }
     }

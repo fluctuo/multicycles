@@ -102,6 +102,7 @@ const actions = {
                   status
                   provider {
                     name
+                    slug
                   }
                 }
               }
@@ -133,6 +134,57 @@ const actions = {
         })
         .then(result => {
           commit('setActiveRides', result.data.getMyActiveRides)
+        })
+    }
+  },
+  startMyRide({ commit }, { token, provider }) {
+    if (localStorage.getItem('token')) {
+      return apolloProvider.defaultClient
+        .mutate({
+          mutation: gql`
+            mutation($provider: String!, $token: String!) {
+              startMyRide(provider: $provider, token: $token) {
+                id
+                startedAt
+                provider {
+                  name
+                  slug
+                }
+              }
+            }
+          `,
+          variables: {
+            token,
+            provider
+          }
+        })
+        .then(result => {
+          commit('setActiveRides', [result.data.startMyRide])
+        })
+    }
+  },
+  stopMyRide({ commit }, rideId) {
+    if (localStorage.getItem('token')) {
+      return apolloProvider.defaultClient
+        .mutate({
+          mutation: gql`
+            mutation($rideId: String!) {
+              stopMyRide(rideId: $rideId) {
+                id
+                startedAt
+                provider {
+                  name
+                  slug
+                }
+              }
+            }
+          `,
+          variables: {
+            rideId
+          }
+        })
+        .then(result => {
+          commit('setActiveRides', null)
         })
     }
   }

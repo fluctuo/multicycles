@@ -27,6 +27,7 @@ function getAccount(accountId) {
           status
           provider {
             name
+            slug
           }
           name
           phone
@@ -68,9 +69,56 @@ function getActiveRides(accountId) {
   )
 }
 
+function startRide(accountId, { provider, token }) {
+  return request(
+    `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
+    `
+    mutation startRide($accountId: String!, $provider: String!, $token: String!) {
+      startRide(accountId: $accountId, provider: $provider, token: $token) {
+        id
+        startedAt
+        provider {
+          name
+          slug
+        }
+      }
+    }
+  `,
+    {
+      accountId,
+      provider,
+      token
+    }
+  )
+}
+
+function stopRide(accountId, { rideId }) {
+  return request(
+    `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
+    `
+    mutation stopRide($accountId: String!, $rideId: String!) {
+      stopRide(accountId: $accountId, rideId: $rideId) {
+        id
+        startedAt
+        provider {
+          name
+          slug
+        }
+      }
+    }
+  `,
+    {
+      accountId,
+      rideId
+    }
+  )
+}
+
 module.exports = {
   request,
   createAccount,
   getAccount,
-  getActiveRides
+  getActiveRides,
+  startRide,
+  stopRide
 }

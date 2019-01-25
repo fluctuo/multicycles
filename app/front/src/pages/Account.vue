@@ -36,7 +36,7 @@ export default {
     if (window.location.search) {
       const hashParsed = window.location.search.match(/jwt=(.+?)(?:&|$)/m)
 
-      if (hashParsed[1]) {
+      if (hashParsed && hashParsed[1]) {
         window.localStorage.setItem('token', hashParsed[1])
         this.login()
       }

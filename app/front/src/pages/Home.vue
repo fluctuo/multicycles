@@ -68,7 +68,7 @@ export default {
 .top {
   position: absolute;
   width: 100%;
-  z-index: 402;
+  z-index: 401;
   display: flex;
   justify-content: space-between;
   margin: 15px 0;

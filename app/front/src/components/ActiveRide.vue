@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="activeride-container">
     <transition name="slideDown">
       <div v-if="hasActiveRides" class="activeRide">
         <div>{{ $t('ActiveRide.riding') }}</div>
@@ -28,21 +28,23 @@ export default {
     }
   },
   computed: mapState({
-    hasActiveRides: state => !!state.activeRides.length
+    hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
   })
 }
 </script>
 
 <style lang="scss" scoped>
+.activeride-container {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
 .activeRide {
   padding: 5px 0px;
   background-color: #007bff;
   text-align: center;
   color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: 1.2em;
   font-weight: bold;
 }

@@ -51,5 +51,10 @@
   },
   "ActiveRideModal": {
     "header": "Currently riding ... 🚴🏻‍"
+  },
+  "QrcodeScanner": {
+    "scanTheQRCode": "Scan the QRCode",
+    "notAvailable": "Not yet available 😢",
+    "unlocking": "Unlocking..."
   }
 }
