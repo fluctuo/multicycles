@@ -1,4 +1,5 @@
 const Koa = require('koa')
+const cors = require('@koa/cors')
 const { ApolloServer } = require('apollo-server-koa')
 const { HttpLink } = require('apollo-link-http')
 const fetch = require('node-fetch')
@@ -17,6 +18,7 @@ const schema = require('./schema')
 const app = new Koa()
 
 app.use(bodyParser())
+app.use(cors())
 
 passport(app)
 
