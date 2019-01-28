@@ -80,7 +80,7 @@ export default {
       dismissSecs: 5,
       dismissCountDown: 0,
       availablePublicScopes: ['vehicles:read', 'providers:read', 'providers:login'],
-      availablePrivateScopes: ['accounts:read', 'accounts:write']
+      availablePrivateScopes: [] /* ['accounts:read', 'accounts:write', 'rides:read', 'rides.write'] */
     }
   },
   watch: {
