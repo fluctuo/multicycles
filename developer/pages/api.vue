@@ -75,7 +75,7 @@ import gql from 'graphql-tag'
 
 import Contact from '~/components/Contact.vue'
 
-const onlyQueries = ['vehicles', 'providers', 'getAccounts', 'getAccount']
+const onlyQueries = ['vehicles', 'providers', 'getAccounts', 'getAccount', 'getRides']
 const onlyMutations = [
   'createAccount',
   'updateAccount',
@@ -88,7 +88,9 @@ const onlyMutations = [
   'birdLogin',
   'birdLoginOTP',
   'birdLoginRefresh',
-  'birdLoginRefreshOTP'
+  'birdLoginRefreshOTP',
+  'startRide',
+  'stopRide'
 ]
 const onlyTypes = [
   'Provider',
@@ -125,7 +127,7 @@ const onlyTypes = [
   'Wind',
   'Yobike'
 ]
-const excludedEnums = ['__TypeKind', '__DirectiveLocation']
+const excludedEnums = ['__TypeKind', '__DirectiveLocation', 'InvoiceStatusEnum']
 
 export default {
   head() {
