@@ -22,6 +22,7 @@
     "jsonwebtoken": "^8.4.0",
     "knex": "^0.16.3",
     "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
     "koa-passport": "^4.1.1",
     "node-fetch": "^2.3.0",
     "passport-google-oauth": "^1.0.0",
