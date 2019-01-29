@@ -90,8 +90,9 @@ const actions = {
   },
   login({ commit, dispatch }) {
     if (localStorage.getItem('token')) {
-      apolloProvider.defaultClient
+      return apolloProvider.defaultClient
         .query({
+          fetchPolicy: 'no-cache',
           query: gql`
             query {
               getMyAccount {
@@ -111,13 +112,13 @@ const actions = {
         })
         .then(result => {
           commit('setMyAccount', result.data.getMyAccount)
-          dispatch('getActiveRides')
+          return dispatch('getActiveRides')
         })
     }
   },
   getActiveRides({ commit }) {
     if (localStorage.getItem('token')) {
-      apolloProvider.defaultClient
+      return apolloProvider.defaultClient
         .query({
           query: gql`
             query {
@@ -240,7 +241,7 @@ const mutations = {
     state.selectedAddress = { name: '' }
   },
   setMyAccount(state, myAccount) {
-    state.myAccount = myAccount
+    Vue.set(state, 'myAccount', myAccount)
   },
   setActiveRides(state, rides) {
     state.activeRides = rides

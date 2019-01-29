@@ -44,6 +44,10 @@ async function init() {
         'birdLogin',
         'limeLoginOTP',
         'birdLoginOTP',
+        'limeLoginRefresh',
+        'limeLoginRefreshOTP',
+        'birdLoginRefresh',
+        'birdLoginRefreshOTP',
         'linkSubAccount'
       ].includes(rootField)
     })

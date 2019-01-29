@@ -63,7 +63,12 @@ export default {
   data() {
     return {
       hasInstallPromptEvent: !!window.installPromptEvent,
-      langs: [{ text: 'Français', value: 'fr' }, { text: 'English', value: 'en' }, { text: '中文', value: 'cn' }, { text: 'German', value: 'de'}]
+      langs: [
+        { text: 'Français', value: 'fr' },
+        { text: 'English', value: 'en' },
+        { text: '中文', value: 'cn' },
+        { text: 'German', value: 'de' }
+      ]
     }
   },
   computed: mapGetters(['isProviderDisabled']),
@@ -76,9 +81,7 @@ export default {
       let logo
       try {
         logo = require(`../assets/providers/${provider.slug}.jpg`)
-      } catch (e) {
-
-      }
+      } catch (e) {}
 
       return logo
     },
@@ -91,7 +94,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../app.scss';
 
 form {

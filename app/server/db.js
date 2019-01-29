@@ -31,7 +31,6 @@ function findOrCreateUser(provider_field, provider_id) {
           return db('users')
             .insert({ account_id: id, [provider_field]: provider_id })
             .returning('*')
-            .debug()
             .then(rows => rows[0])
         })
       }

@@ -9,7 +9,9 @@
 
           <div class="modal-body">
             <p>{{ startFromNow }}</p>
-            <button class="btn--success" @click="stop()">Stop ride</button>
+            <button class="btn--success" :disabled="stoping" @click="stop()">Stop ride
+              <loader-icon v-if="stoping" class="spinner"/>
+            </button>
           </div>
         </div>
       </div>
@@ -20,6 +22,7 @@
 <script>
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
+import { LoaderIcon } from 'vue-feather-icons'
 
 function fancyTimeFormat(time) {
   // Hours, minutes and seconds
@@ -40,8 +43,11 @@ function fancyTimeFormat(time) {
 }
 export default {
   name: 'ActiveRideModal',
+  components: {
+    LoaderIcon
+  },
   data() {
-    return { startFromNow: 0 }
+    return { startFromNow: 0, stoping: false }
   },
   mounted() {
     this.startUpdater()
@@ -73,7 +79,13 @@ export default {
     },
 
     stop() {
-      this.stopMyRide(this.activeRide.id).then(() => this.$emit('close'))
+      this.stoping = true
+      this.stopMyRide(this.activeRide.id)
+        .then(() => {
+          this.stoping = false
+          return this.$emit('close')
+        })
+        .catch(() => (this.stoping = false))
     }
   }
 }
@@ -138,6 +150,21 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+button {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner {
+  margin: 0 5px;
+  animation: spinner 4s linear infinite;
 }
 </style>
 

@@ -83,9 +83,13 @@ module.exports = new GraphQLSchema({
             throw new Error('not logged')
           }
 
-          return db
-            .findById(ctx.user.userId)
-            .then(user => api.getAccount(user.account_id).then(data => data.getAccount))
+          return db.findById(ctx.user.userId).then(user => {
+            if (!user) {
+              return null
+            }
+
+            return api.getAccount(user.account_id).then(data => data.getAccount)
+          })
         }
       },
       getMyActiveRides: {
@@ -95,8 +99,12 @@ module.exports = new GraphQLSchema({
             throw new Error('not logged')
           }
 
-          return db.findById(ctx.user.userId).then(user =>
-            api.getActiveRides(user.account_id).then(data => {
+          return db.findById(ctx.user.userId).then(user => {
+            if (!user) {
+              return null
+            }
+
+            return api.getActiveRides(user.account_id).then(data => {
               if (data.getRides.total > 0) {
                 return data.getRides.nodes.map(r => ({
                   id: r.id,
@@ -107,7 +115,7 @@ module.exports = new GraphQLSchema({
                 return null
               }
             })
-          )
+          })
         }
       }
     }

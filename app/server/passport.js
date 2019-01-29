@@ -13,14 +13,8 @@ passport.use(
     },
     function(accessToken, refreshToken, profile, done) {
       db.findOrCreateUser('google_id', profile.id)
-        .then(user => {
-          console.log('after findOrCreateUser', user)
-          return done(null, user)
-        })
-        .catch(err => {
-          console.log('error findOrCreateUser', err)
-          return done(err)
-        })
+        .then(user => done(null, user))
+        .catch(err => done(err))
     }
   )
 )

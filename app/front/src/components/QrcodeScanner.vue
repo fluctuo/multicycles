@@ -97,10 +97,16 @@ export default {
         this.startMyRide({
           provider: parsed.provider,
           token: parsed.id
-        }).then(() => {
-          this.paused = false
-          this.showScannerModal = false
         })
+          .then(() => {
+            this.paused = false
+            this.showScannerModal = false
+          })
+          .catch(() => {
+            this.isValid = false
+            this.validating = false
+            this.paused = false
+          })
       } else {
         this.isValid = false
         this.validating = false
@@ -140,6 +146,12 @@ export default {
   svg {
     width: $size / 2;
     height: auto;
+  }
+}
+
+@media (max-width: 575px)  {
+  .scan-button {
+    transform: scale(0.7);
   }
 }
 
