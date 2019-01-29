@@ -12,7 +12,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { GenerateSW } = require('workbox-webpack-plugin')
 
-const env = require('../config/prod.env')
+const env = process.env.BUILD_AS_BETA ? require('../config/beta.env') : require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
