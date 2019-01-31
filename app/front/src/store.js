@@ -138,13 +138,13 @@ const actions = {
         })
     }
   },
-  startMyRide({ commit }, { token, provider }) {
+  startMyRide({ commit, state }, { token, provider }) {
     if (localStorage.getItem('token')) {
       return apolloProvider.defaultClient
         .mutate({
           mutation: gql`
-            mutation($provider: String!, $token: String!) {
-              startMyRide(provider: $provider, token: $token) {
+            mutation($provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
+              startMyRide(provider: $provider, token: $token, lat: $lat, lng: $lng) {
                 id
                 startedAt
                 provider {
@@ -156,7 +156,9 @@ const actions = {
           `,
           variables: {
             token,
-            provider
+            provider,
+            lat: state.geolocation[0],
+            lng: state.geolocation[1]
           }
         })
         .then(result => {
@@ -164,13 +166,13 @@ const actions = {
         })
     }
   },
-  stopMyRide({ commit }, rideId) {
+  stopMyRide({ commit, state }, rideId) {
     if (localStorage.getItem('token')) {
       return apolloProvider.defaultClient
         .mutate({
           mutation: gql`
-            mutation($rideId: String!) {
-              stopMyRide(rideId: $rideId) {
+            mutation($rideId: String!, $lat: Float!, $lng: Float!) {
+              stopMyRide(rideId: $rideId, lat: $lat, lng: $lng) {
                 id
                 startedAt
                 provider {
@@ -181,7 +183,9 @@ const actions = {
             }
           `,
           variables: {
-            rideId
+            rideId,
+            lat: state.geolocation[0],
+            lng: state.geolocation[1]
           }
         })
         .then(result => {

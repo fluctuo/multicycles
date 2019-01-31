@@ -69,12 +69,12 @@ function getActiveRides(accountId) {
   )
 }
 
-function startRide(accountId, { provider, token }) {
+function startRide(accountId, { provider, token, lat, lng }) {
   return request(
     `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
     `
-    mutation startRide($accountId: String!, $provider: String!, $token: String!) {
-      startRide(accountId: $accountId, provider: $provider, token: $token) {
+    mutation startRide($accountId: String!, $provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
+      startRide(accountId: $accountId, provider: $provider, token: $token, lat: $lat, lng: $lng) {
         id
         startedAt
         provider {
@@ -87,17 +87,19 @@ function startRide(accountId, { provider, token }) {
     {
       accountId,
       provider,
-      token
+      token,
+      lat,
+      lng
     }
   )
 }
 
-function stopRide(accountId, { rideId }) {
+function stopRide(accountId, { rideId, lat, lng }) {
   return request(
     `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
     `
-    mutation stopRide($accountId: String!, $rideId: String!) {
-      stopRide(accountId: $accountId, rideId: $rideId) {
+    mutation stopRide($accountId: String!, $rideId: String!, $lat: Float!, $lng: Float!) {
+      stopRide(accountId: $accountId, rideId: $rideId, lat: $lat, lng: $lng) {
         id
         startedAt
         provider {
@@ -109,7 +111,9 @@ function stopRide(accountId, { rideId }) {
   `,
     {
       accountId,
-      rideId
+      rideId,
+      lat,
+      lng
     }
   )
 }

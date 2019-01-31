@@ -5,7 +5,8 @@ const {
   GraphQLBoolean,
   GraphQLList,
   GraphQLInt,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLFloat
 } = require('graphql')
 const api = require('./api')
 const db = require('./db')
@@ -127,7 +128,9 @@ module.exports = new GraphQLSchema({
         type: MyActiveRidesType,
         args: {
           provider: { type: new GraphQLNonNull(GraphQLString) },
-          token: { type: new GraphQLNonNull(GraphQLString) }
+          token: { type: new GraphQLNonNull(GraphQLString) },
+          lat: { type: new GraphQLNonNull(GraphQLFloat) },
+          lng: { type: new GraphQLNonNull(GraphQLFloat) }
         },
         resolve(root, args, ctx) {
           if (!ctx.user) {
@@ -143,7 +146,9 @@ module.exports = new GraphQLSchema({
       stopMyRide: {
         type: MyActiveRidesType,
         args: {
-          rideId: { type: new GraphQLNonNull(GraphQLString) }
+          rideId: { type: new GraphQLNonNull(GraphQLString) },
+          lat: { type: new GraphQLNonNull(GraphQLFloat) },
+          lng: { type: new GraphQLNonNull(GraphQLFloat) }
         },
         resolve(root, args, ctx) {
           if (!ctx.user) {
