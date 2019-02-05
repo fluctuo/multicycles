@@ -70,9 +70,6 @@
 </template>
 
 <script>
-import { introspectionQuery } from 'graphql'
-import gql from 'graphql-tag'
-
 import Contact from '~/components/Contact.vue'
 
 const onlyQueries = ['vehicles', 'providers', 'getAccounts', 'getAccount', 'getRides']
@@ -144,6 +141,11 @@ export default {
       showMenu: true
     }
   },
+  computed: {
+    introspection() {
+      return this.$store.state.introspection
+    }
+  },
   methods: {
     queries: introspection => {
       if (!introspection) {
@@ -182,16 +184,6 @@ export default {
         introspection.__schema &&
         introspection.__schema.types.filter(type => type.kind === 'ENUM').filter(f => !excludedEnums.includes(f.name))
       )
-    }
-  },
-  apollo: {
-    introspection: {
-      query: gql(introspectionQuery),
-      fetchPolicy: 'cache-first',
-      update(data) {
-        this.$store.commit('introspection', data)
-        return data
-      }
     }
   }
 }

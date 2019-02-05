@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { introspectionQuery } from 'graphql'
 
 export const state = () => ({
   selectedObject: null,
@@ -30,8 +31,10 @@ export const mutations = {
 }
 
 export const actions = {
-  nuxtServerInit({ state }, { req }) {
+  async nuxtServerInit({ state, dispatch }, { req }) {
     state.env = this.$env
+
+    await dispatch('getSchema')
   },
   updateSubscription({ commit }, planId) {
     const client = this.app.apolloProvider.defaultClient
@@ -89,5 +92,14 @@ export const actions = {
         variables: { stripeCardId }
       })
       .then(resp => commit('removePayementInformation'))
+  },
+  getSchema({ commit }) {
+    const client = this.app.apolloProvider.defaultClient
+
+    return client
+      .query({
+        query: gql(introspectionQuery)
+      })
+      .then(resp => commit('introspection', resp.data))
   }
 }

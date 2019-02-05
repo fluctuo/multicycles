@@ -1,10 +1,17 @@
 <template>
   <div id="graphiql">
-    <GraphiQL :fetcher="graphQLFetcher" :query="query" :variables="variables" :response="response" />
+    <GraphiQL
+      :fetcher="graphQLFetcher"
+      :query="query"
+      :variables="variables"
+      :response="response"
+      :schema="schema"
+    />
   </div>
 </template>
 
 <script>
+import { buildClientSchema } from 'graphql'
 export default {
   props: {
     query: {
@@ -18,6 +25,11 @@ export default {
     response: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    schema() {
+      return buildClientSchema(this.$store.state.introspection)
     }
   },
   methods: {
