@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-container>
+    <b-container fluid>
       <b-row class="mt-3">
-        <b-col md="3">
+        <b-col md="2">
           <b-button
             variant="primary"
             class="d-block d-sm-none w-100"

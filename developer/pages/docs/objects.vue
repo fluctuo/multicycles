@@ -27,8 +27,7 @@
     <single-vehicles class="mt-4 mb-4"/>
 
     <p>Continue with
-      <nuxt-link to="/api">API references</nuxt-link>or
-      <nuxt-link to="/account">get your free access token</nuxt-link>
+      <nuxt-link to="/docs/accounts">Accounts</nuxt-link>.
     </p>
   </div>
 </template>
