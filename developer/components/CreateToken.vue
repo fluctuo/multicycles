@@ -43,6 +43,12 @@
           label="Private scopes"
           description="Carefull, token with private scope should not be public !"
         >
+          <b-alert variant="info" show>
+            Private scopes (aggregated accounts, unlock vehicles) are in beta.
+            <a
+              href="mailto:contact@multicycles.org"
+            >Contact us</a> to participate
+          </b-alert>
           <b-form-checkbox-group
             v-model="newToken.scopesPrivate"
             :options="availablePrivateScopes"
