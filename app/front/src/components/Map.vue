@@ -286,6 +286,7 @@ export default {
 
 .map-container {
   flex: 1;
+  width: 100%;
 }
 
 .crosshair {
