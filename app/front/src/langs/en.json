@@ -1,0 +1,63 @@
+{
+  "home": {
+    "map": "Map"
+  },
+  "about": {
+    "title": "About",
+    "one": "<a href=\"https://multicycles.org/\">Multicycles</a> is an application that allows you to group together at a glance the different bicycle rental services (bicycle-sharing system) and other shared vehicles.",
+    "two": "Use of the application is <span class=\"important\">free</span> and <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
+    "three": "Launched in early 2018, few services are available, but the list is growing steadily.<br>You can contact the initiator of the project on <a href=\"https://twitter.com/le_mulot\">twitter</a>",
+    "four": "Interested by data ? The API is available as a service. More information on <a href=\"https://developer.multicycles.org/\">https://developer.multicycles.org/</a>"
+  },
+  "settings": {
+    "title": "Settings",
+    "lang": "Language",
+    "providers": "Providers",
+    "installApp": "Install App",
+    "account": "Account"
+  },
+  "vehicleType": {
+    "BIKE": "Bike",
+    "SCOOTER": "Scooter",
+    "MOTORSCOOTER": "Motor-scooter",
+    "CARGO": "Cargo bike",
+    "TANDEM": "Tandem",
+    "CAR": "Car"
+  },
+  "selectedVehicle": {
+    "bikes": "bikes",
+    "docks": "docks",
+    "unlockInTheApp": "Unlock in the app"
+  },
+  "search": {
+    "search": "Search"
+  },
+  "account": {
+    "title": "My Account",
+    "intro": "Combine all your accounts in a single application. Link your accounts to take full advantage of Multicycles. You'll never have to switch from one app to another to find the right vehicle for you again.",
+    "linkedAccount": "Linked account",
+    "needLogin": "Need to login",
+    "login": "Login"
+  },
+  "LinkSubaccountModal": {
+    "title": "Login and link my {provider} account",
+    "next": "Next",
+    "link": "Link",
+    "limeStep1": "To link your Lime account, set your phone number. You ll receive a message with a password. Please use internationnal format.",
+    "limeStep2": "Put the received code number on you phone.",
+    "birdStep1": "To link your Bird account, set your email. You ll receive a message with a token at the bottom.",
+    "birdStep2": "Put the token received by email"
+  },
+  "ActiveRide": {
+    "riding": "Currently riding ... 🚴🏻‍",
+    "clickToDetail": "See details"
+  },
+  "ActiveRideModal": {
+    "header": "Currently riding ... 🚴🏻‍"
+  },
+  "QrcodeScanner": {
+    "scanTheQRCode": "Scan the QRCode",
+    "notAvailable": "Not yet available 😢",
+    "unlocking": "Unlocking..."
+  }
+}

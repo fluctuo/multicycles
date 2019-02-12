@@ -90,6 +90,10 @@ class Lime {
       ...config
     })
   }
+
+  getUser() {
+    return got.get(`${BASE_URL}/v1/user`)
+  }
 }
 
 export default Lime

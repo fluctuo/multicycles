@@ -3,13 +3,18 @@ import uuid from 'uuid/v1'
 
 const BASE_URL = 'https://api.bird.co'
 const APP_VERSION = '3.0.5'
+const DEVICE_ID = uuid()
+const PLATFORM = 'ios'
 
 class Bird {
   constructor({ token, timeout } = {}) {
     this.config = {
       timeout: timeout && parseInt(timeout, 10),
       headers: {
-        'App-Version': APP_VERSION
+        'Content-Type': 'application/json',
+        'App-Version': APP_VERSION,
+        'Device-id': DEVICE_ID,
+        Platform: PLATFORM
       }
     }
 
@@ -35,7 +40,7 @@ class Bird {
     }
   }
 
-  login({ email, deviceId = uuid(), platform = 'ios' }, config = {}) {
+  login({ email }, config = {}) {
     if (!email) {
       throw new Error('Email is required')
     }
@@ -43,15 +48,11 @@ class Bird {
     return got
       .post(`${BASE_URL}/user/login`, {
         json: true,
-        body: {
-          email
-        },
+        body: JSON.stringify({
+          email: email
+        }),
         timeout: this.config.timeout,
-        headers: {
-          ...this.config.headers,
-          'Device-id': deviceId,
-          Platform: platform
-        },
+        headers: this.config.headers,
         ...config
       })
       .then(result => {
@@ -63,12 +64,22 @@ class Bird {
       })
   }
 
+  confirmOTP({ otp: token }, config = {}) {
+    return got.put(`${BASE_URL}/request/accept`, {
+      json: true,
+      body: JSON.stringify({
+        token
+      }),
+      timeout: this.config.timeout,
+      headers: this.config.headers,
+      ...config
+    })
+  }
+
   logout() {
     return got
       .post(`${BASE_URL}/user/logout`, {
-        headers: {
-          ...this.config.headers
-        }
+        headers: this.config.headers
       })
       .then(result => {
         delete this.config.headers['Authorization']
@@ -96,6 +107,24 @@ class Bird {
           longitude
         })
       },
+      ...config
+    })
+  }
+
+  getUser(config = {}) {
+    return got.get(`${BASE_URL}/user`, {
+      json: true,
+      timeout: this.config.timeout,
+      headers: this.config.headers,
+      ...config
+    })
+  }
+
+  getCreditCards(config = {}) {
+    return got.get(`${BASE_URL}/stripe/cards`, {
+      json: true,
+      timeout: this.config.timeout,
+      headers: this.config.headers,
       ...config
     })
   }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Introduction</h3>
+    <h3>API Introduction</h3>
 
     <p>
       <nuxt-link to="/">Multicycles API</nuxt-link>is a
@@ -8,7 +8,7 @@
       <br>The docs in the sidedar are generated from the endpoint. Use these docs to find out what data you can get.
     </p>
     <p>All GraphQL requests should use the endpoint https://api.multicycles.org/v1. Requests should be authenticated, see
-      <nuxt-link to="/api/auth">authentication</nuxt-link>.
+      <nuxt-link to="/docs/auth">authentication</nuxt-link>.
     </p>
 
     <h4>What is GraphQL?</h4>
@@ -26,7 +26,8 @@
 
     <h4>Why we using GraphQL?</h4>
 
-    <p>As we saw earlier,
+    <p>
+      As we saw earlier,
       <a href="https://graphql.org/">GraphQL</a> offers many advantages to users such as introspection, the ability to precisely define the data you want and the type system.
     </p>
   </div>

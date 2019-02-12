@@ -1,6 +1,6 @@
 {
   "name": "@multicycles/bird",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "Bird provider for multicycles",
   "author": "Pierrick <mulotmail@gmail.com>",
   "main": "lib/index.js",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": "github:PierrickP/multicycles",
   "dependencies": {
-    "got": "^8.3.1",
+    "got": "^9.5.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
