@@ -48,11 +48,7 @@
           </b-col>
         </b-row>
 
-        <create-token
-          v-if="tokens.length"
-          :tokens-count="tokens.length"
-          :on-new-token="refetchTokens"
-        />
+        <create-token :tokens-count="tokens.length" :on-new-token="refetchTokens"/>
       </b-col>
     </b-row>
   </b-container>
