@@ -235,6 +235,7 @@ export default {
                 lng
                 type
                 attributes
+                battery
                 provider {
                   name
                   slug

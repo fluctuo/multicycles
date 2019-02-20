@@ -4,42 +4,75 @@
       <div class="detail">
         <div>
           <div class="provider">
-            <img v-if="logoSrc(vehicle.provider)" :src="logoSrc(vehicle.provider)" alt="logo" class="logo">
+            <img
+              v-if="logoSrc(vehicle.provider)"
+              :src="logoSrc(vehicle.provider)"
+              alt="logo"
+              class="logo"
+            >
             {{ vehicle.provider.name }}
           </div>
         </div>
         <div>
           <div v-if="vehicle.type == 'STATION'" class="no-shrink">
             <div class="available-vehicles">
-              <span>{{ vehicle.availableVehicles }}</span>&nbsp;{{ $t('selectedVehicle.bikes') }}
+              <span>{{ vehicle.availableVehicles }}</span>
+              &nbsp;{{ $t('selectedVehicle.bikes') }}
             </div>
             <div v-if="vehicle.availableStands && !vehicle.isVirtual" class="available-stands">
-              <span>{{ vehicle.availableStands }}</span>&nbsp;{{ $t('selectedVehicle.docks') }}
+              <span>{{ vehicle.availableStands }}</span>
+              &nbsp;{{ $t('selectedVehicle.docks') }}
             </div>
           </div>
           <div v-else class="type-attributes">
             <span class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
 
             <div class="attributes">
-              <img v-if="vehicle.attributes && vehicle.attributes.includes('ELECTRIC')" src="../assets/lightning.svg" class="attribute"/>
-              <img v-if="vehicle.attributes && vehicle.attributes.includes('GEARS')" src="../assets/cog.svg" class="attribute"/>
+              <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>
+              <img
+                v-if="vehicle.attributes && vehicle.attributes.includes('ELECTRIC')"
+                src="../assets/lightning.svg"
+                class="attribute"
+              >
+              <img
+                v-if="vehicle.attributes && vehicle.attributes.includes('GEARS')"
+                src="../assets/cog.svg"
+                class="attribute"
+              >
             </div>
           </div>
         </div>
-
       </div>
       <div class="subdetail">
         <div>
-          <a v-if="isMobileAndDeeplink('ios')" :href="vehicle.provider.deepLink.ios" class="open-native">
+          <a
+            v-if="isMobileAndDeeplink('ios')"
+            :href="vehicle.provider.deepLink.ios"
+            class="open-native"
+          >
             {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
-            <external-link-icon />
+            <external-link-icon/>
           </a>
-          <a v-if="isMobileAndDeeplink('android')" :href="vehicle.provider.deepLink.android" class="open-native">
+          <a
+            v-if="isMobileAndDeeplink('android')"
+            :href="vehicle.provider.deepLink.android"
+            class="open-native"
+          >
             {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
-            <external-link-icon />
+            <external-link-icon/>
           </a>
-          <a v-if="(isComputer && vehicle.provider.app.ios) || (isMobileAndDeeplink('ios', true))" :href="vehicle.provider.app.ios"><img src="../assets/ios-badge.png" alt=""></a>
-          <a v-if="(isComputer && vehicle.provider.app.android) || (isMobileAndDeeplink('android', true))" :href="vehicle.provider.app.android"><img src="../assets/android-badge.png" alt=""></a>
+          <a
+            v-if="(isComputer && vehicle.provider.app.ios) || (isMobileAndDeeplink('ios', true))"
+            :href="vehicle.provider.app.ios"
+          >
+            <img src="../assets/ios-badge.png" alt>
+          </a>
+          <a
+            v-if="(isComputer && vehicle.provider.app.android) || (isMobileAndDeeplink('android', true))"
+            :href="vehicle.provider.app.android"
+          >
+            <img src="../assets/android-badge.png" alt>
+          </a>
         </div>
       </div>
     </div>
