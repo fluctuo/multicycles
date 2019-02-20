@@ -120,6 +120,7 @@ const onlyTypes = [
   'SocialBicycles',
   'Spin',
   'Tier',
+  'Voi',
   'WhiteBikes',
   'Wind',
   'Yobike'
