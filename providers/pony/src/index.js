@@ -1,7 +1,4 @@
 import firebase from 'firebase'
-import bboxPolygon from '@turf/bbox-polygon'
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
-import { point } from '@turf/helpers'
 import Cacheman from 'cacheman'
 
 const DATABASE_URL = 'https://pony-bikes-f8cf9.firebaseio.com'
@@ -9,15 +6,6 @@ const DATABASE_URL = 'https://pony-bikes-f8cf9.firebaseio.com'
 firebase.initializeApp({
   databaseURL: DATABASE_URL
 })
-
-function boundsFromLatLng(lat, lng) {
-  const latMin = lat - 0.045
-  const latMax = lat + 0.045
-  const lngMin = lng - 0.045 / Math.cos(lat * Math.PI / 180)
-  const lngMax = lng + 0.045 / Math.cos(lat * Math.PI / 180)
-
-  return bboxPolygon([latMin, lngMin, latMax, lngMax])
-}
 
 class Pony {
   constructor({ datastore = {} } = {}) {
@@ -48,14 +36,8 @@ class Pony {
     }
   }
 
-  async getObjects({ lat, lng } = {}, config = {}) {
-    let bounds
-
-    if (lat && lng) {
-      bounds = boundsFromLatLng(lat, lng)
-    }
-
-    const vehicles = await this.datastore.store.get(`pony|vehicles`)
+  async getBikes(config) {
+    const vehicles = await this.datastore.store.get(`pony|bikes`)
 
     if (!vehicles || config.force) {
       return this.database
@@ -65,25 +47,53 @@ class Pony {
           const values = snapshot.val()
           const bikes = Object.keys(values).map(key => values[key])
 
-          await this.datastore.store.set(`pony|vehicles`, bikes, this.datastore.ttl.vehicles)
+          await this.datastore.store.set(`pony|bikes`, bikes, this.datastore.ttl.vehicles)
 
           return {
             statusCode: 200,
-            body:
-              lat && lng
-                ? bikes.filter(bike => booleanPointInPolygon(point([bike.latitude, bike.longitude]), bounds))
-                : bikes
+            body: bikes
           }
         })
     } else {
       return Promise.resolve({
         statusCode: 304,
-        body:
-          lat && lng
-            ? vehicles.filter(bike => booleanPointInPolygon(point([bike.latitude, bike.longitude]), bounds))
-            : vehicles
+        body: vehicles
       })
     }
+  }
+
+  async getScooters(config) {
+    const vehicles = await this.datastore.store.get(`pony|scooters`)
+
+    if (!vehicles || config.force) {
+      return this.database
+        .ref('/rest/scooters')
+        .once('value')
+        .then(async snapshot => {
+          const values = snapshot.val()
+          const vehicles = Object.keys(values).map(key => values[key])
+
+          await this.datastore.store.set(`pony|scooters`, vehicles, this.datastore.ttl.vehicles)
+
+          return {
+            statusCode: 200,
+            body: vehicles
+          }
+        })
+    } else {
+      return Promise.resolve({
+        statusCode: 304,
+        body: vehicles
+      })
+    }
+  }
+
+  getObjects({ lat, lng } = {}, config = {}) {
+    if (!lat || !lng) {
+      throw new Error('Missing lat/lng')
+    }
+
+    return Promise.all([this.getBikes(config), this.getScooters(config)])
   }
 }
 

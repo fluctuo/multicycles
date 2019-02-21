@@ -4,19 +4,6 @@ import Pony from '../lib'
 
 const pony = new Pony()
 
-test('get all bicycles', async t => {
-  await pony
-    .getObjects()
-    .then(result => {
-      t.truthy(result.body.length)
-      t.pass()
-    })
-    .catch(err => {
-      console.log(err)
-      t.fail()
-    })
-})
-
 test('get objects', async t => {
   await pony
     .getObjects({
@@ -24,7 +11,8 @@ test('get objects', async t => {
       lng: -0.563166
     })
     .then(result => {
-      t.truthy(result.body.length)
+      t.truthy(result[0].body.length)
+      t.truthy(result[1].body.length)
       t.pass()
     })
     .catch(err => {
@@ -44,7 +32,8 @@ test('share the same cache', async t => {
       lng: 2.352222
     })
     .then(result => {
-      t.is(result.statusCode, 200)
+      t.is(result[0].statusCode, 200)
+      t.is(result[1].statusCode, 200)
     })
     .catch(err => {
       console.log(err)
@@ -57,7 +46,8 @@ test('share the same cache', async t => {
       lng: 2.352222
     })
     .then(result => {
-      t.is(result.statusCode, 304)
+      t.is(result[0].statusCode, 304)
+      t.is(result[1].statusCode, 304)
     })
 })
 
@@ -72,7 +62,8 @@ test('force bypass cache', async t => {
       lng: 2.352222
     })
     .then(result => {
-      t.is(result.statusCode, 200)
+      t.is(result[0].statusCode, 200)
+      t.is(result[1].statusCode, 200)
     })
     .catch(err => {
       console.log(err)
@@ -88,6 +79,7 @@ test('force bypass cache', async t => {
       { force: true }
     )
     .then(result => {
-      t.is(result.statusCode, 200)
+      t.is(result[0].statusCode, 200)
+      t.is(result[1].statusCode, 200)
     })
 })
