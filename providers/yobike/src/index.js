@@ -4,7 +4,7 @@ class Yobike {
   constructor({ timeout } = {}) {
     this.sharingos = new SharingOS({
       timeout: timeout && parseInt(timeout, 10),
-      appKey: 'NaDl8eR81njaT7FRMNn2oqH020bAfUG7d7Iqa2kMvZm8qCga5cg_QIlk_XZVZvWI'
+      appKey: 'WWTaJQrg-NHe_Zl0iwghHyYypYw6g-6GEZHPGBBF6TI7OzZWo9VVLXWRs2ngQJ18'
     })
   }
 
