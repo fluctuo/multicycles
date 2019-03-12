@@ -42,6 +42,7 @@
                 :alt="provider.name"
                 class="logo"
               >
+              {{ provider.name}}
             </a>
           </div>
         </div>
@@ -126,15 +127,34 @@ form {
 .providers {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 
   margin: -5px -5px;
 
   &>div {
     margin: 5px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 5px;
+    padding: 5px;
+    background: white;
+
+    a {
+      color: black;
+      text-decoration: none;
+      font-size: 2rem;
+    }
 
     &.disabled {
-      filter: opacity(0.6) grayscale(1);
+      filter: opacity(0.5) grayscale(1);
     }
+  }
+}
+
+@media (max-width: 575px) {
+  .providers>div{
+    width: 100%;
+    max-width: none;
   }
 }
 </style>

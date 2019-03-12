@@ -11,7 +11,12 @@
         >
       </router-link>
 
-      <crosshair-icon class="icon" @click="centerOnGeolocation"/>
+      <div class="left">
+        <crosshair-icon class="icon" @click="centerOnGeolocation"/>
+        <router-link to="/settings">
+          <layers-icon class="icon"/>
+        </router-link>
+      </div>
     </div>
     <local-map v-if="centerReady"/>
   </div>
@@ -19,7 +24,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
-import { MenuIcon, CrosshairIcon } from 'vue-feather-icons'
+import { MenuIcon, CrosshairIcon, LayersIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 
 import store from '../store'
@@ -29,6 +34,7 @@ export default {
   components: {
     MenuIcon,
     CrosshairIcon,
+    LayersIcon,
     LocalMap
   },
   beforeRouteEnter(to, from, next) {
@@ -78,6 +84,11 @@ export default {
   margin: 15px 0;
   padding: 0 15px;
 
+  .left {
+    display: flex;
+    flex-direction: column;
+  }
+
   .icon {
     height: $iconSize;
     width: $iconSize;
@@ -88,13 +99,14 @@ export default {
     color: green;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     padding: 5px;
+    margin: 5px 0;
   }
 
   .adress-picker {
     border-radius: 5px;
 
     width: 100%;
-    height: 100%;
+    height: 40px;
 
     box-shadow: none;
     border: 2px solid $mainColor;
