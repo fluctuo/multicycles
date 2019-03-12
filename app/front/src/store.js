@@ -12,6 +12,31 @@ const disabledProviders =
   localStorage.getItem('disabledProviders') && JSON.parse(localStorage.getItem('disabledProviders'))
 const position = localStorage.getItem('position') && JSON.parse(localStorage.getItem('position'))
 
+function degreesToRadians(degrees) {
+  return (degrees * Math.PI) / 180
+}
+
+function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+  var earthRadiusKm = 6371
+
+  var dLat = degreesToRadians(lat2 - lat1)
+  var dLon = degreesToRadians(lon2 - lon1)
+
+  lat1 = degreesToRadians(lat1)
+  lat2 = degreesToRadians(lat2)
+
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2)
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  return earthRadiusKm * c
+}
+
+function roundLocation(l) {
+  return Math.round(l * 1000) / 1000
+}
+
+let geolocationWatcher
+
 const state = {
   lang: getlanguage(),
   geolocation: position || [48.852775, 2.369336],
@@ -27,7 +52,9 @@ const state = {
     name: ''
   },
   myAccount: null,
-  activeRides: []
+  activeRides: [],
+  roundedLocation: position || [48.852775, 2.369336],
+  fixGPS: false
 }
 
 const getters = {
@@ -43,17 +70,18 @@ const actions = {
   setGeolocation({ commit }, position) {
     commit('setGeolocation', position)
   },
-  getProviders({ state, commit }, position) {
+  getProviders({ commit }, position = {}) {
     apolloProvider.defaultClient
       .query({
         query: gql`
-          query {
-            providers {
+          query($lat: Float, $lng: Float) {
+            providers(lat: $lat, lng: $lng) {
               name
               slug
             }
           }
-        `
+        `,
+        variables: position
       })
       .then(result => {
         commit('setProviders', result.data.providers)
@@ -84,6 +112,7 @@ const actions = {
   },
   setCenter({ commit }, center) {
     commit('setCenter', center)
+    commit('setRoundedLocation', center)
   },
   setAddress({ commit }, address) {
     commit('setAddress', address)
@@ -192,6 +221,34 @@ const actions = {
           commit('setActiveRides', null)
         })
     }
+  },
+  startGeolocation({ commit, state, dispatch }) {
+    // request lat lng by ip
+    if (!navigator.geolocation) {
+      console.warn('haha navigator.geolocation doesnt exist')
+      // fallback
+    } else {
+      navigator.geolocation.getCurrentPosition(position => {
+        commit('fixGPS')
+        dispatch('getProviders', { lat: position.coords.latitude, lng: position.coords.longitude })
+
+        if (!state.moved) {
+          state.map.center = [position.coords.latitude, position.coords.longitude]
+          state.geolocation = [position.coords.latitude, position.coords.longitude]
+
+          commit('setRoundedLocation', [position.coords.latitude, position.coords.longitude])
+        }
+      })
+
+      geolocationWatcher = navigator.geolocation.watchPosition(position => {
+        state.geolocation = [position.coords.latitude, position.coords.longitude]
+
+        if (!state.moved) {
+          state.map.center = [position.coords.latitude, position.coords.longitude]
+          commit('setRoundedLocation', [position.coords.latitude, position.coords.longitude])
+        }
+      })
+    }
   }
 }
 
@@ -249,6 +306,21 @@ const mutations = {
   },
   setActiveRides(state, rides) {
     state.activeRides = rides
+  },
+  setRoundedLocation(state, center) {
+    const diff = distanceInKmBetweenEarthCoordinates(
+      state.roundedLocation[0],
+      state.roundedLocation[1],
+      center[0],
+      center[1]
+    )
+
+    if (diff > 0.2) {
+      state.roundedLocation = [roundLocation(center[0]), roundLocation(center[1])]
+    }
+  },
+  fixGPS(state) {
+    state.fixGPS = true
   }
 }
 

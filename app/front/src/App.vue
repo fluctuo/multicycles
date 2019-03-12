@@ -30,9 +30,10 @@ export default {
   created() {
     this.login()
     this.getProviders()
+    this.startGeolocation()
   },
   methods: {
-    ...mapActions(['getProviders', 'setDrawerEnable', 'login']),
+    ...mapActions(['getProviders', 'setDrawerEnable', 'login', 'startGeolocation']),
     fixEnable(visible) {
       // if drawer closed and still on map, disable it
       if (this.$route.path === '/' && !visible) {

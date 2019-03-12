@@ -65,27 +65,6 @@ import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
 import QrcodeScanner from './QrcodeScanner'
 
-let geolocationWatcher
-
-function degreesToRadians(degrees) {
-  return (degrees * Math.PI) / 180
-}
-
-function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
-  var earthRadiusKm = 6371
-
-  var dLat = degreesToRadians(lat2 - lat1)
-  var dLon = degreesToRadians(lon2 - lon1)
-
-  lat1 = degreesToRadians(lat1)
-  lat2 = degreesToRadians(lat2)
-
-  var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2)
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-  return earthRadiusKm * c
-}
-
 export default {
   name: 'Map',
   components: {
@@ -109,8 +88,8 @@ export default {
         lng: this.$store.state.geolocation[1]
       },
       map: {
-        zoom: 17,
-        minZoom: 15,
+        zoom: 16,
+        minZoom: 13,
         detectRetina: true,
         options: {
           zoomControl: false
@@ -122,60 +101,14 @@ export default {
   computed: mapState({
     hasActiveRides: state => !!(state.activeRides && state.activeRides.length),
     center: state => state.map.center,
-    excludeProviders: state => state.disabledProviders
+    excludeProviders: state => state.disabledProviders,
+    roundedLocation: state => state.roundedLocation
   }),
-  created() {
-    this.startGeolocation()
-    this.getVehicles(this.center[0], this.center[1])
-  },
-  destroyed() {
-    if (geolocationWatcher && navigator.geolocation) {
-      navigator.geolocation.clearWatch(geolocationWatcher)
-    }
-  },
   watch: {
-    $route: 'getVehicles'
+    $route: 'reloadVehicules'
   },
   methods: {
     ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
-    roundLocation(l) {
-      return Math.round(l * 1000) / 1000
-    },
-    getVehicles(lat, lng) {
-      this.loading = true
-
-      const diff = distanceInKmBetweenEarthCoordinates(this.location.lat, this.location.lng, lat, lng)
-
-      if (diff > 0.2) {
-        this.location = {
-          lat: this.roundLocation(lat),
-          lng: this.roundLocation(lng)
-        }
-      }
-    },
-    startGeolocation() {
-      if (!navigator.geolocation) {
-        console.warn('haha navigator.geolocation doesnt exist')
-      } else {
-        navigator.geolocation.getCurrentPosition(position => {
-          if (!this.$store.state.moved) {
-            this.setCenter([position.coords.latitude, position.coords.longitude])
-            this.setGeolocation(this.center)
-            this.getVehicles(this.center[0], this.center[1])
-          }
-        })
-        geolocationWatcher = navigator.geolocation.watchPosition(position => {
-          this.setGeolocation([position.coords.latitude, position.coords.longitude])
-
-          if (!this.$store.state.moved) {
-            this.$nextTick(() => {
-              this.setCenter(JSON.parse(JSON.stringify([position.coords.latitude, position.coords.longitude])))
-              this.getVehicles(this.center[0], this.center[1])
-            })
-          }
-        })
-      }
-    },
     zoomEnd(event) {
       this.map.zoom = this.$refs.map.mapObject.getZoom()
     },
@@ -189,10 +122,8 @@ export default {
       }
     },
     moveCenter(event) {
-      // this.$router.push({ name: 'Home', query: { l: this.$refs.map.center.join(','), VNK: this.$route.params.VNK } })
       history.pushState(null, null, `/?l=${this.$refs.map.center.join(',')}`)
       this.setCenter(this.$refs.map.center)
-      this.getVehicles(this.center[0], this.center[1])
     },
     getIconByProvider(vehicle) {
       if (vehicle === 'geo') {
@@ -220,6 +151,9 @@ export default {
         iconRetinaUrl,
         iconSize: [24, 40]
       })
+    },
+    reloadVehicules() {
+      this.$apollo.queries.vehicles.refetch()
     }
   },
   apollo: {
@@ -260,13 +194,10 @@ export default {
           `
         },
         variables() {
-          return { lat: this.location.lat, lng: this.location.lng, excludeProviders: this.excludeProviders }
+          return { lat: this.roundedLocation[0], lng: this.roundedLocation[1], excludeProviders: this.excludeProviders }
         },
         update(data) {
           return data.vehicles ? data.vehicles : []
-        },
-        skip() {
-          return !this.location.lat || !this.location.lng
         }
       }
     }

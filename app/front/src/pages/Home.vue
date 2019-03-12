@@ -13,12 +13,12 @@
 
       <crosshair-icon class="icon" @click="centerOnGeolocation"/>
     </div>
-    <local-map/>
+    <local-map v-if="centerReady"/>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { MenuIcon, CrosshairIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 
@@ -33,19 +33,23 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (to.query && to.query.l) {
-      store.state.map.center = to.query.l.split(',')
-      store.state.moved = true
+      store.dispatch('setCenter', to.query.l.split(','))
+      store.dispatch('setMoved', true)
     }
     next()
   },
   mounted() {
     this.setDrawerEnable(false)
   },
+  computed: mapState(['map', 'roundedLocation']),
   methods: {
     ...mapActions(['setDrawerEnable', 'centerOnGeolocation', 'setCenter']),
     open() {
       this.setDrawerEnable(true)
       this.$parent.toggle()
+    },
+    centerReady() {
+      return this.map.center && this.roundedLocation
     }
   }
 }
