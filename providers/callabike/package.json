@@ -1,6 +1,6 @@
 {
   "name": "@multicycles/callabike",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "Call A Bike provider for multicycles",
   "author": "Pierrick <mulotmail@gmail.com>",
   "main": "lib/index.js",
