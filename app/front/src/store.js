@@ -54,7 +54,8 @@ const state = {
   myAccount: null,
   activeRides: [],
   roundedLocation: position || [48.852775, 2.369336],
-  fixGPS: false
+  fixGPS: false,
+  zones: []
 }
 
 const getters = {
@@ -231,6 +232,7 @@ const actions = {
       navigator.geolocation.getCurrentPosition(position => {
         commit('fixGPS')
         dispatch('getProviders', { lat: position.coords.latitude, lng: position.coords.longitude })
+        dispatch('getZones', { lat: position.coords.latitude, lng: position.coords.longitude })
 
         if (!state.moved) {
           state.map.center = [position.coords.latitude, position.coords.longitude]
@@ -249,6 +251,32 @@ const actions = {
         }
       })
     }
+  },
+  getZones({ commit }, position) {
+    apolloProvider.defaultClient
+      .query({
+        query: gql`
+          query($lat: Float!, $lng: Float!, $types: [ZoneType]) {
+            zones(lat: $lat, lng: $lng, types: $types) {
+              id
+              name
+              types
+              geojson
+              provider {
+                name
+                slug
+              }
+            }
+          }
+        `,
+        variables: {
+          ...position,
+          types: ['parking', 'no_parking', 'no_ride', 'ride']
+        }
+      })
+      .then(result => {
+        commit('setZones', result.data.zones)
+      })
   }
 }
 
@@ -321,6 +349,9 @@ const mutations = {
   },
   fixGPS(state) {
     state.fixGPS = true
+  },
+  setZones(state, zones) {
+    state.zones = zones
   }
 }
 

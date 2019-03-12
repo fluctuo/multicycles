@@ -40,6 +40,7 @@ async function init() {
       return [
         'providers',
         'vehicles',
+        'zones',
         'limeLogin',
         'birdLogin',
         'limeLoginOTP',
