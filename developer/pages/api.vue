@@ -72,7 +72,7 @@
 <script>
 import Contact from '~/components/Contact.vue'
 
-const onlyQueries = ['vehicles', 'providers', 'getAccounts', 'getAccount', 'getRides']
+const onlyQueries = ['vehicles', 'providers', 'zones', 'getAccounts', 'getAccount', 'getRides']
 const onlyMutations = [
   'createAccount',
   'updateAccount',
