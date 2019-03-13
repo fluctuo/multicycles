@@ -105,6 +105,7 @@ const onlyTypes = [
   'Donkey',
   'Emmy',
   'Ford',
+  'Glyde',
   'Hellobike',
   'Hive',
   'IndigoWheel',
