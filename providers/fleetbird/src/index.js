@@ -15,6 +15,14 @@ class Fleetbird {
       ...config
     })
   }
+
+  getTerritories(config = {}) {
+    return got.get(`${this.url}/territories/all`, {
+      json: true,
+      timeout: this.config.timeout,
+      ...config
+    })
+  }
 }
 
 export default Fleetbird
