@@ -123,6 +123,7 @@ const onlyTypes = [
   'Scoot',
   'SocialBicycles',
   'Spin',
+  'TelOFun',
   'Tier',
   'Voi',
   'WhiteBikes',

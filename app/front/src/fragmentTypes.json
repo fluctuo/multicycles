@@ -38,6 +38,7 @@
           { "name": "Scoot" },
           { "name": "SocialBicycles" },
           { "name": "Spin" },
+          { "name": "TelOFun" },
           { "name": "Tier" },
           { "name": "Voi" },
           { "name": "WhiteBikes" },
@@ -60,7 +61,8 @@
           { "name": "Ford" },
           { "name": "Nextbike" },
           { "name": "NiceRide" },
-          { "name": "SocialBicycles" }
+          { "name": "SocialBicycles" },
+          { "name": "TelOFun" }
         ]
       }
     ]
