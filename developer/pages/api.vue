@@ -111,6 +111,7 @@ const onlyTypes = [
   'Hive',
   'IndigoWheel',
   'Jump',
+  'Leo',
   'Lime',
   'Mobike',
   'Moovin',
