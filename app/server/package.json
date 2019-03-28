@@ -26,7 +26,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-passport": "^4.1.1",
     "node-fetch": "^2.3.0",
-    "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth": "^2.0.0",
     "pg": "^7.8.0"
   },
   "devDependencies": {
