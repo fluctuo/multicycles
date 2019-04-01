@@ -86,6 +86,14 @@ const onlyMutations = [
   'birdLoginOTP',
   'birdLoginRefresh',
   'birdLoginRefreshOTP',
+  'tierLogin',
+  'tierLoginRefresh',
+  'hiveLogin',
+  'hiveLoginRefresh',
+  'flashLogin',
+  'flashLoginOTP',
+  'flashLoginRefresh',
+  'flashLoginRefreshOTP',
   'startRide',
   'stopRide'
 ]

@@ -34,7 +34,7 @@
   },
   "account": {
     "title": "My Account",
-    "intro": "Combine all your accounts in a single application. Link your accounts to take full advantage of Multicycles. You'll never have to switch from one app to another to find the right vehicle for you again.",
+    "intro": "Combine all your accounts in a single account. Link your accounts to take full advantage of Multicycles. You'll never have to switch from one app to another to find the right vehicle for you again.",
     "linkedAccount": "Linked account",
     "needLogin": "Need to login",
     "login": "Login"
@@ -46,7 +46,11 @@
     "limeStep1": "To link your Lime account, set your phone number. You ll receive a message with a password. Please use internationnal format.",
     "limeStep2": "Put the received code number on you phone.",
     "birdStep1": "To link your Bird account, set your email. You ll receive a message with a token at the bottom.",
-    "birdStep2": "Put the token received by email"
+    "birdStep2": "Put the token received by email",
+    "fleedbirdStep": "To link your account, set your email and password.",
+    "phoneStep1": "To link your account, set your phone number. You ll receive a message with a password. Please use internationnal format.",
+    "phoneStep2": "Put the token received by email",
+    "passwordStep": "Put your password to refresh auth"
   },
   "ActiveRide": {
     "riding": "Currently riding ... 🚴🏻‍",

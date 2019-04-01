@@ -2,6 +2,9 @@
   <div class="providers">
     <my-sub-account provider="lime"/>
     <my-sub-account provider="bird"/>
+    <my-sub-account provider="tier"/>
+    <my-sub-account provider="hive"/>
+    <my-sub-account provider="flash"/>
   </div>
 </template>
 
