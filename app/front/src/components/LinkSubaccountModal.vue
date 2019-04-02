@@ -142,6 +142,120 @@ const providerRequirements = {
         }
       ]
     }
+  },
+  tier: {
+    login: {
+      steps: [
+        {
+          description: 'fleedbirdStep',
+          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          mutation: `
+            mutation($email: String!, $password: String!){
+              lastStep : tierLogin(email: $email, password: $password) {
+                puid
+              }
+            }
+          `
+        }
+      ]
+    },
+    refresh: {
+      steps: [
+        {
+          description: 'passwordStep',
+          fields: [{ name: 'password', type: 'password' }],
+          mutation: `
+        mutation($puid: String!, $password: String!){
+          tierLoginRefresh(puid: $puid, password: $password) {
+            puid
+          }
+        }
+      `
+        }
+      ]
+    }
+  },
+  hive: {
+    login: {
+      steps: [
+        {
+          description: 'fleedbirdStep',
+          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          mutation: `
+            mutation($email: String!, $password: String!){
+              lastStep : hiveLogin(email: $email, password: $password) {
+                puid
+              }
+            }
+          `
+        }
+      ]
+    },
+    refresh: {
+      steps: [
+        {
+          description: 'passwordStep',
+          fields: [{ name: 'password', type: 'password' }],
+          mutation: `
+        mutation($puid: String!, $password: String!){
+          hiveLoginRefresh(puid: $puid, password: $password) {
+            puid
+          }
+        }
+      `
+        }
+      ]
+    }
+  },
+  flash: {
+    login: {
+      steps: [
+        {
+          description: 'phoneStep1',
+          fields: [{ name: 'phone', type: 'text' }],
+          mutation: `
+          mutation($phone: String!){
+            flashLogin(phone: $phone) {
+              phone
+            }
+          }
+        `
+        },
+        {
+          description: 'phoneStep2',
+          fields: [{ name: 'otp', type: 'number' }],
+          mutation: `
+          mutation($phone: String!, $otp: String!){
+            lastStep : flashLoginOTP(phone: $phone, otp: $otp) {
+              puid
+            }
+          }
+        `
+        }
+      ]
+    },
+    refresh: {
+      initMutation: `
+        mutation($puid: String!){
+          flashLoginRefresh(puid: $puid) {
+            nextStep
+          }
+        }
+      `,
+      steps: [
+        {
+          description: 'phoneStep2',
+          fields: [{ name: 'otp', type: 'number' }],
+          mutation: `
+        mutation($puid: String!, $otp: String!){
+          flashLoginRefreshOTP(puid: $puid, otp: $otp) {
+            puid
+          }
+        }
+      `
+        }
+      ]
+    }
   }
 }
 
@@ -168,10 +282,12 @@ export default {
     if (this.refresh) {
       this.action = 'refresh'
 
-      this.$apolloProvider.defaultClient.mutate({
-        mutation: gql(providerRequirements[this.provider].refresh.initMutation),
-        variables: { puid: this.subAccount.puid }
-      })
+      if (providerRequirements[this.provider].refresh.initMutation) {
+        this.$apolloProvider.defaultClient.mutate({
+          mutation: gql(providerRequirements[this.provider].refresh.initMutation),
+          variables: { puid: this.subAccount.puid }
+        })
+      }
     } else {
       this.action = 'login'
     }

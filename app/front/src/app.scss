@@ -32,7 +32,10 @@ $iconSize: 40px;
     h1 {
       text-align: center;
       flex-grow: 1;
-      margin-left: -59px;
+    }
+
+    a {
+      position: absolute;
     }
 
     svg {

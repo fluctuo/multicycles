@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <a @click="showScannerModal = true" class="scan-button">
-      <camera-icon/>Ride
+      <camera-icon/>Unlock
     </a>
 
     <transition name="modal">
@@ -34,32 +34,13 @@ import { QrcodeStream } from 'vue-qrcode-reader'
 import { CameraIcon } from 'vue-feather-icons'
 import { mapActions } from 'vuex'
 
-const regexps = [/^https:\/\/ride\.(bird)\.co\/(.+)$/m, /^https:\/\/(lime)\.bike\/bc\/v1\/(.+)$/m]
-
-function parseQrcode(decodedString) {
-  let provider
-  let id
-
-  for (let index = 0; index < regexps.length; index++) {
-    const r = regexps[index]
-    const parsed = decodedString.match(r)
-
-    if (parsed && parsed.length === 3) {
-      provider = parsed[1]
-      id = parsed[2]
-      break
-    }
-  }
-
-  return provider && id ? { provider, id } : false
-}
-
 export default {
   name: 'QrcodeScanner',
   components: {
     QrcodeStream,
     CameraIcon
   },
+  props: ['provider'],
   data() {
     return {
       paused: false,
@@ -82,21 +63,18 @@ export default {
     ...mapActions(['startMyRide']),
     onDecode(decoded) {
       this.paused = true
-
       this.validating = true
 
-      const parsed = parseQrcode(decoded)
-
-      if (parsed && parsed.provider && parsed.id) {
-        if (!this.isLogged || !this.subAccountProviders.includes(parsed.provider)) {
+      if (decoded) {
+        if (!this.isLogged || !this.subAccountProviders.includes(this.provider)) {
           this.paused = false
           this.showScannerModal = false
           return this.$router.push({ name: 'account' })
         }
 
         this.startMyRide({
-          provider: parsed.provider,
-          token: parsed.id
+          provider: this.provider,
+          token: decoded
         })
           .then(() => {
             this.paused = false
@@ -121,37 +99,28 @@ export default {
 @import '../app.scss';
 
 .scan-button {
-  $size: 150px;
-
-  position: absolute;
-  z-index: 401;
-  bottom: 66px;
-  left: 50%;
-  margin-left: -1 * $size / 2;
-
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  width: $size;
-  height: $size;
-  background:$mainColor;
-  border-radius: 50%;
-  color: #fff !important;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  padding: 5px;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  border-radius: 50px;
+  color: $mainColor !important;
+  margin: 10px 0;
   font-size: 2em;
+  cursor: pointer;
 
   svg {
-    width: $size / 2;
-    height: auto;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
   }
-}
 
-@media (max-width: 575px)  {
-  .scan-button {
-    transform: scale(0.7);
+  &:hover {
+    box-shadow: inset 0 0 5px 1px #afafaf
   }
 }
 

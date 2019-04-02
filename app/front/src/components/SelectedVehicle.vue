@@ -44,7 +44,11 @@
         </div>
       </div>
       <div class="subdetail">
-        <div>
+        <qrcode-scanner
+          v-if="!hasActiveRides && unlockWhitelisted"
+          :provider="vehicle.provider.slug"
+        />
+        <div v-else>
           <a
             v-if="isMobileAndDeeplink('ios')"
             :href="vehicle.provider.deepLink.ios"
@@ -80,14 +84,16 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import MobileDetect from 'mobile-detect'
 import { ExternalLinkIcon } from 'vue-feather-icons'
+import QrcodeScanner from './QrcodeScanner'
 
 const md = new MobileDetect(window.navigator.userAgent)
+const unlockWhitelist = ['lime', 'bird', 'tier', 'hive', 'flash']
 
 export default {
-  components: { ExternalLinkIcon },
+  components: { ExternalLinkIcon, QrcodeScanner },
   props: ['vehicle'],
   data: () => ({
     detail: false,
@@ -95,6 +101,14 @@ export default {
     isiOs: md.is('iOS'),
     isComputer: md.phone() === null && md.tablet() === null
   }),
+  computed: {
+    ...mapState({
+      hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
+    }),
+    unlockWhitelisted: function() {
+      return unlockWhitelist.includes(this.vehicle.provider.slug)
+    }
+  },
   methods: {
     ...mapActions(['selectVehicle']),
     getVehicleTypeKey(vehicle) {
@@ -228,7 +242,7 @@ $border-radius: 5px;
       background-color: lighten($mainColor, 20%);
 
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       flex-direction: row-reverse;
 
       .open-native {

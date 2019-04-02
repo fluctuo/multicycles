@@ -86,6 +86,14 @@ const onlyMutations = [
   'birdLoginOTP',
   'birdLoginRefresh',
   'birdLoginRefreshOTP',
+  'tierLogin',
+  'tierLoginRefresh',
+  'hiveLogin',
+  'hiveLoginRefresh',
+  'flashLogin',
+  'flashLoginOTP',
+  'flashLoginRefresh',
+  'flashLoginRefreshOTP',
   'startRide',
   'stopRide'
 ]
@@ -94,6 +102,7 @@ const onlyTypes = [
   'Bcycle',
   'Bird',
   'BlueBikes',
+  'Bolt',
   'Byke',
   'CallABike',
   'CapitalBikeshare',

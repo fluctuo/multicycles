@@ -60,7 +60,6 @@
           :vehicle="$store.state.selectedVehicle"
         ></selected-vehicle>
       </transition>
-      <qrcode-scanner v-if="!hasActiveRides"/>
     </div>
   </div>
 </template>
@@ -72,7 +71,6 @@ import { mapActions, mapState } from 'vuex'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
-import QrcodeScanner from './QrcodeScanner'
 
 export default {
   name: 'Map',
@@ -82,8 +80,7 @@ export default {
     LMarker,
     LGeoJson,
     'v-progress': Progress,
-    SelectedVehicle,
-    QrcodeScanner
+    SelectedVehicle
   },
   data() {
     return {

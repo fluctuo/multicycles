@@ -41,6 +41,7 @@ async function init() {
         'providers',
         'vehicles',
         'zones',
+        'linkSubAccount',
         'limeLogin',
         'birdLogin',
         'limeLoginOTP',
@@ -49,7 +50,14 @@ async function init() {
         'limeLoginRefreshOTP',
         'birdLoginRefresh',
         'birdLoginRefreshOTP',
-        'linkSubAccount'
+        'tierLogin',
+        'tierLoginRefresh',
+        'hiveLogin',
+        'hiveLoginRefresh',
+        'flashLogin',
+        'flashLoginOTP',
+        'flashLoginRefresh',
+        'flashLoginRefreshOTP'
       ].includes(rootField)
     })
   ])
