@@ -34,7 +34,7 @@ module.exports = app => {
 
   app.use(passport.initialize())
 
-  router.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }))
+  router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
 
   router.get(
     '/auth/google/callback',
