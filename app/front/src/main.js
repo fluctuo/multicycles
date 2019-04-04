@@ -6,7 +6,6 @@ if (process.env.NODE_ENV !== 'production') {
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAnalytics from 'vue-analytics'
-import VueApollo from 'vue-apollo'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 import DrawerLayout from 'vue-drawer-layout'
@@ -17,23 +16,16 @@ import router from './router'
 import apolloProvider from './apollo'
 import i18n from './i18n'
 import store from './store'
-
-if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js').catch(registrationError => {
-      console.log('SW registration failed: ', registrationError)
-    })
-  })
-}
+import './registerServiceWorker'
 
 window.addEventListener('beforeinstallprompt', event => {
   event.preventDefault()
   window.installPromptEvent = event
 })
 
-if (process.env.UA_ANALYTICS) {
+if (process.env.VUE_APP_UA_ANALYTICS) {
   Vue.use(VueAnalytics, {
-    id: process.env.UA_ANALYTICS,
+    id: process.env.VUE_APP_UA_ANALYTICS,
     router,
     autoTracking: {
       exception: true
@@ -41,8 +33,8 @@ if (process.env.UA_ANALYTICS) {
   })
 }
 
-if (process.env.SENTRY_KEY) {
-  Raven.config(process.env.SENTRY_KEY)
+if (process.env.VUE_APP_SENTRY_KEY) {
+  Raven.config(process.env.VUE_APP_SENTRY_KEY)
     .addPlugin(RavenVue, Vue)
     .install()
 }
@@ -52,7 +44,7 @@ Vue.config.productionTip = false
 Vue.use(
   VueAxios,
   Axios.create({
-    baseURL: process.env.API_URL
+    baseURL: process.env.VUE_APP_API_URL
   })
 )
 

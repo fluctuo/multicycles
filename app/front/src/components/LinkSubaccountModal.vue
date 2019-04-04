@@ -346,9 +346,6 @@ export default {
             }
           }
         })
-        .catch(err => {
-          console.log('ERROR', err)
-        })
     },
     linkSubaccount(puid) {
       return this.$apolloProvider.defaultClient
@@ -368,9 +365,6 @@ export default {
         .then(() => this.login())
         .then(() => {
           this.$emit('close')
-        })
-        .catch(err => {
-          console.log('ERROR', err)
         })
     }
   }

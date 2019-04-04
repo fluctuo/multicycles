@@ -8,7 +8,7 @@ import VueApollo from 'vue-apollo'
 import introspectionQueryResultData from './fragmentTypes.json'
 
 const httpLink = new HttpLink({
-  uri: `${process.env.API_URL}/graphql`
+  uri: `${process.env.VUE_APP_API_URL}/graphql`
 })
 
 const authLink = setContext((_, { headers }) => {

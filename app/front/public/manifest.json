@@ -1,0 +1,423 @@
+{
+  "name": "Multicycles",
+  "short_name": "Multicycles",
+  "lang": "en",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "rgb(18, 168, 11)",
+  "background_color": "rgb(18, 168, 11)",
+  "icons": [
+    {
+      "src": "/Square71x71Logo.scale-400.png",
+      "sizes": "284x284"
+    },
+    {
+      "src": "/Square71x71Logo.scale-200.png",
+      "sizes": "142x142"
+    },
+    {
+      "src": "/Square71x71Logo.scale-100.png",
+      "sizes": "71x71"
+    },
+    {
+      "src": "/Square71x71Logo.scale-150.png",
+      "sizes": "107x107"
+    },
+    {
+      "src": "/Square71x71Logo.scale-125.png",
+      "sizes": "89x89"
+    },
+    {
+      "src": "/Square150x150Logo.scale-400.png",
+      "sizes": "600x600"
+    },
+    {
+      "src": "/Square150x150Logo.scale-200.png",
+      "sizes": "300x300"
+    },
+    {
+      "src": "/Square150x150Logo.scale-100.png",
+      "sizes": "150x150"
+    },
+    {
+      "src": "/Square150x150Logo.scale-150.png",
+      "sizes": "225x225"
+    },
+    {
+      "src": "/Square150x150Logo.scale-125.png",
+      "sizes": "188x188"
+    },
+    {
+      "src": "/Wide310x150Logo.scale-400.png",
+      "sizes": "1240x600"
+    },
+    {
+      "src": "/Wide310x150Logo.scale-200.png",
+      "sizes": "620x300"
+    },
+    {
+      "src": "/Wide310x150Logo.scale-100.png",
+      "sizes": "310x150"
+    },
+    {
+      "src": "/Wide310x150Logo.scale-150.png",
+      "sizes": "465x225"
+    },
+    {
+      "src": "/Wide310x150Logo.scale-125.png",
+      "sizes": "388x188"
+    },
+    {
+      "src": "/Square310x310Logo.scale-400.png",
+      "sizes": "1240x1240"
+    },
+    {
+      "src": "/Square310x310Logo.scale-200.png",
+      "sizes": "620x620"
+    },
+    {
+      "src": "/Square310x310Logo.scale-100.png",
+      "sizes": "310x310"
+    },
+    {
+      "src": "/Square310x310Logo.scale-150.png",
+      "sizes": "465x465"
+    },
+    {
+      "src": "/Square310x310Logo.scale-125.png",
+      "sizes": "388x388"
+    },
+    {
+      "src": "/Square44x44Logo.scale-400.png",
+      "sizes": "176x176"
+    },
+    {
+      "src": "/Square44x44Logo.scale-200.png",
+      "sizes": "88x88"
+    },
+    {
+      "src": "/Square44x44Logo.scale-100.png",
+      "sizes": "44x44"
+    },
+    {
+      "src": "/Square44x44Logo.scale-150.png",
+      "sizes": "66x66"
+    },
+    {
+      "src": "/Square44x44Logo.scale-125.png",
+      "sizes": "55x55"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-256.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-48.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-24.png",
+      "sizes": "24x24"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-16.png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-256_altform-unplated.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-48_altform-unplated.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-24_altform-unplated.png",
+      "sizes": "24x24"
+    },
+    {
+      "src": "/Square44x44Logo.targetsize-16_altform-unplated.png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/StoreLogo.scale-400.png",
+      "sizes": "200x200"
+    },
+    {
+      "src": "/StoreLogo.scale-200.png",
+      "sizes": "100x100"
+    },
+    {
+      "src": "/StoreLogo.scale-150.png",
+      "sizes": "75x75"
+    },
+    {
+      "src": "/StoreLogo.scale-125.png",
+      "sizes": "63x63"
+    },
+    {
+      "src": "/StoreLogo.scale-100.png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "/StoreLogo.png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "/SplashScreen.scale-400.png",
+      "sizes": "2480x1200"
+    },
+    {
+      "src": "/SplashScreen.scale-200.png",
+      "sizes": "1240x600"
+    },
+    {
+      "src": "/SplashScreen.scale-150.png",
+      "sizes": "930x450"
+    },
+    {
+      "src": "/SplashScreen.scale-125.png",
+      "sizes": "775x375"
+    },
+    {
+      "src": "/SplashScreen.scale-100.png",
+      "sizes": "620x300"
+    },
+    {
+      "src": "/windows-smallsquare-24-24.png",
+      "sizes": "24x24"
+    },
+    {
+      "src": "/windows-smallsquare-30-30.png",
+      "sizes": "30x30"
+    },
+    {
+      "src": "/windows-smallsquare-42-42.png",
+      "sizes": "42x42"
+    },
+    {
+      "src": "/windows-smallsquare-54-54.png",
+      "sizes": "54x54"
+    },
+    {
+      "src": "/windows-splashscreen-1116-540.png",
+      "sizes": "1116x540"
+    },
+    {
+      "src": "/windows-splashscreen-868-420.png",
+      "sizes": "868x420"
+    },
+    {
+      "src": "/windows-splashscreen-620-300.png",
+      "sizes": "620x300"
+    },
+    {
+      "src": "/windows-squarelogo-270-270.png",
+      "sizes": "270x270"
+    },
+    {
+      "src": "/windows-squarelogo-210-210.png",
+      "sizes": "210x210"
+    },
+    {
+      "src": "/windows-squarelogo-150-150.png",
+      "sizes": "150x150"
+    },
+    {
+      "src": "/windows-squarelogo-120-120.png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/windows-storelogo-90-90.png",
+      "sizes": "90x90"
+    },
+    {
+      "src": "/windows-storelogo-70-70.png",
+      "sizes": "70x70"
+    },
+    {
+      "src": "/windows-storelogo-50-50.png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "/windowsphone-appicon-106-106.png",
+      "sizes": "106x106"
+    },
+    {
+      "src": "/windowsphone-appicon-62-62.png",
+      "sizes": "62x62"
+    },
+    {
+      "src": "/windowsphone-appicon-44-44.png",
+      "sizes": "44x44"
+    },
+    {
+      "src": "/windowsphone-mediumtile-360-360.png",
+      "sizes": "360x360"
+    },
+    {
+      "src": "/windowsphone-mediumtile-210-210.png",
+      "sizes": "210x210"
+    },
+    {
+      "src": "/windowsphone-mediumtile-150-150.png",
+      "sizes": "150x150"
+    },
+    {
+      "src": "/windowsphone-smalltile-170-170.png",
+      "sizes": "170x170"
+    },
+    {
+      "src": "/windowsphone-smalltile-99-99.png",
+      "sizes": "99x99"
+    },
+    {
+      "src": "/windowsphone-smalltile-71-71.png",
+      "sizes": "71x71"
+    },
+    {
+      "src": "/windowsphone-storelogo-120-120.png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/windowsphone-storelogo-70-70.png",
+      "sizes": "70x70"
+    },
+    {
+      "src": "/windowsphone-storelogo-50-50.png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "/android-launchericon-512-512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/android-launchericon-192-192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/android-launchericon-144-144.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/android-launchericon-96-96.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/android-launchericon-72-72.png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/android-launchericon-48-48.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/ios-appicon-1024-1024.png",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "/ios-appicon-180-180.png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "/ios-appicon-152-152.png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/ios-appicon-120-120.png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/ios-appicon-76-76.png",
+      "sizes": "76x76"
+    },
+    {
+      "src": "/ios-launchimage-750-1334.png",
+      "sizes": "750x1334"
+    },
+    {
+      "src": "/ios-launchimage-1334-750.png",
+      "sizes": "1334x750"
+    },
+    {
+      "src": "/ios-launchimage-1242-2208.png",
+      "sizes": "1242x2208"
+    },
+    {
+      "src": "/ios-launchimage-2208-1242.png",
+      "sizes": "2208x1242"
+    },
+    {
+      "src": "/ios-launchimage-640-960.png",
+      "sizes": "640x960"
+    },
+    {
+      "src": "/ios-launchimage-640-1136.png",
+      "sizes": "640x1136"
+    },
+    {
+      "src": "/ios-launchimage-1536-2048.png",
+      "sizes": "1536x2048"
+    },
+    {
+      "src": "/ios-launchimage-2048-1536.png",
+      "sizes": "2048x1536"
+    },
+    {
+      "src": "/ios-launchimage-768-1024.png",
+      "sizes": "768x1024"
+    },
+    {
+      "src": "/ios-launchimage-1024-768.png",
+      "sizes": "1024x768"
+    },
+    {
+      "src": "/chrome-extensionmanagementpage-48-48.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/chrome-favicon-16-16.png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/chrome-installprocess-128-128.png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/firefox-marketplace-512-512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/firefox-marketplace-128-128.png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/firefox-general-256-256.png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/firefox-general-128-128.png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/firefox-general-90-90.png",
+      "sizes": "90x90"
+    },
+    {
+      "src": "/firefox-general-64-64.png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/firefox-general-48-48.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/firefox-general-32-32.png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/firefox-general-16-16.png",
+      "sizes": "16x16"
+    }
+  ]
+}

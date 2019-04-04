@@ -2,7 +2,7 @@
   <div class="drawer">
     <ul>
       <li>
-        <img src="/static/bicyclist.svg" alt="mutlicycles logo" class="logo">
+        <img src="/bicyclist.svg" alt="mutlicycles logo" class="logo">
       </li>
       <li>
         <router-link to="/" @click.native="handleToggleDrawer">

@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import L from 'leaflet'
 import { LMap, LTileLayer, LMarker, LGeoJson } from 'vue2-leaflet'
 import gql from 'graphql-tag'
 import { mapActions, mapState } from 'vuex'
@@ -85,7 +86,7 @@ export default {
   data() {
     return {
       options: {
-        mapboxKey: process.env.MAPBOX_KEY
+        mapboxKey: process.env.VUE_APP_MAPBOX_KEY
       },
       attribution:
         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
@@ -117,7 +118,7 @@ export default {
   },
   methods: {
     ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
-    zoomEnd(event) {
+    zoomEnd() {
       this.map.zoom = this.$refs.map.mapObject.getZoom()
     },
     moveStart() {
@@ -129,7 +130,7 @@ export default {
         this.setMoved(true)
       }
     },
-    moveCenter(event) {
+    moveCenter() {
       history.pushState(null, null, `/?l=${this.$refs.map.center.join(',')}`)
       this.setCenter(this.$refs.map.center)
     },
@@ -142,7 +143,6 @@ export default {
         })
       }
 
-      let glyph = ''
       let iconUrl
       let iconRetinaUrl
 

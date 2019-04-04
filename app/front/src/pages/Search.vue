@@ -16,7 +16,7 @@
 
       <search-icon class="icon"/>
 
-      <div slot="suggestion-item" slot-scope="{ suggestion, query }" class="adress-suggestion">
+      <div slot="suggestion-item" slot-scope="{ suggestion }" class="adress-suggestion">
         <div>{{ suggestion.place_name }}</div>
       </div>
     </div>
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       searchedAdress: null,
-      mapboxKey: process.env.MAPBOX_KEY,
+      mapboxKey: process.env.VUE_APP_MAPBOX_KEY,
       addresses: []
     }
   },

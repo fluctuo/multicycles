@@ -10,7 +10,7 @@
 export default {
   methods: {
     loginUrl(service) {
-      return `${process.env.API_URL}/auth/${service}`
+      return `${process.env.VUE_APP_API_URL}/auth/${service}`
     }
   }
 }

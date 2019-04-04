@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import { MenuIcon, CrosshairIcon, LayersIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../node_modules/leaflet/dist/leaflet.css';
+@import '~leaflet/dist/leaflet.css';
 @import '../app.scss';
 
 .wrapper {

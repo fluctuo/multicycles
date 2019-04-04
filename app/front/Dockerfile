@@ -1,11 +1,12 @@
-FROM node:8.9 as build-stage
+FROM node:10 as build-stage
 WORKDIR /app
-ARG BUILD_AS_BETA
-ENV BUILD_AS_BETA=${BUILD_AS_BETA}
-COPY package*.json ./
-RUN npm install
-ADD . .
-RUN NODE_ENV=production npm run build
+ARG MODE=production
+ENV MODE=${MODE}
+COPY package*.json .
+COPY yarn.lock .
+RUN yarn install
+COPY . .
+RUN yarn run build --mode ${MODE}
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html

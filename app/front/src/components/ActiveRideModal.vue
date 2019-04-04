@@ -9,7 +9,8 @@
 
           <div class="modal-body">
             <p>{{ startFromNow }}</p>
-            <button class="btn--success" :disabled="stoping" @click="stop()">Stop ride
+            <button class="btn--success" :disabled="stoping" @click="stop()">
+              Stop ride
               <loader-icon v-if="stoping" class="spinner"/>
             </button>
           </div>
@@ -20,7 +21,6 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
 import { LoaderIcon } from 'vue-feather-icons'
 

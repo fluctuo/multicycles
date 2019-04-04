@@ -82,7 +82,9 @@ export default {
       let logo
       try {
         logo = require(`../assets/providers/${provider.slug}.jpg`)
-      } catch (e) {}
+      } catch (e) {
+        return null
+      }
 
       return logo
     },

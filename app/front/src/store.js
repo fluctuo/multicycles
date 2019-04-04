@@ -35,8 +35,6 @@ function roundLocation(l) {
   return Math.round(l * 1000) / 1000
 }
 
-let geolocationWatcher
-
 const state = {
   lang: getlanguage(),
   geolocation: position || [48.852775, 2.369336],
@@ -218,17 +216,14 @@ const actions = {
             lng: state.geolocation[1]
           }
         })
-        .then(result => {
+        .then(() => {
           commit('setActiveRides', null)
         })
     }
   },
   startGeolocation({ commit, state, dispatch }) {
     // request lat lng by ip
-    if (!navigator.geolocation) {
-      console.warn('haha navigator.geolocation doesnt exist')
-      // fallback
-    } else {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         commit('fixGPS')
         dispatch('getProviders', { lat: position.coords.latitude, lng: position.coords.longitude })
@@ -242,7 +237,7 @@ const actions = {
         }
       })
 
-      geolocationWatcher = navigator.geolocation.watchPosition(position => {
+      navigator.geolocation.watchPosition(position => {
         state.geolocation = [position.coords.latitude, position.coords.longitude]
 
         if (!state.moved) {
