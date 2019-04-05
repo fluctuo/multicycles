@@ -138,7 +138,7 @@ export default {
       if (vehicle === 'geo') {
         return L.icon({
           prefix: '',
-          iconUrl: '/static/glyph-marker-dot.png',
+          iconUrl: '/glyph-marker-dot.png',
           iconSize: [24, 24]
         })
       }
