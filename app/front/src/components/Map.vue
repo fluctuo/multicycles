@@ -10,7 +10,7 @@
         :zoom="map.zoom"
         :minZoom="map.minZoom"
         :center="center"
-        @moveend="moveCenter"
+        @update:center="moveCenter"
         @dragstart="moveStart"
         @zoomend="zoomEnd"
         :options="map.options"
@@ -130,9 +130,9 @@ export default {
         this.setMoved(true)
       }
     },
-    moveCenter() {
-      history.pushState(null, null, `/?l=${this.$refs.map.center.join(',')}`)
-      this.setCenter(this.$refs.map.center)
+    moveCenter(center) {
+      history.pushState(null, null, `/?l=${center.lat},${center.lng}`)
+      this.setCenter([center.lat, center.lng])
     },
     getIconByProvider(vehicle) {
       if (vehicle === 'geo') {
