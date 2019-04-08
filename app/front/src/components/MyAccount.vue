@@ -5,6 +5,7 @@
     <my-sub-account provider="tier"/>
     <my-sub-account provider="hive"/>
     <my-sub-account provider="flash"/>
+    <my-sub-account provider="ufo"/>
   </div>
 </template>
 

@@ -52,6 +52,8 @@ async function init() {
         'birdLoginRefreshOTP',
         'tierLogin',
         'tierLoginRefresh',
+        'ufoLogin',
+        'ufoLoginRefresh',
         'hiveLogin',
         'hiveLoginRefresh',
         'flashLogin',

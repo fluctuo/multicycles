@@ -175,6 +175,38 @@ const providerRequirements = {
       ]
     }
   },
+  ufo: {
+    login: {
+      steps: [
+        {
+          description: 'fleedbirdStep',
+          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          mutation: `
+            mutation($email: String!, $password: String!){
+              lastStep : ufoLogin(email: $email, password: $password) {
+                puid
+              }
+            }
+          `
+        }
+      ]
+    },
+    refresh: {
+      steps: [
+        {
+          description: 'passwordStep',
+          fields: [{ name: 'password', type: 'password' }],
+          mutation: `
+        mutation($puid: String!, $password: String!){
+          ufoLoginRefresh(puid: $puid, password: $password) {
+            puid
+          }
+        }
+      `
+        }
+      ]
+    }
+  },
   hive: {
     login: {
       steps: [
