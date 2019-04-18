@@ -15,6 +15,7 @@ const providers = {
   gobeebike: 'GobeeBike',
   hellobike: 'Hellobike',
   indigowheel: 'IndigoWheel',
+  israbike: 'IsraBike',
   jump: 'Jump',
   lime: 'Lime',
   mobike: 'Mobike',

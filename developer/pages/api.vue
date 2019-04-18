@@ -119,6 +119,7 @@ const onlyTypes = [
   'Hellobike',
   'Hive',
   'IndigoWheel',
+  'IsraBike',
   'Jump',
   'Leo',
   'Lime',
