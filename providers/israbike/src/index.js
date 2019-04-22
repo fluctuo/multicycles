@@ -10,14 +10,13 @@ class Israbike {
 
   static getProviderDetails() {
     return {
-      name: 'Israbike',
-      slug: 'Israbike',
+      name: 'IsraBike',
+      slug: 'israbike',
       website: 'https://www.facebook.com/IsraBike/',
       discountCode: null,
       app: {
         android: 'https://play.google.com/store/apps/details?id=com.gesila.israbike',
-        ios:
-          'https://itunes.apple.com/us/app/israbike-%D7%99%D7%A9%D7%A8%D7%90%D7%91%D7%99%D7%99%D7%A7/id1291237814?mt=8'
+        ios: 'https://itunes.apple.com/us/app/id1291237814'
       },
       deepLink: {
         android: null,
@@ -27,10 +26,7 @@ class Israbike {
   }
 
   getObjects({ lat, lng } = {}, config = {}) {
-    return Promise.all([
-      this.sharingos.getVehicules({ lat, lng }, config),
-      this.sharingos.getScooters({ lat, lng }, config)
-    ])
+    return this.sharingos.getVehicules({ lat, lng }, config)
   }
 }
 
