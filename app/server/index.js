@@ -18,7 +18,28 @@ const schema = require('./schema')
 const app = new Koa()
 
 app.use(bodyParser())
-app.use(cors())
+app.use(
+  cors({
+    origin: process.env.FRONT_BASE_URL
+  })
+)
+
+app.use((ctx, next) => {
+  if (
+    !ctx.request.headers ||
+    !ctx.request.headers.origin ||
+    ctx.request.headers.origin !== process.env.FRONT_BASE_URL
+  ) {
+    ctx.body = JSON.stringify({
+      data: {
+        vehicles: []
+      }
+    })
+    return
+  } else {
+    return next()
+  }
+})
 
 passport(app)
 
