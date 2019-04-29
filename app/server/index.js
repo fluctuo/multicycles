@@ -12,11 +12,24 @@ const {
 } = require('apollo-server')
 const bodyParser = require('koa-bodyparser')
 const jwt = require('jsonwebtoken')
+const RateLimit = require('koa2-ratelimit').RateLimit
 const passport = require('./passport')
 const schema = require('./schema')
 
 const app = new Koa()
 
+const limiter = RateLimit.middleware({
+  interval: 1 * 60 * 1000,
+  max: process.env.RATE_LIMIT_PER_MIN || 20
+})
+
+app.use(async (ctx, next) => {
+  if (ctx.request.method === 'POST' && ctx.request.path === '/graphql') {
+    return limiter(ctx, next)
+  }
+
+  return next()
+})
 app.use(bodyParser())
 app.use(
   cors({
