@@ -18,6 +18,8 @@ const schema = require('./schema')
 
 const app = new Koa()
 
+app.proxy = true
+
 const limiter = RateLimit.middleware({
   interval: 1 * 60 * 1000,
   max: process.env.RATE_LIMIT_PER_MIN || 20
