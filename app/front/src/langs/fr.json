@@ -24,7 +24,7 @@
     "CAR": "Voiture"
   },
   "selectedVehicle": {
-    "bikes": "vélos",
+    "vehicle": "véhicule",
     "docks": "docks",
     "unlockInTheApp": "déverrouiller dans l'app"
   },

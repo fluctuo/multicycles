@@ -25,7 +25,7 @@
     "CAR": "Car"
   },
   "selectedVehicle": {
-    "bikes": "bikes",
+    "vehicle": "vehicle",
     "docks": "docks",
     "unlockInTheApp": "Unlock in the app"
   },

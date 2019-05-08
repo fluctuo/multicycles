@@ -24,7 +24,7 @@
     "CAR": "汽车"
   },
   "selectedVehicle": {
-    "bikes": "自行车",
+    "vehicle": "车辆",
     "docks": "码头",
     "unlockInTheApp": "在应用中解锁程序"
   },
