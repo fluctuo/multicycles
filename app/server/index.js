@@ -41,9 +41,8 @@ app.use(
 
 app.use((ctx, next) => {
   if (
-    !ctx.request.headers ||
-    !ctx.request.headers.origin ||
-    ctx.request.headers.origin !== process.env.FRONT_BASE_URL
+    ctx.request.method === 'POST' &&
+    (!ctx.request.headers || !ctx.request.headers.origin || ctx.request.headers.origin !== process.env.FRONT_BASE_URL)
   ) {
     ctx.body = JSON.stringify({
       data: {
