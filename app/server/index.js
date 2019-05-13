@@ -94,7 +94,9 @@ async function init() {
         'flashLogin',
         'flashLoginOTP',
         'flashLoginRefresh',
-        'flashLoginRefreshOTP'
+        'flashLoginRefreshOTP',
+        'moowLogin',
+        'moowLoginRefresh'
       ].includes(rootField)
     })
   ])

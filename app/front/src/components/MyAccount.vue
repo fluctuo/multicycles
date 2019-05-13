@@ -6,6 +6,7 @@
     <my-sub-account provider="hive"/>
     <my-sub-account provider="flash"/>
     <my-sub-account provider="ufo"/>
+    <my-sub-account provider="moow"/>
   </div>
 </template>
 

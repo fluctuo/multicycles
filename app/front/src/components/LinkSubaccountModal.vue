@@ -288,6 +288,38 @@ const providerRequirements = {
         }
       ]
     }
+  },
+  moow: {
+    login: {
+      steps: [
+        {
+          description: 'fleedbirdStep',
+          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          mutation: `
+            mutation($email: String!, $password: String!){
+              lastStep : moowLogin(email: $email, password: $password) {
+                puid
+              }
+            }
+          `
+        }
+      ]
+    },
+    refresh: {
+      steps: [
+        {
+          description: 'passwordStep',
+          fields: [{ name: 'password', type: 'password' }],
+          mutation: `
+        mutation($puid: String!, $password: String!){
+          moowLoginRefresh(puid: $puid, password: $password) {
+            puid
+          }
+        }
+      `
+        }
+      ]
+    }
   }
 }
 

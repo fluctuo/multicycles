@@ -128,6 +128,7 @@ const onlyTypes = [
   'Lime',
   'Mobike',
   'Moovin',
+  'Moow',
   'Nextbike',
   'NiceRide',
   'Obike',
