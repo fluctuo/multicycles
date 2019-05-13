@@ -105,6 +105,7 @@ const onlyTypes = [
   'Bird',
   'BlueBikes',
   'Bolt',
+  'BoltMobility',
   'Byke',
   'CallABike',
   'CapitalBikeshare',
