@@ -145,6 +145,7 @@ const onlyTypes = [
   'Voi',
   'WhiteBikes',
   'Wind',
+  'Yego',
   'Yobike'
 ]
 const excludedEnums = ['__TypeKind', '__DirectiveLocation', 'InvoiceStatusEnum']
