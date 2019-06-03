@@ -16,7 +16,7 @@
             <b-nav-item :to="{name: 'partners'}" exact>Partners</b-nav-item>
           </b-navbar-nav>
 
-          <b-nav-item-dropdown v-if="isLogged" right class="fix-dropdown-padding">
+          <b-nav-item-dropdown v-if="auth" right class="fix-dropdown-padding">
             <template slot="button-content">
               <b-img
                 :src="$store.state.auth.user.pictureUrl"
@@ -31,7 +31,12 @@
             <b-dropdown-divider/>
             <b-dropdown-item @click="logout">Sign out</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item v-else :to="{name: 'login'}" variant="outline-primary" exact>Sign in</b-nav-item>
+          <b-nav-item
+            v-else
+            :to="{name: 'login'}"
+            class="border border-primary rounded"
+            exact
+          >Sign in</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-container>
@@ -40,15 +45,11 @@
 
 <script>
 import logo from '~/components/Logo.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: { logo },
-  computed: {
-    isLogged: function() {
-      return this.$store.state.auth
-    }
-  },
+  computed: mapState(['auth']),
   methods: mapActions(['logout'])
 }
 </script>

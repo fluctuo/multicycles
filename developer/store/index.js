@@ -2,6 +2,7 @@ import gql from 'graphql-tag'
 import { introspectionQuery } from 'graphql'
 
 export const state = () => ({
+  auth: undefined,
   selectedObject: null,
   introspection: null
 })
@@ -31,6 +32,7 @@ export const mutations = {
   logout(state) {
     state.auth = undefined
     localStorage.removeItem('token')
+    this.$router.replace({ path: '/login' })
   }
 }
 
