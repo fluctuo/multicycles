@@ -91,7 +91,6 @@ import { PrinterIcon } from 'vue-feather-icons'
 
 export default {
   name: 'Invoice',
-  middleware: ['auth'],
   components: {
     PrinterIcon
   },
@@ -173,9 +172,6 @@ export default {
       `,
       variables() {
         return { invoiceId: this.$route.params.id }
-      },
-      error(err) {
-        this.$auth.logout()
       }
     }
   }

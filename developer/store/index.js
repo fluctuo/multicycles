@@ -17,7 +17,7 @@ export const mutations = {
     state.auth.user = Object.assign({}, state.auth.user, updated)
   },
   user(state, user) {
-    state.auth.user = user
+    state.auth = { user }
   },
   updateSubscription(state, subscription) {
     state.auth.user = Object.assign({}, state.auth.user, { subscription })
@@ -27,6 +27,10 @@ export const mutations = {
   },
   removePayementInformation(state) {
     state.auth.user = Object.assign({}, state.auth.user, { payementInformation: null })
+  },
+  logout(state) {
+    state.auth = undefined
+    localStorage.removeItem('token')
   }
 }
 
@@ -101,5 +105,62 @@ export const actions = {
         query: gql(introspectionQuery)
       })
       .then(resp => commit('introspection', resp.data))
+  },
+  getMe({ commit }) {
+    let client = this.app.apolloProvider.defaultClient
+
+    return client
+      .query({
+        query: gql`
+          query {
+            me {
+              userId
+              name
+              organization
+              email
+              pictureUrl
+              roles
+              subscription {
+                plan {
+                  id
+                  name
+                  support
+                }
+                limits
+              }
+              payementInformation {
+                id
+                brand
+                expMonth
+                expYear
+                last4
+              }
+              usage {
+                tokens
+                unitsPerMonth
+              }
+            }
+          }
+        `
+      })
+      .then(resp => {
+        if (resp.data.me) {
+          commit('user', resp.data.me)
+        }
+      })
+  },
+  handleLogin({ dispatch }) {
+    const [hash, token] = window.location.hash.match(/#jwt=(.*)/)
+
+    if (hash && token) {
+      localStorage.setItem('token', token)
+
+      return dispatch('getMe')
+    } else {
+      return Promise.reject('no token')
+    }
+  },
+  logout({ commit }) {
+    commit('logout')
   }
 }

@@ -7,13 +7,13 @@ export default ctx => {
   const authLink = new ApolloLink((operation, forward) => {
     const jwtCookie = process.server
       ? ctx.req.headers.cookie
-        ? ctx.req.headers.cookie.split(';').find(c => c.trim().startsWith('auth._token.auth0'))
+        ? ctx.req.headers.cookie.split(';').find(c => c.trim().startsWith('token'))
         : false
-      : localStorage.getItem('auth._token.auth0')
+      : localStorage.getItem('token')
 
     if (jwtCookie) {
       operation.setContext({
-        headers: { Authorization: `${process.server ? decodeURI(jwtCookie.split('=')[1]) : jwtCookie}` }
+        headers: { Authorization: `Bearer ${process.server ? decodeURI(jwtCookie.split('=')[1]) : jwtCookie}` }
       })
     }
 

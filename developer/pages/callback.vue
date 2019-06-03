@@ -4,6 +4,23 @@
   </div>
 </template>
 
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  name: 'Callback',
+  mounted() {
+    this.handleLogin()
+      .then(() => this.$router.push({ name: 'account' }))
+      .catch(() => this.$router.push({ name: 'login' }))
+  },
+  methods: {
+    ...mapActions(['handleLogin'])
+  }
+}
+</script>
+
+
 <style scoped>
 .container {
   min-height: 70vh;

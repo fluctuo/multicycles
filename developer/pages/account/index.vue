@@ -61,7 +61,6 @@ import token from '~/components/Token.vue'
 import CreateToken from '~/components/CreateToken.vue'
 
 export default {
-  middleware: ['auth'],
   components: {
     Trash2Icon,
     CopyIcon,
@@ -127,10 +126,7 @@ export default {
             }
           }
         }
-      `,
-      error(err) {
-        this.$auth.logout()
-      }
+      `
     }
   }
 }

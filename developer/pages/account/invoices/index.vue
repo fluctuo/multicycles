@@ -31,7 +31,6 @@
 import gql from 'graphql-tag'
 
 export default {
-  middleware: ['auth'],
   components: {},
   data() {
     return {
@@ -116,9 +115,6 @@ export default {
       },
       update(data) {
         return data.invoices ? JSON.parse(JSON.stringify(data.invoices)) : data
-      },
-      error(err) {
-        this.$auth.logout()
       }
     }
   }

@@ -2,8 +2,8 @@ require('dotenv').config()
 
 module.exports = {
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: 'The true API for shared mobility',
     titleTemplate: '%s - Multicycles API',
@@ -78,12 +78,12 @@ module.exports = {
     script: [{ src: 'https://js.stripe.com/v3/' }]
   },
   /*
-  ** Customize the progress bar color
-  */
+   ** Customize the progress bar color
+   */
   loading: { color: '#677fb7' },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     extend(config, { isDev, isClient }) {
       config.module.rules.push({
@@ -124,7 +124,8 @@ module.exports = {
     '~/plugins/highlight',
     '~/plugins/filters',
     '~/plugins/copy',
-    '~/plugins/react'
+    '~/plugins/react',
+    { src: '~plugins/me.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/dotenv',
@@ -132,6 +133,7 @@ module.exports = {
       'nuxt-env',
       {
         keys: [
+          'BASE_URL',
           'MULTICYCLES_API',
           'MULTICYCLES_ACCESS_TOKEN',
           'SENTRY_KEY',
@@ -143,27 +145,11 @@ module.exports = {
     ],
     ['bootstrap-vue/nuxt', { css: false }],
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     '@nuxtjs/sentry',
     '@nuxtjs/apollo',
     '@nuxtjs/moment',
     'nuxt-leaflet'
   ],
-  auth: {
-    plugins: ['~/plugins/me.js'],
-    redirect: {
-      home: '/account',
-      callback: '/callback'
-    },
-    strategies: {
-      auth0: {
-        domain: 'multicycles.eu.auth0.com',
-        client_id: 'fOYk1TlPc20pzwVhTpN4eKuji7SUbPgM',
-        userinfo_endpoint: false,
-        token_key: 'id_token'
-      }
-    }
-  },
   sentry: {
     dsn: process.env.SENTRY_KEY
   },

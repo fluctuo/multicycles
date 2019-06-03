@@ -8,20 +8,48 @@
         <b-row>
           <b-col>
             <b-card title="Profile" sub-title="Update profile details">
-              <b-form class="pt-3" @submit="onSubmit" >
+              <b-form class="pt-3" @submit="onSubmit">
                 <b-form-group id="fullnameInputGroup" label="Fullname:" label-for="fullnameInput">
-                  <b-form-input id="fullnameInput" v-model="form.name" type="text" required placeholder="Enter fullname" />
+                  <b-form-input
+                    id="fullnameInput"
+                    v-model="form.name"
+                    type="text"
+                    required
+                    placeholder="Enter fullname"
+                  />
                 </b-form-group>
 
-                <b-form-group id="organizationInputGroup" label="Organization:" label-for="organizationInput">
-                  <b-form-input id="organizationInput" v-model="form.organization" type="text" placeholder="Enter organization" />
+                <b-form-group
+                  id="organizationInputGroup"
+                  label="Organization:"
+                  label-for="organizationInput"
+                >
+                  <b-form-input
+                    id="organizationInput"
+                    v-model="form.organization"
+                    type="text"
+                    placeholder="Enter organization"
+                  />
                 </b-form-group>
 
                 <b-form-group id="emailInputGroup" label="Email:" label-for="emailInput">
-                  <b-form-input id="emailInput" v-model="form.email" type="email" required placeholder="Enter email" />
+                  <b-form-input
+                    id="emailInput"
+                    v-model="form.email"
+                    type="email"
+                    required
+                    placeholder="Enter email"
+                  />
                 </b-form-group>
 
-                <b-alert :show="dismissCountDown" class="mt-2 mb-2" fade dismissible variant="danger" @dismiss-count-down="countDownChanged">{{ updateError }}</b-alert>
+                <b-alert
+                  :show="dismissCountDown"
+                  class="mt-2 mb-2"
+                  fade
+                  dismissible
+                  variant="danger"
+                  @dismiss-count-down="countDownChanged"
+                >{{ updateError }}</b-alert>
                 <b-button type="submit" variant="primary">Save</b-button>
               </b-form>
             </b-card>
@@ -32,20 +60,27 @@
           <b-col>
             <b-card title="Billing">
               <h4 class="pt-3">Current plan</h4>
-              <subscription-detail :subscription="$store.state.auth.user.subscription" />
+              <subscription-detail :subscription="$store.state.auth.user.subscription"/>
 
               <h4 class="pt-3">Payment information</h4>
-              <payment-information :payement-information="$store.state.auth.user.payementInformation"/>
+              <payment-information
+                :payement-information="$store.state.auth.user.payementInformation"
+              />
 
-              <b-modal id="creditCard" ref="creditCardModal" title="Add credit card" hide-footer @open-credit-card-modal="openCreditCardModal">
+              <b-modal
+                id="creditCard"
+                ref="creditCardModal"
+                title="Add credit card"
+                hide-footer
+                @open-credit-card-modal="openCreditCardModal"
+              >
                 <no-ssr>
-                  <credit-card-form />
+                  <credit-card-form/>
                 </no-ssr>
               </b-modal>
             </b-card>
           </b-col>
         </b-row>
-
       </b-col>
     </b-row>
   </b-container>
@@ -59,7 +94,6 @@ import PaymentInformation from '~/components/PaymentInformation'
 import CreditCardForm from '~/components/CreditCardForm.vue'
 
 export default {
-  middleware: ['auth'],
   components: { SubscriptionDetail, PaymentInformation, CreditCardForm },
   data() {
     return {

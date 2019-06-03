@@ -3,10 +3,16 @@
     <b-row>
       <b-col align="center">
         <h3 class="display-4 pt-5 pb-4">Login or sign in</h3>
+      </b-col>
+    </b-row>
 
-        <b-btn size="lg" variant="primary" @click="$auth.loginWith('auth0')">
-          <github-icon class="ajust-line" /> Login with Github
+    <b-row>
+      <b-col align="center">
+        <b-btn size="lg" variant="primary" @click="loginWith('github')">
+          <github-icon class="ajust-line"/>Login with Github
         </b-btn>
+
+        <b-btn size="lg" variant="primary" @click="loginWith('google')">Login with Google</b-btn>
       </b-col>
     </b-row>
   </b-container>
@@ -22,8 +28,12 @@
 import { GithubIcon } from 'vue-feather-icons'
 
 export default {
-  middleware: ['auth'],
-  components: { GithubIcon }
+  components: { GithubIcon },
+  methods: {
+    loginWith(provider) {
+      window.location.href = process.env.MULTICYCLES_API + `/auth/${provider}?returnTo=${process.env.BASE_URL}/callback`
+    }
+  }
 }
 </script>
 

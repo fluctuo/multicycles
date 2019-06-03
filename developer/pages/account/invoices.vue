@@ -1,9 +1,3 @@
 <template>
-  <nuxt-child />
+  <nuxt-child/>
 </template>
-
-<script>
-export default {
-  middleware: ['auth']
-}
-</script>

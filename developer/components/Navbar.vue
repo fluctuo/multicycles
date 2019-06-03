@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="md" type="dark" variant="dark">
     <b-container>
-      <b-navbar-toggle target="nav_collapse" />
+      <b-navbar-toggle target="nav_collapse"/>
 
       <b-navbar-brand :to="{name: 'index'}">
         <logo/>
@@ -16,9 +16,14 @@
             <b-nav-item :to="{name: 'partners'}" exact>Partners</b-nav-item>
           </b-navbar-nav>
 
-          <b-nav-item-dropdown v-if="$auth.loggedIn" right class="fix-dropdown-padding">
+          <b-nav-item-dropdown v-if="isLogged" right class="fix-dropdown-padding">
             <template slot="button-content">
-              <b-img :src="$store.state.auth.user.picture" rounded="circle" width="30" height="30" />
+              <b-img
+                :src="$store.state.auth.user.pictureUrl"
+                rounded="circle"
+                width="30"
+                height="30"
+              />
             </template>
             <b-dropdown-item :to="{name: 'account'}" exact>Account</b-dropdown-item>
             <b-dropdown-item :to="{name: 'account-invoices'}">Invoices</b-dropdown-item>
@@ -26,9 +31,7 @@
             <b-dropdown-divider/>
             <b-dropdown-item @click="logout">Sign out</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-button v-else variant="outline-primary" @click="login">
-            Sign in
-          </b-button>
+          <b-nav-item v-else :to="{name: 'login'}" variant="outline-primary" exact>Sign in</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-container>
@@ -37,17 +40,16 @@
 
 <script>
 import logo from '~/components/Logo.vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: { logo },
-  methods: {
-    login() {
-      this.$auth.loginWith('auth0')
-    },
-    logout() {
-      this.$auth.logout()
+  computed: {
+    isLogged: function() {
+      return this.$store.state.auth
     }
-  }
+  },
+  methods: mapActions(['logout'])
 }
 </script>
 
