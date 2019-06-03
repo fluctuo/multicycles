@@ -1,4 +1,4 @@
-import { ApolloLink, concat } from 'apollo-link'
+import { ApolloLink } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
@@ -21,7 +21,8 @@ export default ctx => {
   })
 
   return {
-    link: ApolloLink.from([authLink, httpLink]),
-    cache: new InMemoryCache()
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+    defaultHttpLink: false
   }
 }

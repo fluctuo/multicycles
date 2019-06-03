@@ -2,10 +2,12 @@
   <div>
     <div class="titi">
       <b-container>
-        <h1 class="display-3">The true API
+        <h1 class="display-3">
+          The true API
           <br>for shared mobility
         </h1>
-        <h2>Get all data about shared vehicles arround the word in a single request.
+        <h2>
+          Get all data about shared vehicles arround the word in a single request.
           <br>Find the position and book the vehicles closest to you.
         </h2>
 

@@ -85,6 +85,9 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    /*
+     ** Run ESLint on save
+     */
     extend(config, { isDev, isClient }) {
       config.module.rules.push({
         test: /\.flow$/,
@@ -99,24 +102,6 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-
-      const vueLoader = config.module.rules.find(rule => rule.loader === 'vue-loader')
-      vueLoader.options.transformAssetUrls = {
-        video: ['src', 'poster'],
-        source: 'src',
-        img: 'src',
-        image: 'xlink:href',
-        'b-img': 'src',
-        'b-img-lazy': ['src', 'blank-src'],
-        'b-card': 'img-src',
-        'b-card-img': 'img-src',
-        'b-carousel-slide': 'img-src',
-        'b-embed': 'src'
-      }
-    },
-    babel: {
-      plugins: ['transform-react-jsx'],
-      ignore: ['*.flow']
     }
   },
   plugins: [
@@ -147,8 +132,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/sentry',
     '@nuxtjs/apollo',
-    '@nuxtjs/moment',
-    'nuxt-leaflet'
+    '@nuxtjs/moment'
   ],
   sentry: {
     dsn: process.env.SENTRY_KEY

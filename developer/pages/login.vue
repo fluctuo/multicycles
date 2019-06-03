@@ -31,7 +31,7 @@ export default {
   components: { GithubIcon },
   methods: {
     loginWith(provider) {
-      window.location.href = process.env.MULTICYCLES_API + `/auth/${provider}?returnTo=${process.env.BASE_URL}/callback`
+      window.location.href = `${this.$env.MULTICYCLES_API}/auth/${provider}?returnTo=${this.$env.BASE_URL}/callback`
     }
   }
 }
