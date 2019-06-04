@@ -14,7 +14,11 @@
           </ul>
         </b-col>
         <b-col cols="4" class="text-center">
-          <b-btn :disabled="isCurrentPlan(1)" variant="primary" @click="updateToPlan(1)">{{ isCurrentPlan(1) ? 'Current' : 'Change' }}</b-btn>
+          <b-btn
+            :disabled="isCurrentPlan(1)"
+            variant="primary"
+            @click="updateToPlan(1)"
+          >{{ isCurrentPlan(1) ? 'Current' : 'Change' }}</b-btn>
         </b-col>
       </b-row>
     </b-card>
@@ -32,9 +36,15 @@
           </ul>
         </b-col>
         <b-col cols="4" class="text-center">
-          <b>Pay per usage</b><br>
-          See <nuxt-link to="princing">pricings</nuxt-link><br>
-          <b-btn :disabled="isCurrentPlan(2)" variant="primary" @click="updateToPlan(2)">{{ isCurrentPlan(2) ? 'Current' : 'Change' }}</b-btn>
+          <b>Pay per usage</b>
+          <br>See
+          <nuxt-link to="/pricing">pricings</nuxt-link>
+          <br>
+          <b-btn
+            :disabled="isCurrentPlan(2)"
+            variant="primary"
+            @click="updateToPlan(2)"
+          >{{ isCurrentPlan(2) ? 'Current' : 'Change' }}</b-btn>
         </b-col>
       </b-row>
     </b-card>
