@@ -32,16 +32,6 @@
                   />
                 </b-form-group>
 
-                <b-form-group id="emailInputGroup" label="Email:" label-for="emailInput">
-                  <b-form-input
-                    id="emailInput"
-                    v-model="form.email"
-                    type="email"
-                    required
-                    placeholder="Enter email"
-                  />
-                </b-form-group>
-
                 <b-alert
                   :show="dismissCountDown"
                   class="mt-2 mb-2"
@@ -129,19 +119,17 @@ export default {
       this.$apollo
         .mutate({
           mutation: gql`
-            mutation($id: String!, $name: String, $organization: String, $email: String) {
-              updateUser(id: $id, name: $name, organization: $organization, email: $email) {
+            mutation($id: String!, $name: String, $organization: String) {
+              updateUser(id: $id, name: $name, organization: $organization) {
                 name
                 organization
-                email
               }
             }
           `,
           variables: {
             id: this.$store.state.auth.user.userId,
             name: this.form.name,
-            organization: this.form.organization,
-            email: this.form.email
+            organization: this.form.organization
           }
         })
         .then(resp => {
