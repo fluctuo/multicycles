@@ -10,7 +10,7 @@
         :zoom="map.zoom"
         :minZoom="map.minZoom"
         :center="center"
-        @update:center="moveCenter"
+        @dragend="moveEnd"
         @dragstart="moveStart"
         @zoomend="zoomEnd"
         :options="map.options"
@@ -130,7 +130,9 @@ export default {
         this.setMoved(true)
       }
     },
-    moveCenter(center) {
+    moveEnd(e) {
+      const center = e.target.getCenter()
+
       history.pushState(null, null, `/?l=${center.lat},${center.lng}`)
       this.setCenter([center.lat, center.lng])
     },
