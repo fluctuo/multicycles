@@ -76,6 +76,7 @@ async function init() {
         'providers',
         'vehicles',
         'zones',
+        'missingProvider',
         'linkSubAccount',
         'limeLogin',
         'birdLogin',

@@ -30,5 +30,12 @@
   },
   "search": {
     "search": "Adresse suchen"
+  },
+  "MissingModal": {
+    "header": "Einen fehlenden Anbieter einreichen",
+    "description": "Mit Hunderten von Städten ist es nicht immer einfach, auf dem neuesten Stand zu sein. Vielen Dank an einen fehlenden Anbieter für diesen Standort. Wir werden den fehlenden Anbieter prüfen und hinzufügen.",
+    "provider": "Anbieter :",
+    "submit": "Absenden",
+    "Location": "Lage"
   }
 }

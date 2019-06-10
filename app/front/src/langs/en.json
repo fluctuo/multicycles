@@ -63,5 +63,12 @@
     "scanTheQRCode": "Scan the QRCode",
     "notAvailable": "Not yet available 😢",
     "unlocking": "Unlocking..."
+  },
+  "MissingModal": {
+    "header": "Submit a missing provider",
+    "description": "With hundreds of cities, it's not always easy to be up to date. Thanks to submit a missing provider for this location. We will check it and add the missing provider.",
+    "provider": "Provider :",
+    "submit": "Submit",
+    "Location": "Location"
   }
 }

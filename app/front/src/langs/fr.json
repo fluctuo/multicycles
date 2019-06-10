@@ -30,5 +30,12 @@
   },
   "search": {
     "search": "Recherche"
+  },
+  "MissingModal": {
+    "header": "Soumettre un fournisseur absent",
+    "description": "Avec des centaines de villes, il n'est pas toujours facile d'être à jour. Merci de soumettre un fournisseur manquant pour cet emplacement. Nous vérifierons et ajouterons le fournisseur manquant.",
+    "provider": "Fournisseur :",
+    "submit": "Soumettre",
+    "Location": "Position"
   }
 }

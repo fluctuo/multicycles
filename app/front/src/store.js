@@ -272,6 +272,22 @@ const actions = {
       .then(result => {
         commit('setZones', result.data.zones)
       })
+  },
+  missingProvider({ state }, provider) {
+    apolloProvider.defaultClient.mutate({
+      mutation: gql`
+        mutation missingProvider($provider: String!, $lat: Float!, $lng: Float!) {
+          missingProvider(provider: $provider, lat: $lat, lng: $lng) {
+            provider
+          }
+        }
+      `,
+      variables: {
+        provider,
+        lat: state.geolocation[0],
+        lng: state.geolocation[1]
+      }
+    })
   }
 }
 

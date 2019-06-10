@@ -16,16 +16,20 @@
         <router-link to="/settings">
           <layers-icon class="icon"/>
         </router-link>
+        <alert-circle-icon class="icon" @click="openMissingModal"/>
       </div>
     </div>
     <local-map v-if="centerReady"/>
+
+    <missing-modal v-if="showMissingModal" @close="showMissingModal = false"></missing-modal>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import { MenuIcon, CrosshairIcon, LayersIcon } from 'vue-feather-icons'
+import { MenuIcon, CrosshairIcon, LayersIcon, AlertCircleIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
+import MissingModal from '../components/MissingModal'
 
 import store from '../store'
 
@@ -35,7 +39,9 @@ export default {
     MenuIcon,
     CrosshairIcon,
     LayersIcon,
-    LocalMap
+    LocalMap,
+    AlertCircleIcon,
+    MissingModal
   },
   beforeRouteEnter(to, from, next) {
     if (to.query && to.query.l) {
@@ -47,6 +53,11 @@ export default {
   mounted() {
     this.setDrawerEnable(false)
   },
+  data() {
+    return {
+      showMissingModal: false
+    }
+  },
   computed: mapState(['map', 'roundedLocation']),
   methods: {
     ...mapActions(['setDrawerEnable', 'centerOnGeolocation', 'setCenter']),
@@ -56,6 +67,9 @@ export default {
     },
     centerReady() {
       return this.map.center && this.roundedLocation
+    },
+    openMissingModal() {
+      this.showMissingModal = true
     }
   }
 }

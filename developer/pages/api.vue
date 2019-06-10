@@ -74,6 +74,7 @@ import Contact from '~/components/Contact.vue'
 
 const onlyQueries = ['vehicles', 'providers', 'zones', 'getAccounts', 'getAccount', 'getRides']
 const onlyMutations = [
+  'missingProvider',
   'createAccount',
   'updateAccount',
   'deleteAccount',

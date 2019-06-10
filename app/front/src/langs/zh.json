@@ -13,7 +13,8 @@
     "title": "参数",
     "lang": "语言",
     "providers": "供应商",
-    "installApp": "安装应用"
+    "installApp": "安装应用",
+    "account": "帐户"
   },
   "vehicleType": {
     "BIKE": "自行车",
@@ -30,5 +31,12 @@
   },
   "search": {
     "search": "再寻找"
+  },
+  "MissingModal": {
+    "header": "提交缺少的供应商",
+    "description": "有数百个城市，要及时更新并不容易。 感谢您为此位置提交缺少的提供商。 我们将检查并添加缺少的供应商。",
+    "provider": "供应商 :",
+    "submit": "提交",
+    "Location": "地点"
   }
 }
