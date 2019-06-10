@@ -67,7 +67,7 @@ export default {
       langs: [
         { text: 'Français', value: 'fr' },
         { text: 'English', value: 'en' },
-        { text: '中文', value: 'cn' },
+        { text: '中文', value: 'zh' },
         { text: 'German', value: 'de' }
       ]
     }
