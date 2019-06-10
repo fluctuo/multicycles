@@ -120,6 +120,7 @@ const onlyTypes = [
   'Flash',
   'Ford',
   'Glyde',
+  'Helbiz',
   'Hellobike',
   'Hive',
   'IndigoWheel',
