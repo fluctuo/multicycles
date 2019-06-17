@@ -239,7 +239,7 @@ const providerRequirements = {
       ]
     }
   },
-  flash: {
+  circ: {
     login: {
       steps: [
         {
@@ -247,7 +247,7 @@ const providerRequirements = {
           fields: [{ name: 'phone', type: 'text' }],
           mutation: `
           mutation($phone: String!){
-            flashLogin(phone: $phone) {
+            circLogin(phone: $phone) {
               phone
             }
           }
@@ -258,7 +258,7 @@ const providerRequirements = {
           fields: [{ name: 'otp', type: 'number' }],
           mutation: `
           mutation($phone: String!, $otp: String!){
-            lastStep : flashLoginOTP(phone: $phone, otp: $otp) {
+            lastStep : circLoginOTP(phone: $phone, otp: $otp) {
               puid
             }
           }
@@ -269,7 +269,7 @@ const providerRequirements = {
     refresh: {
       initMutation: `
         mutation($puid: String!){
-          flashLoginRefresh(puid: $puid) {
+          circLoginRefresh(puid: $puid) {
             nextStep
           }
         }
@@ -280,7 +280,7 @@ const providerRequirements = {
           fields: [{ name: 'otp', type: 'number' }],
           mutation: `
         mutation($puid: String!, $otp: String!){
-          flashLoginRefreshOTP(puid: $puid, otp: $otp) {
+          circLoginRefreshOTP(puid: $puid, otp: $otp) {
             puid
           }
         }

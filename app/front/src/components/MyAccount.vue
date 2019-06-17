@@ -4,7 +4,7 @@
     <my-sub-account provider="bird"/>
     <my-sub-account provider="tier"/>
     <my-sub-account provider="hive"/>
-    <my-sub-account provider="flash"/>
+    <my-sub-account provider="circ"/>
     <my-sub-account provider="ufo"/>
     <my-sub-account provider="moow"/>
   </div>

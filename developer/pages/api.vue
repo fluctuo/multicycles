@@ -93,10 +93,10 @@ const onlyMutations = [
   'ufoLoginRefresh',
   'hiveLogin',
   'hiveLoginRefresh',
-  'flashLogin',
-  'flashLoginOTP',
-  'flashLoginRefresh',
-  'flashLoginRefreshOTP',
+  'circLogin',
+  'circLoginOTP',
+  'circLoginRefresh',
+  'circLoginRefreshOTP',
   'startRide',
   'stopRide'
 ]
@@ -117,7 +117,7 @@ const onlyTypes = [
   'Divvy',
   'Donkey',
   'Emmy',
-  'Flash',
+  'Circ',
   'Ford',
   'Glyde',
   'Helbiz',

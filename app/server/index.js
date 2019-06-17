@@ -92,10 +92,10 @@ async function init() {
         'ufoLoginRefresh',
         'hiveLogin',
         'hiveLoginRefresh',
-        'flashLogin',
-        'flashLoginOTP',
-        'flashLoginRefresh',
-        'flashLoginRefreshOTP',
+        'circLogin',
+        'circLoginOTP',
+        'circLoginRefresh',
+        'circLoginRefreshOTP',
         'moowLogin',
         'moowLoginRefresh'
       ].includes(rootField)
