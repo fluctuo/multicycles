@@ -67,13 +67,23 @@ export default {
       return this.currentPlan && this.currentPlan.id === planId
     },
     updateToPlan(planId) {
-      this.updateSubscription(planId).then(() => {
-        if (planId === 2 && !this.$store.state.auth.user.payementInformation) {
-          this.$root.$emit('openCreditCardModal')
-        } else {
+      if (planId === 2 && !this.$store.state.auth.user.payementInformation) {
+        this.$root.$emit('openCreditCardModal')
+
+        this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
+          if (modalId === 'creditCard') {
+            if (this.$store.state.auth.user.payementInformation) {
+              this.updateSubscription(planId).then(() => {
+                this.$root.$emit('bv::hide::modal', 'planSelector')
+              })
+            }
+          }
+        })
+      } else {
+        this.updateSubscription(planId).then(() => {
           this.$root.$emit('bv::hide::modal', 'planSelector')
-        }
-      })
+        })
+      }
     }
   }
 }
