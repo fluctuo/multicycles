@@ -95,6 +95,7 @@ export default {
         case 'vehicles:read':
         case 'providers:read':
         case 'providers:login':
+        case 'providers:missing':
           variant = 'info'
           break
         default:

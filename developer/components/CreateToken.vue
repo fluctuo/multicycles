@@ -27,9 +27,8 @@
         </b-form-group>
 
         <h4>Scopes</h4>
-        <p
-          class="text-muted"
-        >Scopes define methods that are accessible with this token. Some scopes are sensitive and should be reserved for private tokens.
+        <p class="text-muted">
+          Scopes define methods that are accessible with this token. Some scopes are sensitive and should be reserved for private tokens.
           <nuxt-link to="/docs/auth">More information</nuxt-link>
         </p>
         <b-form-group label="Public scopes">
@@ -79,13 +78,13 @@ export default {
     return {
       newToken: {
         name: this.tokensCount ? `Token ${this.tokensCount + 1}` : 'My token',
-        scopesPublic: ['vehicles:read', 'providers:read', 'providers:login'],
+        scopesPublic: ['vehicles:read', 'providers:read', 'providers:login', 'providers:missing'],
         scopesPrivate: []
       },
       updateError: false,
       dismissSecs: 5,
       dismissCountDown: 0,
-      availablePublicScopes: ['vehicles:read', 'providers:read', 'providers:login'],
+      availablePublicScopes: ['vehicles:read', 'providers:read', 'providers:login', 'providers:missing'],
       availablePrivateScopes: [] /* ['accounts:read', 'accounts:write', 'rides:read', 'rides.write'] */
     }
   },
