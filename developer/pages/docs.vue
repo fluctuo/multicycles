@@ -57,7 +57,7 @@ import Contact from '~/components/Contact.vue'
 export default {
   head() {
     return {
-      title: 'Documentions - Multicycles API',
+      title: 'Documentation - Multicycles API',
       meta: [{ hid: 'description', name: 'description', content: 'Documentation for Multicycles API.' }]
     }
   },

@@ -23,7 +23,7 @@
         <h4>Standardized</h4>
         <p>
           Return
-          <span class="font-weight-bold">standardized data</span> (like type, attributes, mobile app link) and providers specific fields. Backward compatibilty guarantee.
+          <span class="font-weight-bold">standardized data</span> (like type, attributes, mobile app link) and provider-specific fields. Backward compatibilty guarantee.
         </p>
       </b-col>
       <b-col class="text-center">
@@ -38,10 +38,10 @@
       <b-col class="text-center">
         <h4>Easy to implement</h4>
         <p>
-          Multicycles API use latest technologies. Our api offer a
+          Multicycles API uses latest technologies. Our api offers a
           <span
             class="font-weight-bold"
-          >GraphQL endpoint</span>. You can exactly what you want in a single query.
+          >GraphQL endpoint</span>. You can get exactly what you want in a single query.
           <br>See
           <nuxt-link to="docs">documentation</nuxt-link>. You can't do easier.
         </p>
