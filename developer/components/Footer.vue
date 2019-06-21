@@ -45,7 +45,7 @@
           <h5>Contact</h5>
           <ul class="list-unstyled">
             <li>
-              <a href="https://twitter.com/multicyclesOrg">
+              <a href="https://twitter.com/fluctuo">
                 <twitter-icon/>
               </a>&nbsp;
               <a href="mailto:contact@multicycles.org">

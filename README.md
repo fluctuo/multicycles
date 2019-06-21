@@ -31,8 +31,8 @@ Use `npm run dev:SERVICE` with SERVICE as `front` / `developer`
 
 ## Contact
 
-Email: contact@multicycles.org
-Twitter: https://twitter.com/multicyclesOrg
+Email: contact@fluctuo.org
+Twitter: https://twitter.com/fluctuo
 
 ## Sponsors
 
