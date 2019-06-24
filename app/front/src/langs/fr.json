@@ -21,7 +21,8 @@
     "MOTORSCOOTER": "Scooter",
     "CARGO": "Vélo cargo",
     "TANDEM": "Tandem",
-    "CAR": "Voiture"
+    "CAR": "Voiture",
+    "OTHER": "Véhicule"
   },
   "selectedVehicle": {
     "vehicle": "véhicule",

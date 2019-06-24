@@ -22,7 +22,8 @@
     "MOTORSCOOTER": "底座小摩托车",
     "CARGO": "前座载人自行车",
     "TANDEM": "双座双人骑自行车",
-    "CAR": "汽车"
+    "CAR": "汽车",
+    "OTHER": "车辆"
   },
   "selectedVehicle": {
     "vehicle": "车辆",
