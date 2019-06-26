@@ -6,6 +6,7 @@
         "name": "Vehicle",
         "possibleTypes": [
           { "name": "Bcycle" },
+          { "name": "Billy" },
           { "name": "Bird" },
           { "name": "BlueBikes" },
           { "name": "Bolt" },
