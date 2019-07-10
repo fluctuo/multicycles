@@ -122,6 +122,8 @@ export const actions = {
               email
               pictureUrl
               roles
+              disabled
+              disabledReason
               subscription {
                 plan {
                   id
