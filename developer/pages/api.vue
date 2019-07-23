@@ -144,6 +144,7 @@ const onlyTypes = [
   'Ofo',
   'Oribiky',
   'Pony',
+  'Reby',
   'Scoot',
   'Scutt',
   'SocialBicycles',
