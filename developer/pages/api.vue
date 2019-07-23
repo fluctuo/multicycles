@@ -60,12 +60,12 @@
           </div>
         </b-col>
         <b-col md="9">
-          <nuxt-child/>
+          <nuxt-child />
         </b-col>
       </b-row>
     </b-container>
 
-    <Contact/>
+    <Contact />
   </div>
 </template>
 
@@ -136,6 +136,7 @@ const onlyTypes = [
   'Mobike',
   'Moovin',
   'Moow',
+  'Mygo',
   'Nextbike',
   'NiceRide',
   'Obike',
@@ -154,7 +155,7 @@ const onlyTypes = [
   'Wind',
   'Yego',
   'Yobike',
-  "Wheels"
+  'Wheels'
 ]
 const excludedEnums = ['__TypeKind', '__DirectiveLocation', 'InvoiceStatusEnum']
 
