@@ -5,6 +5,7 @@
         "kind": "INTERFACE",
         "name": "Vehicle",
         "possibleTypes": [
+          { "name": "Acciona" },
           { "name": "Bcycle" },
           { "name": "Billy" },
           { "name": "Bird" },

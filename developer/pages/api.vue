@@ -102,6 +102,7 @@ const onlyMutations = [
 ]
 const onlyTypes = [
   'Provider',
+  'Acciona',
   'Bcycle',
   'Billy',
   'Bird',
