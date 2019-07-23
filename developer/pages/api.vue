@@ -109,6 +109,7 @@ const onlyTypes = [
   'BlueBikes',
   'Bolt',
   'BoltMobility',
+  'Buny',
   'Byke',
   'CallABike',
   'CapitalBikeshare',
