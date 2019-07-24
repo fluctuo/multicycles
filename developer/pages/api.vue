@@ -128,6 +128,7 @@ const onlyTypes = [
   'IsraBike',
   'Jump',
   'Knot',
+  'Koko',
   'Leo',
   'Lime',
   'Mobike',
