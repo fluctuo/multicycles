@@ -60,12 +60,12 @@
           </div>
         </b-col>
         <b-col md="9">
-          <nuxt-child/>
+          <nuxt-child />
         </b-col>
       </b-row>
     </b-container>
 
-    <Contact/>
+    <Contact />
   </div>
 </template>
 
@@ -102,29 +102,33 @@ const onlyMutations = [
 ]
 const onlyTypes = [
   'Provider',
+  'Acciona',
   'Bcycle',
   'Billy',
   'Bird',
   'BlueBikes',
   'Bolt',
   'BoltMobility',
+  'Buny',
   'Byke',
   'CallABike',
   'CapitalBikeshare',
   'CitiBike',
   'Cityscoot',
   'CoGo',
+  'Circ',
   'Coup',
   'Divvy',
   'Donkey',
+  'Ecooltra',
   'Emmy',
-  'Circ',
   'Ford',
   'Glyde',
   'Helbiz',
   'Hellobike',
   'Hive',
   'IndigoWheel',
+  'Ioscoot',
   'IsraBike',
   'Jump',
   'Knot',
@@ -134,14 +138,16 @@ const onlyTypes = [
   'Mobike',
   'Moovin',
   'Moow',
+  'Mygo',
   'Nextbike',
   'NiceRide',
   'Obike',
   'Ofo',
   'Oribiky',
   'Pony',
-  'Scutt',
+  'Reby',
   'Scoot',
+  'Scutt',
   'SocialBicycles',
   'Spin',
   'TelOFun',
@@ -152,7 +158,7 @@ const onlyTypes = [
   'Wind',
   'Yego',
   'Yobike',
-  "Wheels"
+  'Wheels'
 ]
 const excludedEnums = ['__TypeKind', '__DirectiveLocation', 'InvoiceStatusEnum']
 
