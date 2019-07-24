@@ -146,6 +146,7 @@ const onlyTypes = [
   'Oribiky',
   'Pony',
   'Reby',
+  'Revel',
   'Scoot',
   'Scutt',
   'SocialBicycles',
