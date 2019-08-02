@@ -110,7 +110,8 @@ module.exports = {
     '~/plugins/filters',
     '~/plugins/copy',
     '~/plugins/react',
-    { src: '~plugins/me.js', ssr: false }
+    { src: '~plugins/me.js', ssr: false },
+    '~/plugins/validation'
   ],
   modules: [
     '@nuxtjs/dotenv',
