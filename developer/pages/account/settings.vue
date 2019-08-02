@@ -20,7 +20,7 @@
         <b-row>
           <b-col>
             <b-card title="Profile" sub-title="Update profile details">
-              <edit-user-form />
+              <edit-user-form :form="user" />
             </b-card>
           </b-col>
         </b-row>
@@ -52,11 +52,13 @@
         </b-row>
       </b-col>
     </b-row>
+    <b-modal id="editUser" ref="editUserModal" title="Complete user detail" hide-footer>
+      <edit-user-form :form="user" />
+    </b-modal>
   </b-container>
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import SubscriptionDetail from '~/components/SubscriptionDetail'
 import PaymentInformation from '~/components/PaymentInformation'
 import CreditCardForm from '~/components/CreditCardForm.vue'
@@ -75,7 +77,20 @@ export default {
           text: `Settings`,
           active: true
         }
-      ]
+      ],
+      user: {
+        company: this.$store.state.auth.user.company || false,
+        name: this.$store.state.auth.user.name,
+        organization: this.$store.state.auth.user.organization,
+        email: this.$store.state.auth.user.email,
+        address1: this.$store.state.auth.user.address1,
+        address2: this.$store.state.auth.user.address2,
+        zipCode: this.$store.state.auth.user.zipCode,
+        city: this.$store.state.auth.user.city,
+        country: this.$store.state.auth.user.country,
+        state: this.$store.state.auth.user.state,
+        vatNumber: this.$store.state.auth.user.vatNumber
+      }
     }
   },
   created() {

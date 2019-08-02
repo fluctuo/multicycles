@@ -137,6 +137,7 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import { mapMutations } from 'vuex'
 import countries from 'country-region-data'
 import { required, requiredIf } from 'vuelidate/lib/validators'
@@ -174,26 +175,14 @@ const europeanCountries = [
 
 export default {
   name: 'EditUser',
+  props: ['form'],
   data() {
     return {
       updateError: false,
       dismissSecs: 5,
       dismissCountDown: 0,
       type: [{ text: 'Individual', value: 'individual' }, { text: 'Company', value: 'company' }],
-      countries: countries,
-      form: {
-        company: this.$store.state.auth.user.company || false,
-        name: this.$store.state.auth.user.name,
-        organization: this.$store.state.auth.user.organization,
-        email: this.$store.state.auth.user.email,
-        address1: this.$store.state.auth.user.address1,
-        address2: this.$store.state.auth.user.address2,
-        zipCode: this.$store.state.auth.user.zipCode,
-        city: this.$store.state.auth.user.city,
-        country: this.$store.state.auth.user.country,
-        state: this.$store.state.auth.user.state,
-        vatNumber: this.$store.state.auth.user.vatNumber
-      }
+      countries: countries
     }
   },
   validations: {
@@ -245,7 +234,6 @@ export default {
   },
   methods: {
     ...mapMutations(['updateMe']),
-
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
@@ -315,6 +303,7 @@ export default {
         })
         .then(resp => {
           this.updateMe(resp.data.updateUser)
+          this.$root.$emit('fluctuo::editUser::updated')
         })
         .catch(err => {
           this.dismissCountDown = this.dismissSecs
