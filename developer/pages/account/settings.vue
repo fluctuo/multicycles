@@ -71,7 +71,7 @@ export default {
       breadcrumb: [
         {
           text: 'Account',
-          href: '/account'
+          to: { name: 'account' }
         },
         {
           text: `Settings`,

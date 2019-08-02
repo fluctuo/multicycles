@@ -268,11 +268,11 @@ export default {
       breadcrumb: [
         {
           text: 'Account',
-          href: '/account'
+          to: { name: 'account' }
         },
         {
           text: 'Invoices',
-          href: '/account/invoices'
+          to: { name: 'account-invoices' }
         },
         {
           text: `Invoice`,
