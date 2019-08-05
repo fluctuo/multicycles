@@ -37,9 +37,9 @@
         </b-col>
         <b-col cols="4" class="text-center">
           <b>Pay per usage</b>
-          <br>See
+          <br />See
           <nuxt-link to="/pricing">pricings</nuxt-link>
-          <br>
+          <br />
           <b-btn
             :disabled="isCurrentPlan(2)"
             variant="primary"
@@ -67,16 +67,27 @@ export default {
       return this.currentPlan && this.currentPlan.id === planId
     },
     updateToPlan(planId) {
-      if (planId === 2 && !this.$store.state.auth.user.payementInformation) {
-        this.$root.$emit('openCreditCardModal')
+      if (planId === 2) {
+        this.$bvModal.show('editUser')
 
-        this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
-          if (modalId === 'creditCard') {
-            if (this.$store.state.auth.user.payementInformation) {
-              this.updateSubscription(planId).then(() => {
-                this.$root.$emit('bv::hide::modal', 'planSelector')
-              })
-            }
+        this.$root.$on('fluctuo::editUser::updated', (bvEvent, modalId) => {
+          this.$bvModal.hide('editUser')
+          if (!this.$store.state.auth.user.payementInformation) {
+            this.$root.$emit('openCreditCardModal')
+
+            this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
+              if (modalId === 'creditCard') {
+                if (this.$store.state.auth.user.payementInformation) {
+                  this.updateSubscription(planId).then(() => {
+                    this.$root.$emit('bv::hide::modal', 'planSelector')
+                  })
+                }
+              }
+            })
+          } else {
+            this.updateSubscription(planId).then(() => {
+              this.$root.$emit('bv::hide::modal', 'planSelector')
+            })
           }
         })
       } else {

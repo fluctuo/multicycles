@@ -117,9 +117,17 @@ export const actions = {
           query {
             me {
               userId
+              company
               name
               organization
               email
+              address1
+              address2
+              zipCode
+              city
+              country
+              state
+              vatNumber
               pictureUrl
               roles
               disabled

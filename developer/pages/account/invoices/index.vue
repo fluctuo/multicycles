@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col class="mb-5 pt-5">
-        <b-breadcrumb :items="breadcrumb" class="d-print-none"/>
+        <b-breadcrumb :items="breadcrumb" class="d-print-none" />
         <h3 class="mb-4">Invoices</h3>
 
         <b-table
@@ -37,7 +37,7 @@ export default {
       breadcrumb: [
         {
           text: 'Account',
-          href: '/account'
+          to: { name: 'account' }
         },
         {
           text: 'Invoices',
