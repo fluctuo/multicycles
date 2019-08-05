@@ -136,7 +136,7 @@
             <b-col>
               Terms of Payment :
               <ul>
-                <li>Payment shall only be made by transfer to our bank account</li>
+                <li>Payment shall only be made by transfer to our bank account or by credit card</li>
                 <li>Total payment is due within 30 days from the invoice date</li>
                 <li>Late Payment Penalty : 3 times the legal interest rate plus a 40 € fixed compensation (recovery costs)</li>
               </ul>
