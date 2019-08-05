@@ -19,7 +19,7 @@
           <template slot="status" slot-scope="row">
             <b-badge :variant="getBadgeVariant(row.item.status)">{{ row.item.status.toLowerCase() }}</b-badge>
           </template>
-          <template slot="period" slot-scope="row">{{ row.item.period | currentMonth }}</template>
+          <template slot="period" slot-scope="row">{{ row.item.period.end | format('MMMM YY') }}</template>
           <template slot="total" slot-scope="row">{{ Number(row.item.total / 100).toFixed(2) }} €</template>
         </b-table>
       </b-col>
