@@ -38,9 +38,6 @@ module.exports = plop => {
             answers
           ),
           ' ',
-          '= Developer',
-          '+ Add to Type developer/pages/api.vue',
-          ' ',
           '= Status =',
           '+ Add new components on status website'
         ].join('\n')

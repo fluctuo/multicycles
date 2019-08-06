@@ -11,7 +11,7 @@ node_js:
 jobs:
   include:
     - stage: test
-      before_script: lerna exec --ignore '@multicycles/{front,developer}' -- npm i
+      before_script: lerna exec --ignore '@multicycles/{front}' -- npm i
       script: npm test
 
     - stage: deploy
