@@ -1,0 +1,10 @@
+FROM node:lts
+WORKDIR /app/front
+
+COPY package*.json .
+RUN yarn install
+COPY . .
+
+EXPOSE 8080
+
+CMD ["yarn", "run", "dev"]

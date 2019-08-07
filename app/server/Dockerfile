@@ -1,11 +1,11 @@
-FROM node:8.9
+FROM node:lts
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN yarn install
 
 ADD . .
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "run", "start" ]

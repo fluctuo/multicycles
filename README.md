@@ -1,37 +1,19 @@
 # Multicyles
 
-[![Build Status](https://travis-ci.org/PierrickP/multicycles.svg?branch=master)](https://travis-ci.org/PierrickP/multicycles)
-
 [Multicycles.org](http://multicycles.org) aggregates on one map, different "free-floating" bike rental services.
 
-See [API](https://flow.fluctuo.com/) for the API endpoint.
+See [fluctuo Data Flow](https://flow.fluctuo.com/) for the API endpoint.
 
 ## Supported Providers
 
-All from [Multicycles API](https://flow.fluctuo.com/)
+All from [fluctuo Data Flow](https://flow.fluctuo.com/)
 
 Want to add one ? [https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems](https://en.wikipedia.org/wiki/List_of_bicycle-sharing_systems)
 Or submit an [Issue](https://github.com/PierrickP/multicycles/issues/new)
 
-## Contribute
-
-### Setup
-
-`git clone https://github.com/PierrickP/multicycles && cd multicycles`
-run `npm i`
-
-### Create a new provider
-
-Run `npm run generate`
-
-### Run services
-
-Set `{developer}/.env` files
-Use `npm run dev:SERVICE` with SERVICE as `front` / `developer`
-
 ## Contact
 
-Email: contact@fluctuo.org
+Email: contact@fluctuo.com
 Twitter: https://twitter.com/fluctuo
 
 ## Sponsors

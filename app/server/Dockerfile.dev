@@ -1,0 +1,15 @@
+FROM node:lts
+
+WORKDIR /app/server
+
+COPY package*.json ./
+
+RUN yarn install
+RUN yarn global add nodemon
+
+ADD . .
+
+EXPOSE 3001
+
+CMD [ "nodemon", "start" ]
+

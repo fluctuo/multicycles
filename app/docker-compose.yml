@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  front:
+    build:
+      context: front
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./front:/app/front
+    ports:
+      - '8080:8080'
+    env_file:
+      - ./front/.env
+  server:
+    build:
+      context: server
+      dockerfile: Dockerfile.dev
+    network_mode: host
+    volumes:
+      - ./server:/app/server
+    ports:
+      - '3001:3001'
+    env_file:
+      - ./server/.env
