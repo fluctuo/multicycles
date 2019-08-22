@@ -1,45 +1,51 @@
 <template>
-  <vue-drawer-layout
-    ref="drawerLayout"
-    :enable="drawerEnable"
-    @slide-end="fixEnable"
-    @mask-click="handleMaskClick"
-  >
-    <drawer-menu slot="drawer"/>
+  <vue-drawer-layout ref="drawerLayout" @mask-click="handleMaskClick">
+    <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
-      <active-ride/>
-      <navigation>
-        <router-view></router-view>
-      </navigation>
+      <active-ride />
+      <search v-if="page === 'search'" />
+      <settings v-else-if="page === 'settings'" />
+      <about v-else-if="page === 'about'" />
+      <account v-else-if="page === 'account'" />
+      <home v-else />
     </div>
   </vue-drawer-layout>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import DrawerMenu from './components/DrawerMenu'
 import ActiveRide from './components/ActiveRide'
+
+import Home from '@/pages/Home'
+import Search from '@/pages/Search'
+import Settings from '@/pages/Settings'
+import About from '@/pages/About'
+import Account from '@/pages/Account'
 
 export default {
   name: 'app',
   components: {
     DrawerMenu,
-    ActiveRide
+    ActiveRide,
+    Home,
+    Search,
+    Settings,
+    About,
+    Account
   },
-  computed: mapGetters(['drawerEnable']),
+  computed: mapGetters(['page']),
   created() {
+    if (window.location.search && window.location.search.match(/jwt=/)) {
+      this.setPage('account')
+    }
+
     this.login()
-    this.getProviders()
     this.startGeolocation()
   },
   methods: {
-    ...mapActions(['getProviders', 'setDrawerEnable', 'login', 'startGeolocation', 'getZones']),
-    fixEnable(visible) {
-      // if drawer closed and still on map, disable it
-      if (this.$route.path === '/' && !visible) {
-        this.setDrawerEnable(false)
-      }
-    },
+    ...mapActions(['login', 'startGeolocation', 'getZones']),
+    ...mapMutations(['setPage']),
     handleMaskClick() {
       this.$refs.drawerLayout.toggle(false)
     }

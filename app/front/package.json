@@ -29,9 +29,7 @@
     "vue-drawer-layout": "^1.0.0",
     "vue-feather-icons": "^4.10.0",
     "vue-i18n": "^8.10.0",
-    "vue-navigation": "^1.1.4",
     "vue-qrcode-reader": "^1.4.2",
-    "vue-router": "^3.0.2",
     "vue2-animate": "^2.1.0",
     "vue2-leaflet": "^2.0.2",
     "vuex": "^3.1.0"

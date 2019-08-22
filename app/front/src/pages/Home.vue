@@ -1,57 +1,66 @@
 <template>
   <div class="wrapper">
     <div class="top">
-      <menu-icon @click="open" class="icon"/>
-      <router-link to="/search">
+      <menu-icon @click="open" class="icon" />
+      <a @click="setPage('search')">
         <input
           v-model="$store.state.selectedAddress.name"
           type="text"
           :placeholder="$t('search.search')"
           class="adress-picker"
-        >
-      </router-link>
+        />
+      </a>
 
       <div class="left">
-        <crosshair-icon class="icon" @click="centerOnGeolocation"/>
-        <router-link to="/settings">
-          <layers-icon class="icon"/>
-        </router-link>
-        <alert-circle-icon class="icon" @click="openMissingModal"/>
+        <crosshair-icon class="icon" @click="centerOnGeolocation" />
+        <a @click="setPage('settings')">
+          <filter-icon class="icon" />
+        </a>
+        <alert-circle-icon class="icon" @click="openMissingModal" />
       </div>
     </div>
-    <local-map v-if="centerReady"/>
+    <local-map v-if="centerReady" />
 
     <missing-modal v-if="showMissingModal" @close="showMissingModal = false"></missing-modal>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-import { MenuIcon, CrosshairIcon, LayersIcon, AlertCircleIcon } from 'vue-feather-icons'
+import { mapActions, mapState, mapMutations } from 'vuex'
+import { MenuIcon, CrosshairIcon, FilterIcon, AlertCircleIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 import MissingModal from '../components/MissingModal'
 
 import store from '../store'
+
+function getUrlParams(search) {
+  let hashes = search.slice(search.indexOf('?') + 1).split('&')
+  let params = {}
+  hashes.map(hash => {
+    let [key, val] = hash.split('=')
+    params[key] = decodeURIComponent(val)
+  })
+
+  return params
+}
 
 export default {
   name: 'Home',
   components: {
     MenuIcon,
     CrosshairIcon,
-    LayersIcon,
+    FilterIcon,
     LocalMap,
     AlertCircleIcon,
     MissingModal
   },
-  beforeRouteEnter(to, from, next) {
-    if (to.query && to.query.l) {
-      store.dispatch('setCenter', to.query.l.split(','))
+  created() {
+    const search = getUrlParams(window.location.search)
+
+    if (search.l) {
+      store.dispatch('setCenter', search.l.split(','))
       store.dispatch('setMoved', true)
     }
-    next()
-  },
-  mounted() {
-    this.setDrawerEnable(false)
   },
   data() {
     return {
@@ -60,9 +69,9 @@ export default {
   },
   computed: mapState(['map', 'roundedLocation']),
   methods: {
-    ...mapActions(['setDrawerEnable', 'centerOnGeolocation', 'setCenter']),
+    ...mapActions(['centerOnGeolocation', 'setCenter']),
+    ...mapMutations(['setPage']),
     open() {
-      this.setDrawerEnable(true)
       this.$parent.toggle()
     },
     centerReady() {

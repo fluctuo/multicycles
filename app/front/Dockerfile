@@ -3,7 +3,6 @@ WORKDIR /app
 ARG MODE=production
 ENV MODE=${MODE}
 COPY package*.json .
-COPY yarn.lock .
 RUN yarn install
 COPY . .
 RUN yarn run build --mode ${MODE}

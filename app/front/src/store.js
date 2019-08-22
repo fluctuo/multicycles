@@ -36,12 +36,12 @@ function roundLocation(l) {
 }
 
 const state = {
+  page: 'home',
   lang: getlanguage(),
   geolocation: position || [48.852775, 2.369336],
   providers: [],
   disabledProviders: disabledProviders || [],
   selectedVehicle: false,
-  drawerEnable: true,
   moved: false,
   map: {
     center: position || [48.852775, 2.369336]
@@ -59,7 +59,7 @@ const state = {
 const getters = {
   isProviderDisabled: state => provider => state.disabledProviders.includes(provider),
   enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider)),
-  drawerEnable: state => state.drawerEnable
+  page: state => state.page
 }
 
 const actions = {
@@ -80,7 +80,10 @@ const actions = {
             }
           }
         `,
-        variables: position
+        variables: {
+          lat: position.lat || this.state.roundedLocation[0],
+          lng: position.lng || this.state.roundedLocation[1]
+        }
       })
       .then(result => {
         commit('setProviders', result.data.providers)
@@ -98,9 +101,6 @@ const actions = {
         commit('selectVehicle', vehicle)
       }, 100)
     }
-  },
-  setDrawerEnable({ commit }, enable) {
-    commit('drawerEnable', !!enable)
   },
   centerOnGeolocation({ commit }) {
     commit('centerOnGeolocation')
@@ -292,6 +292,9 @@ const actions = {
 }
 
 const mutations = {
+  setPage(state, page) {
+    state.page = page
+  },
   setLang(state, lang) {
     localStorage.setItem('lang', lang)
     i18n.locale = lang
@@ -316,15 +319,16 @@ const mutations = {
   selectVehicle(state, vehicle) {
     state.selectedVehicle = vehicle
   },
-  drawerEnable(state, enable) {
-    state.drawerEnable = enable
-  },
   centerOnGeolocation(state) {
     const geolocation = state.geolocation
 
     if (geolocation) {
       state.moved = false
       state.map.center = JSON.parse(JSON.stringify(geolocation))
+
+      state.roundedLocation = [roundLocation(state.map.center[0]), roundLocation(state.map.center[1])]
+
+      history.pushState(null, null, `/?l=${state.map.center.join(',')}`)
     }
   },
   setMoved(state, moved) {

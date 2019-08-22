@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="input-wrapper">
-      <router-link :to="getPreviousPage()">
-        <arrow-left-icon class="icon"/>
-      </router-link>
+      <a @click="setPage('home')">
+        <arrow-left-icon />
+      </a>
 
       <input
         v-model="searchedAdress"
@@ -12,9 +12,9 @@
         type="text"
         class="search-input"
         v-focus
-      >
+      />
 
-      <search-icon class="icon"/>
+      <search-icon class="icon" />
 
       <div slot="suggestion-item" slot-scope="{ suggestion }" class="adress-suggestion">
         <div>{{ suggestion.place_name }}</div>
@@ -26,13 +26,13 @@
         :key="address.id"
         @click="selectAddress(address)"
       >{{ address.place_name }}</li>
-      <search-icon v-if="!addresses.length" class="background"/>
+      <search-icon v-if="!addresses.length" class="background" />
     </ul>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import { ArrowLeftIcon, SearchIcon } from 'vue-feather-icons'
 
 export default {
@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     ...mapActions(['setAddress']),
+    ...mapMutations(['setPage']),
     getList() {
       if (this.searchedAdress.length > 3) {
         return this.axios
@@ -65,11 +66,8 @@ export default {
     },
     selectAddress(address) {
       this.setAddress(address)
-      this.$router.push({ name: 'Home', query: { l: this.$store.state.selectedAddress.position.join(',') } })
-    },
-    getPreviousPage() {
-      const previousHome = this.$store.state.navigation.routes[this.$store.state.navigation.routes.length - 2]
-      return previousHome ? `/?VNK=${previousHome.replace('Home?', '')}` : '/'
+      history.pushState(null, null, `/?l=${this.$store.state.selectedAddress.position.join(',')}`)
+      this.setPage('home')
     }
   }
 }

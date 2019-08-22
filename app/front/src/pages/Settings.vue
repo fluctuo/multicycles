@@ -1,9 +1,9 @@
 <template>
   <div class="page">
     <div class="header">
-      <router-link :to="getPreviousPage()">
-        <arrow-left-circle-icon/>
-      </router-link>
+      <a @click="setPage('home')">
+        <arrow-left-circle-icon />
+      </a>
 
       <h1>{{ $t('settings.title')}}</h1>
     </div>
@@ -41,7 +41,7 @@
                 :src="logoSrc(provider)"
                 :alt="provider.name"
                 class="logo"
-              >
+              />
               {{ provider.name}}
             </a>
           </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import { ArrowLeftCircleIcon, ArrowDownCircleIcon } from 'vue-feather-icons'
 
 export default {
@@ -60,6 +60,9 @@ export default {
   components: {
     ArrowLeftCircleIcon,
     ArrowDownCircleIcon
+  },
+  created() {
+    this.getProviders()
   },
   data() {
     return {
@@ -74,7 +77,8 @@ export default {
   },
   computed: mapGetters(['isProviderDisabled']),
   methods: {
-    ...mapActions(['setLang', 'toggleProvider']),
+    ...mapActions(['setLang', 'toggleProvider', 'getProviders']),
+    ...mapMutations(['setPage']),
     installApp() {
       window.installPromptEvent.prompt()
     },
@@ -87,10 +91,6 @@ export default {
       }
 
       return logo
-    },
-    getPreviousPage() {
-      const previousHome = this.$store.state.navigation.routes[this.$store.state.navigation.routes.length - 2]
-      return previousHome ? `/?VNK=${previousHome.replace('Home?', '')}` : '/'
     }
   }
 }
@@ -133,7 +133,7 @@ form {
 
   margin: -5px -5px;
 
-  &>div {
+  & > div {
     margin: 5px;
     width: 100%;
     max-width: 450px;
@@ -154,7 +154,7 @@ form {
 }
 
 @media (max-width: 575px) {
-  .providers>div{
+  .providers > div {
     width: 100%;
     max-width: none;
   }

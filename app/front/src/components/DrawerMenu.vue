@@ -2,37 +2,38 @@
   <div class="drawer">
     <ul>
       <li>
-        <img src="/bicyclist.svg" alt="mutlicycles logo" class="logo">
+        <img src="/bicyclist.svg" alt="mutlicycles logo" class="logo" />
       </li>
       <li>
-        <router-link to="/" @click.native="handleToggleDrawer">
-          <globe-icon/>
+        <a @click="moveToPage('home')">
+          <globe-icon />
           &nbsp;{{ $t('home.map') }}
-        </router-link>
+        </a>
       </li>
       <li>
-        <router-link to="/account" @click.native="handleToggleDrawer">
-          <user-icon/>
+        <a @click="moveToPage('account')">
+          <user-icon />
           &nbsp;{{ $t('settings.account') }}
-        </router-link>
+        </a>
       </li>
       <li>
-        <router-link to="/settings" @click.native="handleToggleDrawer">
-          <settings-icon/>
+        <a @click="moveToPage('settings')">
+          <settings-icon />
           &nbsp;{{ $t('settings.title') }}
-        </router-link>
+        </a>
       </li>
       <li>
-        <router-link to="/about" @click.native="handleToggleDrawer">
-          <info-icon/>
+        <a @click="moveToPage('about')">
+          <info-icon />
           &nbsp;{{ $t('about.title') }}
-        </router-link>
+        </a>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { GlobeIcon, SettingsIcon, InfoIcon, UserIcon } from 'vue-feather-icons'
 
 export default {
@@ -43,6 +44,11 @@ export default {
     UserIcon
   },
   methods: {
+    ...mapMutations(['setPage']),
+    moveToPage(page) {
+      this.setPage(page)
+      this.$parent.toggle()
+    },
     handleToggleDrawer() {
       this.$parent.toggle()
     }
@@ -72,6 +78,7 @@ export default {
     li {
       list-style: none;
       padding: 10px 0;
+      color: #fff;
 
       a {
         padding: 0 20px;
@@ -79,13 +86,12 @@ export default {
         align-items: center;
         height: 45px;
         text-decoration: none;
-        color: #fff;
         transition: 0.3s;
+        cursor: pointer;
 
         &:hover {
           background-color: #ffffff40;
           border-radius: 5px;
-          color: #fff;
           text-decoration: none;
         }
       }

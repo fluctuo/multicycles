@@ -9,10 +9,7 @@ import VueAnalytics from 'vue-analytics'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 import DrawerLayout from 'vue-drawer-layout'
-import Navigation from 'vue-navigation'
-
 import App from './App'
-import router from './router'
 import apolloProvider from './apollo'
 import i18n from './i18n'
 import store from './store'
@@ -26,7 +23,6 @@ window.addEventListener('beforeinstallprompt', event => {
 if (process.env.VUE_APP_UA_ANALYTICS) {
   Vue.use(VueAnalytics, {
     id: process.env.VUE_APP_UA_ANALYTICS,
-    router,
     autoTracking: {
       exception: true
     }
@@ -49,7 +45,6 @@ Vue.use(
 )
 
 Vue.use(DrawerLayout)
-Vue.use(Navigation, { router, store })
 
 Vue.directive('focus', {
   inserted(el) {
@@ -60,7 +55,6 @@ Vue.directive('focus', {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
   apolloProvider,
   i18n,
   store,
