@@ -1,21 +1,24 @@
 <template>
   <div class="wrapper">
     <div class="top">
-      <menu-icon @click="open" class="icon" />
-      <a @click="setPage('search')">
-        <input
-          v-model="$store.state.selectedAddress.name"
-          type="text"
-          :placeholder="$t('search.search')"
-          class="adress-picker"
-        />
-      </a>
+      <div class="right">
+        <menu-icon @click="open" class="icon" />
+      </div>
+
+      <div class="center">
+        <a @click="setPage('search')">
+          <input
+            v-model="$store.state.selectedAddress.name"
+            type="text"
+            :placeholder="$t('search.search')"
+            class="adress-picker"
+          />
+        </a>
+      </div>
 
       <div class="left">
         <crosshair-icon class="icon" @click="centerOnGeolocation" />
-        <a @click="setPage('settings')">
-          <filter-icon class="icon" />
-        </a>
+        <filter-icon class="icon" @click="setPage('settings')" />
         <alert-circle-icon class="icon" @click="openMissingModal" />
       </div>
     </div>
@@ -106,31 +109,48 @@ export default {
   justify-content: space-between;
   margin: 15px 0;
   padding: 0 15px;
+  @include respond-to('tiny') {
+    padding: 0;
+  }
 
-  .left {
+  .left,
+  .right {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
+
+    @include respond-to('tiny') {
+      margin: 0 5px;
+    }
+  }
+
+  .center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
   }
 
   .icon {
     height: $iconSize;
     width: $iconSize;
     cursor: pointer;
-
+    flex-shrink: 0;
     background: #ffffff;
     border-radius: 50%;
     color: green;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     padding: 5px;
-    margin: 5px 0;
+
+    & + .icon {
+      margin-top: 5px;
+    }
   }
 
   .adress-picker {
     border-radius: 5px;
-
+    max-width: 300px;
     width: 100%;
     height: 40px;
-
     box-shadow: none;
     border: 2px solid $mainColor;
   }

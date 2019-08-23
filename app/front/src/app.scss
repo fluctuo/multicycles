@@ -13,7 +13,6 @@ $iconSize: 40px;
   background-color: $mainColor;
   color: #ffffff;
   flex-grow: 1;
-  padding: 15px;
   overflow: auto;
 
   a {
@@ -28,14 +27,13 @@ $iconSize: 40px;
     height: 77px;
     align-items: center;
     justify-content: flex-start;
+    position: absolute;
+    padding: 15px;
+    width: 100%;
 
     h1 {
       text-align: center;
       flex-grow: 1;
-    }
-
-    a {
-      position: absolute;
     }
 
     svg {
@@ -46,6 +44,8 @@ $iconSize: 40px;
   }
 
   .content {
-    margin: 0;
+    margin: 77px 0 0;
+    padding: 15px;
+    background-color: lighten($mainColor, 8%);
   }
 }

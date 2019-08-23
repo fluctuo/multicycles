@@ -77,7 +77,6 @@ export default {
 
 .content {
   max-width: 576px;
-  margin: 5px auto !important;
   flex: 1;
 }
 

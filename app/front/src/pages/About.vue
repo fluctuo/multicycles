@@ -47,7 +47,6 @@ export default {
 }
 
 .content {
-  margin: 5px 25px;
   flex: 1;
 }
 
