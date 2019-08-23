@@ -118,8 +118,12 @@ export default {
         return 'vehicleType.VIRTUAL_STATION'
       }
 
-      if (vehicle.attributes && vehicle.attributes.includes('CARGO')) {
-        return 'vehicleType.CARGO'
+      if (vehicle.type === 'BIKE' && vehicle.attributes && vehicle.attributes.includes('CARGO')) {
+        return 'vehicleType.BIKE_CARGO'
+      }
+
+      if (vehicle.type === 'CAR' && vehicle.attributes && vehicle.attributes.includes('CARGO')) {
+        return 'vehicleType.CAR_CARGO'
       }
 
       if (vehicle.attributes && vehicle.attributes.includes('TANDEM')) {

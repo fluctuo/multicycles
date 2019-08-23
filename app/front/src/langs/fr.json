@@ -19,7 +19,8 @@
     "BIKE": "Vélo",
     "SCOOTER": "Trottinette",
     "MOTORSCOOTER": "Scooter",
-    "CARGO": "Vélo cargo",
+    "BIKE_CARGO": "Vélo cargo",
+    "CAR_CARGO": "Camionnette",
     "TANDEM": "Tandem",
     "CAR": "Voiture",
     "OTHER": "Véhicule"

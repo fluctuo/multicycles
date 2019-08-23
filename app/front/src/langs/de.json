@@ -19,7 +19,8 @@
     "BIKE": "Fahrrad",
     "SCOOTER": "Scooter",
     "MOTORSCOOTER": "Motorroller",
-    "CARGO": "Lastenfahrrad",
+    "BIKE_CARGO": "Lastenfahrrad",
+    "CAR_CARGO": "Transporter",
     "TANDEM": "Tandem",
     "CAR": "Auto",
     "OTHER": "Fahrzeug"

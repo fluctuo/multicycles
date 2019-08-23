@@ -20,7 +20,8 @@
     "BIKE": "Bike",
     "SCOOTER": "Scooter",
     "MOTORSCOOTER": "Motor-scooter",
-    "CARGO": "Cargo bike",
+    "BIKE_CARGO": "Cargo bike",
+    "CAR_CARGO": "Van",
     "TANDEM": "Tandem",
     "CAR": "Car",
     "OTHER": "Vehicle"
