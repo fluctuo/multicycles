@@ -6,6 +6,7 @@
         "name": "Vehicle",
         "possibleTypes": [
           { "name": "Acciona" },
+          { "name": "BBBike" },
           { "name": "Bcycle" },
           { "name": "Billy" },
           { "name": "Bird" },
@@ -76,6 +77,7 @@
         "kind": "INTERFACE",
         "name": "Station",
         "possibleTypes": [
+          { "name": "BBBike" },
           { "name": "Bcycle" },
           { "name": "BlueBikes" },
           { "name": "CallABike" },
