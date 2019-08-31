@@ -63,6 +63,7 @@
           { "name": "Spin" },
           { "name": "TelOFun" },
           { "name": "Tier" },
+          { "name": "Torvelo" },
           { "name": "Troty" },
           { "name": "Ufo" },
           { "name": "Voi" },
@@ -94,6 +95,7 @@
           { "name": "Scutt" },
           { "name": "SocialBicycles" },
           { "name": "TelOFun" },
+          { "name": "Torvelo" },
           { "name": "Zero" }
         ]
       }
