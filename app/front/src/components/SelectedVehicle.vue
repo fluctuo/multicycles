@@ -9,7 +9,7 @@
               :src="logoSrc(vehicle.provider)"
               alt="logo"
               class="logo"
-            >
+            />
             {{ vehicle.provider.name }}
           </div>
         </div>
@@ -33,12 +33,12 @@
                 v-if="vehicle.attributes && vehicle.attributes.includes('ELECTRIC')"
                 src="../assets/lightning.svg"
                 class="attribute"
-              >
+              />
               <img
                 v-if="vehicle.attributes && vehicle.attributes.includes('GEARS')"
                 src="../assets/cog.svg"
                 class="attribute"
-              >
+              />
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
             class="open-native"
           >
             {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
-            <external-link-icon/>
+            <external-link-icon />
           </a>
           <a
             v-if="isMobileAndDeeplink('android')"
@@ -63,19 +63,19 @@
             class="open-native"
           >
             {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
-            <external-link-icon/>
+            <external-link-icon />
           </a>
           <a
             v-if="(isComputer && vehicle.provider.app.ios) || (isMobileAndDeeplink('ios', true))"
             :href="vehicle.provider.app.ios"
           >
-            <img src="../assets/ios-badge.png" alt>
+            <img src="../assets/ios-badge.png" alt />
           </a>
           <a
             v-if="(isComputer && vehicle.provider.app.android) || (isMobileAndDeeplink('android', true))"
             :href="vehicle.provider.app.android"
           >
-            <img src="../assets/android-badge.png" alt>
+            <img src="../assets/android-badge.png" alt />
           </a>
         </div>
       </div>
