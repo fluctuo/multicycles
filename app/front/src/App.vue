@@ -4,6 +4,7 @@
     :enable="drawerEnable"
     @slide-end="fixEnable"
     @mask-click="handleMaskClick"
+    v-if="!isEmbedded"
   >
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
@@ -15,6 +16,7 @@
       <home v-else />
     </div>
   </vue-drawer-layout>
+  <local-map v-else />
 </template>
 
 <script>
@@ -23,6 +25,7 @@ import DrawerMenu from './components/DrawerMenu'
 import ActiveRide from './components/ActiveRide'
 
 import Home from '@/pages/Home'
+import LocalMap from '@/components/Map'
 import Search from '@/pages/Search'
 import Settings from '@/pages/Settings'
 import About from '@/pages/About'
@@ -37,20 +40,25 @@ export default {
     Search,
     Settings,
     About,
-    Account
+    Account,
+    LocalMap
   },
-  computed: mapGetters(['drawerEnable', 'page']),
+  computed: mapGetters(['drawerEnable', 'page', 'isEmbedded']),
   created() {
-    if (window.location.search && window.location.search.match(/jwt=/)) {
-      this.setPage('account')
-    }
+    if (window.location.search && window.location.search.match(/embedded=true/)) {
+      this.setEmbedded(true)
+    } else {
+      if (window.location.search && window.location.search.match(/jwt=/)) {
+        this.setPage('account')
+      }
 
-    this.login()
-    this.startGeolocation()
+      this.login()
+      this.startGeolocation()
+    }
   },
   methods: {
     ...mapActions(['setDrawerEnable', 'login', 'startGeolocation', 'getZones']),
-    ...mapMutations(['setPage']),
+    ...mapMutations(['setPage', 'setEmbedded']),
     fixEnable(visible) {
       if (visible) {
         this.setDrawerEnable(true)

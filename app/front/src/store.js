@@ -38,21 +38,21 @@ function roundLocation(l) {
 const state = {
   page: 'home',
   lang: getlanguage(),
-  geolocation: position || [48.852775, 2.369336],
+  geolocation: position || [48.856613, 2.352222],
   providers: [],
   disabledProviders: disabledProviders || [],
   selectedVehicle: false,
   drawerEnable: false,
   moved: false,
   map: {
-    center: position || [48.852775, 2.369336]
+    center: position || [48.856613, 2.352222]
   },
   selectedAddress: {
     name: ''
   },
   myAccount: null,
   activeRides: [],
-  roundedLocation: position || [48.852775, 2.369336],
+  roundedLocation: position || [48.856613, 2.352222],
   fixGPS: false,
   zones: []
 }
@@ -61,7 +61,8 @@ const getters = {
   isProviderDisabled: state => provider => state.disabledProviders.includes(provider),
   enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider)),
   page: state => state.page,
-  drawerEnable: state => state.drawerEnable
+  drawerEnable: state => state.drawerEnable,
+  isEmbedded: state => state.embedded
 }
 
 const actions = {
@@ -376,6 +377,9 @@ const mutations = {
   },
   setZones(state, zones) {
     state.zones = zones
+  },
+  setEmbedded(state) {
+    state.embedded = true
   }
 }
 

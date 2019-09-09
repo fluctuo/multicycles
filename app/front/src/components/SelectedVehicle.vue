@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-      <div class="subdetail">
+      <div class="subdetail" v-if="!isEmbedded">
         <qrcode-scanner
           v-if="!hasActiveRides && unlockWhitelisted"
           :provider="vehicle.provider.slug"
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import MobileDetect from 'mobile-detect'
 import { ExternalLinkIcon } from 'vue-feather-icons'
 import QrcodeScanner from './QrcodeScanner'
@@ -102,6 +102,7 @@ export default {
     isComputer: md.phone() === null && md.tablet() === null
   }),
   computed: {
+    ...mapGetters(['isEmbedded']),
     ...mapState({
       hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
     }),
