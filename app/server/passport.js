@@ -49,7 +49,7 @@ module.exports = app => {
             ctx.body = { success: false }
           } else {
             const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1y' })
-            ctx.redirect(`${process.env.FRONT_BASE_URL}/account?jwt=${token}`)
+            ctx.redirect(`${process.env.FRONT_BASE_URL}/?jwt=${token}`)
           }
         }
       )(ctx, next)

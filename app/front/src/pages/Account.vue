@@ -26,6 +26,17 @@ import Login from '../components/Login'
 import MyAccount from '../components/MyAccount'
 import Footer from '../components/Footer'
 
+function getUrlParams(search) {
+  let hashes = search.slice(search.indexOf('?') + 1).split('&')
+  let params = {}
+  hashes.map(hash => {
+    let [key, val] = hash.split('=')
+    params[key] = decodeURIComponent(val)
+  })
+
+  return params
+}
+
 export default {
   name: 'Account',
   components: {
@@ -36,12 +47,16 @@ export default {
     Footer
   },
   created() {
-    if (window.location.search) {
+    const urlParams = getUrlParams(window.location.search)
+
+    if (urlParams && urlParams.jwt) {
       this.isLoging = true
-      const hashParsed = window.location.search.match(/jwt=(.+?)(?:&|$)/m)
+      const jwt = urlParams.jwt
+
       window.location.search = ''
-      if (hashParsed && hashParsed[1]) {
-        window.localStorage.setItem('token', hashParsed[1])
+
+      if (jwt) {
+        window.localStorage.setItem('token', jwt)
         this.login()
       }
     }
