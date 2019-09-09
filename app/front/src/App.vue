@@ -1,5 +1,10 @@
 <template>
-  <vue-drawer-layout ref="drawerLayout" @mask-click="handleMaskClick">
+  <vue-drawer-layout
+    ref="drawerLayout"
+    :enable="drawerEnable"
+    @slide-end="fixEnable"
+    @mask-click="handleMaskClick"
+  >
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
       <active-ride />
@@ -34,7 +39,7 @@ export default {
     About,
     Account
   },
-  computed: mapGetters(['page']),
+  computed: mapGetters(['drawerEnable', 'page']),
   created() {
     if (window.location.search && window.location.search.match(/jwt=/)) {
       this.setPage('account')
@@ -44,8 +49,15 @@ export default {
     this.startGeolocation()
   },
   methods: {
-    ...mapActions(['login', 'startGeolocation', 'getZones']),
+    ...mapActions(['setDrawerEnable', 'login', 'startGeolocation', 'getZones']),
     ...mapMutations(['setPage']),
+    fixEnable(visible) {
+      if (visible) {
+        this.setDrawerEnable(true)
+      } else {
+        this.setDrawerEnable(this.page === 'home' ? false : true)
+      }
+    },
     handleMaskClick() {
       this.$refs.drawerLayout.toggle(false)
     }

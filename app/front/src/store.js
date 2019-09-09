@@ -42,6 +42,7 @@ const state = {
   providers: [],
   disabledProviders: disabledProviders || [],
   selectedVehicle: false,
+  drawerEnable: false,
   moved: false,
   map: {
     center: position || [48.852775, 2.369336]
@@ -59,7 +60,8 @@ const state = {
 const getters = {
   isProviderDisabled: state => provider => state.disabledProviders.includes(provider),
   enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider)),
-  page: state => state.page
+  page: state => state.page,
+  drawerEnable: state => state.drawerEnable
 }
 
 const actions = {
@@ -101,6 +103,9 @@ const actions = {
         commit('selectVehicle', vehicle)
       }, 100)
     }
+  },
+  setDrawerEnable({ commit }, enable) {
+    commit('drawerEnable', !!enable)
   },
   centerOnGeolocation({ commit }) {
     commit('centerOnGeolocation')
@@ -294,6 +299,7 @@ const actions = {
 const mutations = {
   setPage(state, page) {
     state.page = page
+    state.drawerEnable = page === 'home' ? false : true
   },
   setLang(state, lang) {
     localStorage.setItem('lang', lang)
@@ -318,6 +324,9 @@ const mutations = {
   },
   selectVehicle(state, vehicle) {
     state.selectedVehicle = vehicle
+  },
+  drawerEnable(state, enable) {
+    state.drawerEnable = enable
   },
   centerOnGeolocation(state) {
     const geolocation = state.geolocation
