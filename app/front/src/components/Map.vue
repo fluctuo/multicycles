@@ -2,9 +2,9 @@
   <div class="flex-container">
     <div class="map-container">
       <transition name="fade">
-        <img src="../assets/crosshair.svg" class="crosshair" v-if="$store.state.moved">
+        <img src="../assets/crosshair.svg" class="crosshair" v-if="$store.state.moved" />
       </transition>
-      <v-progress v-if="fetchingVehicles !== 0"/>
+      <v-progress v-if="fetchingVehicles !== 0" />
       <l-map
         ref="map"
         :zoom="map.zoom"
@@ -145,6 +145,19 @@ export default {
         })
       }
 
+      if (vehicle.type === 'STATION') {
+        return L.divIcon({
+          className: null,
+          html: `<div><img src="${require(`../assets/markers/${
+            vehicle.provider.slug
+          }.png`)}" /><div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
+            vehicle.availableVehicles === 0 ? 'grey' : '#22961d'
+          }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
+            vehicle.availableVehicles
+          }</div>`
+        })
+      }
+
       let iconUrl
       let iconRetinaUrl
 
@@ -269,5 +282,22 @@ export default {
 
 .leaflet-bottom {
   z-index: 800 !important;
+}
+
+.leaflet-div-icon {
+  background: none !important;
+  border: none !important;
+}
+
+.marker-available-badge {
+  position: relative;
+  top: -48px;
+  right: -20px;
+  background: white;
+  border-radius: 50px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
 }
 </style>
