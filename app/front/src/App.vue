@@ -8,6 +8,7 @@
   >
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
+      <fluctuo-banner />
       <active-ride />
       <search v-if="page === 'search'" />
       <settings v-else-if="page === 'settings'" />
@@ -23,6 +24,7 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import DrawerMenu from './components/DrawerMenu'
 import ActiveRide from './components/ActiveRide'
+import FluctuoBanner from './components/FluctuoBanner'
 
 import Home from '@/pages/Home'
 import LocalMap from '@/components/Map'
@@ -41,7 +43,8 @@ export default {
     Settings,
     About,
     Account,
-    LocalMap
+    LocalMap,
+    FluctuoBanner
   },
   computed: mapGetters(['drawerEnable', 'page', 'isEmbedded']),
   created() {
