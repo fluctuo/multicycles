@@ -44,8 +44,16 @@ $iconSize: 40px;
   }
 
   .content {
-    margin: 77px 0 0;
+    margin: 77px auto 0;
     padding: 15px;
     background-color: lighten($mainColor, 8%);
+    width: 100%;
+    flex-grow: 1;
+
+    .inner-content {
+      max-width: 576px;
+      flex: 1;
+      margin: 0 auto;
+    }
   }
 }

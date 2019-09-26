@@ -9,44 +9,46 @@
     </div>
 
     <div class="content">
-      <div class="install" v-if="hasInstallPromptEvent">
-        <button @click="installApp()">
-          <arrow-down-circle-icon></arrow-down-circle-icon>
-          {{ $t('settings.installApp')}}
-        </button>
-      </div>
-      <form>
-        <label for="lang">{{ $t('settings.lang') }}:</label>
-        <select
-          v-model="$store.state.lang"
-          :class="[$store.state.lang]"
-          @change="setLang"
-          id="lang"
-        >
-          <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
-        </select>
-
-        <label for="lang">{{ $t('settings.providers') }}:</label>
-
-        <div class="providers">
-          <div
-            v-for="provider in $store.state.providers"
-            :key="provider.slug"
-            v-bind:class="{disabled: isProviderDisabled(provider.slug)}"
-            @click="toggleProvider(provider.slug)"
-          >
-            <a href="#" :title="provider.name">
-              <img
-                v-if="logoSrc(provider)"
-                :src="logoSrc(provider)"
-                :alt="provider.name"
-                class="logo"
-              />
-              {{ provider.name}}
-            </a>
-          </div>
+      <div class="inner-content">
+        <div class="install" v-if="hasInstallPromptEvent">
+          <button @click="installApp()">
+            <arrow-down-circle-icon></arrow-down-circle-icon>
+            {{ $t('settings.installApp')}}
+          </button>
         </div>
-      </form>
+        <form>
+          <label for="lang">{{ $t('settings.lang') }}:</label>
+          <select
+            v-model="$store.state.lang"
+            :class="[$store.state.lang]"
+            @change="setLang"
+            id="lang"
+          >
+            <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
+          </select>
+
+          <label for="lang">{{ $t('settings.providers') }}:</label>
+
+          <div class="providers">
+            <div
+              v-for="provider in $store.state.providers"
+              :key="provider.slug"
+              v-bind:class="{disabled: isProviderDisabled(provider.slug)}"
+              @click="toggleProvider(provider.slug)"
+            >
+              <a href="#" :title="provider.name">
+                <img
+                  v-if="logoSrc(provider)"
+                  :src="logoSrc(provider)"
+                  :alt="provider.name"
+                  class="logo"
+                />
+                {{ provider.name}}
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -136,7 +138,7 @@ form {
   & > div {
     margin: 5px;
     width: 100%;
-    max-width: 450px;
+    max-width: 250px;
     border-radius: 5px;
     padding: 5px;
     background: white;

@@ -8,7 +8,7 @@
   >
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
-      <fluctuo-banner />
+      <fluctuo-banner v-if="page === 'home'" />
       <active-ride />
       <search v-if="page === 'search'" />
       <settings v-else-if="page === 'settings'" />

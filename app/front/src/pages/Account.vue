@@ -9,11 +9,13 @@
     </div>
 
     <div class="content">
-      <p>{{ $t('account.intro') }}</p>
+      <div class="inner-content">
+        <p>{{ $t('account.intro') }}</p>
 
-      <loader-icon v-if="isLoging" class="spinner" />
-      <my-account v-else-if="isLogged" />
-      <login v-else />
+        <loader-icon v-if="isLoging" class="spinner" />
+        <my-account v-else-if="isLogged" />
+        <login v-else />
+      </div>
     </div>
     <Footer />
   </div>
@@ -88,11 +90,6 @@ export default {
   justify-content: flex-start;
   align-content: flex-start;
   align-items: stretch;
-}
-
-.content {
-  max-width: 576px;
-  flex: 1;
 }
 
 .important {
