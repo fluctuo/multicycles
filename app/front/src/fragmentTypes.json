@@ -71,6 +71,7 @@
           { "name": "Torvelo" },
           { "name": "Troty" },
           { "name": "Ufo" },
+          { "name": "Velib" },
           { "name": "Voi" },
           { "name": "WeTrott" },
           { "name": "Wheels" },
@@ -105,6 +106,7 @@
           { "name": "SocialBicycles" },
           { "name": "TelOFun" },
           { "name": "Torvelo" },
+          { "name": "Velib" },
           { "name": "WeTrott" },
           { "name": "Zero" }
         ]
