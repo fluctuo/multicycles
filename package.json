@@ -5,14 +5,7 @@
   "scripts": {
     "#<git hooks>": "handled by husky",
     "precommit": "lint-staged",
-    "#</git hooks>": "handled by husky",
-    "clean": "rm -rf providers/*/lib",
-    "transpile": "lerna exec --ignore '@multicycles/{front}' -- babel --root-mode upward src --optional runtime --out-dir lib --ignore \"__tests__\"",
-    "watch": "lerna exec --ignore '@multicycles/{front}' --parallel -- babel --root-mode upward src -w src --optional runtime --out-dir lib --ignore \"__tests__\"",
-    "prepare": "npm run clean && npm run transpile",
-    "test": "lerna run --parallel test",
-    "generate": "plop",
-    "dev:front": "cd front && npm run dev"
+    "#</git hooks>": "handled by husky"
   },
   "lint-staged": {
     "*.{js,json,css,md}": [
@@ -28,9 +21,7 @@
     "@babel/preset-env": "^7.1.6",
     "eslint-plugin-prettier": "^2.7.0",
     "husky": "^0.14.3",
-    "lerna": "^2.11.0",
     "lint-staged": "^6.1.1",
-    "plop": "^2.1.0",
     "prettier": "^1.15.2"
   },
   "dependencies": {}

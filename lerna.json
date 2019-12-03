@@ -1,5 +1,0 @@
-{
-  "lerna": "2.5.1",
-  "packages": ["front", "providers/*"],
-  "version": "independent"
-}
