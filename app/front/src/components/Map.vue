@@ -73,6 +73,8 @@ import { mapActions, mapState, mapMutations } from 'vuex'
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
 
+let autoReloadInterval
+
 export default {
   name: 'Map',
   components: {
@@ -82,6 +84,18 @@ export default {
     LGeoJson,
     'v-progress': Progress,
     SelectedVehicle
+  },
+  mounted() {
+    if (this.autoReloadEnabled) {
+      autoReloadInterval = setInterval(() => {
+        this.reloadVehicules()
+      }, 2 * 60 * 1000)
+    }
+  },
+  beforeDestroy() {
+    if (autoReloadInterval) {
+      clearInterval(autoReloadInterval)
+    }
   },
   data() {
     return {
@@ -96,7 +110,7 @@ export default {
         lng: this.$store.state.geolocation[1]
       },
       map: {
-        zoom: 16,
+        zoom: 17,
         minZoom: 13,
         detectRetina: true,
         options: {
@@ -111,7 +125,8 @@ export default {
     center: state => state.map.center,
     excludeProviders: state => state.disabledProviders,
     roundedLocation: state => state.roundedLocation,
-    zones: state => state.zones
+    zones: state => state.zones,
+    autoReloadEnabled: state => state.autoReload
   }),
   watch: {
     $route: 'reloadVehicules'

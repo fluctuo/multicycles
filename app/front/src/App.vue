@@ -64,6 +64,10 @@ export default {
         this.setCenter(params.l)
         this.setMoved(true)
       }
+
+      if (params.autoReload === 'true') {
+        this.setAutoReload(true)
+      }
     }
 
     this.login()
@@ -71,7 +75,7 @@ export default {
   },
   methods: {
     ...mapActions(['setDrawerEnable', 'login', 'startGeolocation', 'getZones', 'setCenter', 'setMoved']),
-    ...mapMutations(['setPage', 'setEmbedded']),
+    ...mapMutations(['setPage', 'setEmbedded', 'setAutoReload']),
     fixEnable(visible) {
       if (visible) {
         this.setDrawerEnable(true)
