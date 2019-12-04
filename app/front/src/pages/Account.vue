@@ -24,20 +24,10 @@
 <script>
 import { mapActions, mapMutations } from 'vuex'
 import { ArrowLeftCircleIcon, LoaderIcon } from 'vue-feather-icons'
+import queryString from 'query-string'
 import Login from '../components/Login'
 import MyAccount from '../components/MyAccount'
 import Footer from '../components/Footer'
-
-function getUrlParams(search) {
-  let hashes = search.slice(search.indexOf('?') + 1).split('&')
-  let params = {}
-  hashes.map(hash => {
-    let [key, val] = hash.split('=')
-    params[key] = decodeURIComponent(val)
-  })
-
-  return params
-}
 
 export default {
   name: 'Account',
@@ -49,20 +39,17 @@ export default {
     Footer
   },
   created() {
-    const urlParams = getUrlParams(window.location.search)
+    if (window.location.search) {
+      const params = queryString.parse(window.location.search)
 
-    if (urlParams && urlParams.jwt) {
-      this.isLoging = true
-      const jwt = urlParams.jwt
-
-      window.location.search = ''
-
-      if (jwt) {
-        window.localStorage.setItem('token', jwt)
+      if (params.jwt) {
+        this.isLoging = true
+        window.localStorage.setItem('token', params.jwt)
+        this.updateLocation()
         this.login()
       }
+      this.isLoging = false
     }
-    this.isLoging = false
   },
   data() {
     return {
@@ -76,7 +63,7 @@ export default {
   },
   methods: {
     ...mapActions(['login']),
-    ...mapMutations(['setPage'])
+    ...mapMutations(['setPage', 'updateLocation'])
   }
 }
 </script>

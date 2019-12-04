@@ -34,19 +34,6 @@ import { MenuIcon, CrosshairIcon, FilterIcon, AlertCircleIcon } from 'vue-feathe
 import LocalMap from '../components/Map'
 import MissingModal from '../components/MissingModal'
 
-import store from '../store'
-
-function getUrlParams(search) {
-  let hashes = search.slice(search.indexOf('?') + 1).split('&')
-  let params = {}
-  hashes.map(hash => {
-    let [key, val] = hash.split('=')
-    params[key] = decodeURIComponent(val)
-  })
-
-  return params
-}
-
 export default {
   name: 'Home',
   components: {
@@ -56,14 +43,6 @@ export default {
     LocalMap,
     AlertCircleIcon,
     MissingModal
-  },
-  created() {
-    const search = getUrlParams(window.location.search)
-
-    if (search.l) {
-      store.dispatch('setCenter', search.l.split(','))
-      store.dispatch('setMoved', true)
-    }
   },
   data() {
     return {

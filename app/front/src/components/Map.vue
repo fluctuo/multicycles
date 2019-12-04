@@ -68,7 +68,7 @@
 import L from 'leaflet'
 import { LMap, LTileLayer, LMarker, LGeoJson } from 'vue2-leaflet'
 import gql from 'graphql-tag'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
@@ -118,6 +118,7 @@ export default {
   },
   methods: {
     ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
+    ...mapMutations(['updateLocation']),
     zoomEnd() {
       this.map.zoom = this.$refs.map.mapObject.getZoom()
     },
@@ -133,8 +134,8 @@ export default {
     moveEnd(e) {
       const center = e.target.getCenter()
 
-      history.pushState(null, null, `/?l=${center.lat},${center.lng}`)
       this.setCenter([center.lat, center.lng])
+      this.updateLocation()
     },
     getIconByProvider(vehicle) {
       if (vehicle === 'geo') {

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import gql from 'graphql-tag'
+import queryString from 'query-string'
 
 import i18n from './i18n'
 import apolloProvider from './apollo'
@@ -54,7 +55,8 @@ const state = {
   activeRides: [],
   roundedLocation: position || [48.856613, 2.352222],
   fixGPS: false,
-  zones: []
+  zones: [],
+  embedded: false
 }
 
 const getters = {
@@ -338,7 +340,7 @@ const mutations = {
 
       state.roundedLocation = [roundLocation(state.map.center[0]), roundLocation(state.map.center[1])]
 
-      history.pushState(null, null, `/?l=${state.map.center.join(',')}`)
+      this.updateLocation()
     }
   },
   setMoved(state, moved) {
@@ -380,6 +382,18 @@ const mutations = {
   },
   setEmbedded(state) {
     state.embedded = true
+  },
+  updateLocation(state) {
+    const params = {
+      l: state.map.center
+    }
+
+    if (state.embedded) {
+      params.embedded = true
+    }
+
+    const stringified = queryString.stringify(params)
+    history.pushState(null, null, `/?${stringified}`)
   }
 }
 

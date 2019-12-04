@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ...mapActions(['setAddress']),
-    ...mapMutations(['setPage']),
+    ...mapMutations(['setPage', 'updateLocation']),
     getList() {
       if (this.searchedAdress.length > 3) {
         return this.axios
@@ -66,8 +66,8 @@ export default {
     },
     selectAddress(address) {
       this.setAddress(address)
-      history.pushState(null, null, `/?l=${this.$store.state.selectedAddress.position.join(',')}`)
       this.setPage('home')
+      this.updateLocation()
     }
   }
 }

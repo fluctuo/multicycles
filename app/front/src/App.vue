@@ -22,6 +22,7 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import queryString from 'query-string'
 import DrawerMenu from './components/DrawerMenu'
 import ActiveRide from './components/ActiveRide'
 import FluctuoBanner from './components/FluctuoBanner'
@@ -48,19 +49,28 @@ export default {
   },
   computed: mapGetters(['drawerEnable', 'page', 'isEmbedded']),
   created() {
-    if (window.location.search && window.location.search.match(/embedded=true/)) {
-      this.setEmbedded(true)
-    } else {
-      if (window.location.search && window.location.search.match(/jwt=/)) {
+    if (window.location.search) {
+      const params = queryString.parse(window.location.search)
+
+      if (params.embedded === 'true') {
+        this.setEmbedded(true)
+      }
+
+      if (params.jwt) {
         this.setPage('account')
       }
 
-      this.login()
-      this.startGeolocation()
+      if (params.l) {
+        this.setCenter(params.l)
+        this.setMoved(true)
+      }
     }
+
+    this.login()
+    this.startGeolocation()
   },
   methods: {
-    ...mapActions(['setDrawerEnable', 'login', 'startGeolocation', 'getZones']),
+    ...mapActions(['setDrawerEnable', 'login', 'startGeolocation', 'getZones', 'setCenter', 'setMoved']),
     ...mapMutations(['setPage', 'setEmbedded']),
     fixEnable(visible) {
       if (visible) {
