@@ -17,7 +17,10 @@
       <home v-else />
     </div>
   </vue-drawer-layout>
-  <local-map v-else />
+  <div v-else class="wrapper">
+    <img src="./assets/logo.png" class="watermark" />
+    <local-map />
+  </div>
 </template>
 
 <script>
@@ -128,5 +131,19 @@ body {
   justify-content: flex-start;
   align-content: flex-start;
   align-items: stretch;
+}
+
+.watermark {
+  width: 150px;
+  position: absolute;
+  z-index: 1000;
+  bottom: 0px;
+  left: 20px;
+}
+
+@media (max-width: 1025px) {
+  .watermark {
+    display: none;
+  }
 }
 </style>
