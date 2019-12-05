@@ -114,6 +114,7 @@ const actions = {
   centerOnGeolocation({ commit }) {
     commit('centerOnGeolocation')
     commit('clearAddress')
+    commit('updateLocation')
   },
   setMoved({ commit }, moved) {
     commit('setMoved', moved)
@@ -124,6 +125,8 @@ const actions = {
   },
   setAddress({ commit }, address) {
     commit('setAddress', address)
+    commit('setCenter', address.position)
+    commit('setRoundedLocation', address.position)
   },
   login({ commit, dispatch }) {
     if (localStorage.getItem('token')) {
@@ -340,8 +343,6 @@ const mutations = {
       state.map.center = JSON.parse(JSON.stringify(geolocation))
 
       state.roundedLocation = [roundLocation(state.map.center[0]), roundLocation(state.map.center[1])]
-
-      this.updateLocation()
     }
   },
   setMoved(state, moved) {
@@ -351,8 +352,7 @@ const mutations = {
     state.map.center = center
   },
   setAddress(state, address) {
-    const position = address.geometry.coordinates
-    state.selectedAddress = { name: address.place_name, position: position.reverse() }
+    state.selectedAddress = address
   },
   clearAddress(state) {
     state.selectedAddress = { name: '' }

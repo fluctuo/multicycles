@@ -65,7 +65,7 @@ export default {
       }
     },
     selectAddress(address) {
-      this.setAddress(address)
+      this.setAddress({ name: address.place_name, position: address.geometry.coordinates.reverse() })
       this.setPage('home')
       this.updateLocation()
     }
