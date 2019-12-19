@@ -53,6 +53,7 @@
           { "name": "Leo" },
           { "name": "Lev" },
           { "name": "Lime" },
+          { "name": "Miles" },
           { "name": "Mimoto" },
           { "name": "Mobike" },
           { "name": "Moovin" },
@@ -90,7 +91,8 @@
           { "name": "Wind" },
           { "name": "Yego" },
           { "name": "Yobike" },
-          { "name": "Zigzag" }
+          { "name": "Zigzag" },
+          { "name": "Zoov" }
         ]
       },
       {
@@ -119,7 +121,8 @@
           { "name": "Torvelo" },
           { "name": "Velib" },
           { "name": "WeTrott" },
-          { "name": "Zero" }
+          { "name": "Zero" },
+          { "name": "Zoov" }
         ]
       }
     ]
