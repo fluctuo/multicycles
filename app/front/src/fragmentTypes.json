@@ -5,117 +5,330 @@
         "kind": "INTERFACE",
         "name": "Vehicle",
         "possibleTypes": [
-          { "name": "Acciona" },
-          { "name": "ArboriaBike" },
-          { "name": "BBBike" },
-          { "name": "Bcycle" },
-          { "name": "Beryl" },
-          { "name": "Billy" },
-          { "name": "Bird" },
-          { "name": "BitMobility" },
-          { "name": "Blinkee" },
-          { "name": "BlueBikes" },
-          { "name": "Bolt" },
-          { "name": "BoltMobility" },
-          { "name": "Bond" },
-          { "name": "Buny" },
-          { "name": "Byke" },
-          { "name": "CallABike" },
-          { "name": "CapitalBikeshare" },
-          { "name": "Circ" },
-          { "name": "CitiBike" },
-          { "name": "Citybee" },
-          { "name": "Cityscoot" },
-          { "name": "CoGo" },
-          { "name": "Coup" },
-          { "name": "Divvy" },
-          { "name": "Donkey" },
-          { "name": "Dott" },
-          { "name": "Ecooltra" },
-          { "name": "Emmy" },
-          { "name": "Felyx" },
-          { "name": "Ford" },
-          { "name": "Franke" },
-          { "name": "Freebike" },
-          { "name": "Frog" },
-          { "name": "Glyde" },
-          { "name": "GoFloat" },
-          { "name": "Helbiz" },
-          { "name": "Hellobike" },
-          { "name": "Hive" },
-          { "name": "IndigoWheel" },
-          { "name": "Ioscoot" },
-          { "name": "Israbike" },
-          { "name": "Jump" },
-          { "name": "Knot" },
-          { "name": "Koko" },
-          { "name": "Leo" },
-          { "name": "Lime" },
-          { "name": "Mimoto" },
-          { "name": "Mobike" },
-          { "name": "Moovin" },
-          { "name": "Moow" },
-          { "name": "Muving" },
-          { "name": "Mygo" },
-          { "name": "Nextbike" },
-          { "name": "NiceRide" },
-          { "name": "Ofo" },
-          { "name": "Oply" },
-          { "name": "Oribiky" },
-          { "name": "PickEBike" },
-          { "name": "Pony" },
-          { "name": "Poppy" },
-          { "name": "Reby" },
-          { "name": "Revel" },
-          { "name": "Scoot" },
-          { "name": "Scooty" },
-          { "name": "Scutt" },
-          { "name": "Smide" },
-          { "name": "SocialBicycles" },
-          { "name": "Spin" },
-          { "name": "TelOFun" },
-          { "name": "Tier" },
-          { "name": "Torvelo" },
-          { "name": "Troty" },
-          { "name": "Ufo" },
-          { "name": "Velib" },
-          { "name": "Voi" },
-          { "name": "WeTrott" },
-          { "name": "Wheels" },
-          { "name": "WhiteBikes" },
-          { "name": "Wind" },
-          { "name": "Yego" },
-          { "name": "Yobike" },
-          { "name": "Zigzag" }
+          {
+            "name": "Acciona"
+          },
+          {
+            "name": "ArboriaBike"
+          },
+          {
+            "name": "BBBike"
+          },
+          {
+            "name": "Bcycle"
+          },
+          {
+            "name": "Beryl"
+          },
+          {
+            "name": "Billy"
+          },
+          {
+            "name": "Bird"
+          },
+          {
+            "name": "BitMobility"
+          },
+          {
+            "name": "Blinkee"
+          },
+          {
+            "name": "BlueBikes"
+          },
+          {
+            "name": "Bolt"
+          },
+          {
+            "name": "BoltMobility"
+          },
+          {
+            "name": "Bond"
+          },
+          {
+            "name": "Buny"
+          },
+          {
+            "name": "Byke"
+          },
+          {
+            "name": "CallABike"
+          },
+          {
+            "name": "CapitalBikeshare"
+          },
+          {
+            "name": "Circ"
+          },
+          {
+            "name": "CitiBike"
+          },
+          {
+            "name": "Citybee"
+          },
+          {
+            "name": "Cityscoot"
+          },
+          {
+            "name": "CoGo"
+          },
+          {
+            "name": "Coup"
+          },
+          {
+            "name": "Divvy"
+          },
+          {
+            "name": "Donkey"
+          },
+          {
+            "name": "Dott"
+          },
+          {
+            "name": "Ecooltra"
+          },
+          {
+            "name": "Emmy"
+          },
+          {
+            "name": "Felyx"
+          },
+          {
+            "name": "Ford"
+          },
+          {
+            "name": "Franke"
+          },
+          {
+            "name": "Freebike"
+          },
+          {
+            "name": "Frog"
+          },
+          {
+            "name": "Glyde"
+          },
+          {
+            "name": "GoFloat"
+          },
+          {
+            "name": "GreenWheels"
+          },
+          {
+            "name": "Helbiz"
+          },
+          {
+            "name": "Hellobike"
+          },
+          {
+            "name": "Hive"
+          },
+          {
+            "name": "IndigoWheel"
+          },
+          {
+            "name": "Ioscoot"
+          },
+          {
+            "name": "Israbike"
+          },
+          {
+            "name": "Jump"
+          },
+          {
+            "name": "Knot"
+          },
+          {
+            "name": "Koko"
+          },
+          {
+            "name": "Leo"
+          },
+          {
+            "name": "Lime"
+          },
+          {
+            "name": "Mimoto"
+          },
+          {
+            "name": "Mobike"
+          },
+          {
+            "name": "Moovin"
+          },
+          {
+            "name": "Moow"
+          },
+          {
+            "name": "Muving"
+          },
+          {
+            "name": "Mygo"
+          },
+          {
+            "name": "Nextbike"
+          },
+          {
+            "name": "NiceRide"
+          },
+          {
+            "name": "Ofo"
+          },
+          {
+            "name": "Oply"
+          },
+          {
+            "name": "Oribiky"
+          },
+          {
+            "name": "PickEBike"
+          },
+          {
+            "name": "Pony"
+          },
+          {
+            "name": "Poppy"
+          },
+          {
+            "name": "Reby"
+          },
+          {
+            "name": "Revel"
+          },
+          {
+            "name": "Scoot"
+          },
+          {
+            "name": "Scooty"
+          },
+          {
+            "name": "Scutt"
+          },
+          {
+            "name": "Smide"
+          },
+          {
+            "name": "SocialBicycles"
+          },
+          {
+            "name": "Spin"
+          },
+          {
+            "name": "TelOFun"
+          },
+          {
+            "name": "Tier"
+          },
+          {
+            "name": "Torvelo"
+          },
+          {
+            "name": "Troty"
+          },
+          {
+            "name": "Ufo"
+          },
+          {
+            "name": "Velib"
+          },
+          {
+            "name": "Voi"
+          },
+          {
+            "name": "WeTrott"
+          },
+          {
+            "name": "Wheels"
+          },
+          {
+            "name": "WhiteBikes"
+          },
+          {
+            "name": "Wind"
+          },
+          {
+            "name": "Yego"
+          },
+          {
+            "name": "Yobike"
+          },
+          {
+            "name": "Zigzag"
+          }
         ]
       },
       {
         "kind": "INTERFACE",
         "name": "Station",
         "possibleTypes": [
-          { "name": "ArboriaBike" },
-          { "name": "BBBike" },
-          { "name": "Bcycle" },
-          { "name": "Beryl" },
-          { "name": "BlueBikes" },
-          { "name": "CallABike" },
-          { "name": "CapitalBikeshare" },
-          { "name": "CitiBike" },
-          { "name": "CoGo" },
-          { "name": "Divvy" },
-          { "name": "Donkey" },
-          { "name": "Ford" },
-          { "name": "Freebike" },
-          { "name": "Knot" },
-          { "name": "Nextbike" },
-          { "name": "NiceRide" },
-          { "name": "Scutt" },
-          { "name": "SocialBicycles" },
-          { "name": "TelOFun" },
-          { "name": "Torvelo" },
-          { "name": "Velib" },
-          { "name": "WeTrott" },
-          { "name": "Zero" }
+          {
+            "name": "ArboriaBike"
+          },
+          {
+            "name": "BBBike"
+          },
+          {
+            "name": "Bcycle"
+          },
+          {
+            "name": "Beryl"
+          },
+          {
+            "name": "BlueBikes"
+          },
+          {
+            "name": "CallABike"
+          },
+          {
+            "name": "CapitalBikeshare"
+          },
+          {
+            "name": "CitiBike"
+          },
+          {
+            "name": "CoGo"
+          },
+          {
+            "name": "Divvy"
+          },
+          {
+            "name": "Donkey"
+          },
+          {
+            "name": "Ford"
+          },
+          {
+            "name": "Freebike"
+          },
+          {
+            "name": "Knot"
+          },
+          {
+            "name": "Nextbike"
+          },
+          {
+            "name": "NiceRide"
+          },
+          {
+            "name": "Scutt"
+          },
+          {
+            "name": "SocialBicycles"
+          },
+          {
+            "name": "TelOFun"
+          },
+          {
+            "name": "Torvelo"
+          },
+          {
+            "name": "Velib"
+          },
+          {
+            "name": "WeTrott"
+          },
+          {
+            "name": "Zero"
+          }
         ]
       }
     ]
