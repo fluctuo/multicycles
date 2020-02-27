@@ -173,8 +173,8 @@ export default {
           iconRetinaUrl = require(`../../../../graphics/assets/markers/default-2x.png`)
         }
       } else {
-        iconUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug.slug}.png`
-        iconRetinaUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug.slug}-2X.png`
+        iconUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}.png`
+        iconRetinaUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}-2X.png`
       }
 
       if (vehicle.type === 'STATION') {
