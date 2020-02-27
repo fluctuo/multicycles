@@ -98,6 +98,7 @@
           { "name": "Yego" },
           { "name": "Yobike" },
           { "name": "Zigzag" },
+          { "name": "Zipcar" },
           { "name": "Zoov" }
         ]
       },
@@ -128,6 +129,7 @@
           { "name": "Torvelo" },
           { "name": "Velib" },
           { "name": "WeTrott" },
+          { "name": "zipcar" },
           { "name": "Zero" },
           { "name": "Zoov" }
         ]
