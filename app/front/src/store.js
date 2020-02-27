@@ -127,6 +127,7 @@ const actions = {
     commit('setAddress', address)
     commit('setCenter', address.position)
     commit('setRoundedLocation', address.position)
+    commit('setMoved', true)
   },
   login({ commit, dispatch }) {
     if (localStorage.getItem('token')) {
