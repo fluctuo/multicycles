@@ -1,6 +1,6 @@
 # Multicyles
 
-[Multicycles.org](http://multicycles.org) aggregates on one map, different "free-floating" bike rental services.
+[Multicycles.org](http://multicycles.org) aggregates on one map, more than 100 share vehicles like bikes, scooters, mopeds and cars.
 
 See [fluctuo Data Flow](https://flow.fluctuo.com/) for the API endpoint.
 
@@ -15,8 +15,3 @@ Or submit an [Issue](https://github.com/PierrickP/multicycles/issues/new)
 
 Email: contact@fluctuo.com
 Twitter: https://twitter.com/fluctuo
-
-## Sponsors
-
-[![Realtime application protection](https://s3-eu-west-1.amazonaws.com/sqreen-assets/badges/20171107/sqreen-light-badge.svg)](https://www.sqreen.io/?utm_source=badge)
-[![Sentry](https://flow.fluctuo.com/sentry-logo-black.png)](https://sentry.io)
