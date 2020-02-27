@@ -1,23 +1,38 @@
 <template>
-  <div class="banner">
-    <div class="inner flex-container autogrid">
-      <div>
-        Multicycles.org is powered by
-        <a href="https://fluctuo.com">
-          <b>Fluctuo Data Flow</b> API
-        </a>
-        <div class="hideOnMobile">The best data on shared-mobility vehicles available in real-time.</div>
-      </div>
-      <div>
-        <a href="https://fluctuo.com/data-flow/" class="btn--primary">Discover</a>
-      </div>
+  <div class="banner" v-if="!bannerHidden">
+    <div>
+      Multicycles.org is powered by&nbsp;
+      <a href="https://fluctuo.com">
+        <b>Fluctuo Data Flow</b>&nbsp;API
+      </a>
+      <span class="hideOnMobile">
+        <br />The best data on shared-mobility vehicles available in real-time.
+      </span>
+    </div>
+    <div class="hide-banner">
+      <a href="#" @click="hide()">close</a>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FluctuoBanner'
+  name: 'FluctuoBanner',
+  data() {
+    return {
+      bannerHidden: false
+    }
+  },
+  mounted() {
+    this.bannerHidden = localStorage.getItem('bannerHidden')
+  },
+
+  methods: {
+    hide() {
+      localStorage.setItem('bannerHidden', true)
+      this.bannerHidden = true
+    }
+  }
 }
 </script>
 
@@ -27,27 +42,30 @@ export default {
 .banner {
   background-color: $mainColor;
   color: #fff;
-  padding: 10px;
+  padding: 10px 30px;
+  display: flex;
 
-  .inner {
-    max-width: 900px;
-    margin: 0px auto;
-    align-items: center;
-    justify-items: center;
+  a {
+    color: #fff;
+  }
 
-    div > div {
-      margin-right: 20px;
-    }
+  div:nth-child(2) {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
 
     a {
-      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: right;
     }
   }
 }
 
 @media (max-width: 480px) {
-  .banner .inner {
-    margin-bottom: 10px;
+  .banner {
+    padding: 10px 10px;
   }
 
   .hideOnMobile {
