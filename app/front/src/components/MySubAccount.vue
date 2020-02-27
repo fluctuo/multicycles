@@ -2,13 +2,13 @@
   <div>
     <div class="provider flex-container">
       <div>
-        <img :src="providerLogo" alt>
+        <img :src="providerLogo" alt />
       </div>
       <div class="link-btn">
         <div v-if="subAccount">
           <div v-if="subAccount.status === 'ok'" class="flex-container">
             {{ $t('account.linkedAccount') }}
-            <check-icon/>
+            <check-icon />
           </div>
           <div v-else class="flex-container">
             <button
@@ -59,7 +59,19 @@ export default {
   },
   computed: {
     providerLogo() {
-      return require(`../assets/providers/${this.provider}.jpg`)
+      if (process.env.NODE_ENV !== 'production') {
+        let logo
+
+        try {
+          logo = require(`../../../../graphics/assets/providers/${provider.slug}.jpg`)
+        } catch (e) {
+          return null
+        }
+
+        return logo
+      } else {
+        return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
+      }
     },
     subAccount() {
       return this.$store.state.myAccount.subAccounts.find(sa => sa.provider.slug === this.provider)
@@ -102,7 +114,6 @@ export default {
   .flex-container {
     flex-direction: row !important;
   }
-
 }
 </style>
 

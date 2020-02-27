@@ -161,28 +161,31 @@ export default {
         })
       }
 
+      let iconUrl
+      let iconRetinaUrl
+
+      if (process.env.NODE_ENV !== 'production') {
+        try {
+          iconUrl = require(`../../../../graphics/assets/markers/${vehicle.provider.slug}.png`)
+          iconRetinaUrl = require(`../../../../graphics/assets/markers/${vehicle.provider.slug}-2x.png`)
+        } catch (e) {
+          iconUrl = require(`../../../../graphics/assets/markers/default.png`)
+          iconRetinaUrl = require(`../../../../graphics/assets/markers/default-2x.png`)
+        }
+      } else {
+        iconUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug.slug}.png`
+        iconRetinaUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug.slug}-2X.png`
+      }
+
       if (vehicle.type === 'STATION') {
         return L.divIcon({
           className: null,
-          html: `<div><img src="${require(`../assets/markers/${
-            vehicle.provider.slug
-          }.png`)}" /><div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
+          html: `<div><img src="${iconUrl}" /><div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
             vehicle.availableVehicles === 0 ? 'grey' : '#22961d'
           }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
             vehicle.availableVehicles
           }</div>`
         })
-      }
-
-      let iconUrl
-      let iconRetinaUrl
-
-      try {
-        iconUrl = require(`../assets/markers/${vehicle.provider.slug}.png`)
-        iconRetinaUrl = require(`../assets/markers/${vehicle.provider.slug}-2x.png`)
-      } catch (e) {
-        iconUrl = require(`../assets/markers/default.png`)
-        iconRetinaUrl = require(`../assets/markers/default-2x.png`)
       }
 
       return L.icon({
