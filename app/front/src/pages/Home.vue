@@ -83,6 +83,7 @@ export default {
 .top {
   position: absolute;
   width: 100%;
+  height: 0;
   z-index: 401;
   display: flex;
   justify-content: space-between;
@@ -97,6 +98,7 @@ export default {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    height: 100%;
 
     @include respond-to('tiny') {
       margin: 0 5px;
@@ -107,6 +109,7 @@ export default {
     flex-grow: 1;
     display: flex;
     justify-content: center;
+    height: 100%;
   }
 
   .icon {
