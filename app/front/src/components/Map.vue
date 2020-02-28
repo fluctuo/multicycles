@@ -174,7 +174,7 @@ export default {
         }
       } else {
         iconUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}.png`
-        iconRetinaUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}-2X.png`
+        iconRetinaUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}-2x.png`
       }
 
       if (vehicle.type === 'STATION') {
