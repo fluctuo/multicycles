@@ -180,11 +180,15 @@ export default {
       if (vehicle.type === 'STATION') {
         return L.divIcon({
           className: null,
-          html: `<div><img src="${iconUrl}" /><div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
-            vehicle.availableVehicles === 0 ? 'grey' : '#22961d'
-          }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
+          html: `<div><img src="${iconUrl}" />${
             vehicle.availableVehicles
-          }</div>`
+              ? `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
+                  vehicle.availableVehicles === 0 ? 'grey' : '#22961d'
+                }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
+                  vehicle.availableVehicles
+                }</div>`
+              : ''
+          }`
         })
       }
 
