@@ -46,6 +46,7 @@
           { "name": "Glyde" },
           { "name": "GoFloat" },
           { "name": "GOSharing" },
+          { "name": "GIGCarShare" },
           { "name": "Greenwheels" },
           { "name": "Helbiz" },
           { "name": "Hellobike" },
@@ -103,6 +104,7 @@
           { "name": "Yobike" },
           { "name": "Zigzag" },
           { "name": "Zipcar" },
+          { "name": "Zity" },
           { "name": "Zoov" }
         ]
       },
