@@ -32,7 +32,7 @@
             <div class="attributes">
               <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>
               <img
-                v-if="vehicle.attributes && vehicle.attributes.includes('ELECTRIC')"
+                v-if="vehicle.propulsion === 'ELECTRIC' || vehicle.propulsion === 'ASSIST'"
                 src="../assets/lightning.svg"
                 class="attribute"
               />

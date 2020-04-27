@@ -237,6 +237,7 @@ export default {
                 lng
                 type
                 attributes
+                propulsion
                 battery
                 provider {
                   name
