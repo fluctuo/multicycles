@@ -63,14 +63,14 @@ export default {
         let logo
 
         try {
-          logo = require(`../../../../graphics/assets/providers/${provider.slug}.jpg`)
+          logo = require(`../../../../graphics/assets/providers/${this.provider}.jpg`)
         } catch (e) {
           return null
         }
 
         return logo
       } else {
-        return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
+        return `https://cdn.fluctuo.com/providers/${this.provider}.jpg`
       }
     },
     subAccount() {
