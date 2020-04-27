@@ -180,6 +180,7 @@ export default {
       if (vehicle.type === 'STATION') {
         return L.divIcon({
           className: null,
+          iconAnchor: [12, 40],
           html: `<div><img src="${iconUrl}" />${
             `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
               !vehicle.availableVehicles ? 'grey' : '#22961d'
@@ -193,7 +194,8 @@ export default {
       return L.icon({
         iconUrl,
         iconRetinaUrl,
-        iconSize: [24, 40]
+        iconSize: [24, 40],
+        iconAnchor: [12, 40]
       })
     },
     reloadVehicules() {
