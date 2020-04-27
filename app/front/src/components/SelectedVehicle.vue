@@ -27,7 +27,14 @@
             </div>
           </div>
           <div v-else class="type-attributes">
-            <span class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
+            <span class="type">
+              <span v-if="vehicle.carModel">{{ vehicle.carModel }}</span>
+              <span v-else>{{ $t(getVehicleTypeKey(vehicle)) }}</span>
+              <span v-if="vehicle.carClass === 'MICRO'">&nbsp;(XS)</span>
+              <span v-if="vehicle.carClass === 'SMALL'">&nbsp;(S)</span>
+              <span v-if="vehicle.carClass === 'MEDIUM'">&nbsp;(M)</span>
+              <span v-if="vehicle.carClass === 'LARGE'">&nbsp;(L)</span>
+            </span>
 
             <div class="attributes">
               <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>

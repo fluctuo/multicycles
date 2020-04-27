@@ -258,6 +258,10 @@ export default {
                   availableStands
                   isVirtual
                 }
+                ... on Car {
+                  carClass
+                  carModel
+                }
               }
             }
           `
