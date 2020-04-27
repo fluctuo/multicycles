@@ -181,13 +181,11 @@ export default {
         return L.divIcon({
           className: null,
           html: `<div><img src="${iconUrl}" />${
-            vehicle.availableVehicles
-              ? `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
-                  vehicle.availableVehicles === 0 ? 'grey' : '#22961d'
+            `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
+              !vehicle.availableVehicles ? 'grey' : '#22961d'
                 }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
-                  vehicle.availableVehicles
+              vehicle.availableVehicles == null ? '?' : vehicle.availableVehicles
                 }</div>`
-              : ''
           }`
         })
       }
