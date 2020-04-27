@@ -25,6 +25,7 @@
     "TANDEM": "Tandem",
     "CAR": "Car",
     "STATION": "Station",
+    "VIRTUAL_STATION": "Station",
     "OTHER": "Vehicle"
   },
   "selectedVehicle": {
