@@ -15,10 +15,12 @@
         </div>
         <div>
           <div v-if="vehicle.type == 'STATION'" class="no-shrink">
-            <div class="available-vehicles">
+            <div v-if="vehicle.availableVehicles != null" class="available-vehicles">
               <span>{{ vehicle.availableVehicles }}</span>
               &nbsp;{{ $t('selectedVehicle.vehicle') }}
             </div>
+            <span v-else class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
+
             <div v-if="vehicle.availableStands && !vehicle.isVirtual" class="available-stands">
               <span>{{ vehicle.availableStands }}</span>
               &nbsp;{{ $t('selectedVehicle.docks') }}

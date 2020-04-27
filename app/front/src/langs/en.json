@@ -24,6 +24,7 @@
     "CAR_CARGO": "Van",
     "TANDEM": "Tandem",
     "CAR": "Car",
+    "STATION": "Station",
     "OTHER": "Vehicle"
   },
   "selectedVehicle": {
