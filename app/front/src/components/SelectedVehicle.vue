@@ -36,6 +36,10 @@
               <span v-if="vehicle.carClass === 'LARGE'">&nbsp;(L)</span>
             </span>
 
+            <div v-if="vehicle.publicId" class="vehicle-id">
+              <span class="tag--primary">{{ vehicle.publicId }}</span>
+            </div>
+
             <div class="attributes">
               <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>
               <img
@@ -225,7 +229,7 @@ $border-radius: 5px;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
 
         .attributes {
           display: flex;
@@ -254,6 +258,11 @@ $border-radius: 5px;
           font-size: 1.8rem;
         }
       }
+
+      .vehicle-id {
+        font-size: 1.6rem;
+      }
+
     }
 
     .subdetail {

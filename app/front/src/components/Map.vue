@@ -238,6 +238,7 @@ export default {
                 lat
                 lng
                 type
+                publicId
                 attributes
                 propulsion
                 battery
