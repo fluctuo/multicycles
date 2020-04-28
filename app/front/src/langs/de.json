@@ -23,7 +23,9 @@
     "CAR_CARGO": "Transporter",
     "TANDEM": "Tandem",
     "CAR": "Auto",
-    "OTHER": "Fahrzeug"
+    "OTHER": "Fahrzeug",
+    "STATION": "Radstation",
+    "VIRTUAL_STATION": "Radstation"
   },
   "selectedVehicle": {
     "vehicle": "Fahrzeug",

@@ -24,7 +24,9 @@
     "CAR_CARGO": "面包车",
     "TANDEM": "双座双人骑自行车",
     "CAR": "汽车",
-    "OTHER": "车辆"
+    "OTHER": "车辆",
+    "STATION": "车站",
+    "VIRTUAL_STATION": "车站"
   },
   "selectedVehicle": {
     "vehicle": "车辆",

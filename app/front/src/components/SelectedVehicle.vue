@@ -15,22 +15,35 @@
         </div>
         <div>
           <div v-if="vehicle.type == 'STATION'" class="no-shrink">
-            <div class="available-vehicles">
+            <div v-if="vehicle.availableVehicles != null" class="available-vehicles">
               <span>{{ vehicle.availableVehicles }}</span>
               &nbsp;{{ $t('selectedVehicle.vehicle') }}
             </div>
+            <span v-else class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
+
             <div v-if="vehicle.availableStands && !vehicle.isVirtual" class="available-stands">
               <span>{{ vehicle.availableStands }}</span>
               &nbsp;{{ $t('selectedVehicle.docks') }}
             </div>
           </div>
           <div v-else class="type-attributes">
-            <span class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
+            <span class="type">
+              <span v-if="vehicle.carModel">{{ vehicle.carModel }}</span>
+              <span v-else>{{ $t(getVehicleTypeKey(vehicle)) }}</span>
+              <span v-if="vehicle.carClass === 'MICRO'">&nbsp;(XS)</span>
+              <span v-if="vehicle.carClass === 'SMALL'">&nbsp;(S)</span>
+              <span v-if="vehicle.carClass === 'MEDIUM'">&nbsp;(M)</span>
+              <span v-if="vehicle.carClass === 'LARGE'">&nbsp;(L)</span>
+            </span>
+
+            <div v-if="vehicle.publicId" class="vehicle-id">
+              <span class="tag--primary">{{ vehicle.publicId }}</span>
+            </div>
 
             <div class="attributes">
               <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>
               <img
-                v-if="vehicle.attributes && vehicle.attributes.includes('ELECTRIC')"
+                v-if="vehicle.propulsion === 'ELECTRIC' || vehicle.propulsion === 'ASSIST'"
                 src="../assets/lightning.svg"
                 class="attribute"
               />
@@ -216,7 +229,7 @@ $border-radius: 5px;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
 
         .attributes {
           display: flex;
@@ -245,6 +258,11 @@ $border-radius: 5px;
           font-size: 1.8rem;
         }
       }
+
+      .vehicle-id {
+        font-size: 1.6rem;
+      }
+
     }
 
     .subdetail {

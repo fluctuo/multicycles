@@ -180,14 +180,13 @@ export default {
       if (vehicle.type === 'STATION') {
         return L.divIcon({
           className: null,
+          iconAnchor: [12, 40],
           html: `<div><img src="${iconUrl}" />${
-            vehicle.availableVehicles
-              ? `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
-                  vehicle.availableVehicles === 0 ? 'grey' : '#22961d'
+            `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
+              !vehicle.availableVehicles ? 'grey' : '#22961d'
                 }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
-                  vehicle.availableVehicles
+              vehicle.availableVehicles == null ? '?' : vehicle.availableVehicles
                 }</div>`
-              : ''
           }`
         })
       }
@@ -195,7 +194,8 @@ export default {
       return L.icon({
         iconUrl,
         iconRetinaUrl,
-        iconSize: [24, 40]
+        iconSize: [24, 40],
+        iconAnchor: [12, 40]
       })
     },
     reloadVehicules() {
@@ -238,7 +238,9 @@ export default {
                 lat
                 lng
                 type
+                publicId
                 attributes
+                propulsion
                 battery
                 provider {
                   name
@@ -258,6 +260,10 @@ export default {
                   availableVehicles
                   availableStands
                   isVirtual
+                }
+                ... on Car {
+                  carClass
+                  carModel
                 }
               }
             }

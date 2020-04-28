@@ -23,7 +23,9 @@
     "CAR_CARGO": "Camionnette",
     "TANDEM": "Tandem",
     "CAR": "Voiture",
-    "OTHER": "Véhicule"
+    "OTHER": "Véhicule",
+    "STATION": "Station",
+    "VIRTUAL_STATION": "Station"
   },
   "selectedVehicle": {
     "vehicle": "véhicule",
