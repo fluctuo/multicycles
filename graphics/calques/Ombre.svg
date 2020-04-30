@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="22px" viewBox="0 0 45 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 60 (101010) - https://sketch.com -->
+    <title>3BD54C91-02EB-48F7-A63F-7D34609363BB</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <filter x="-16.2%" y="-50.0%" width="132.4%" height="200.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="2" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.089938">
+        <g id="City_Sccoters_1.3" transform="translate(-1165.000000, -265.000000)" fill="#000000">
+            <g id="Décomposé" transform="translate(1169.000000, 226.000000)">
+                <ellipse id="Ombre" filter="url(#filter-1)" cx="18.5" cy="50" rx="18.5" ry="6"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>
