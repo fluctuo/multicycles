@@ -50,7 +50,7 @@ const providers = readdirSync(base_path).map(p => p.substr(0, p.length - 4))
       console.info(`${count}/${providers.length} - ${provider}`)
       const provider_image = await Jimp.read(`${base_path}/${provider}.png`) // 631*1050
 
-      const shift_provider = 200
+      const shift_provider = 210
 
       const img = do_marker(provider_image, 880, 980, 80 * 5, masque, shadow, shift_provider)
       img.resize(176, 196)
@@ -58,7 +58,7 @@ const providers = readdirSync(base_path).map(p => p.substr(0, p.length - 4))
 
       img.resize(88, 89)
       img.write(`./test/new/${provider}.png`)
-      /*
+
       const imgM = do_marker_multicycles(provider_image, 631, 1050, masqueMulticycles, shadowM)
       imgM.resize(48, 80)
       imgM.write(`./test/multicycles/${provider}2x.png`)
@@ -70,8 +70,6 @@ const providers = readdirSync(base_path).map(p => p.substr(0, p.length - 4))
       provider_image.crop(crop, 40, 631 - crop, 631 - 2 * crop)
       provider_image.resize(50, 50)
       provider_image.write(`./test/square/${provider}.png`)
-
-      */
     } catch (error) {
       console.error('Failed: ', error)
     }
