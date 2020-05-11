@@ -136,8 +136,13 @@ export default {
   methods: {
     ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
     ...mapMutations(['updateLocation']),
-    zoomEnd() {
+    zoomEnd(e) {
+      const center = e.target.getCenter()
+      
       this.map.zoom = this.$refs.map.mapObject.getZoom()
+      
+      this.setCenter([center.lat, center.lng])
+      this.updateLocation()
     },
     moveStart() {
       if (this.$store.state.selectedVehicle) {
