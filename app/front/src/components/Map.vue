@@ -22,7 +22,7 @@
         ></l-tile-layer>
         <l-tile-layer
           v-else
-          url="https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}{r}.png?access_token={mapboxKey}"
+          url="https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={mapboxKey}"
           :options="options"
           :attribution="attribution"
         ></l-tile-layer>
@@ -100,7 +100,9 @@ export default {
   data() {
     return {
       options: {
-        mapboxKey: process.env.VUE_APP_MAPBOX_KEY
+        mapboxKey: process.env.VUE_APP_MAPBOX_KEY,
+          tileSize: 512,
+          zoomOffset: -1
       },
       attribution:
         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
