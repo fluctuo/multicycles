@@ -168,27 +168,16 @@ export default {
         })
       }
 
-      let iconUrl
-      let iconRetinaUrl
-
-      if (process.env.NODE_ENV !== 'production') {
-        try {
-          iconUrl = require(`../../../../graphics/assets/markers/${vehicle.provider.slug}.png`)
-          iconRetinaUrl = require(`../../../../graphics/assets/markers/${vehicle.provider.slug}-2x.png`)
-        } catch (e) {
-          iconUrl = require(`../../../../graphics/assets/markers/default.png`)
-          iconRetinaUrl = require(`../../../../graphics/assets/markers/default-2x.png`)
-        }
-      } else {
-        iconUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}.png`
-        iconRetinaUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}-2x.png`
-      }
-
+      let iconUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}.png`
+      let iconRetinaUrl = `https://cdn.fluctuo.com/markers/${vehicle.provider.slug}-2x.png`
+      
       if (vehicle.type === 'STATION') {
         return L.divIcon({
           className: null,
           iconAnchor: [12, 40],
-          html: `<div><img src="${iconUrl}" />${
+          html: `<div><object data="${iconUrl}" type="image/png">
+              <img src="https://cdn.fluctuo.com/markers/default.png">
+            </object>${
             `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
               !vehicle.availableVehicles ? 'grey' : '#22961d'
                 }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
@@ -198,11 +187,12 @@ export default {
         })
       }
 
-      return L.icon({
-        iconUrl,
-        iconRetinaUrl,
-        iconSize: [24, 40],
-        iconAnchor: [12, 40]
+      return L.divIcon({
+        className: null,
+        iconAnchor: [12, 40],
+        html: `<object data="${iconRetinaUrl}" type="image/png" width="24" height="40">
+              <img src="https://cdn.fluctuo.com/markers/default-2x.png" width="24" height="40">
+            </object>`
       })
     },
     reloadVehicules() {
