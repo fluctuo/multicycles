@@ -34,17 +34,23 @@
                   {{vehicle.stationVehicleDetails[0].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
                   +
                   {{ vehicle.stationVehicleDetails[1].availableVehicles }}
-                </span> 
+                </span>
               </span>
               <span v-else>{{ vehicle.availableVehicles }}</span>
               
-              &nbsp;{{ $t('selectedVehicle.vehicle') }}
+              <span v-if="vehicle.provider.stationVehicleTypes 
+              && vehicle.provider.stationVehicleTypes.length === 1">
+                &nbsp;{{ $tc('stationVehicleTypes.'+vehicle.provider.stationVehicleTypes[0], vehicle.availableVehicles) }}
+              </span>
+              <span v-else>
+                &nbsp;{{ $t('selectedVehicle.vehicle') }}
+              </span>
             </div>
             <span v-else class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
 
-            <div v-if="vehicle.availableStands && !vehicle.isVirtual" class="available-stands">
+            <div v-if="vehicle.availableStands != null && !vehicle.isVirtual" class="available-stands">
               <span>{{ vehicle.availableStands }}</span>
-              &nbsp;{{ $t('selectedVehicle.docks') }}
+              &nbsp;{{ $tc('selectedVehicle.free_docks', vehicle.availableStands) }}
             </div>
           </div>
           <div v-else class="type-attributes">

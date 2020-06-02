@@ -252,6 +252,7 @@ export default {
                     android
                     ios
                   }
+                  stationVehicleTypes
                 }
                 ... on Station {
                   availableVehicles

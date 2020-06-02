@@ -27,9 +27,17 @@
     "STATION": "Station",
     "VIRTUAL_STATION": "Station"
   },
+  "stationVehicleTypes": {
+    "BIKE": "Vélo | Vélos",
+    "SCOOTER": "Trottinette | Trottinettes",
+    "MOTORSCOOTER": "Scooter | Scooters",
+    "CAR": "Voiture | Voitures",
+    "OTHER": "Véhicule | Véhicules"
+  },
   "selectedVehicle": {
     "vehicle": "véhicule",
     "docks": "docks",
+    "free_docks": "dock libre | docks libres",
     "unlockInTheApp": "déverrouiller dans l'app"
   },
   "search": {

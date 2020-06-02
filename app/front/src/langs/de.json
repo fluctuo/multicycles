@@ -27,9 +27,17 @@
     "STATION": "Radstation",
     "VIRTUAL_STATION": "Radstation"
   },
+  "stationVehicleTypes": {
+    "BIKE": "Fahrrad | Fahrräder",
+    "SCOOTER": "Scooter | Scooters",
+    "MOTORSCOOTER": "Motorroller | Motorrollers",
+    "CAR": "Auto | Autos",
+    "OTHER": "Fahrzeug | Fahrzeuge"
+  },
   "selectedVehicle": {
     "vehicle": "Fahrzeug",
     "docks": "Docks",
+    "free_docks": "freie dock | freie Docks",
     "unlockInTheApp": "In der App öffnen"
   },
   "search": {
