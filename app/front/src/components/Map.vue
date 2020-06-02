@@ -173,7 +173,7 @@ export default {
       
       if (vehicle.type === 'STATION') {
         return L.divIcon({
-          className: null,
+          className: 'outline-none',
           iconAnchor: [12, 40],
           html: `<div style="width:24px;height:40px"><object data="${iconUrl}" type="image/png">
               <img src="https://cdn.fluctuo.com/markers/default.png">
@@ -188,7 +188,7 @@ export default {
       }
 
       return L.divIcon({
-        className: null,
+        className: 'outline-none',
         iconAnchor: [12, 40],
         html: `<object data="${iconRetinaUrl}" type="image/png" width="24" height="40">
               <img src="https://cdn.fluctuo.com/markers/default-2x.png" width="24" height="40">
@@ -330,5 +330,11 @@ export default {
   height: 20px;
   text-align: center;
   line-height: 20px;
+}
+</style>
+
+<style lang="scss">
+.outline-none:focus {
+  outline: none !important;
 }
 </style>
