@@ -175,7 +175,7 @@ export default {
         return L.divIcon({
           className: null,
           iconAnchor: [12, 40],
-          html: `<div><object data="${iconUrl}" type="image/png">
+          html: `<div style="width:24px;height:40px"><object data="${iconUrl}" type="image/png">
               <img src="https://cdn.fluctuo.com/markers/default.png">
             </object>${
             `<div class="marker-available-badge" style="  position: relative; top: -50px; right: -15px; background: ${
