@@ -16,7 +16,28 @@
         <div>
           <div v-if="vehicle.type == 'STATION'" class="no-shrink">
             <div v-if="vehicle.availableVehicles != null" class="available-vehicles">
-              <span>{{ vehicle.availableVehicles }}</span>
+
+              <span v-if="vehicle.stationVehicleDetails 
+              && vehicle.stationVehicleDetails.length === 2
+              && vehicle.stationVehicleDetails[0].availableVehicles != null
+              && vehicle.stationVehicleDetails[1].availableVehicles != null
+              && vehicle.stationVehicleDetails[0].vehicleType === 'BIKE'
+              && vehicle.stationVehicleDetails[1].vehicleType === 'BIKE'
+              && vehicle.stationVehicleDetails[0].propulsion != vehicle.stationVehicleDetails[1].propulsion">
+
+                <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'HUMAIN'">
+                  {{vehicle.stationVehicleDetails[1].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
+                  +
+                  {{ vehicle.stationVehicleDetails[0].availableVehicles }}
+                </span> 
+                <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'ASSIST'">
+                  {{vehicle.stationVehicleDetails[0].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
+                  +
+                  {{ vehicle.stationVehicleDetails[1].availableVehicles }}
+                </span> 
+              </span>
+              <span v-else>{{ vehicle.availableVehicles }}</span>
+              
               &nbsp;{{ $t('selectedVehicle.vehicle') }}
             </div>
             <span v-else class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
@@ -43,7 +64,11 @@
             <div class="attributes">
               <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>
               <img
-                v-if="vehicle.propulsion === 'ELECTRIC' || vehicle.propulsion === 'ASSIST'"
+                v-if="
+                  vehicle.propulsion === 'ELECTRIC'
+                  || vehicle.propulsion === 'ASSIST'
+                  || vehicle.stationVehicleDetails && vehicle.stationVehicleDetails.length === 1 && vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'
+                  || vehicle.stationVehicleDetails && vehicle.stationVehicleDetails.length === 1 && vehicle.stationVehicleDetails[0].propulsion === 'ASSIST'"
                 src="../assets/lightning.svg"
                 class="attribute"
               />

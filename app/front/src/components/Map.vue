@@ -267,6 +267,11 @@ export default {
                   availableVehicles
                   availableStands
                   isVirtual
+                  stationVehicleDetails {
+                    vehicleType
+                    propulsion
+                    availableVehicles
+                  }
                 }
                 ... on Car {
                   carClass
