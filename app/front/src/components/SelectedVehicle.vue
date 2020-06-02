@@ -30,7 +30,7 @@
                   +
                   {{ vehicle.stationVehicleDetails[0].availableVehicles }}
                 </span> 
-                <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'ASSIST'">
+                <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'ASSIST' || vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'">
                   {{vehicle.stationVehicleDetails[0].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
                   +
                   {{ vehicle.stationVehicleDetails[1].availableVehicles }}
@@ -249,6 +249,9 @@ $border-radius: 5px;
         margin-right: 10px;
       }
 
+      .attribute-nb {
+        height: 20px;
+      }
       .type-attributes {
         font-weight: bold;
         display: flex;
