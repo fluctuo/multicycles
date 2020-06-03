@@ -16,14 +16,41 @@
         <div>
           <div v-if="vehicle.type == 'STATION'" class="no-shrink">
             <div v-if="vehicle.availableVehicles != null" class="available-vehicles">
-              <span>{{ vehicle.availableVehicles }}</span>
-              &nbsp;{{ $t('selectedVehicle.vehicle') }}
+
+              <span v-if="vehicle.stationVehicleDetails 
+              && vehicle.stationVehicleDetails.length === 2
+              && vehicle.stationVehicleDetails[0].availableVehicles != null
+              && vehicle.stationVehicleDetails[1].availableVehicles != null
+              && vehicle.stationVehicleDetails[0].vehicleType === 'BIKE'
+              && vehicle.stationVehicleDetails[1].vehicleType === 'BIKE'
+              && vehicle.stationVehicleDetails[0].propulsion != vehicle.stationVehicleDetails[1].propulsion">
+
+                <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'HUMAIN'">
+                  {{vehicle.stationVehicleDetails[1].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
+                  +
+                  {{ vehicle.stationVehicleDetails[0].availableVehicles }}
+                </span> 
+                <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'ASSIST' || vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'">
+                  {{vehicle.stationVehicleDetails[0].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
+                  +
+                  {{ vehicle.stationVehicleDetails[1].availableVehicles }}
+                </span>
+              </span>
+              <span v-else>{{ vehicle.availableVehicles }}</span>
+              
+              <span v-if="vehicle.provider.stationVehicleTypes 
+              && vehicle.provider.stationVehicleTypes.length === 1">
+                &nbsp;{{ $tc('stationVehicleTypes.'+vehicle.provider.stationVehicleTypes[0], vehicle.availableVehicles) }}
+              </span>
+              <span v-else>
+                &nbsp;{{ $t('selectedVehicle.vehicle') }}
+              </span>
             </div>
             <span v-else class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
 
-            <div v-if="vehicle.availableStands && !vehicle.isVirtual" class="available-stands">
+            <div v-if="vehicle.availableStands != null && !vehicle.isVirtual" class="available-stands">
               <span>{{ vehicle.availableStands }}</span>
-              &nbsp;{{ $t('selectedVehicle.docks') }}
+              &nbsp;{{ $tc('selectedVehicle.free_docks', vehicle.availableStands) }}
             </div>
           </div>
           <div v-else class="type-attributes">
@@ -43,7 +70,11 @@
             <div class="attributes">
               <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>
               <img
-                v-if="vehicle.propulsion === 'ELECTRIC' || vehicle.propulsion === 'ASSIST'"
+                v-if="
+                  vehicle.propulsion === 'ELECTRIC'
+                  || vehicle.propulsion === 'ASSIST'
+                  || vehicle.stationVehicleDetails && vehicle.stationVehicleDetails.length === 1 && vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'
+                  || vehicle.stationVehicleDetails && vehicle.stationVehicleDetails.length === 1 && vehicle.stationVehicleDetails[0].propulsion === 'ASSIST'"
                 src="../assets/lightning.svg"
                 class="attribute"
               />
@@ -224,6 +255,9 @@ $border-radius: 5px;
         margin-right: 10px;
       }
 
+      .attribute-nb {
+        height: 20px;
+      }
       .type-attributes {
         font-weight: bold;
         display: flex;
