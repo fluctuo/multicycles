@@ -25,6 +25,7 @@
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-passport": "^4.1.1",
+    "koa-router": "^9.1.0",
     "koa2-ratelimit": "^0.8.0",
     "node-fetch": "^2.3.0",
     "passport-google-oauth": "^2.0.0",
