@@ -9,7 +9,7 @@ RUN yarn global add nodemon
 
 ADD . .
 
-EXPOSE 3001
+EXPOSE 4001
 
 CMD [ "nodemon", "start" ]
 
