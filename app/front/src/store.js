@@ -129,34 +129,6 @@ const actions = {
     commit('setRoundedLocation', address.position)
     commit('setMoved', true)
   },
-  login({ commit, dispatch }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .query({
-          fetchPolicy: 'no-cache',
-          query: gql`
-            query {
-              getMyAccount {
-                id
-                name
-                subAccounts {
-                  puid
-                  status
-                  provider {
-                    name
-                    slug
-                  }
-                }
-              }
-            }
-          `
-        })
-        .then(result => {
-          commit('setMyAccount', result.data.getMyAccount)
-          return dispatch('getActiveRides')
-        })
-    }
-  },
   getActiveRides({ commit }) {
     if (localStorage.getItem('token')) {
       return apolloProvider.defaultClient

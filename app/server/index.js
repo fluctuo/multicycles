@@ -11,9 +11,7 @@ const {
   mergeSchemas
 } = require('apollo-server')
 const bodyParser = require('koa-bodyparser')
-const jwt = require('jsonwebtoken')
 const RateLimit = require('koa2-ratelimit').RateLimit
-const schema = require('./schema')
 
 const app = new Koa()
 
@@ -69,56 +67,14 @@ async function init() {
 
   const transformedSchema = transformSchema(executableSchema, [
     new FilterRootFields((operation, rootField) => {
-      return [
-        'providers',
-        'vehicles',
-        'zones',
-        'area',
-        'areas',
-        'missingProvider',
-        'linkSubAccount',
-        'limeLogin',
-        'birdLogin',
-        'limeLoginOTP',
-        'birdLoginOTP',
-        'limeLoginRefresh',
-        'limeLoginRefreshOTP',
-        'birdLoginRefresh',
-        'birdLoginRefreshOTP',
-        'tierLogin',
-        'tierLoginRefresh',
-        'ufoLogin',
-        'ufoLoginRefresh',
-        'hiveLogin',
-        'hiveLoginRefresh',
-        'circLogin',
-        'circLoginOTP',
-        'circLoginRefresh',
-        'circLoginRefreshOTP',
-        'moowLogin',
-        'moowLoginRefresh'
-      ].includes(rootField)
+      return ['providers', 'vehicles', 'zones', 'area', 'areas', 'missingProvider'].includes(rootField)
     })
   ])
 
   const server = new ApolloServer({
     schema: mergeSchemas({
-      schemas: [transformedSchema, schema]
-    }),
-    context: ({ ctx }) => {
-      if (ctx.request.header && ctx.request.header.authorization) {
-        let user
-        try {
-          user = jwt.verify(ctx.request.header.authorization.replace('Bearer ', ''), process.env.JWT_SECRET)
-        } catch (err) {
-          console.log('INVALID JWT', err)
-        }
-
-        return {
-          user
-        }
-      }
-    }
+      schemas: [transformedSchema]
+    })
   })
 
   server.applyMiddleware({ app })
