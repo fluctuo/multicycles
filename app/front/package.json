@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@turf/turf": "^5.1.6",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link-context": "^1.0.17",
@@ -22,7 +23,6 @@
     "mobile-detect": "^1.4.3",
     "query-string": "^6.9.0",
     "raven-js": "^3.27.0",
-    "register-service-worker": "^1.6.2",
     "vue": "^2.6.6",
     "vue-analytics": "^5.16.4",
     "vue-apollo": "^3.0.0-beta.28",
@@ -33,6 +33,7 @@
     "vue-qrcode-reader": "^1.4.2",
     "vue2-animate": "^2.1.0",
     "vue2-leaflet": "^2.0.2",
+    "vue2-leaflet-markercluster": "^3.1.0",
     "vuex": "^3.1.0"
   },
   "devDependencies": {

@@ -13,7 +13,6 @@ const {
 const bodyParser = require('koa-bodyparser')
 const jwt = require('jsonwebtoken')
 const RateLimit = require('koa2-ratelimit').RateLimit
-const passport = require('./passport')
 const schema = require('./schema')
 
 const app = new Koa()
@@ -55,8 +54,6 @@ app.use((ctx, next) => {
   }
 })
 
-passport(app)
-
 const multicyclesPrivateLink = new HttpLink({
   uri: `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
   fetch
@@ -76,6 +73,8 @@ async function init() {
         'providers',
         'vehicles',
         'zones',
+        'area',
+        'areas',
         'missingProvider',
         'linkSubAccount',
         'limeLogin',
@@ -124,7 +123,7 @@ async function init() {
 
   server.applyMiddleware({ app })
 
-  app.listen({ port: 3001 }, () => console.log(`🚀 Server ready at http://localhost:3001${server.graphqlPath}`))
+  app.listen({ port: 4001 }, () => console.log(`🚀 Server ready at http://localhost:4001${server.graphqlPath}`))
 }
 
 init()

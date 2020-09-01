@@ -32,15 +32,15 @@
           :lat-lng="$store.state.geolocation"
           :icon="getIconByProvider('geo')"
         />
-
-        <l-marker
-          v-for="vehicle in vehicles"
-          :lat-lng="[vehicle.lat, vehicle.lng]"
-          :icon="getIconByProvider(vehicle)"
-          :key="vehicle.id"
-          @click="selectVehicle(vehicle)"
-        ></l-marker>
-
+        <v-marker-cluster :options="{showCoverageOnHover: false, chunkedLoading: true}">
+          <l-marker
+            v-for="vehicle in getVehicles()"
+            :lat-lng="[vehicle.lat, vehicle.lng]"
+            :icon="getIconByProvider(vehicle)"
+            :key="vehicle.id"
+            @click="selectVehicle(vehicle)"
+          ></l-marker>
+        </v-marker-cluster>
         <l-geo-json
           v-for="zone in activeRideOrSelectedVehicle(zones)"
           :geojson="zone.geojson"
@@ -67,8 +67,10 @@
 <script>
 import L from 'leaflet'
 import { LMap, LTileLayer, LMarker, LGeoJson } from 'vue2-leaflet'
+import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 import gql from 'graphql-tag'
 import { mapActions, mapState, mapMutations } from 'vuex'
+import {point, polygon, booleanPointInPolygon} from '@turf/turf'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
@@ -83,7 +85,8 @@ export default {
     LMarker,
     LGeoJson,
     'v-progress': Progress,
-    SelectedVehicle
+    SelectedVehicle,
+    'v-marker-cluster': Vue2LeafletMarkerCluster
   },
   mounted() {
     if (this.autoReloadEnabled) {
@@ -113,13 +116,16 @@ export default {
       },
       map: {
         zoom: 17,
-        minZoom: 13,
+        minZoom: 10,
         detectRetina: true,
         options: {
           zoomControl: false
         }
       },
-      vehicles: []
+      vehicles: [],
+      area: [],
+      areas: [],
+      areaId: null
     }
   },
   computed: mapState({
@@ -221,6 +227,23 @@ export default {
       return {
         style: { color }
       }
+    },
+    getArea() {
+      var pt = point([this.roundedLocation[1],this.roundedLocation[0]]);
+      return this.areas.find( a => {
+        var poly = polygon(a.outline.coordinates);
+        return booleanPointInPolygon(pt, poly);
+      })
+      
+    },
+    getVehicles() {
+      const area = this.getArea()
+      if( area ) {
+        this.areaId = area.id
+        return this.area
+      } else {
+        return this.vehicles
+      }
     }
   },
   apollo: {
@@ -279,11 +302,75 @@ export default {
           return data.vehicles ? data.vehicles : []
         }
       }
+    },
+    area() {
+      return {
+        loadingKey: 'fetchingVehicles',
+        query() {
+          return gql`
+            query($id: Int!) {
+              area(id:$id) {
+                vehicles {
+                  id
+                  lat
+                  lng
+                  type
+                  publicId
+                  attributes
+                  propulsion
+                  battery
+                  provider {
+                    name
+                    slug
+                    website
+                    discountCode
+                    app {
+                      android
+                      ios
+                    }
+                    deepLink {
+                      android
+                      ios
+                    }
+                    stationVehicleTypes
+                  }
+                }
+              }
+            }
+          `
+        },
+        variables() {
+          return { id: this.areaId }
+        },
+        update(data) {
+          return data.area && data.area.vehicles ? data.area.vehicles : []
+        }
+      }
+    },
+    areas() {
+      return {
+        query() {
+          return gql`
+            query {
+              areas {
+                id
+                outline
+              }
+            }
+          `
+        },
+        update(data) {
+          return data.areas ? data.areas : []
+        }
+      }
     }
   }
 }
 </script>
-
+<style>
+  @import '~leaflet.markercluster/dist/MarkerCluster.css';
+  @import '~leaflet.markercluster/dist/MarkerCluster.Default.css';
+</style>
 <style lang="scss" scoped>
 .flex-container {
   height: 100%;
