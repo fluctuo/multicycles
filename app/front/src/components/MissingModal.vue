@@ -24,7 +24,7 @@
                 >
               </label>
 
-              <span>&nbsp;{{ $t(`MissingModal.Location`) }}: {{ $store.state.geolocation[0] }} / {{ $store.state.geolocation[1] }}</span>
+              <span>&nbsp;{{ $t(`MissingModal.Location`) }}: {{ $store.state.roundedLocation[0] }} / {{ $store.state.roundedLocation[1] }}</span>
 
               <button type="submit" class="btn--success btn--big" :disabled="submiting">
                 {{ $t('MissingModal.submit') }}

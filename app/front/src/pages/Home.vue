@@ -17,7 +17,7 @@
       </div>
 
       <div class="left">
-        <crosshair-icon class="icon" @click="centerOnGeolocation" />
+        <crosshair-icon class="icon" @click="startGeolocation" />
         <filter-icon class="icon" @click="setPage('settings')" />
         <alert-circle-icon class="icon" @click="openMissingModal" />
       </div>
@@ -51,7 +51,7 @@ export default {
   },
   computed: mapState(['map', 'roundedLocation']),
   methods: {
-    ...mapActions(['centerOnGeolocation', 'setCenter']),
+    ...mapActions(['centerOnGeolocation', 'startGeolocation', 'setCenter']),
     ...mapMutations(['setPage']),
     open() {
       this.$parent.toggle()

@@ -142,9 +142,6 @@ export default {
   }),
   computed: {
     ...mapGetters(['isEmbedded']),
-    ...mapState({
-      hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
-    }),
     unlockWhitelisted: function() {
       return unlockWhitelist.includes(this.vehicle.provider.slug)
     }

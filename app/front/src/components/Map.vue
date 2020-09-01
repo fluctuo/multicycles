@@ -32,9 +32,17 @@
           :lat-lng="$store.state.geolocation"
           :icon="getIconByProvider('geo')"
         />
-        <v-marker-cluster :options="{showCoverageOnHover: false, chunkedLoading: true}">
+        <v-marker-cluster
+          v-for="provider in getVehicles()"
+          v-bind:key="provider.slug"
+          :options="{
+            showCoverageOnHover: false, 
+            chunkedLoading: true, 
+            maxClusterRadius: 200,
+            iconCreateFunction: (cluster) => iconCreateFunction(cluster,provider)}"
+        >
           <l-marker
-            v-for="vehicle in getVehicles()"
+            v-for="vehicle in provider.vehicles"
             :lat-lng="[vehicle.lat, vehicle.lng]"
             :icon="getIconByProvider(vehicle)"
             :key="vehicle.id"
@@ -42,7 +50,7 @@
           ></l-marker>
         </v-marker-cluster>
         <l-geo-json
-          v-for="zone in activeRideOrSelectedVehicle(zones)"
+          v-for="zone in selectedVehicle(zones)"
           :geojson="zone.geojson"
           :key="zone.id"
           :options="getZoneStyle(zone.types)"
@@ -119,7 +127,8 @@ export default {
         minZoom: 10,
         detectRetina: true,
         options: {
-          zoomControl: false
+          zoomControl: false,
+          zoomAnimation: false
         }
       },
       vehicles: [],
@@ -129,7 +138,6 @@ export default {
     }
   },
   computed: mapState({
-    hasActiveRides: state => !!(state.activeRides && state.activeRides.length),
     center: state => state.map.center,
     excludeProviders: state => state.disabledProviders,
     roundedLocation: state => state.roundedLocation,
@@ -204,10 +212,8 @@ export default {
     reloadVehicules() {
       this.$apollo.queries.vehicles.refetch()
     },
-    activeRideOrSelectedVehicle(zones) {
-      const provider = this.hasActiveRides
-        ? this.$store.state.activeRides[0].provider.slug
-        : this.$store.state.selectedVehicle
+    selectedVehicle(zones) {
+      const provider = this.$store.state.selectedVehicle
         ? this.$store.state.selectedVehicle.provider.slug
         : null
 
@@ -237,13 +243,31 @@ export default {
       
     },
     getVehicles() {
+      let vehicles
+      const vehiclesPerProvider = {}
+
       const area = this.getArea()
+      
       if( area ) {
         this.areaId = area.id
-        return this.area
+        vehicles = this.area
       } else {
-        return this.vehicles
+        vehicles = this.vehicles
       }
+
+
+      vehicles.map(v => {
+        const p = v.provider
+        if ( ! vehiclesPerProvider[p.slug]) {
+          vehiclesPerProvider[p.slug] = {...p, vehicles:[]}
+        }
+        vehiclesPerProvider[p.slug].vehicles.push(v)
+      })
+
+      return vehiclesPerProvider
+    },
+    iconCreateFunction: function (cluster, provider) {
+      return this.getIconByProvider({provider,type:"STATION",availableVehicles: cluster.getChildCount()})
     }
   },
   apollo: {
@@ -367,10 +391,6 @@ export default {
   }
 }
 </script>
-<style>
-  @import '~leaflet.markercluster/dist/MarkerCluster.css';
-  @import '~leaflet.markercluster/dist/MarkerCluster.Default.css';
-</style>
 <style lang="scss" scoped>
 .flex-container {
   height: 100%;

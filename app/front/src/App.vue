@@ -59,8 +59,6 @@ export default {
         this.setAutoReload(true)
       }
     }
-
-    this.startGeolocation()
   },
   methods: {
     ...mapActions(['setDrawerEnable', 'startGeolocation', 'getZones', 'setCenter', 'setMoved']),

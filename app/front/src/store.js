@@ -9,6 +9,8 @@ import getlanguage from './language'
 
 Vue.use(Vuex)
 
+const paris = [48.856613, 2.352222]
+
 const disabledProviders =
   localStorage.getItem('disabledProviders') && JSON.parse(localStorage.getItem('disabledProviders'))
 const position = localStorage.getItem('position') && JSON.parse(localStorage.getItem('position'))
@@ -39,21 +41,19 @@ function roundLocation(l) {
 const state = {
   page: 'home',
   lang: getlanguage(),
-  geolocation: position || [48.856613, 2.352222],
+  geolocation: position || paris,
   providers: [],
   disabledProviders: disabledProviders || [],
   selectedVehicle: false,
   drawerEnable: false,
   moved: false,
   map: {
-    center: position || [48.856613, 2.352222]
+    center: position || paris
   },
   selectedAddress: {
     name: ''
   },
-  myAccount: null,
-  activeRides: [],
-  roundedLocation: position || [48.856613, 2.352222],
+  roundedLocation: position || paris,
   fixGPS: false,
   zones: [],
   embedded: false,
@@ -128,83 +128,6 @@ const actions = {
     commit('setCenter', address.position)
     commit('setRoundedLocation', address.position)
     commit('setMoved', true)
-  },
-  getActiveRides({ commit }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .query({
-          query: gql`
-            query {
-              getMyActiveRides {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
-            }
-          `
-        })
-        .then(result => {
-          commit('setActiveRides', result.data.getMyActiveRides)
-        })
-    }
-  },
-  startMyRide({ commit, state }, { token, provider }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .mutate({
-          mutation: gql`
-            mutation($provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
-              startMyRide(provider: $provider, token: $token, lat: $lat, lng: $lng) {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
-            }
-          `,
-          variables: {
-            token,
-            provider,
-            lat: state.geolocation[0],
-            lng: state.geolocation[1]
-          }
-        })
-        .then(result => {
-          commit('setActiveRides', [result.data.startMyRide])
-        })
-    }
-  },
-  stopMyRide({ commit, state }, rideId) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .mutate({
-          mutation: gql`
-            mutation($rideId: String!, $lat: Float!, $lng: Float!) {
-              stopMyRide(rideId: $rideId, lat: $lat, lng: $lng) {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
-            }
-          `,
-          variables: {
-            rideId,
-            lat: state.geolocation[0],
-            lng: state.geolocation[1]
-          }
-        })
-        .then(() => {
-          commit('setActiveRides', null)
-        })
-    }
   },
   startGeolocation({ commit, state, dispatch }) {
     // request lat lng by ip
@@ -329,12 +252,6 @@ const mutations = {
   },
   clearAddress(state) {
     state.selectedAddress = { name: '' }
-  },
-  setMyAccount(state, myAccount) {
-    Vue.set(state, 'myAccount', myAccount)
-  },
-  setActiveRides(state, rides) {
-    state.activeRides = rides
   },
   setRoundedLocation(state, center) {
     const diff = distanceInKmBetweenEarthCoordinates(
