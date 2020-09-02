@@ -6,11 +6,9 @@
     @mask-click="handleMaskClick"
     v-if="!isEmbedded"
   >
-    <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
       <search v-if="page === 'search'" />
       <settings v-else-if="page === 'settings'" />
-      <about v-else-if="page === 'about'" />
       <home v-else />
     </div>
   </vue-drawer-layout>
@@ -23,22 +21,18 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import queryString from 'query-string'
-import DrawerMenu from './components/DrawerMenu'
 
 import Home from '@/pages/Home'
 import LocalMap from '@/components/Map'
 import Search from '@/pages/Search'
 import Settings from '@/pages/Settings'
-import About from '@/pages/About'
 
 export default {
   name: 'app',
   components: {
-    DrawerMenu,
     Home,
     Search,
     Settings,
-    About,
     LocalMap
   },
   computed: mapGetters(['drawerEnable', 'page', 'isEmbedded']),

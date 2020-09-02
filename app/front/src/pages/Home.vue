@@ -1,10 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="top">
-      <div class="right">
-        <menu-icon @click="open" class="icon" />
-      </div>
-
       <div class="center">
         <a @click="setPage('search')">
           <input
@@ -30,14 +26,13 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
-import { MenuIcon, CrosshairIcon, FilterIcon, AlertCircleIcon } from 'vue-feather-icons'
+import { CrosshairIcon, FilterIcon, AlertCircleIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
 import MissingModal from '../components/MissingModal'
 
 export default {
   name: 'Home',
   components: {
-    MenuIcon,
     CrosshairIcon,
     FilterIcon,
     LocalMap,
