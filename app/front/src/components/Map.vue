@@ -118,10 +118,7 @@ export default {
       attribution:
         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
       fetchingVehicles: 0,
-      location: {
-        lat: this.$store.state.geolocation[0],
-        lng: this.$store.state.geolocation[1]
-      },
+      location: {},
       map: {
         zoom: 17,
         minZoom: 10,
@@ -357,6 +354,20 @@ export default {
                       ios
                     }
                     stationVehicleTypes
+                  }
+                  ... on Station {
+                    availableVehicles
+                    availableStands
+                    isVirtual
+                    stationVehicleDetails {
+                      vehicleType
+                      propulsion
+                      availableVehicles
+                    }
+                  }
+                  ... on Car {
+                    carClass
+                    carModel
                   }
                 }
               }

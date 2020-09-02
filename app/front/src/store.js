@@ -41,7 +41,7 @@ function roundLocation(l) {
 const state = {
   page: 'home',
   lang: getlanguage(),
-  geolocation: position || paris,
+  geolocation: position || null,
   providers: [],
   disabledProviders: disabledProviders || [],
   selectedVehicle: false,
@@ -131,18 +131,23 @@ const actions = {
   },
   startGeolocation({ commit, state, dispatch }) {
     // request lat lng by ip
+    commit('setMoved', false)
+
+    if (state.geolocation) {
+      commit('setCenter', state.geolocation)
+      commit('setRoundedLocation', state.geolocation)
+    }
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         commit('fixGPS')
         dispatch('getProviders', { lat: position.coords.latitude, lng: position.coords.longitude })
         dispatch('getZones', { lat: position.coords.latitude, lng: position.coords.longitude })
 
-        if (!state.moved) {
-          state.map.center = [position.coords.latitude, position.coords.longitude]
-          state.geolocation = [position.coords.latitude, position.coords.longitude]
+        state.map.center = [position.coords.latitude, position.coords.longitude]
+        state.geolocation = [position.coords.latitude, position.coords.longitude]
 
-          commit('setRoundedLocation', [position.coords.latitude, position.coords.longitude])
-        }
+        commit('setRoundedLocation', [position.coords.latitude, position.coords.longitude])
       })
 
       navigator.geolocation.watchPosition(position => {
@@ -192,8 +197,8 @@ const actions = {
       `,
       variables: {
         provider,
-        lat: state.geolocation[0],
-        lng: state.geolocation[1]
+        lat: state.roundedLocation[0],
+        lng: state.roundedLocation[1]
       }
     })
   }
