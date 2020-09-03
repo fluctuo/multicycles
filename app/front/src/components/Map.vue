@@ -33,7 +33,7 @@
           :icon="getIconByProvider('geo')"
         />
         <v-marker-cluster
-          v-for="provider in getVehicles()"
+          v-for="provider in vehiclesPerProvider"
           v-bind:key="provider.slug"
           :options="{
             showCoverageOnHover: false, 
@@ -83,8 +83,6 @@ import {point, polygon, booleanPointInPolygon} from '@turf/turf'
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
 
-let autoReloadInterval
-
 export default {
   name: 'Map',
   components: {
@@ -95,18 +93,6 @@ export default {
     'v-progress': Progress,
     SelectedVehicle,
     'v-marker-cluster': Vue2LeafletMarkerCluster
-  },
-  mounted() {
-    if (this.autoReloadEnabled) {
-      autoReloadInterval = setInterval(() => {
-        this.reloadVehicules()
-      }, 2 * 60 * 1000)
-    }
-  },
-  beforeDestroy() {
-    if (autoReloadInterval) {
-      clearInterval(autoReloadInterval)
-    }
   },
   data() {
     return {
@@ -131,19 +117,16 @@ export default {
       vehicles: [],
       area: [],
       areas: [],
-      areaId: null
+      areaId: 1,
+      vehiclesPerProvider: {}
     }
   },
   computed: mapState({
     center: state => state.map.center,
     excludeProviders: state => state.disabledProviders,
     roundedLocation: state => state.roundedLocation,
-    zones: state => state.zones,
-    autoReloadEnabled: state => state.autoReload
+    zones: state => state.zones
   }),
-  watch: {
-    $route: 'reloadVehicules'
-  },
   methods: {
     ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
     ...mapMutations(['updateLocation']),
@@ -206,9 +189,6 @@ export default {
             </object>`
       })
     },
-    reloadVehicules() {
-      this.$apollo.queries.vehicles.refetch()
-    },
     selectedVehicle(zones) {
       const provider = this.$store.state.selectedVehicle
         ? this.$store.state.selectedVehicle.provider.slug
@@ -239,7 +219,7 @@ export default {
       })
       
     },
-    getVehicles() {
+    updateVehiclesPerProviders() {
       let vehicles
       const vehiclesPerProvider = {}
 
@@ -252,16 +232,18 @@ export default {
         vehicles = this.vehicles
       }
 
-
       vehicles.map(v => {
         const p = v.provider
         if ( ! vehiclesPerProvider[p.slug]) {
-          vehiclesPerProvider[p.slug] = {...p, vehicles:[]}
+          vehiclesPerProvider[p.slug] = {
+            slug: p.slug,
+            vehicles: []
+          }
         }
         vehiclesPerProvider[p.slug].vehicles.push(v)
       })
 
-      return vehiclesPerProvider
+      this.vehiclesPerProvider = vehiclesPerProvider
     },
     iconCreateFunction: function (cluster, provider) {
       return this.getIconByProvider({provider,type:"STATION",availableVehicles: cluster.getChildCount()})
@@ -321,6 +303,9 @@ export default {
         },
         update(data) {
           return data.vehicles ? data.vehicles : []
+        },
+        result() {
+          this.updateVehiclesPerProviders()
         }
       }
     },
@@ -379,6 +364,9 @@ export default {
         },
         update(data) {
           return data.area && data.area.vehicles ? data.area.vehicles : []
+        },
+        result() {
+          this.updateVehiclesPerProviders()
         }
       }
     },
@@ -396,6 +384,9 @@ export default {
         },
         update(data) {
           return data.areas ? data.areas : []
+        },
+        result() {
+          this.updateVehiclesPerProviders()
         }
       }
     }

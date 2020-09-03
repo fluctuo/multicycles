@@ -56,8 +56,7 @@ const state = {
   roundedLocation: position || paris,
   fixGPS: false,
   zones: [],
-  embedded: false,
-  autoReload: false
+  embedded: false
 }
 
 const getters = {
@@ -279,9 +278,6 @@ const mutations = {
   setEmbedded(state) {
     state.embedded = true
   },
-  setAutoReload(state) {
-    state.autoReload = true
-  },
   updateLocation(state) {
     const params = {
       l: state.map.center
@@ -289,10 +285,6 @@ const mutations = {
 
     if (state.embedded) {
       params.embedded = true
-    }
-
-    if (state.autoReload) {
-      params.autoReload = true
     }
 
     const stringified = queryString.stringify(params)

@@ -48,10 +48,6 @@ export default {
         this.setCenter(params.l)
         this.setMoved(true)
       }
-
-      if (params.autoReload === 'true') {
-        this.setAutoReload(true)
-      }
     }
   },
   methods: {
