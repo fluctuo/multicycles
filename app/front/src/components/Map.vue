@@ -329,8 +329,8 @@ export default {
         loadingKey: 'fetchingVehicles',
         query() {
           return gql`
-            query($id: Int!) {
-              area(id:$id) {
+            query($id: Int!, $excludeProviders: [String]) {
+              area(id:$id, excludeProviders: $excludeProviders) {
                 vehicles {
                   id
                   lat
@@ -375,7 +375,7 @@ export default {
           `
         },
         variables() {
-          return { id: this.areaId }
+          return { id: this.areaId, excludeProviders: this.excludeProviders }
         },
         update(data) {
           return data.area && data.area.vehicles ? data.area.vehicles : []
