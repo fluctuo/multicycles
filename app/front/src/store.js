@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import gql from 'graphql-tag'
 import queryString from 'query-string'
+import { point, polygon, booleanPointInPolygon } from '@turf/turf'
 
 import i18n from './i18n'
 import apolloProvider from './apollo'
@@ -18,6 +19,46 @@ const position = localStorage.getItem('position') && JSON.parse(localStorage.get
 function degreesToRadians(degrees) {
   return (degrees * Math.PI) / 180
 }
+
+const gglVehicles = `{
+  id
+  lat
+  lng
+  type
+  publicId
+  attributes
+  propulsion
+  battery
+  provider {
+    name
+    slug
+    website
+    discountCode
+    app {
+      android
+      ios
+    }
+    deepLink {
+      android
+      ios
+    }
+    stationVehicleTypes
+  }
+  ... on Station {
+    availableVehicles
+    availableStands
+    isVirtual
+    stationVehicleDetails {
+      vehicleType
+      propulsion
+      availableVehicles
+    }
+  }
+  ... on Car {
+    carClass
+    carModel
+  }
+}`
 
 function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
   var earthRadiusKm = 6371
@@ -56,7 +97,10 @@ const state = {
   roundedLocation: position || paris,
   fixGPS: false,
   zones: [],
-  embedded: false
+  embedded: false,
+  vehicles: [],
+  fetchingVehicles: false,
+  fetchingVehiclesId: 0
 }
 
 const getters = {
@@ -200,6 +244,76 @@ const actions = {
         lng: state.roundedLocation[1]
       }
     })
+  },
+  updateVehiclesArea({ state }) {
+    if (!state.areas) {
+      this.dispatch('updateAreas')
+      return
+    }
+
+    state.fetchingVehicles = true
+
+    const pt = point([state.roundedLocation[1], state.roundedLocation[0]])
+
+    const area = state.areas.find(a => {
+      const poly = polygon(a.outline.coordinates)
+      return booleanPointInPolygon(pt, poly)
+    })
+
+    const fetchingVehiclesId = state.fetchingVehiclesId + 1
+    state.fetchingVehiclesId = fetchingVehiclesId
+
+    const excludeProviders = state.disabledProviders
+
+    if (area) {
+      apolloProvider.defaultClient
+        .query({
+          query: gql`
+            query($id: Int!, $excludeProviders: [String]) {
+              area(id:$id, excludeProviders: $excludeProviders) {
+                vehicles ${gglVehicles}
+              }
+            }
+          `,
+          variables: { id: area.id, excludeProviders }
+        })
+        .then(({ data }) => {
+          if (fetchingVehiclesId === state.fetchingVehiclesId) {
+            this.commit('setVehicles', data.area.vehicles)
+          }
+        })
+    } else {
+      apolloProvider.defaultClient
+        .query({
+          query: gql`
+          query($lat: Float!, $lng: Float!, $excludeProviders: [String]) {
+            vehicles(lat: $lat, lng: $lng, excludeProviders: $excludeProviders) ${gglVehicles}
+          }
+        `,
+          variables: { lat: state.roundedLocation[0], lng: state.roundedLocation[1], excludeProviders }
+        })
+        .then(({ data }) => {
+          if (fetchingVehiclesId === state.fetchingVehiclesId) {
+            this.commit('setVehicles', data.vehicles, state.area)
+          }
+        })
+    }
+  },
+  updateAreas({ commit }) {
+    apolloProvider.defaultClient
+      .query({
+        query: gql`
+          query {
+            areas {
+              id
+              outline
+            }
+          }
+        `
+      })
+      .then(result => {
+        commit('setAreas', result.data.areas)
+      })
   }
 }
 
@@ -226,6 +340,8 @@ const mutations = {
     } else {
       state.disabledProviders.push(provider)
     }
+
+    this.dispatch('updateVehiclesArea')
 
     localStorage.setItem('disabledProviders', JSON.stringify(state.disabledProviders))
   },
@@ -267,6 +383,8 @@ const mutations = {
 
     if (diff > 0.2) {
       state.roundedLocation = [roundLocation(center[0]), roundLocation(center[1])]
+
+      this.dispatch('updateVehiclesArea')
     }
   },
   fixGPS(state) {
@@ -274,6 +392,15 @@ const mutations = {
   },
   setZones(state, zones) {
     state.zones = zones
+  },
+  setAreas(state, areas) {
+    state.areas = areas
+
+    this.dispatch('updateVehiclesArea')
+  },
+  setVehicles(state, vehicles) {
+    state.fetchingVehicles = false
+    state.vehicles = vehicles
   },
   setEmbedded(state) {
     state.embedded = true

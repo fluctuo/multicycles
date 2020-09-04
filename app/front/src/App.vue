@@ -49,9 +49,10 @@ export default {
         this.setMoved(true)
       }
     }
+    this.updateVehiclesArea()
   },
   methods: {
-    ...mapActions(['setDrawerEnable', 'startGeolocation', 'getZones', 'setCenter', 'setMoved']),
+    ...mapActions(['setDrawerEnable', 'startGeolocation', 'getZones', 'setCenter', 'setMoved', 'updateVehiclesArea']),
     ...mapMutations(['setPage', 'setEmbedded', 'setAutoReload']),
     fixEnable(visible) {
       if (visible) {

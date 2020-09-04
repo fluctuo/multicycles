@@ -4,7 +4,7 @@
       <transition name="fade">
         <img src="../assets/crosshair.svg" class="crosshair" v-if="$store.state.moved" />
       </transition>
-      <v-progress v-if="fetchingVehicles !== 0" />
+      <v-progress v-if="fetchingVehicles" />
       <l-map
         ref="map"
         :zoom="map.zoom"
@@ -76,9 +76,7 @@
 import L from 'leaflet'
 import { LMap, LTileLayer, LMarker, LGeoJson } from 'vue2-leaflet'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
-import gql from 'graphql-tag'
 import { mapActions, mapState, mapMutations } from 'vuex'
-import {point, polygon, booleanPointInPolygon} from '@turf/turf'
 
 import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
@@ -103,7 +101,6 @@ export default {
       },
       attribution:
         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-      fetchingVehicles: 0,
       location: {},
       map: {
         zoom: 17,
@@ -113,20 +110,40 @@ export default {
           zoomControl: false,
           zoomAnimation: false
         }
-      },
-      vehicles: [],
-      area: [],
-      areas: [],
-      areaId: 1,
-      vehiclesPerProvider: {}
+      }
     }
   },
-  computed: mapState({
-    center: state => state.map.center,
-    excludeProviders: state => state.disabledProviders,
-    roundedLocation: state => state.roundedLocation,
-    zones: state => state.zones
-  }),
+  computed: {
+    ...mapState({
+      center: state => state.map.center,
+      excludeProviders: state => state.disabledProviders,
+      roundedLocation: state => state.roundedLocation,
+      zones: state => state.zones,
+      vehicles: state => state.vehicles,
+      fetchingVehicles: state => state.fetchingVehicles
+    }),
+    vehiclesPerProvider : function() {
+      if(!this.vehicles) {
+        return {}
+      }
+
+      const vehiclesPerProvider = {}
+      this.vehicles.map(v => {
+        const p = v.provider
+
+        if ( ! vehiclesPerProvider[p.slug]) {
+          vehiclesPerProvider[p.slug] = {
+            slug: p.slug,
+            vehicles: []
+          }
+        }
+        
+        vehiclesPerProvider[p.slug].vehicles.push(v)
+      })
+
+      return vehiclesPerProvider
+    }
+  },
   methods: {
     ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
     ...mapMutations(['updateLocation']),
@@ -211,184 +228,8 @@ export default {
         style: { color }
       }
     },
-    getArea() {
-      var pt = point([this.roundedLocation[1],this.roundedLocation[0]]);
-      return this.areas.find( a => {
-        var poly = polygon(a.outline.coordinates);
-        return booleanPointInPolygon(pt, poly);
-      })
-      
-    },
-    updateVehiclesPerProviders() {
-      let vehicles
-      const vehiclesPerProvider = {}
-
-      const area = this.getArea()
-      
-      if( area ) {
-        this.areaId = area.id
-        vehicles = this.area
-      } else {
-        vehicles = this.vehicles
-      }
-
-      vehicles.map(v => {
-        const p = v.provider
-        if ( ! vehiclesPerProvider[p.slug]) {
-          vehiclesPerProvider[p.slug] = {
-            slug: p.slug,
-            vehicles: []
-          }
-        }
-        vehiclesPerProvider[p.slug].vehicles.push(v)
-      })
-
-      this.vehiclesPerProvider = vehiclesPerProvider
-    },
     iconCreateFunction: function (cluster, provider) {
       return this.getIconByProvider({provider,type:"STATION",availableVehicles: cluster.getChildCount()})
-    }
-  },
-  apollo: {
-    vehicles() {
-      return {
-        loadingKey: 'fetchingVehicles',
-        query() {
-          return gql`
-            query($lat: Float!, $lng: Float!, $excludeProviders: [String]) {
-              vehicles(lat: $lat, lng: $lng, excludeProviders: $excludeProviders) {
-                id
-                lat
-                lng
-                type
-                publicId
-                attributes
-                propulsion
-                battery
-                provider {
-                  name
-                  slug
-                  website
-                  discountCode
-                  app {
-                    android
-                    ios
-                  }
-                  deepLink {
-                    android
-                    ios
-                  }
-                  stationVehicleTypes
-                }
-                ... on Station {
-                  availableVehicles
-                  availableStands
-                  isVirtual
-                  stationVehicleDetails {
-                    vehicleType
-                    propulsion
-                    availableVehicles
-                  }
-                }
-                ... on Car {
-                  carClass
-                  carModel
-                }
-              }
-            }
-          `
-        },
-        variables() {
-          return { lat: this.roundedLocation[0], lng: this.roundedLocation[1], excludeProviders: this.excludeProviders }
-        },
-        update(data) {
-          return data.vehicles ? data.vehicles : []
-        },
-        result() {
-          this.updateVehiclesPerProviders()
-        }
-      }
-    },
-    area() {
-      return {
-        loadingKey: 'fetchingVehicles',
-        query() {
-          return gql`
-            query($id: Int!, $excludeProviders: [String]) {
-              area(id:$id, excludeProviders: $excludeProviders) {
-                vehicles {
-                  id
-                  lat
-                  lng
-                  type
-                  publicId
-                  attributes
-                  propulsion
-                  battery
-                  provider {
-                    name
-                    slug
-                    website
-                    discountCode
-                    app {
-                      android
-                      ios
-                    }
-                    deepLink {
-                      android
-                      ios
-                    }
-                    stationVehicleTypes
-                  }
-                  ... on Station {
-                    availableVehicles
-                    availableStands
-                    isVirtual
-                    stationVehicleDetails {
-                      vehicleType
-                      propulsion
-                      availableVehicles
-                    }
-                  }
-                  ... on Car {
-                    carClass
-                    carModel
-                  }
-                }
-              }
-            }
-          `
-        },
-        variables() {
-          return { id: this.areaId, excludeProviders: this.excludeProviders }
-        },
-        update(data) {
-          return data.area && data.area.vehicles ? data.area.vehicles : []
-        },
-        result() {
-          this.updateVehiclesPerProviders()
-        }
-      }
-    },
-    areas() {
-      return {
-        query() {
-          return gql`
-            query {
-              areas {
-                id
-                outline
-              }
-            }
-          `
-        },
-        update(data) {
-          return data.areas ? data.areas : []
-        },
-        result() {
-          this.updateVehiclesPerProviders()
-        }
-      }
     }
   }
 }
