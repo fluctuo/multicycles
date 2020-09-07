@@ -14,6 +14,8 @@ import apolloProvider from './apollo'
 import i18n from './i18n'
 import store from './store'
 
+import(/* webpackPrefetch: true */ 'mapbox-gl/dist/mapbox-gl.css')
+
 window.addEventListener('beforeinstallprompt', event => {
   event.preventDefault()
   window.installPromptEvent = event
