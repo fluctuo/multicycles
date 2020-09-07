@@ -30,11 +30,10 @@ import Progress from './Progress'
 import SelectedVehicle from './SelectedVehicle.vue'
 
 let mapRef = null;
-let defaultZonesLayer = null;
-let dataLayer = null;
 
 let markers = {};
 let markersOnScreen = {};
+let sources = {};
 
 export default {
   name: 'Map',
@@ -77,7 +76,7 @@ export default {
     mapOptions() {
       return {
         style: "mapbox://styles/pierrickp/ck9xygbh80kp81jo4rraosg8n",
-        center: [2.352222, 48.856613],
+        center: [ this.center[1], this.center[0] ],
         zoom: 10,
         antialias: true,
         url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={mapboxKey}'
@@ -123,6 +122,13 @@ export default {
       handler() {
         this.drawData();
       }
+    },
+    center: {
+      handler() {
+        if(mapRef) {
+          //mapRef.setCenter([ this.center[1], this.center[0] ])
+        }
+      }
     }
   },
   methods: {
@@ -131,6 +137,11 @@ export default {
     loaded(map) {
       mapRef = map;
       //this.drawDefaultZones();
+
+      mapRef.on('zoomend', (e) => { this.zoomEnd(e) })
+      mapRef.on('movestart', (e) => { this.moveStart(e) })
+      mapRef.on('moveend', (e) => { this.moveEnd(e) })
+
       this.drawData();
     },
     zoomEnd(e) {
@@ -218,51 +229,55 @@ export default {
       const vehiclesPerProvider = this.vehiclesPerProvider
 
       for (const slug in vehiclesPerProvider) {
-        /*
-        const features = vehiclesPerProvider[slug].GeoJSON.features
-/*
-        for (const marker of features) {
-          // create a DOM element for the marker
 
-          
-          var html = this.getIconByProvider({provider:{slug:'velib'}, type:'STATION'});
+        const source = mapRef.getSource(slug);
 
-          var el = document.createElement('div');
-          el.innerHTML = html
-          // add marker to map
-          new mapboxgl.Marker(el)
-            .setLngLat(marker.geometry.coordinates)
-            .addTo(mapRef);
-        }
-        */
-        mapRef.addSource(slug, {
-          'type': 'geojson',
-          'data': vehiclesPerProvider[slug].GeoJSON,
-          'cluster': true,
-          'clusterRadius': 80
-        });
+        if ( source ) {
+          source.setData(vehiclesPerProvider[slug].GeoJSON);
+        } else {
+          sources[slug] = true
 
-        mapRef.addLayer({
-          'id': `layer-${slug}`,
-          'type': 'circle',
-          'source': slug,
-          'paint': {
-            'circle-color': '#8dd3c7',
-            'circle-radius': 5
-          }
-        });
+          mapRef.addSource(slug, {
+            'type': 'geojson',
+            'data': vehiclesPerProvider[slug].GeoJSON,
+            'cluster': true,
+            'clusterRadius': 80
+          });
 
-        mapRef.on('data', (e) => {
-          
-          mapRef.on('moveend', () => { this.updateMarkers(e.sourceId) } );
+          mapRef.addLayer({
+            'id': `layer-${slug}`,
+            'type': 'circle',
+            'source': slug,
+            'paint': {
+              'circle-color': '#8dd3c7',
+              'circle-radius': 5
+            }
+          });
+
+          //TODO hide layer
+          //mapRef.setLayoutProperty(`layer-${slug}`, 'visibility', 'none');
+
+          mapRef.on('data', (e) => {
+            
+            mapRef.on('moveend', () => { this.updateMarkers(e.sourceId) } );
+
             this.updateMarkers(e.sourceId);
           });
         
+        }
+
+
       }
 
+      for (const slug in sources) {
+        if (!vehiclesPerProvider[slug]) {
+          mapRef.getSource(slug).setData({
+            "type": "FeatureCollection",
+            "features": []
+          })
+        }
+      }
 
-
-      mapRef.addLayer(dataLayer);
     },
     updateMarkers(sourceId) {
       let newMarkers = {};
