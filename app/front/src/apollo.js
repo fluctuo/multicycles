@@ -14,12 +14,14 @@ const httpLink = new HttpLink({
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
 
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : ''
-    }
-  }
+  return token
+    ? {
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${token}`
+        }
+      }
+    : { headers }
 })
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
