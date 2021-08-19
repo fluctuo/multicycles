@@ -105,7 +105,7 @@
                 displayCurrency(price.max, vehicle.pricing.currency)
               }}
             </span>
-            <span v-else> Starting at {{ displayCurrency(price.min || 0, vehicle.pricing.currency) }}</span>
+            <span v-else> {{ $t('cost.StartingAt') }} {{ displayCurrency(price.min || 0, vehicle.pricing.currency) }}</span>
           </span>
         </div>
         <div v-if="vehicle.pricing.includeVat === false">(VAT not included)</div>
@@ -250,22 +250,22 @@ export default {
     },
     strIntervalMin(interval) {
       if (interval === 1) {
-        return 'Per minute'
+        return this.$t('cost.perMinute')
       } else if (interval === 60) {
-        return 'Per hour'
+        return this.$t('cost.perHour')
       } else if (interval === 60 * 24) {
-        return 'Per day'
+        return this.$t('cost.perDay')
       } else if (interval % 60 === 0) {
-        return `Per ${interval / 60} hour`
+        return this.$t('cost.perNHours', { hours: interval / 60 })
       } else {
-        return `Per ${interval} minutes`
+        return this.$t('cost.perNMinutes', { minutes: interval })
       }
     },
     strIntervalKm(interval) {
       if (interval === 1) {
-        return 'Per km'
+        return this.$t('cost.perKm')
       } else {
-        return `Per ${interval} km`
+        return this.$t('cost.perNKm', { km: interval })
       }
     },
     displayCurrency(price, currency) {
@@ -308,9 +308,9 @@ export default {
           minPrice += pricing.perMin[0].price
         }
 
-        parts.unshift({ text: 'Trip price', min: minPrice || 0 })
+        parts.unshift({ text: this.$t('cost.tripPrice'), min: minPrice || 0 })
       } else if (pricing.unlock) {
-        parts.unshift({ text: 'Unlock', price: pricing.unlock })
+        parts.unshift({ text: this.$t('cost.unlock'), price: pricing.unlock })
       }
 
       return parts
