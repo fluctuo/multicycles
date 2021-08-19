@@ -4,49 +4,52 @@
       <div class="detail">
         <div>
           <div class="provider">
-            <img
-              v-if="logoSrc(vehicle.provider)"
-              :src="logoSrc(vehicle.provider)"
-              alt="logo"
-              class="logo"
-            />
+            <img v-if="logoSrc(vehicle.provider)" :src="logoSrc(vehicle.provider)" alt="logo" class="logo" />
             {{ vehicle.provider.name }}
           </div>
         </div>
         <div>
           <div v-if="vehicle.type == 'STATION'" class="no-shrink">
             <div v-if="vehicle.availableVehicles != null" class="available-vehicles">
-
-              <span v-if="vehicle.stationVehicleDetails 
-              && vehicle.stationVehicleDetails.length === 2
-              && vehicle.stationVehicleDetails[0].availableVehicles != null
-              && vehicle.stationVehicleDetails[1].availableVehicles != null
-              && vehicle.stationVehicleDetails[0].vehicleType === 'BIKE'
-              && vehicle.stationVehicleDetails[1].vehicleType === 'BIKE'
-              && vehicle.stationVehicleDetails[0].propulsion != vehicle.stationVehicleDetails[1].propulsion">
-
+              <span
+                v-if="
+                  vehicle.stationVehicleDetails &&
+                    vehicle.stationVehicleDetails.length === 2 &&
+                    vehicle.stationVehicleDetails[0].availableVehicles != null &&
+                    vehicle.stationVehicleDetails[1].availableVehicles != null &&
+                    vehicle.stationVehicleDetails[0].vehicleType === 'BIKE' &&
+                    vehicle.stationVehicleDetails[1].vehicleType === 'BIKE' &&
+                    vehicle.stationVehicleDetails[0].propulsion != vehicle.stationVehicleDetails[1].propulsion
+                "
+              >
                 <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'HUMAIN'">
-                  {{vehicle.stationVehicleDetails[1].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
+                  {{ vehicle.stationVehicleDetails[1].availableVehicles
+                  }}<img src="../assets/lightning.svg" class="attribute-nb" />
                   +
                   {{ vehicle.stationVehicleDetails[0].availableVehicles }}
-                </span> 
-                <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'ASSIST' || vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'">
-                  {{vehicle.stationVehicleDetails[0].availableVehicles}}<img src="../assets/lightning.svg" class="attribute-nb"/>
+                </span>
+                <span
+                  v-if="
+                    vehicle.stationVehicleDetails[0].propulsion === 'ASSIST' ||
+                      vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'
+                  "
+                >
+                  {{ vehicle.stationVehicleDetails[0].availableVehicles
+                  }}<img src="../assets/lightning.svg" class="attribute-nb" />
                   +
                   {{ vehicle.stationVehicleDetails[1].availableVehicles }}
                 </span>
               </span>
               <span v-else>{{ vehicle.availableVehicles }}</span>
-              
-              <span v-if="vehicle.provider.stationVehicleTypes 
-              && vehicle.provider.stationVehicleTypes.length === 1">
-                &nbsp;{{ $tc('stationVehicleTypes.'+vehicle.provider.stationVehicleTypes[0], vehicle.availableVehicles) }}
+
+              <span v-if="vehicle.provider.stationVehicleTypes && vehicle.provider.stationVehicleTypes.length === 1">
+                &nbsp;{{
+                  $tc('stationVehicleTypes.' + vehicle.provider.stationVehicleTypes[0], vehicle.availableVehicles)
+                }}
               </span>
-              <span v-else>
-                &nbsp;{{ $t('selectedVehicle.vehicle') }}
-              </span>
+              <span v-else> &nbsp;{{ $t('selectedVehicle.vehicle') }} </span>
             </div>
-            <span v-else class="type">{{ $t(getVehicleTypeKey(vehicle))}}</span>
+            <span v-else class="type">{{ $t(getVehicleTypeKey(vehicle)) }}</span>
 
             <div v-if="vehicle.availableStands != null && !vehicle.isVirtual" class="available-stands">
               <span>{{ vehicle.availableStands }}</span>
@@ -71,10 +74,15 @@
               <div v-if="vehicle.battery">{{ vehicle.battery }}%</div>
               <img
                 v-if="
-                  vehicle.propulsion === 'ELECTRIC'
-                  || vehicle.propulsion === 'ASSIST'
-                  || vehicle.stationVehicleDetails && vehicle.stationVehicleDetails.length === 1 && vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'
-                  || vehicle.stationVehicleDetails && vehicle.stationVehicleDetails.length === 1 && vehicle.stationVehicleDetails[0].propulsion === 'ASSIST'"
+                  vehicle.propulsion === 'ELECTRIC' ||
+                    vehicle.propulsion === 'ASSIST' ||
+                    (vehicle.stationVehicleDetails &&
+                      vehicle.stationVehicleDetails.length === 1 &&
+                      vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC') ||
+                    (vehicle.stationVehicleDetails &&
+                      vehicle.stationVehicleDetails.length === 1 &&
+                      vehicle.stationVehicleDetails[0].propulsion === 'ASSIST')
+                "
                 src="../assets/lightning.svg"
                 class="attribute"
               />
@@ -87,36 +95,40 @@
           </div>
         </div>
       </div>
+      <div class="pricesdetails" v-if="vehicle.pricing">
+        <div v-for="(price, index) in pricingText(vehicle.pricing)" :key="index" class="prices">
+          <span class="column-text"> {{ price.text }} </span>
+          <span class="column-price">
+            <span v-if="price.price"> {{ displayCurrency(price.price, vehicle.pricing.currency) }}</span>
+            <span v-else-if="price.max">
+              {{ displayCurrency(price.min || 0, vehicle.pricing.currency) }}-{{
+                displayCurrency(price.max, vehicle.pricing.currency)
+              }}
+            </span>
+            <span v-else> Starting at {{ displayCurrency(price.min || 0, vehicle.pricing.currency) }}</span>
+          </span>
+        </div>
+        <div v-if="vehicle.pricing.includeVat === false">(VAT not included)</div>
+      </div>
       <div class="subdetail" v-if="!isEmbedded">
-        <qrcode-scanner
-          v-if="!hasActiveRides && unlockWhitelisted"
-          :provider="vehicle.provider.slug"
-        />
+        <qrcode-scanner v-if="!hasActiveRides && unlockWhitelisted" :provider="vehicle.provider.slug" />
         <div v-else>
-          <a
-            v-if="isMobileAndDeeplink('ios')"
-            :href="vehicle.provider.deepLink.ios"
-            class="open-native"
-          >
+          <a v-if="isMobileAndDeeplink('ios')" :href="vehicle.provider.deepLink.ios" class="open-native">
+            {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
+            <external-link-icon />
+          </a>
+          <a v-if="isMobileAndDeeplink('android')" :href="vehicle.provider.deepLink.android" class="open-native">
             {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
             <external-link-icon />
           </a>
           <a
-            v-if="isMobileAndDeeplink('android')"
-            :href="vehicle.provider.deepLink.android"
-            class="open-native"
-          >
-            {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
-            <external-link-icon />
-          </a>
-          <a
-            v-if="(isComputer && vehicle.provider.app.ios) || (isMobileAndDeeplink('ios', true))"
+            v-if="(isComputer && vehicle.provider.app.ios) || isMobileAndDeeplink('ios', true)"
             :href="vehicle.provider.app.ios"
           >
             <img src="../assets/ios-badge.png" alt />
           </a>
           <a
-            v-if="(isComputer && vehicle.provider.app.android) || (isMobileAndDeeplink('android', true))"
+            v-if="(isComputer && vehicle.provider.app.android) || isMobileAndDeeplink('android', true)"
             :href="vehicle.provider.app.android"
           >
             <img src="../assets/android-badge.png" alt />
@@ -196,6 +208,113 @@ export default {
       const isMobile = md.is(os === 'android' ? 'AndroidOS' : 'iOS')
       const deeplink = shouldMissingDeeplink ? !this.vehicle.provider.deepLink[os] : this.vehicle.provider.deepLink[os]
       return isMobile && deeplink
+    },
+    pricingInterval(interval) {
+      if (interval.find(p => !p.interval && !p.end)) {
+        return null // has fixed price
+      }
+
+      const prices = interval.map(p => {
+        let interval = p.interval ? p.interval : p.end - p.start
+        let unitPrice = p.price / interval
+
+        return { p, unitPrice, interval }
+      })
+
+      const sorted = [...prices].sort((a, b) => a.unitPrice - b.unitPrice)
+      const first = sorted[0]
+      const last = sorted[sorted.length - 1]
+
+      if (first.unitPrice === last.unitPrice) {
+        return {
+          price: first.p.price,
+          interval: first.p.interval
+        }
+      }
+
+      const sameInterval = !sorted.find(a => a.interval !== first.interval)
+      if (sameInterval) {
+        return {
+          min: first.p.price,
+          max: last.p.price,
+          interval: first.interval
+        }
+      }
+
+      // Not the same price, not the same interval : "starting at"
+      // min is the FIRST interval, not the MINIMUM price.
+      return {
+        min: prices[0].p.price,
+        interval: prices[0].interval
+      }
+    },
+    strIntervalMin(interval) {
+      if (interval === 1) {
+        return 'Per minute'
+      } else if (interval === 60) {
+        return 'Per hour'
+      } else if (interval === 60 * 24) {
+        return 'Per day'
+      } else if (interval % 60 === 0) {
+        return `Per ${interval / 60} hour`
+      } else {
+        return `Per ${interval} minutes`
+      }
+    },
+    strIntervalKm(interval) {
+      if (interval === 1) {
+        return 'Per km'
+      } else {
+        return `Per ${interval} km`
+      }
+    },
+    displayCurrency(price, currency) {
+      return price.toLocaleString('EN', { style: 'currency', currency, minimumFractionDigits: 0 })
+    },
+    pricingText(pricing) {
+      const parts = []
+
+      let startingAt = false
+
+      if (pricing.perMin && pricing.perMin.length) {
+        const p = this.pricingInterval(pricing.perMin)
+
+        if (!p) {
+          startingAt = true
+        } else {
+          parts.push({ text: this.strIntervalMin(p.interval), price: p.price, min: p.min, max: p.max })
+        }
+      }
+
+      if (pricing.perKm && pricing.perKm.length) {
+        const p = this.pricingInterval(pricing.perKm)
+
+        if (!p) {
+          startingAt = true
+        } else {
+          parts.push({ text: this.strIntervalMin(p.interval), price: p.price, min: p.min, max: p.max })
+        }
+      }
+
+      if (startingAt) {
+        let minPrice = pricing.unlock || 0
+
+        const firstKm = pricing.firstKm && pricing.firstKm[0] && pricing.firstKm[0].start === 0
+        if (firstKm) {
+          minPrice += pricing.firstKm[0].price
+        }
+        const firstMin = pricing.perMin && pricing.perMin[0] && pricing.perMin[0].start === 0
+        if (firstMin) {
+          minPrice += pricing.perMin[0].price
+        }
+console.error({firstMin})
+
+        parts.unshift({ text: 'Trip price', min: minPrice || 0 })
+      } else if (pricing.unlock) {
+        parts.unshift({ text: 'Unlock', price: pricing.unlock })
+      }
+
+      return parts
     }
   }
 }
@@ -296,7 +415,6 @@ $border-radius: 5px;
       .vehicle-id {
         font-size: 1.6rem;
       }
-
     }
 
     .subdetail {
@@ -318,6 +436,24 @@ $border-radius: 5px;
         font-weight: bold;
         padding: 10px 20px;
         display: flex;
+      }
+    }
+
+    .pricesdetails {
+      padding: 10px 10px;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+
+      .prices {
+        display: flex;
+
+        .column-text {
+          flex: 50%;
+        }
+        .column-price {
+          flex: 50%;
+          text-align: right;
+        }
       }
     }
   }

@@ -249,6 +249,26 @@ export default {
                   }
                   stationVehicleTypes
                 }
+                pricing {
+                  currency
+                  unlock
+                  perKm {
+                    start
+                    interval
+                    price
+                  }
+                  perMin {
+                    start
+                    interval
+                    price
+                  }
+                  perMinPause {
+                    start
+                    interval
+                    price
+                  }
+                  includeVat
+                }
                 ... on Station {
                   availableVehicles
                   availableStands
