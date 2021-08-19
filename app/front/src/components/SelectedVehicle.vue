@@ -307,7 +307,6 @@ export default {
         if (firstMin) {
           minPrice += pricing.perMin[0].price
         }
-console.error({firstMin})
 
         parts.unshift({ text: 'Trip price', min: minPrice || 0 })
       } else if (pricing.unlock) {
