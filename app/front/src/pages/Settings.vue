@@ -75,24 +75,11 @@ export default {
       window.installPromptEvent.prompt()
     },
     logoSrc(provider) {
-      if (process.env.NODE_ENV !== 'production') {
-        let logo
-
-        try {
-          logo = require(`../../../../graphics/assets/providers/${provider.slug}.jpg`)
-        } catch (e) {
-          return null
-        }
-
-        return logo
-      } else {
-        return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
-      }
+      return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
     }
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import '../app.scss';

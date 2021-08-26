@@ -11,10 +11,7 @@
             <check-icon />
           </div>
           <div v-else class="flex-container">
-            <button
-              class="btn"
-              @click="linkSubAccount(provider, true)"
-            >{{ $t('account.needLogin') }}</button>
+            <button class="btn" @click="linkSubAccount(provider, true)">{{ $t('account.needLogin') }}</button>
           </div>
         </div>
         <div v-else>
@@ -59,19 +56,7 @@ export default {
   },
   computed: {
     providerLogo() {
-      if (process.env.NODE_ENV !== 'production') {
-        let logo
-
-        try {
-          logo = require(`../../../../graphics/assets/providers/${this.provider}.jpg`)
-        } catch (e) {
-          return null
-        }
-
-        return logo
-      } else {
-        return `https://cdn.fluctuo.com/providers/${this.provider}.jpg`
-      }
+      return `https://cdn.fluctuo.com/providers/${this.provider}.jpg`
     },
     subAccount() {
       return this.$store.state.myAccount.subAccounts.find(sa => sa.provider.slug === this.provider)
@@ -116,4 +101,3 @@ export default {
   }
 }
 </style>
-

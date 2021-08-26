@@ -193,19 +193,7 @@ export default {
       return key
     },
     logoSrc(provider) {
-      if (process.env.NODE_ENV !== 'production') {
-        let logo
-
-        try {
-          logo = require(`../../../../graphics/assets/providers/${provider.slug}.jpg`)
-        } catch (e) {
-          return null
-        }
-
-        return logo
-      } else {
-        return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
-      }
+      return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
     },
     isMobileAndDeeplink(os, shouldMissingDeeplink) {
       const isMobile = md.is(os === 'android' ? 'AndroidOS' : 'iOS')
