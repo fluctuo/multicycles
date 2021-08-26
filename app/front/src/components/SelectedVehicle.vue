@@ -105,10 +105,12 @@
                 displayCurrency(price.max, vehicle.pricing.currency)
               }}
             </span>
-            <span v-else> {{ $t('cost.StartingAt') }} {{ displayCurrency(price.min || 0, vehicle.pricing.currency) }}</span>
+            <span v-else>
+              {{ $t('cost.StartingAt') }} {{ displayCurrency(price.min || 0, vehicle.pricing.currency) }}</span
+            >
           </span>
         </div>
-        <div v-if="vehicle.pricing.includeVat === false">(VAT not included)</div>
+        <div v-if="vehicle.pricing.includeVat === false">{{ $t('cost.vatExcl') }}</div>
       </div>
       <div class="subdetail" v-if="!isEmbedded">
         <qrcode-scanner v-if="!hasActiveRides && unlockWhitelisted" :provider="vehicle.provider.slug" />
@@ -160,6 +162,7 @@ export default {
   computed: {
     ...mapGetters(['isEmbedded']),
     ...mapState({
+      lang: state => state.lang,
       hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
     }),
     unlockWhitelisted: function() {
@@ -250,26 +253,22 @@ export default {
     },
     strIntervalMin(interval) {
       if (interval === 1) {
-        return this.$t('cost.perMinute')
+        return this.$tc('cost.perMinutes', 1)
       } else if (interval === 60) {
-        return this.$t('cost.perHour')
+        return this.$tc('cost.perHours', 1)
       } else if (interval === 60 * 24) {
         return this.$t('cost.perDay')
       } else if (interval % 60 === 0) {
-        return this.$t('cost.perNHours', { hours: interval / 60 })
+        return this.$tc('cost.perHours', interval / 60)
       } else {
-        return this.$t('cost.perNMinutes', { minutes: interval })
+        return this.$tc('cost.perMinutes', interval)
       }
     },
     strIntervalKm(interval) {
-      if (interval === 1) {
-        return this.$t('cost.perKm')
-      } else {
-        return this.$t('cost.perNKm', { km: interval })
-      }
+      return this.$tc('cost.perKm', interval)
     },
     displayCurrency(price, currency) {
-      return price.toLocaleString('EN', { style: 'currency', currency, minimumFractionDigits: 0 })
+      return price.toLocaleString(this.lang, { style: 'currency', currency, minimumFractionDigits: 0 })
     },
     pricingText(pricing) {
       const parts = []

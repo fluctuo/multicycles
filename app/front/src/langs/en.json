@@ -86,13 +86,11 @@
   "cost": {
     "tripPrice": "Trip price",
     "unlock": "Unlock",
-    "perMinute": "Per minute",
-    "perHour": "Per hour",
     "perDay": "Per Day",
-    "perNMinutes": "Per {{ minutes }} minutes",
-    "perNHours": "Per {{ hours }} hours",
-    "perKm": "Per km",
-    "perNKm": "Per {{ km }} km",
-    "StartingAt": "Starting at"
+    "perMinutes": "Per minute | Per {count} minutes",
+    "perHours": "Per hour | Per {count} hours",
+    "perKm": "Per km | Per {count} km",
+    "StartingAt": "Starting at",
+    "vatExcl": "VAT excl."
   }
 }
