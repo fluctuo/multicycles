@@ -16,7 +16,7 @@
     "@koa/cors": "^3.1.0",
     "apollo-link-http": "^1.5.9",
     "apollo-server": "^2.3.1",
-    "apollo-server-koa": "^2.3.1",
+    "apollo-server-koa": "^2.14.2",
     "dotenv": "^8.2.0",
     "graphql": "^15.4.0",
     "graphql-request": "^3.3.0",
