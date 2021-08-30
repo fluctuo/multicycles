@@ -82,5 +82,15 @@
     "provider": "Provider :",
     "submit": "Submit",
     "Location": "Location"
+  },
+  "cost": {
+    "tripPrice": "Trip price",
+    "unlock": "Unlock",
+    "perDay": "Per Day",
+    "perMinutes": "Per minute | Per {count} minutes",
+    "perHours": "Per hour | Per {count} hours",
+    "perKm": "Per km | Per {count} km",
+    "StartingAt": "Starting at",
+    "vatExcl": "VAT excl."
   }
 }

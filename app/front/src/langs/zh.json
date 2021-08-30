@@ -50,5 +50,15 @@
     "provider": "供应商 :",
     "submit": "提交",
     "Location": "地点"
+  },
+  "cost": {
+    "tripPrice": "Trip price",
+    "unlock": "Unlock",
+    "perDay": "Per Day",
+    "perMinutes": "Per minute | Per {count} minutes",
+    "perHours": "Per hour | Per {count} hours",
+    "perKm": "Per km | Per {count} km",
+    "StartingAt": "Starting at",
+    "vatExcl": "TVA excl."
   }
 }

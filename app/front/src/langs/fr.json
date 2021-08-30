@@ -49,5 +49,15 @@
     "provider": "Fournisseur :",
     "submit": "Soumettre",
     "Location": "Position"
+  },
+  "cost": {
+    "tripPrice": "Trajet",
+    "unlock": "Déblocage",
+    "perDay": "Par jour",
+    "perMinutes": "Par min | Par {count} mins",
+    "perHours": "Par heure | Par {count} heures",
+    "perKm": "Par km | Par {count} km",
+    "StartingAt": "A partir de",
+    "vatExcl": "TVA excl."
   }
 }

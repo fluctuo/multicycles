@@ -49,5 +49,15 @@
     "provider": "Anbieter :",
     "submit": "Absenden",
     "Location": "Lage"
+  },
+  "cost": {
+    "tripPrice": "Reisepreis",
+    "unlock": "Entsperren",
+    "perDay": "Pro tag",
+    "perMinutes": "Pro minute | Pro {count} minuten",
+    "perHours": "Pro stunde | Pro {count} stunden",
+    "perKm": "Pro km | Pro {count} kms",
+    "StartingAt": "Beginnend bei",
+    "vatExcl": "TVA excl."
   }
 }

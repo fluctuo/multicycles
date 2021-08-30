@@ -4,20 +4,22 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const db = require('./db')
 const jwt = require('jsonwebtoken')
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CONSUMER_KEY,
-      clientSecret: process.env.GOOGLE_CONSUMER_SECRET,
-      callbackURL: `${process.env.API_BASE_URL}/auth/google/callback`
-    },
-    function(accessToken, refreshToken, profile, done) {
-      db.findOrCreateUser('google_id', profile.id)
-        .then(user => done(null, user))
-        .catch(err => done(err))
-    }
+if (process.env.GOOGLE_CONSUMER_KEY) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CONSUMER_KEY,
+        clientSecret: process.env.GOOGLE_CONSUMER_SECRET,
+        callbackURL: `${process.env.API_BASE_URL}/auth/google/callback`
+      },
+      function(accessToken, refreshToken, profile, done) {
+        db.findOrCreateUser('google_id', profile.id)
+          .then(user => done(null, user))
+          .catch(err => done(err))
+      }
+    )
   )
-)
+}
 
 passport.serializeUser((user, done) => {
   done(null, user.id)

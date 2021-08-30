@@ -5,7 +5,7 @@
         <arrow-left-circle-icon />
       </a>
 
-      <h1>{{ $t('settings.title')}}</h1>
+      <h1>{{ $t('settings.title') }}</h1>
     </div>
 
     <div class="content">
@@ -13,17 +13,12 @@
         <div class="install" v-if="hasInstallPromptEvent">
           <button @click="installApp()">
             <arrow-down-circle-icon></arrow-down-circle-icon>
-            {{ $t('settings.installApp')}}
+            {{ $t('settings.installApp') }}
           </button>
         </div>
         <form>
           <label for="lang">{{ $t('settings.lang') }}:</label>
-          <select
-            v-model="$store.state.lang"
-            :class="[$store.state.lang]"
-            @change="setLang"
-            id="lang"
-          >
+          <select v-model="$store.state.lang" :class="[$store.state.lang]" @change="setLang" id="lang">
             <option v-for="lang in langs" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
           </select>
 
@@ -33,17 +28,12 @@
             <div
               v-for="provider in $store.state.providers"
               :key="provider.slug"
-              v-bind:class="{disabled: isProviderDisabled(provider.slug)}"
+              v-bind:class="{ disabled: isProviderDisabled(provider.slug) }"
               @click="toggleProvider(provider.slug)"
             >
               <a href="#" :title="provider.name">
-                <img
-                  v-if="logoSrc(provider)"
-                  :src="logoSrc(provider)"
-                  :alt="provider.name"
-                  class="logo"
-                />
-                {{ provider.name}}
+                <img v-if="logoSrc(provider)" :src="logoSrc(provider)" :alt="provider.name" class="logo" />
+                {{ provider.name }}
               </a>
             </div>
           </div>
@@ -85,24 +75,11 @@ export default {
       window.installPromptEvent.prompt()
     },
     logoSrc(provider) {
-      if (process.env.NODE_ENV !== 'production') {
-        let logo
-
-        try {
-          logo = require(`../../../../graphics/assets/providers/${provider.slug}.jpg`)
-        } catch (e) {
-          return null
-        }
-
-        return logo
-      } else {
-        return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
-      }
+      return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
     }
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import '../app.scss';
@@ -167,4 +144,3 @@ form {
   }
 }
 </style>
-
