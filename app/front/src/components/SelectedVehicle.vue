@@ -148,7 +148,7 @@ import { ExternalLinkIcon } from 'vue-feather-icons'
 import QrcodeScanner from './QrcodeScanner'
 
 const md = new MobileDetect(window.navigator.userAgent)
-const unlockWhitelist = ['lime', 'bird', 'tier', 'hive', 'circ', 'ufo', 'moow']
+const unlockWhitelist = []
 
 export default {
   components: { ExternalLinkIcon, QrcodeScanner },
