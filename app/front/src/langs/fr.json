@@ -4,10 +4,7 @@
   },
   "about": {
     "title": "À propos",
-    "one": "<a href=\"https://multicycles.org/\">Multicycles</a> est une application permettant de regrouper en un seul coup d'oeil les différents services de location de vélo (VLS, vélos en libre-service) ainsi que les autres vehicules partagés.",
-    "two": "L'utilisation de l'application est <span class=\"important\">gratuite</span> et <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
-    "three": "Lancée début 2018, peu de services sont disponibles, mais la liste augmente régulièrement.<br>Vous pouvez contacter l'initiateur du projet sur <a href=\"https://twitter.com/le_mulot\">twitter</a>",
-    "four": "Interessé par les données ? L'API est disponible sous forme de service. Plus d'info sur <a href=\"https://flow.fluctuo.com/\">https://flow.fluctuo.com/</a>"
+    "text": "<p>Multicycles est la démo technologique de l'API Data Flow de fluctuo.</p><p>Fluctuo est la startup spécialisée dans la mobilité partagé. Plus d'info sur <a href=\"https://fluctuo.com\">fluctuo.com</a>.</p><p>Retrouvez les informations sur l'API Data Flow sur <a href=\"https://flow.fluctuo.com\">flow.fluctuo.com</a>. Cette API integre les données temps-réel de plus de 200 opérateurs de mobilité partagé, partout dans le monde.</p><p>fluctuo propose à également developpé City dive, un tableau de bord de données historique. Plus d'info sur <a href=\"https://dive.fluctuo.com\">dive.fluctuo.com</a>.</p><p><a href=\"https://www.linkedin.com/company/fluctuo/\">linkedin</a> | <a href=\"https://twitter.com/fluctuo\">twitter</a></p>"
   },
   "settings": {
     "title": "Paramètres",

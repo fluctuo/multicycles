@@ -4,10 +4,7 @@
   },
   "about": {
     "title": "关于",
-    "one": "<a href=\"https://multicycles.org/\">Multicycles是一个自行车应用程序，简单明了和一目了然的地组合不同的自行车租赁服务（VLS，自助自行车）和其它共用车辆。",
-    "two": "该应用程序的使用是 <span class=\"important\">免费</span> et <span class=\"important\">open-source</span> (<a href=\"https://github.com/PierrickP/multicycles\">https://github.com/PierrickP/multicycles</a>)",
-    "three": "2018年初推出的服务很少，但是名单正在逐步稳定的增长 .<br>您可以联系项目的发起人<a href=\"https://twitter.com/le_mulot\">twitter</a>",
-    "four": "对数据感兴趣吗？ L'API可作为您提供服务。 想要获得更多信息如下<a href=\"https://flow.fluctuo.com/\">https://flow.fluctuo.com/</a>"
+    "text": "<p>Multicycles is the technology demo of fluctuo's Data Flow API.</p><p>Fluctuo is the startup specialized in shared mobility. More info on <a href=\"https://fluctuo.com\">fluctuo.com</a>.</p><p>Find out more about the Data Flow API on <a href=\"https://flow.fluctuo.com\">flow.fluctuo.com</a>. This API integrates real-time data from over 200 shared mobility operators around the world.</p><p>fluctuo also developed, City Dive, a historical data dashboard. More info on <a href=\"https://dive.fluctuo.com\">dive.fluctuo.com</a>.</p><p><a href=\"https://www.linkedin.com/company/fluctuo/\">linkedin</a> | <a href=\"https://twitter.com/fluctuo\">twitter</a></p>"
   },
   "settings": {
     "title": "参数",
