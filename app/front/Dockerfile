@@ -1,4 +1,4 @@
-FROM node:lts as build-stage
+FROM node:14-alpine as build-stage
 WORKDIR /app
 ARG MODE=production
 ENV MODE=${MODE}

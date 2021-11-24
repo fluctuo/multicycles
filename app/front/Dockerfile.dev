@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:14-alpine
 WORKDIR /app/front
 
 COPY package*.json .
