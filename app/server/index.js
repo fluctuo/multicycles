@@ -57,9 +57,21 @@ app.use((ctx, next) => {
 
 passport(app)
 
+const customFetch = (uri, options) => {
+  const start = new Date()
+  return fetch(uri, options).then(async resp => {
+    if (resp.status === 502) {
+      console.log('RETRY', Date.now() - start, resp.headers)
+      return customFetch(uri, options)
+    }
+
+    return resp
+  })
+}
+
 const multicyclesPrivateLink = new HttpLink({
   uri: `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
-  fetch
+  fetch: customFetch
 })
 
 async function init() {
@@ -119,6 +131,9 @@ async function init() {
           user
         }
       }
+    },
+    formatError(err) {
+      console.log(require('util').inspect(err, { depth: null, colors: true }))
     }
   })
 
