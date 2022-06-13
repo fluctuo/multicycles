@@ -49,6 +49,8 @@ export default {
         this.login()
       }
       this.isLoging = false
+    } else {
+      this.isLoging = false
     }
   },
   data() {

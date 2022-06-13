@@ -65,7 +65,8 @@ const getters = {
   enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider)),
   page: state => state.page,
   drawerEnable: state => state.drawerEnable,
-  isEmbedded: state => state.embedded
+  isEmbedded: state => state.embedded,
+  hasSeamlessSubaccount: state => provider => state.myAccount.subAccounts.find(sub => sub.provider.slug === provider)
 }
 
 const actions = {
@@ -136,101 +137,141 @@ const actions = {
           fetchPolicy: 'no-cache',
           query: gql`
             query {
-              getMyAccount {
-                id
-                name
-                subAccounts {
-                  puid
-                  status
-                  provider {
-                    name
-                    slug
-                  }
-                }
-              }
+              getMyAccount
             }
           `
         })
         .then(result => {
           commit('setMyAccount', result.data.getMyAccount)
-          return dispatch('getActiveRides')
+          return dispatch('getActiveTrip')
         })
     }
   },
-  getActiveRides({ commit }) {
+  getActiveTrip({ commit }) {
     if (localStorage.getItem('token')) {
       return apolloProvider.defaultClient
         .query({
           query: gql`
             query {
-              getMyActiveRides {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
+              getMyActiveTrip
             }
           `
         })
         .then(result => {
-          commit('setActiveRides', result.data.getMyActiveRides)
+          commit('setActiveTrip', result.data.getMyActiveTrip)
         })
     }
   },
-  startMyRide({ commit, state }, { token, provider }) {
+  startMyTrip({ commit, state }, { token, vehicleId, provider }) {
+    if (localStorage.getItem('token')) {
+      if (vehicleId) {
+        return apolloProvider.defaultClient
+          .query({
+            query: gql`
+              query vehicle($id: String, $code: String, $provider: String, $lat: Float!, $lng: Float!) {
+                vehicle(id: $id, code: $code, provider: $provider, lat: $lat, lng: $lng) {
+                  id
+                  type
+                  publicId
+                  lat
+                  lng
+                  battery
+                  provider {
+                    name
+                  }
+                  actions {
+                    unlock {
+                      available
+                      metadata
+                    }
+                  }
+                }
+              }
+            `,
+            variables: {
+              lat: state.geolocation[0],
+              lng: state.geolocation[1],
+              id: vehicleId,
+              provider
+            }
+          })
+          .then(result => {
+            if (result.data?.vehicle?.actions?.unlock?.available) {
+              return apolloProvider.defaultClient
+                .mutate({
+                  mutation: gql`
+                    mutation(
+                      $provider: String!
+                      $metadata: String
+                      $vehicleId: String
+                      $token: String
+                      $lat: Float!
+                      $lng: Float!
+                    ) {
+                      startMyTrip(
+                        provider: $provider
+                        metadata: $metadata
+                        vehicleId: $vehicleId
+                        token: $token
+                        lat: $lat
+                        lng: $lng
+                      )
+                    }
+                  `,
+                  variables: {
+                    provider,
+                    vehicleId,
+                    metadata: result.data.vehicle.actions.unlock.metadata,
+                    lat: state.geolocation[0],
+                    lng: state.geolocation[1]
+                  }
+                })
+                .then(result => {
+                  commit('setActiveTrip', [result.data.startMyTrip])
+                })
+            } else {
+              alert('This vehicle can not be unlocked')
+            }
+          })
+      } else {
+        return apolloProvider.defaultClient
+          .mutate({
+            mutation: gql`
+              mutation($provider: String!, $token: String, $lat: Float!, $lng: Float!) {
+                startMyTrip(provider: $provider, token: $token, lat: $lat, lng: $lng)
+              }
+            `,
+            variables: {
+              token,
+              provider,
+              lat: state.geolocation[0],
+              lng: state.geolocation[1]
+            }
+          })
+          .then(result => {
+            commit('setActiveTrip', [result.data.startMyTrip])
+          })
+      }
+    }
+  },
+  stopMyTrip({ commit, state }, { tripId, provider }) {
     if (localStorage.getItem('token')) {
       return apolloProvider.defaultClient
         .mutate({
           mutation: gql`
-            mutation($provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
-              startMyRide(provider: $provider, token: $token, lat: $lat, lng: $lng) {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
+            mutation($tripId: String!, $provider: String!, $lat: Float!, $lng: Float!) {
+              stopMyTrip(tripId: $tripId, provider: $provider, lat: $lat, lng: $lng)
             }
           `,
           variables: {
-            token,
+            tripId,
             provider,
             lat: state.geolocation[0],
             lng: state.geolocation[1]
           }
         })
-        .then(result => {
-          commit('setActiveRides', [result.data.startMyRide])
-        })
-    }
-  },
-  stopMyRide({ commit, state }, rideId) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .mutate({
-          mutation: gql`
-            mutation($rideId: String!, $lat: Float!, $lng: Float!) {
-              stopMyRide(rideId: $rideId, lat: $lat, lng: $lng) {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
-            }
-          `,
-          variables: {
-            rideId,
-            lat: state.geolocation[0],
-            lng: state.geolocation[1]
-          }
-        })
         .then(() => {
-          commit('setActiveRides', null)
+          commit('setActiveTrip', null)
         })
     }
   },
@@ -301,6 +342,32 @@ const actions = {
         lng: state.geolocation[1]
       }
     })
+  },
+  createSubAccount({ commit }, { provider }) {
+    console.log('ICI', provider)
+    return apolloProvider.defaultClient
+      .mutate({
+        fetchPolicy: 'no-cache',
+        mutation: gql`
+          mutation($provider: String!) {
+            createSubAccount(provider: $provider) {
+              id
+              name
+              subAccounts {
+                provider {
+                  name
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          provider
+        }
+      })
+      .then(result => {
+        commit('setMyAccount', result.data.createSubAccount)
+      })
   }
 }
 
@@ -361,7 +428,7 @@ const mutations = {
   setMyAccount(state, myAccount) {
     Vue.set(state, 'myAccount', myAccount)
   },
-  setActiveRides(state, rides) {
+  setActiveTrip(state, rides) {
     state.activeRides = rides
   },
   setRoundedLocation(state, center) {

@@ -113,7 +113,20 @@
         <div v-if="vehicle.pricing.includeVat === false">{{ $t('cost.vatExcl') }}</div>
       </div>
       <div class="subdetail" v-if="!isEmbedded">
-        <qrcode-scanner v-if="!hasActiveRides && unlockWhitelisted" :provider="vehicle.provider.slug" />
+        <template v-if="!hasActiveRides && unlockWhitelisted">
+          <a
+            v-if="hasSeamlessSubaccount(vehicle.provider.slug)"
+            @click="
+              startMyTrip({
+                provider: vehicle.provider.slug,
+                vehicleId: vehicle.id
+              })
+            "
+            class="scan-button"
+            >Unlock
+          </a>
+          <qrcode-scanner v-else :provider="vehicle.provider.slug" />
+        </template>
         <div v-else>
           <a v-if="isMobileAndDeeplink('ios')" :href="vehicle.provider.deepLink.ios" class="open-native">
             {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
@@ -148,7 +161,7 @@ import { ExternalLinkIcon } from 'vue-feather-icons'
 import QrcodeScanner from './QrcodeScanner'
 
 const md = new MobileDetect(window.navigator.userAgent)
-const unlockWhitelist = []
+const unlockWhitelist = ['voi']
 
 export default {
   components: { ExternalLinkIcon, QrcodeScanner },
@@ -160,7 +173,7 @@ export default {
     isComputer: md.phone() === null && md.tablet() === null
   }),
   computed: {
-    ...mapGetters(['isEmbedded']),
+    ...mapGetters(['isEmbedded', 'hasSeamlessSubaccount']),
     ...mapState({
       lang: state => state.lang,
       hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
@@ -170,7 +183,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['selectVehicle']),
+    ...mapActions(['selectVehicle', 'startMyTrip']),
     getVehicleTypeKey(vehicle) {
       let key = `vehicleType.${vehicle.type}`
 
@@ -441,6 +454,26 @@ $border-radius: 5px;
           text-align: right;
         }
       }
+    }
+  }
+
+  .scan-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    border-radius: 50px;
+    color: $mainColor !important;
+    margin: 10px 0;
+    font-size: 2em;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: inset 0 0 5px 1px #afafaf;
     }
   }
 }

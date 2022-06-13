@@ -11,6 +11,12 @@
         </a>
       </li>
       <li>
+        <a @click="moveToPage('account')">
+          <user-icon />
+          &nbsp;{{ $t('settings.account') }}
+        </a>
+      </li>
+      <li>
         <a @click="moveToPage('settings')">
           <settings-icon />
           &nbsp;{{ $t('settings.title') }}
@@ -28,13 +34,14 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { GlobeIcon, SettingsIcon, InfoIcon } from 'vue-feather-icons'
+import { GlobeIcon, SettingsIcon, InfoIcon, UserIcon } from 'vue-feather-icons'
 
 export default {
   components: {
     GlobeIcon,
     SettingsIcon,
-    InfoIcon
+    InfoIcon,
+    UserIcon
   },
   methods: {
     ...mapMutations(['setPage']),

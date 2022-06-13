@@ -13,7 +13,7 @@ if (process.env.GOOGLE_CONSUMER_KEY) {
         callbackURL: `${process.env.API_BASE_URL}/auth/google/callback`
       },
       function(accessToken, refreshToken, profile, done) {
-        db.findOrCreateUser('google_id', profile.id)
+        db.findOrCreateUser('google_id', profile.id, profile)
           .then(user => done(null, user))
           .catch(err => done(err))
       }
@@ -36,7 +36,12 @@ module.exports = app => {
 
   app.use(passport.initialize())
 
-  router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }))
+  router.get(
+    '/auth/google',
+    passport.authenticate('google', {
+      scope: ['profile', 'email', 'https://www.googleapis.com/auth/user.phonenumbers.read']
+    })
+  )
 
   router.get(
     '/auth/google/callback',

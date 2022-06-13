@@ -1,11 +1,9 @@
 <template>
   <div style="width: 100%">
-    <a @click="showScannerModal = true" class="scan-button">
-      <camera-icon/>Unlock
-    </a>
+    <a @click="showScannerModal = true" class="scan-button"> <camera-icon />Unlock </a>
 
     <transition name="modal">
-      <div v-if="showScannerModal" class="modal-mask" @click="showScannerModal= false">
+      <div v-if="showScannerModal" class="modal-mask" @click="showScannerModal = false">
         <div class="modal-wrapper">
           <div class="modal-container" @click.stop>
             <div class="modal-body">
@@ -60,7 +58,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['startMyRide']),
+    ...mapActions(['startMyTrip']),
     onDecode(decoded) {
       this.paused = true
       this.validating = true
@@ -72,7 +70,7 @@ export default {
           return this.$router.push({ name: 'account' })
         }
 
-        this.startMyRide({
+        this.startMyTrip({
           provider: this.provider,
           token: decoded
         })
@@ -120,7 +118,7 @@ export default {
   }
 
   &:hover {
-    box-shadow: inset 0 0 5px 1px #afafaf
+    box-shadow: inset 0 0 5px 1px #afafaf;
   }
 }
 
@@ -129,7 +127,7 @@ export default {
   width: 100%;
   height: 100%;
 
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 10px;
 
@@ -194,5 +192,3 @@ export default {
   transform: scale(1.1);
 }
 </style>
-
-

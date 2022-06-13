@@ -15,7 +15,7 @@
           </div>
         </div>
         <div v-else>
-          <button class="btn" @click="linkSubAccount(provider)">{{ $t('account.login') }}</button>
+          <button class="btn" @click="createSubAccount(provider)">Create SEAMLESS</button>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@ import { CheckIcon } from 'vue-feather-icons'
 import LinkSubaccountModal from './LinkSubaccountModal'
 
 export default {
-  name: 'MyAccount',
+  name: 'MySubAccount',
   props: {
     provider: {
       type: String,
@@ -72,6 +72,9 @@ export default {
       }
       this.providerLinkSubAccountModal = provider
       this.showLinkSubAccountModal = true
+    },
+    createSubAccount() {
+      this.$store.dispatch('createSubAccount', { provider: this.provider })
     }
   }
 }

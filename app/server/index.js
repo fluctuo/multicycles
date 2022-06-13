@@ -87,6 +87,7 @@ async function init() {
       return [
         'providers',
         'vehicles',
+        'vehicle',
         'zones',
         'missingProvider',
         'linkSubAccount',
@@ -139,7 +140,7 @@ async function init() {
 
   server.applyMiddleware({ app })
 
-  app.listen({ port: 3001 }, () => console.log(`🚀 Server ready at http://localhost:3001${server.graphqlPath}`))
+  app.listen({ port: 4001 }, () => console.log(`🚀 Server ready at http://localhost:4001${server.graphqlPath}`))
 }
 
 init()

@@ -11,7 +11,7 @@
             <p>{{ startFromNow }}</p>
             <button class="btn--success" :disabled="stoping" @click="stop()">
               Stop ride
-              <loader-icon v-if="stoping" class="spinner"/>
+              <loader-icon v-if="stoping" class="spinner" />
             </button>
           </div>
         </div>
@@ -65,7 +65,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login', 'stopMyRide']),
+    ...mapActions(['login', 'stopMyTrip']),
     startUpdater() {
       this.updater = setInterval(() => {
         const seconds = new Date().valueOf() / 1000 - this.activeRide.startedAt
@@ -80,7 +80,7 @@ export default {
 
     stop() {
       this.stoping = true
-      this.stopMyRide(this.activeRide.id)
+      this.stopMyTrip({ tripId: this.activeRide.id, provider: this.activeRide.provider.slug })
         .then(() => {
           this.stoping = false
           return this.$emit('close')
@@ -99,15 +99,15 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
-  text-align: center
+  text-align: center;
 }
 
 .modal-container {
@@ -117,8 +117,8 @@ export default {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 
   color: #000;
@@ -159,7 +159,9 @@ button {
 }
 
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {
@@ -167,4 +169,3 @@ button {
   animation: spinner 4s linear infinite;
 }
 </style>
-

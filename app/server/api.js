@@ -1,15 +1,43 @@
 const { request } = require('graphql-request')
 
-function createAccount() {
+function createAccount({ firstName, lastName, email, phone }) {
   return request(
     `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
     `
-    mutation createAccount {
-      createAccount {
+    mutation(
+      $firstName:String!,
+      $lastName:String!,
+      $email:String!,
+      $phone:String!,
+      $externalId:String
+    ){
+      createAccount(
+        firstName:$firstName,
+        lastName:$lastName,
+        email:$email,
+        phone:$phone,
+        externalId:$externalId
+      ) {
         id
+        firstName
+        lastName
+        phone
+        email
+        subAccounts {
+          id
+          type
+          status
+          provider {
+            name
+          }
+          hasPaymentMethod
+          referralCode
+          createdAt
+        }
       }
     }
-  `
+  `,
+    { firstName, lastName, email, phone }
   )
 }
 
@@ -17,24 +45,24 @@ function getAccount(accountId) {
   return request(
     `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
     `
-    query getAccount($accountId: String!) {
+    query($accountId: String){
       getAccount(accountId: $accountId) {
         id
-        name
+        externalId
+        firstName
+        lastName
+        phone
         email
         subAccounts {
-          puid
+          id
+          type
           status
           provider {
-            name
             slug
           }
-          name
-          phone
           hasPaymentMethod
           referralCode
           createdAt
-          refreshedAt
         }
       }
     }
@@ -45,20 +73,67 @@ function getAccount(accountId) {
   )
 }
 
-function getActiveRides(accountId) {
+function createSubAccount(accountId, provider) {
+  console.log('createSubAccount', accountId, provider)
+
   return request(
     `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
     `
-    query getRides($accountId: String!) {
-      getRides(accountId: $accountId, status: ["riding"], limit: 2) {
+    mutation(
+      $accountId: String!,
+      $provider: String!
+    ) {
+      createSubAccount(
+      accountId: $accountId,
+      acceptTerms: true,
+      type: SEAMLESS,
+      provider: $provider
+    ) {
+      message {
+        key
+        text
+        type
+      }
+      subAccount {
+        id
+        provider { name }
+        status
+        type
+      }
+    }
+  }
+`,
+    {
+      accountId,
+      provider
+    }
+  )
+}
+
+function getActiveTrip(accountId) {
+  return request(
+    `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
+    `
+    query ($accountId: String!){
+      getTrips(accountId: $accountId, status: "riding"){
+        page
+        limit
         total
         nodes {
           id
-          startedAt
+          vehicleFriendlyId
           provider {
             name
             slug
           }
+          status
+          startedAt
+          startLocation { lat lng }
+          completedAt
+          completedLocation { lat lng }
+          cost
+          currency
+          distance
         }
       }
     }
@@ -69,17 +144,43 @@ function getActiveRides(accountId) {
   )
 }
 
-function startRide(accountId, { provider, token, lat, lng }) {
+function startTrip(accountId, { provider, vehicleId, metadata, lat, lng }) {
   return request(
     `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
     `
-    mutation startRide($accountId: String!, $provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
-      startRide(accountId: $accountId, provider: $provider, token: $token, lat: $lat, lng: $lng) {
-        id
-        startedAt
-        provider {
-          name
-          slug
+    mutation(
+      $accountId: String!,
+      $provider: String!,
+      $lat: Float!,
+      $lng: Float!,
+      $vehicleId: String!,
+      $metadata: String,
+      $externalId: String
+    ) {
+      startTrip(
+        accountId: $accountId,
+        provider: $provider
+        lat: $lat,
+        lng: $lng,
+        vehicleId: $vehicleId,
+        metadata: $metadata,
+        externalId: $externalId
+      ) {
+        message {
+          key
+          text
+          type
+        }
+        trip {
+          id
+          provider { name slug }
+          status
+          cost
+          currency
+          startedAt
+          startLocation { lat lng }
+          completedAt
+          completedLocation { lat lng }
         }
       }
     }
@@ -87,33 +188,56 @@ function startRide(accountId, { provider, token, lat, lng }) {
     {
       accountId,
       provider,
-      token,
+      vehicleId,
+      metadata,
       lat,
       lng
     }
   )
 }
 
-function stopRide(accountId, { rideId, lat, lng }) {
+function stopRide(accountId, { provider, lat, lng, tripId }) {
   return request(
     `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
     `
-    mutation stopRide($accountId: String!, $rideId: String!, $lat: Float!, $lng: Float!) {
-      stopRide(accountId: $accountId, rideId: $rideId, lat: $lat, lng: $lng) {
-        id
-        startedAt
-        provider {
-          name
-          slug
+    mutation(
+      $accountId: String!,
+      $tripId: String!,
+      $lat: Float!,
+      $lng: Float!
+    ) {
+      stopTrip(
+        accountId: $accountId,
+        tripId: $tripId
+        lat: $lat,
+        lng: $lng
+      ) {
+        message {
+          key
+          text
+          type
+        }
+        trip {
+          id
+          provider { name slug }
+          status
+          cost
+          currency
+          startedAt
+          startLocation { lat lng }
+          completedAt
+          completedLocation { lat lng }
         }
       }
-    }
+  }
+
   `,
     {
       accountId,
-      rideId,
+      provider,
       lat,
-      lng
+      lng,
+      tripId
     }
   )
 }
@@ -122,7 +246,8 @@ module.exports = {
   request,
   createAccount,
   getAccount,
-  getActiveRides,
-  startRide,
+  createSubAccount,
+  getActiveTrip,
+  startTrip,
   stopRide
 }
