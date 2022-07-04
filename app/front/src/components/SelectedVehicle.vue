@@ -113,19 +113,9 @@
         <div v-if="vehicle.pricing.includeVat === false">{{ $t('cost.vatExcl') }}</div>
       </div>
       <div class="subdetail" v-if="!isEmbedded">
-        <template v-if="!hasActiveRides && unlockWhitelisted">
-          <a
-            v-if="hasSeamlessSubaccount(vehicle.provider.slug)"
-            @click="
-              startMyTrip({
-                provider: vehicle.provider.slug,
-                vehicleId: vehicle.id
-              })
-            "
-            class="scan-button"
-            >Unlock
-          </a>
-          <qrcode-scanner v-else :provider="vehicle.provider.slug" />
+        <template v-if="hasSeamlessSubaccount(vehicle.provider.slug) && !hasActiveTrips">
+          <a v-if="canUnlock" @click="startTrip({ vehicle })" class="scan-button">Unlock </a>
+          <qrcode-scanner v-else :provider="vehicle.provider.slug" :lat="vehicle.lat" :lng="vehicle.lng" />
         </template>
         <div v-else>
           <a v-if="isMobileAndDeeplink('ios')" :href="vehicle.provider.deepLink.ios" class="open-native">
@@ -150,6 +140,7 @@
           </a>
         </div>
       </div>
+      <div v-if="errorMessage">Error: {{ errorMessage }}</div>
     </div>
   </div>
 </template>
@@ -158,10 +149,12 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 import MobileDetect from 'mobile-detect'
 import { ExternalLinkIcon } from 'vue-feather-icons'
+import gql from 'graphql-tag'
+
 import QrcodeScanner from './QrcodeScanner'
 
 const md = new MobileDetect(window.navigator.userAgent)
-const unlockWhitelist = ['voi']
+const unlockWhitelist = ['tier']
 
 export default {
   components: { ExternalLinkIcon, QrcodeScanner },
@@ -170,20 +163,32 @@ export default {
     detail: false,
     isAndroid: md.is('AndroidOS'),
     isiOs: md.is('iOS'),
-    isComputer: md.phone() === null && md.tablet() === null
+    isComputer: md.phone() === null && md.tablet() === null,
+    errorMessage: null,
+    errorTimeout: null,
+    getStripeInformation: {}
   }),
   computed: {
     ...mapGetters(['isEmbedded', 'hasSeamlessSubaccount']),
     ...mapState({
       lang: state => state.lang,
-      hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
+      hasActiveTrips: state => !!(state.activeTrips && state.activeTrips.length)
     }),
     unlockWhitelisted: function() {
       return unlockWhitelist.includes(this.vehicle.provider.slug)
+    },
+    canUnlock: function() {
+      if (this.hasActiveTrips) {
+        return false
+      }
+
+      const vehicle = this.vehicle
+
+      return vehicle && vehicle.actions && vehicle.actions.unlock && vehicle.actions.unlock.available
     }
   },
   methods: {
-    ...mapActions(['selectVehicle', 'startMyTrip']),
+    ...mapActions(['selectVehicle', 'startMyTrip', 'getVehicle', 'getCompletedTrips']),
     getVehicleTypeKey(vehicle) {
       let key = `vehicleType.${vehicle.type}`
 
@@ -314,6 +319,53 @@ export default {
       }
 
       return parts
+    },
+    async startTrip(vehicle) {
+      try {
+        await this.startMyTrip(vehicle)
+      } catch (error) {
+        if (error.paymentIntent) {
+          const { stripePublishableKey, stripeAccountId } = this.getStripeInformation
+
+          const stripe = window.Stripe(stripePublishableKey, {
+            stripeAccount: stripeAccountId
+          })
+
+          const res = await stripe.confirmCardPayment(error.paymentIntent.clientSecret)
+
+          this.getCompletedTrips()
+
+          if (res.error) {
+            this.displayError(res.error)
+          } else {
+            await this.startMyTrip(vehicle)
+          }
+          return
+        }
+
+        this.displayError(error)
+      }
+    },
+    displayError(error) {
+      console.error(error)
+
+      if (this.errorTimeout) {
+        clearTimeout(this.errorTimeout)
+      }
+
+      this.errorMessage = error.message
+      this.errorTimeout = setTimeout(() => {
+        this.errorMessage = null
+      }, 4000)
+    }
+  },
+  apollo: {
+    getStripeInformation: {
+      query: gql`
+        query getStripeInformation {
+          getStripeInformation
+        }
+      `
     }
   }
 }

@@ -38,7 +38,7 @@ export default {
     QrcodeStream,
     CameraIcon
   },
-  props: ['provider'],
+  props: ['provider', 'lat', 'lng'],
   data() {
     return {
       paused: false,
@@ -47,42 +47,24 @@ export default {
       showScannerModal: false
     }
   },
-  computed: {
-    isLogged() {
-      return this.$store.state.myAccount
-    },
-    subAccountProviders() {
-      return this.$store.state.myAccount && this.$store.state.myAccount.subAccounts
-        ? this.$store.state.myAccount.subAccounts.map(sa => sa.provider.slug)
-        : []
-    }
-  },
+  computed: {},
   methods: {
-    ...mapActions(['startMyTrip']),
-    onDecode(decoded) {
+    ...mapActions(['getVehicle', 'selectVehicle']),
+    async onDecode(decoded) {
       this.paused = true
       this.validating = true
 
       if (decoded) {
-        if (!this.isLogged || !this.subAccountProviders.includes(this.provider)) {
-          this.paused = false
-          this.showScannerModal = false
-          return this.$router.push({ name: 'account' })
-        }
+        this.isValid = true
+        this.validating = false
+        this.paused = false
+        this.showScannerModal = false
 
-        this.startMyTrip({
-          provider: this.provider,
-          token: decoded
-        })
-          .then(() => {
-            this.paused = false
-            this.showScannerModal = false
-          })
-          .catch(() => {
-            this.isValid = false
-            this.validating = false
-            this.paused = false
-          })
+        const v = await this.getVehicle({ provider: this.provider, code: decoded, lat: this.lat, lng: this.lng })
+
+        if (v) {
+          return this.selectVehicle(v, { refresh: false })
+        }
       } else {
         this.isValid = false
         this.validating = false

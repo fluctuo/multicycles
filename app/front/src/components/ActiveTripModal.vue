@@ -4,13 +4,16 @@
       <div class="modal-wrapper">
         <div class="modal-container" @click.stop>
           <div class="modal-header">
-            <h3>{{ $t('ActiveRideModal.header') }}</h3>
+            <h3>
+              {{ $t('ActiveTripModal.header') }}{{ activeTrip.provider.name }} {{ tripIcon
+              }}{{ activeTrip.vehicleFriendlyId }}
+            </h3>
           </div>
 
           <div class="modal-body">
             <p>{{ startFromNow }}</p>
             <button class="btn--success" :disabled="stoping" @click="stop()">
-              Stop ride
+              Stop trip
               <loader-icon v-if="stoping" class="spinner" />
             </button>
           </div>
@@ -23,6 +26,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { LoaderIcon } from 'vue-feather-icons'
+import gql from 'graphql-tag'
 
 function fancyTimeFormat(time) {
   // Hours, minutes and seconds
@@ -42,12 +46,12 @@ function fancyTimeFormat(time) {
   return ret
 }
 export default {
-  name: 'ActiveRideModal',
+  name: 'ActiveTripModal',
   components: {
     LoaderIcon
   },
   data() {
-    return { startFromNow: 0, stoping: false }
+    return { startFromNow: 0, stoping: false, getStripeInformation: {} }
   },
   mounted() {
     this.startUpdater()
@@ -56,19 +60,32 @@ export default {
     this.stopUpdater()
   },
   created() {
-    const seconds = new Date().valueOf() / 1000 - this.activeRide.startedAt
+    const seconds = new Date().valueOf() / 1000 - this.activeTrip.startedAt
     this.startFromNow = fancyTimeFormat(seconds)
   },
   computed: {
-    activeRide() {
-      return this.$store.state.activeRides[0]
+    activeTrips() {
+      return this.$store.state.activeTrips || []
+    },
+    activeTrip() {
+      return this.activeTrips[0]
+    },
+    tripIcon() {
+      return (
+        {
+          CAR: '🚗',
+          BIKE: '🚲',
+          SCOOTER: '🛴',
+          MOTORSCOOTER: '🛵'
+        }[this.activeTrip.vehicleType] || this.activeTrip.vehicleType
+      )
     }
   },
   methods: {
-    ...mapActions(['login', 'stopMyTrip']),
+    ...mapActions(['login', 'stopMyTrip', 'getActiveTrips', 'getCompletedTrips']),
     startUpdater() {
       this.updater = setInterval(() => {
-        const seconds = new Date().valueOf() / 1000 - this.activeRide.startedAt
+        const seconds = new Date().valueOf() / 1000 - this.activeTrip.startedAt
         this.startFromNow = fancyTimeFormat(seconds)
       }, 1000)
     },
@@ -78,14 +95,38 @@ export default {
       this.updater = null
     },
 
-    stop() {
+    async stop() {
       this.stoping = true
-      this.stopMyTrip({ tripId: this.activeRide.id, provider: this.activeRide.provider.slug })
-        .then(() => {
+      await this.stopMyTrip({ tripId: this.activeTrip.id, provider: this.activeTrip.provider.slug })
+        .then(async res => {
+          this.getActiveTrips()
+          this.getCompletedTrips()
+
+          if (res.paymentIntent && res.paymentIntent.status === 'requires_action') {
+            const { stripePublishableKey, stripeAccountId } = this.getStripeInformation
+
+            const stripe = window.Stripe(stripePublishableKey, {
+              stripeAccount: stripeAccountId
+            })
+
+            await stripe.confirmCardPayment(res.paymentIntent.clientSecret)
+
+            this.getCompletedTrips()
+          }
+
           this.stoping = false
           return this.$emit('close')
         })
         .catch(() => (this.stoping = false))
+    }
+  },
+  apollo: {
+    getStripeInformation: {
+      query: gql`
+        query getStripeInformation {
+          getStripeInformation
+        }
+      `
     }
   }
 }

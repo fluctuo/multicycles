@@ -43,25 +43,21 @@ module.exports = app => {
     })
   )
 
-  router.get(
-    '/auth/google/callback',
-
-    function(ctx, next) {
-      return passport.authenticate(
-        'google',
-        { session: false, failureRedirect: `${process.env.FRONT_BASE_URL}/login` },
-        function(err, user, info) {
-          if (user === false) {
-            ctx.status = 401
-            ctx.body = { success: false }
-          } else {
-            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1y' })
-            ctx.redirect(`${process.env.FRONT_BASE_URL}/?jwt=${token}`)
-          }
+  router.get('/auth/google/callback', function(ctx, next) {
+    return passport.authenticate(
+      'google',
+      { session: false, failureRedirect: `${process.env.FRONT_BASE_URL}/login` },
+      function(err, user, info) {
+        if (err || user === false) {
+          ctx.status = 401
+          ctx.body = { success: false }
+        } else {
+          const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1y' })
+          ctx.redirect(`${process.env.FRONT_BASE_URL}/?jwt=${token}`)
         }
-      )(ctx, next)
-    }
-  )
+      }
+    )(ctx, next)
+  })
 
   app.use(router.routes()).use(router.allowedMethods())
 }

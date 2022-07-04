@@ -9,7 +9,7 @@
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
       <fluctuo-banner v-if="page === 'home'" />
-      <active-ride />
+      <active-trip />
       <search v-if="page === 'search'" />
       <settings v-else-if="page === 'settings'" />
       <about v-else-if="page === 'about'" />
@@ -27,7 +27,7 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import queryString from 'query-string'
 import DrawerMenu from './components/DrawerMenu'
-import ActiveRide from './components/ActiveRide'
+import ActiveTrip from './components/ActiveTrip'
 import FluctuoBanner from './components/FluctuoBanner'
 
 import Home from '@/pages/Home'
@@ -41,7 +41,7 @@ export default {
   name: 'app',
   components: {
     DrawerMenu,
-    ActiveRide,
+    ActiveTrip,
     Home,
     Search,
     Settings,

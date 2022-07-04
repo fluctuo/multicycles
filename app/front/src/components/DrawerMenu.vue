@@ -10,7 +10,7 @@
           &nbsp;{{ $t('home.map') }}
         </a>
       </li>
-      <li>
+      <li v-if="showAccount">
         <a @click="moveToPage('account')">
           <user-icon />
           &nbsp;{{ $t('settings.account') }}
@@ -36,12 +36,27 @@
 import { mapMutations } from 'vuex'
 import { GlobeIcon, SettingsIcon, InfoIcon, UserIcon } from 'vue-feather-icons'
 
+import queryString from 'query-string'
+
 export default {
   components: {
     GlobeIcon,
     SettingsIcon,
     InfoIcon,
     UserIcon
+  },
+  computed: {
+    showAccount: function() {
+      if (window.location.search) {
+        const params = queryString.parse(window.location.search)
+
+        if (params.debug) {
+          return true
+        }
+      }
+
+      return this.$store.state.myAccount
+    }
   },
   methods: {
     ...mapMutations(['setPage']),

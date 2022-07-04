@@ -98,4 +98,8 @@ export default {
   display: block;
   animation: spinner 4s linear infinite;
 }
+
+.inner-content {
+  max-width: 50% !important;
+}
 </style>

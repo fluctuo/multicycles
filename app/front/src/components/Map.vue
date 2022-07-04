@@ -35,7 +35,7 @@
         />
 
         <l-marker
-          v-for="vehicle in vehicles"
+          v-for="vehicle in vehicles || []"
           :lat-lng="[vehicle.lat, vehicle.lng]"
           :icon="getIconByProvider(vehicle)"
           :key="vehicle.id"
@@ -43,7 +43,7 @@
         ></l-marker>
 
         <l-geo-json
-          v-for="zone in activeRideOrSelectedVehicle(zones)"
+          v-for="zone in activeTripOrSelectedVehicle(zones)"
           :geojson="zone.geojson"
           :key="zone.id"
           :options="getZoneStyle(zone.types)"
@@ -120,7 +120,7 @@ export default {
     }
   },
   computed: mapState({
-    hasActiveRides: state => !!(state.activeRides && state.activeRides.length),
+    hasActiveTrips: state => !!(state.activeTrips && state.activeTrips.length),
     center: state => state.map.center,
     excludeProviders: state => state.disabledProviders,
     roundedLocation: state => state.roundedLocation,
@@ -193,9 +193,9 @@ export default {
     reloadVehicules() {
       this.$apollo.queries.vehicles.refetch()
     },
-    activeRideOrSelectedVehicle(zones) {
-      const provider = this.hasActiveRides
-        ? this.$store.state.activeRides[0].provider.slug
+    activeTripOrSelectedVehicle(zones) {
+      const provider = this.hasActiveTrips
+        ? this.$store.state.activeTrips[0].provider.slug
         : this.$store.state.selectedVehicle
         ? this.$store.state.selectedVehicle.provider.slug
         : null
@@ -289,9 +289,6 @@ export default {
         },
         variables() {
           return { lat: this.roundedLocation[0], lng: this.roundedLocation[1], excludeProviders: this.excludeProviders }
-        },
-        update(data) {
-          return data.vehicles ? data.vehicles : []
         }
       }
     }

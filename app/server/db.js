@@ -20,8 +20,13 @@ function findById(id) {
     .first()
 }
 
-function findOrCreateUser(provider_field, provider_id, profile) {
-  console.log('findOrCreateUser', profile)
+async function findOrCreateUser(provider_field, provider_id, profile) {
+  const email = profile.emails[0].value
+  const phone = profile.phone || '+33612345678' // fake number
+
+  if (!/@fluctuo.com$/.test(email)) {
+    throw new Error('Invalid email')
+  }
 
   return db('users')
     .where(provider_field, provider_id)
@@ -34,8 +39,8 @@ function findOrCreateUser(provider_field, provider_id, profile) {
           .createAccount({
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
-            email: profile.emails[0].value,
-            phone: profile.phone || '+33612345678' // fake number
+            email,
+            phone
           })
           .then(({ createAccount: { id } }) => {
             return db('users')

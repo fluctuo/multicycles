@@ -25,8 +25,24 @@ const limiter = RateLimit.middleware({
   max: process.env.RATE_LIMIT_PER_MIN || 20
 })
 
+function getUserFromContext(ctx) {
+  if (ctx.request.header && ctx.request.header.authorization) {
+    try {
+      return jwt.verify(ctx.request.header.authorization.replace('Bearer ', ''), process.env.JWT_SECRET)
+    } catch (err) {
+      console.log('INVALID JWT', err)
+    }
+  }
+}
+
 app.use(async (ctx, next) => {
   if (ctx.request.method === 'POST' && ctx.request.path === '/graphql') {
+    const user = getUserFromContext(ctx)
+
+    if (user) {
+      return next()
+    }
+
     return limiter(ctx, next)
   }
 
@@ -84,34 +100,7 @@ async function init() {
 
   const transformedSchema = transformSchema(executableSchema, [
     new FilterRootFields((operation, rootField) => {
-      return [
-        'providers',
-        'vehicles',
-        'vehicle',
-        'zones',
-        'missingProvider',
-        'linkSubAccount',
-        'limeLogin',
-        'birdLogin',
-        'limeLoginOTP',
-        'birdLoginOTP',
-        'limeLoginRefresh',
-        'limeLoginRefreshOTP',
-        'birdLoginRefresh',
-        'birdLoginRefreshOTP',
-        'tierLogin',
-        'tierLoginRefresh',
-        'ufoLogin',
-        'ufoLoginRefresh',
-        'hiveLogin',
-        'hiveLoginRefresh',
-        'circLogin',
-        'circLoginOTP',
-        'circLoginRefresh',
-        'circLoginRefreshOTP',
-        'moowLogin',
-        'moowLoginRefresh'
-      ].includes(rootField)
+      return ['providers', 'vehicles', 'vehicle', 'zones', 'missingProvider'].includes(rootField)
     })
   ])
 
@@ -120,21 +109,16 @@ async function init() {
       schemas: [transformedSchema, schema]
     }),
     context: ({ ctx }) => {
-      if (ctx.request.header && ctx.request.header.authorization) {
-        let user
-        try {
-          user = jwt.verify(ctx.request.header.authorization.replace('Bearer ', ''), process.env.JWT_SECRET)
-        } catch (err) {
-          console.log('INVALID JWT', err)
-        }
+      const user = getUserFromContext(ctx)
 
-        return {
-          user
-        }
-      }
+      return { user }
     },
     formatError(err) {
       console.log(require('util').inspect(err, { depth: null, colors: true }))
+
+      return {
+        message: err.message
+      }
     }
   })
 

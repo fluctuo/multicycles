@@ -61,12 +61,12 @@
     "phoneStep2": "Put the token received by email",
     "passwordStep": "Put your password to refresh auth"
   },
-  "ActiveRide": {
-    "riding": "Currently riding ... 🚴🏻‍",
+  "activeTrip": {
+    "riding": "Currently riding ... ",
     "clickToDetail": "See details"
   },
-  "ActiveRideModal": {
-    "header": "Currently riding ... 🚴🏻‍"
+  "ActiveTripModal": {
+    "header": "Currently riding "
   },
   "QrcodeScanner": {
     "scanTheQRCode": "Scan the QRCode",

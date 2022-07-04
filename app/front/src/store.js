@@ -52,7 +52,8 @@ const state = {
     name: ''
   },
   myAccount: null,
-  activeRides: [],
+  activeTrips: [],
+  completedTrips: [],
   roundedLocation: position || [48.856613, 2.352222],
   fixGPS: false,
   zones: [],
@@ -66,7 +67,8 @@ const getters = {
   page: state => state.page,
   drawerEnable: state => state.drawerEnable,
   isEmbedded: state => state.embedded,
-  hasSeamlessSubaccount: state => provider => state.myAccount.subAccounts.find(sub => sub.provider.slug === provider)
+  hasSeamlessSubaccount: state => provider =>
+    state.myAccount && state.myAccount.subAccounts.find(sub => sub.provider.slug === provider)
 }
 
 const actions = {
@@ -99,13 +101,32 @@ const actions = {
   toggleProvider({ commit }, provider) {
     commit('toggleProvider', provider)
   },
-  selectVehicle({ commit }, vehicle) {
+  refreshSelectedVehicle({ commit, dispatch }, vehicle) {
+    return dispatch('getVehicle', {
+      id: vehicle.id,
+      lat: vehicle.lat,
+      lng: vehicle.lng
+    }).then(vehicle => {
+      if (vehicle && state.selectedVehicle && vehicle.id === state.selectedVehicle.id) {
+        commit('selectVehicle', vehicle)
+      }
+    })
+  },
+  selectVehicle({ commit, dispatch }, vehicle, { refresh = true } = {}) {
     if (!vehicle) {
       commit('selectVehicle', null)
-    } else if (!state.selectedVehicle || vehicle.id !== state.selectedVehicle.id) {
+    } else if (!state.selectedVehicle || vehicle.id === state.selectedVehicle.id) {
+      commit('selectVehicle', vehicle)
+      if (refresh) {
+        dispatch('refreshSelectedVehicle', vehicle)
+      }
+    } else {
       commit('selectVehicle', null)
       setTimeout(() => {
         commit('selectVehicle', vehicle)
+        if (refresh) {
+          dispatch('refreshSelectedVehicle', vehicle)
+        }
       }, 100)
     }
   },
@@ -130,7 +151,7 @@ const actions = {
     commit('setRoundedLocation', address.position)
     commit('setMoved', true)
   },
-  login({ commit, dispatch }) {
+  login({ dispatch }) {
     if (localStorage.getItem('token')) {
       return apolloProvider.defaultClient
         .query({
@@ -141,139 +162,196 @@ const actions = {
             }
           `
         })
-        .then(result => {
-          commit('setMyAccount', result.data.getMyAccount)
-          return dispatch('getActiveTrip')
-        })
+        .then(() => dispatch('getMyAccount'))
+        .then(() => dispatch('getActiveTrips'))
+        .then(() => dispatch('getCompletedTrips'))
     }
   },
-  getActiveTrip({ commit }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .query({
-          query: gql`
-            query {
-              getMyActiveTrip
-            }
-          `
-        })
-        .then(result => {
-          commit('setActiveTrip', result.data.getMyActiveTrip)
-        })
-    }
+  getMyAccount({ commit }) {
+    return apolloProvider.defaultClient
+      .query({
+        fetchPolicy: 'no-cache',
+        query: gql`
+          query {
+            getMyAccount
+          }
+        `
+      })
+      .then(result => {
+        commit('setMyAccount', result.data.getMyAccount)
+      })
   },
-  startMyTrip({ commit, state }, { token, vehicleId, provider }) {
-    if (localStorage.getItem('token')) {
-      if (vehicleId) {
-        return apolloProvider.defaultClient
-          .query({
-            query: gql`
-              query vehicle($id: String, $code: String, $provider: String, $lat: Float!, $lng: Float!) {
-                vehicle(id: $id, code: $code, provider: $provider, lat: $lat, lng: $lng) {
-                  id
-                  type
-                  publicId
-                  lat
-                  lng
-                  battery
-                  provider {
-                    name
-                  }
-                  actions {
-                    unlock {
-                      available
-                      metadata
-                    }
-                  }
+  getActiveTrips({ commit }) {
+    if (!localStorage.getItem('token')) {
+      return
+    }
+
+    return apolloProvider.defaultClient
+      .query({
+        fetchPolicy: 'no-cache',
+        query: gql`
+          query {
+            getMyActiveTrips
+          }
+        `
+      })
+      .then(result => {
+        commit('setActiveTrips', result.data.getMyActiveTrips)
+      })
+  },
+  getCompletedTrips({ commit }) {
+    if (!localStorage.getItem('token')) {
+      return
+    }
+
+    return apolloProvider.defaultClient
+      .query({
+        fetchPolicy: 'no-cache',
+        query: gql`
+          query {
+            getMyCompletedTrips
+          }
+        `
+      })
+      .then(result => {
+        commit('setCompletedTrips', result.data.getMyCompletedTrips)
+      })
+  },
+  getVehicle(unused, { provider, code, id, lat, lng }) {
+    return apolloProvider.defaultClient
+      .query({
+        fetchPolicy: 'no-cache',
+        query: gql`
+          query($id: String, $code: String, $provider: String, $lat: Float!, $lng: Float!) {
+            vehicle(id: $id, code: $code, provider: $provider, lat: $lat, lng: $lng) {
+              id
+              lat
+              lng
+              type
+              publicId
+              attributes
+              propulsion
+              battery
+              actions {
+                unlock {
+                  available
+                  metadata
                 }
               }
-            `,
-            variables: {
-              lat: state.geolocation[0],
-              lng: state.geolocation[1],
-              id: vehicleId,
-              provider
-            }
-          })
-          .then(result => {
-            if (result.data?.vehicle?.actions?.unlock?.available) {
-              return apolloProvider.defaultClient
-                .mutate({
-                  mutation: gql`
-                    mutation(
-                      $provider: String!
-                      $metadata: String
-                      $vehicleId: String
-                      $token: String
-                      $lat: Float!
-                      $lng: Float!
-                    ) {
-                      startMyTrip(
-                        provider: $provider
-                        metadata: $metadata
-                        vehicleId: $vehicleId
-                        token: $token
-                        lat: $lat
-                        lng: $lng
-                      )
-                    }
-                  `,
-                  variables: {
-                    provider,
-                    vehicleId,
-                    metadata: result.data.vehicle.actions.unlock.metadata,
-                    lat: state.geolocation[0],
-                    lng: state.geolocation[1]
-                  }
-                })
-                .then(result => {
-                  commit('setActiveTrip', [result.data.startMyTrip])
-                })
-            } else {
-              alert('This vehicle can not be unlocked')
-            }
-          })
-      } else {
-        return apolloProvider.defaultClient
-          .mutate({
-            mutation: gql`
-              mutation($provider: String!, $token: String, $lat: Float!, $lng: Float!) {
-                startMyTrip(provider: $provider, token: $token, lat: $lat, lng: $lng)
+              provider {
+                name
+                slug
+                website
+                discountCode
+                app {
+                  android
+                  ios
+                }
+                deepLink {
+                  android
+                  ios
+                }
+                stationVehicleTypes
               }
-            `,
-            variables: {
-              token,
-              provider,
-              lat: state.geolocation[0],
-              lng: state.geolocation[1]
+              pricing {
+                currency
+                unlock
+                perKm {
+                  start
+                  interval
+                  price
+                }
+                perMin {
+                  start
+                  interval
+                  price
+                }
+                perMinPause {
+                  start
+                  interval
+                  price
+                }
+                includeVat
+              }
+              ... on Station {
+                availableVehicles
+                availableStands
+                isVirtual
+                stationVehicleDetails {
+                  vehicleType
+                  propulsion
+                  availableVehicles
+                }
+              }
+              ... on Car {
+                carClass
+                carModel
+              }
             }
-          })
-          .then(result => {
-            commit('setActiveTrip', [result.data.startMyTrip])
-          })
-      }
+          }
+        `,
+        variables: { provider, code, id, lat, lng }
+      })
+      .then(result => result?.data?.vehicle)
+  },
+  async startMyTrip({ commit }, { vehicle }) {
+    if (!localStorage.getItem('token')) {
+      return
+    }
+
+    if (!vehicle?.actions?.unlock?.available) {
+      return
+    }
+
+    const { message, trip, paymentIntent } = await apolloProvider.defaultClient
+      .mutate({
+        mutation: gql`
+          mutation($provider: String!, $metadata: String!, $vehicleId: String!, $lat: Float!, $lng: Float!) {
+            startMyTrip(provider: $provider, metadata: $metadata, vehicleId: $vehicleId, lat: $lat, lng: $lng)
+          }
+        `,
+        variables: {
+          vehicleId: vehicle.id,
+          provider: vehicle.provider.slug,
+          metadata: vehicle.actions.unlock.metadata,
+          lat: vehicle.lat,
+          lng: vehicle.lng
+        }
+      })
+      .then(result => result?.data?.startMyTrip)
+
+    if (message && message.type === 'error' && !paymentIntent && !trip) {
+      throw new Error(message.text)
+    }
+
+    if (paymentIntent?.status === 'requires_action') {
+      throw { paymentIntent }
+    }
+
+    if (trip) {
+      commit('setActiveTrips', [trip])
     }
   },
-  stopMyTrip({ commit, state }, { tripId, provider }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .mutate({
-          mutation: gql`
-            mutation($tripId: String!, $provider: String!, $lat: Float!, $lng: Float!) {
-              stopMyTrip(tripId: $tripId, provider: $provider, lat: $lat, lng: $lng)
-            }
-          `,
-          variables: {
-            tripId,
-            provider,
-            lat: state.geolocation[0],
-            lng: state.geolocation[1]
-          }
-        })
-        .then(() => {
-          commit('setActiveTrip', null)
-        })
+  stopMyTrip({ state }, { tripId, provider }) {
+    if (!localStorage.getItem('token')) {
+      return
     }
+
+    return apolloProvider.defaultClient
+      .mutate({
+        mutation: gql`
+          mutation($tripId: String!, $provider: String!, $lat: Float!, $lng: Float!) {
+            stopMyTrip(tripId: $tripId, provider: $provider, lat: $lat, lng: $lng)
+          }
+        `,
+        variables: {
+          tripId,
+          provider,
+          lat: state.geolocation[0],
+          lng: state.geolocation[1]
+        }
+      })
+      .then(result => result.data.stopMyTrip)
   },
   startGeolocation({ commit, state, dispatch }) {
     // request lat lng by ip
@@ -343,31 +421,20 @@ const actions = {
       }
     })
   },
-  createSubAccount({ commit }, { provider }) {
-    console.log('ICI', provider)
+  createSubAccount({ dispatch }, { provider }) {
     return apolloProvider.defaultClient
       .mutate({
         fetchPolicy: 'no-cache',
         mutation: gql`
           mutation($provider: String!) {
-            createSubAccount(provider: $provider) {
-              id
-              name
-              subAccounts {
-                provider {
-                  name
-                }
-              }
-            }
+            createSubAccount(provider: $provider)
           }
         `,
         variables: {
           provider
         }
       })
-      .then(result => {
-        commit('setMyAccount', result.data.createSubAccount)
-      })
+      .then(() => dispatch('getMyAccount'))
   }
 }
 
@@ -428,8 +495,11 @@ const mutations = {
   setMyAccount(state, myAccount) {
     Vue.set(state, 'myAccount', myAccount)
   },
-  setActiveTrip(state, rides) {
-    state.activeRides = rides
+  setActiveTrips(state, trips) {
+    state.activeTrips = trips
+  },
+  setCompletedTrips(state, trips) {
+    state.completedTrips = trips
   },
   setRoundedLocation(state, center) {
     const diff = distanceInKmBetweenEarthCoordinates(
