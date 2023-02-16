@@ -15,11 +15,11 @@
     ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-env": "^7.20.2",
     "eslint-plugin-prettier": "^2.7.0",
     "husky": "^0.14.3",
     "lint-staged": "^6.1.1",
