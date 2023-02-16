@@ -20,7 +20,7 @@
     "dotenv": "^8.2.0",
     "graphql": "^15.4.0",
     "graphql-request": "^3.3.0",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "knex": "^0.21.12",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
