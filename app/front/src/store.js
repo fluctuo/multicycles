@@ -46,10 +46,10 @@ const state = {
   drawerEnable: false,
   moved: false,
   map: {
-    center: position || [48.856613, 2.352222]
+    center: position || [48.856613, 2.352222],
   },
   selectedAddress: {
-    name: ''
+    name: '',
   },
   myAccount: null,
   activeRides: [],
@@ -57,15 +57,15 @@ const state = {
   fixGPS: false,
   zones: [],
   embedded: false,
-  autoReload: false
+  autoReload: false,
 }
 
 const getters = {
-  isProviderDisabled: state => provider => state.disabledProviders.includes(provider),
-  enabledProviders: state => [...state.providers].filter(provider => !state.disabledProviders.includes(provider)),
-  page: state => state.page,
-  drawerEnable: state => state.drawerEnable,
-  isEmbedded: state => state.embedded
+  isProviderDisabled: (state) => (provider) => state.disabledProviders.includes(provider),
+  enabledProviders: (state) => [...state.providers].filter((provider) => !state.disabledProviders.includes(provider)),
+  page: (state) => state.page,
+  drawerEnable: (state) => state.drawerEnable,
+  isEmbedded: (state) => state.embedded,
 }
 
 const actions = {
@@ -79,7 +79,7 @@ const actions = {
     apolloProvider.defaultClient
       .query({
         query: gql`
-          query($lat: Float, $lng: Float) {
+          query ($lat: Float, $lng: Float) {
             providers(lat: $lat, lng: $lng) {
               name
               slug
@@ -88,10 +88,10 @@ const actions = {
         `,
         variables: {
           lat: position.lat || this.state.roundedLocation[0],
-          lng: position.lng || this.state.roundedLocation[1]
-        }
+          lng: position.lng || this.state.roundedLocation[1],
+        },
       })
-      .then(result => {
+      .then((result) => {
         commit('setProviders', result.data.providers)
       })
   },
@@ -149,9 +149,9 @@ const actions = {
                 }
               }
             }
-          `
+          `,
         })
-        .then(result => {
+        .then((result) => {
           commit('setMyAccount', result.data.getMyAccount)
           return dispatch('getActiveRides')
         })
@@ -172,9 +172,9 @@ const actions = {
                 }
               }
             }
-          `
+          `,
         })
-        .then(result => {
+        .then((result) => {
           commit('setActiveRides', result.data.getMyActiveRides)
         })
     }
@@ -184,7 +184,7 @@ const actions = {
       return apolloProvider.defaultClient
         .mutate({
           mutation: gql`
-            mutation($provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
+            mutation ($provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
               startMyRide(provider: $provider, token: $token, lat: $lat, lng: $lng) {
                 id
                 startedAt
@@ -199,10 +199,10 @@ const actions = {
             token,
             provider,
             lat: state.geolocation[0],
-            lng: state.geolocation[1]
-          }
+            lng: state.geolocation[1],
+          },
         })
-        .then(result => {
+        .then((result) => {
           commit('setActiveRides', [result.data.startMyRide])
         })
     }
@@ -212,7 +212,7 @@ const actions = {
       return apolloProvider.defaultClient
         .mutate({
           mutation: gql`
-            mutation($rideId: String!, $lat: Float!, $lng: Float!) {
+            mutation ($rideId: String!, $lat: Float!, $lng: Float!) {
               stopMyRide(rideId: $rideId, lat: $lat, lng: $lng) {
                 id
                 startedAt
@@ -226,8 +226,8 @@ const actions = {
           variables: {
             rideId,
             lat: state.geolocation[0],
-            lng: state.geolocation[1]
-          }
+            lng: state.geolocation[1],
+          },
         })
         .then(() => {
           commit('setActiveRides', null)
@@ -237,7 +237,7 @@ const actions = {
   startGeolocation({ commit, state, dispatch }) {
     // request lat lng by ip
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition((position) => {
         commit('fixGPS')
         dispatch('getProviders', { lat: position.coords.latitude, lng: position.coords.longitude })
         dispatch('getZones', { lat: position.coords.latitude, lng: position.coords.longitude })
@@ -250,7 +250,7 @@ const actions = {
         }
       })
 
-      navigator.geolocation.watchPosition(position => {
+      navigator.geolocation.watchPosition((position) => {
         state.geolocation = [position.coords.latitude, position.coords.longitude]
 
         if (!state.moved) {
@@ -264,7 +264,7 @@ const actions = {
     apolloProvider.defaultClient
       .query({
         query: gql`
-          query($lat: Float!, $lng: Float!, $types: [ZoneType]) {
+          query ($lat: Float!, $lng: Float!, $types: [ZoneType]) {
             zones(lat: $lat, lng: $lng, types: $types) {
               id
               name
@@ -279,10 +279,10 @@ const actions = {
         `,
         variables: {
           ...position,
-          types: ['parking', 'no_parking', 'no_ride', 'ride']
-        }
+          types: ['parking', 'no_parking', 'no_ride', 'ride'],
+        },
       })
-      .then(result => {
+      .then((result) => {
         commit('setZones', result.data.zones)
       })
   },
@@ -298,10 +298,10 @@ const actions = {
       variables: {
         provider,
         lat: state.geolocation[0],
-        lng: state.geolocation[1]
-      }
+        lng: state.geolocation[1],
+      },
     })
-  }
+  },
 }
 
 const mutations = {
@@ -390,7 +390,7 @@ const mutations = {
   },
   updateLocation(state) {
     const params = {
-      l: state.map.center
+      l: state.map.center,
     }
 
     if (state.embedded) {
@@ -403,12 +403,12 @@ const mutations = {
 
     const stringified = queryString.stringify(params)
     history.pushState(null, null, `/?${stringified}`)
-  }
+  },
 }
 
 export default new Vuex.Store({
   state,
   getters,
   actions,
-  mutations
+  mutations,
 })

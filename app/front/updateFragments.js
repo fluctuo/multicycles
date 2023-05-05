@@ -15,13 +15,13 @@ axios
           }
         }
       }
-    `
+    `,
   })
   .then(({ data }) => {
     // here we're filtering out any type information unrelated to unions or interfaces
-    const filteredData = data.data.__schema.types.filter(type => type.possibleTypes !== null)
+    const filteredData = data.data.__schema.types.filter((type) => type.possibleTypes !== null)
     data.data.__schema.types = filteredData
-    fs.writeFile('./src/fragmentTypes.json', JSON.stringify(data.data), err => {
+    fs.writeFile('./src/fragmentTypes.json', JSON.stringify(data.data), (err) => {
       if (err) {
         console.error('Error writing fragmentTypes file', err)
       } else {

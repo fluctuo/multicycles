@@ -42,11 +42,11 @@ export default {
     FilterIcon,
     LocalMap,
     AlertCircleIcon,
-    MissingModal
+    MissingModal,
   },
   data() {
     return {
-      showMissingModal: false
+      showMissingModal: false,
     }
   },
   computed: mapState(['map', 'roundedLocation']),
@@ -61,8 +61,8 @@ export default {
     },
     openMissingModal() {
       this.showMissingModal = true
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -138,4 +138,3 @@ export default {
   }
 }
 </style>
-

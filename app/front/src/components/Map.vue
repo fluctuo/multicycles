@@ -80,7 +80,7 @@ export default {
     LMarker,
     LGeoJson,
     'v-progress': Progress,
-    SelectedVehicle
+    SelectedVehicle,
   },
   mounted() {
     if (this.autoReloadEnabled) {
@@ -99,36 +99,36 @@ export default {
       options: {
         mapboxKey: process.env.VUE_APP_MAPBOX_KEY,
         tileSize: 512,
-        zoomOffset: -1
+        zoomOffset: -1,
       },
       attribution:
         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> | © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
       fetchingVehicles: 0,
       location: {
         lat: this.$store.state.geolocation[0],
-        lng: this.$store.state.geolocation[1]
+        lng: this.$store.state.geolocation[1],
       },
       map: {
         zoom: 17,
         minZoom: 13,
         detectRetina: true,
         options: {
-          zoomControl: false
-        }
+          zoomControl: false,
+        },
       },
-      vehicles: []
+      vehicles: [],
     }
   },
   computed: mapState({
-    hasActiveRides: state => !!(state.activeRides && state.activeRides.length),
-    center: state => state.map.center,
-    excludeProviders: state => state.disabledProviders,
-    roundedLocation: state => state.roundedLocation,
-    zones: state => state.zones,
-    autoReloadEnabled: state => state.autoReload
+    hasActiveRides: (state) => !!(state.activeRides && state.activeRides.length),
+    center: (state) => state.map.center,
+    excludeProviders: (state) => state.disabledProviders,
+    roundedLocation: (state) => state.roundedLocation,
+    zones: (state) => state.zones,
+    autoReloadEnabled: (state) => state.autoReload,
   }),
   watch: {
-    $route: 'reloadVehicules'
+    $route: 'reloadVehicules',
   },
   methods: {
     ...mapActions(['setGeolocation', 'selectVehicle', 'setMoved', 'setCenter']),
@@ -161,7 +161,7 @@ export default {
         return L.icon({
           prefix: '',
           iconUrl: '/glyph-marker-dot.png',
-          iconSize: [24, 24]
+          iconSize: [24, 24],
         })
       }
 
@@ -178,7 +178,7 @@ export default {
               !vehicle.availableVehicles ? 'grey' : '#22961d'
             }; color: #fff; border-radius: 10px; width: 20px; height: 20px; text-align: center; line-height: 20px;">${
               vehicle.availableVehicles == null ? '?' : vehicle.availableVehicles
-            }</div>`}`
+            }</div>`}`,
         })
       }
 
@@ -187,7 +187,7 @@ export default {
         iconAnchor: [12, 40],
         html: `<object data="${iconRetinaUrl}" type="image/png" width="24" height="40">
               <img src="https://cdn.fluctuo.com/markers/default-2x.png" width="24" height="40">
-            </object>`
+            </object>`,
       })
     },
     reloadVehicules() {
@@ -200,7 +200,7 @@ export default {
         ? this.$store.state.selectedVehicle.provider.slug
         : null
 
-      return provider ? zones.filter(z => z.provider.slug === provider) : []
+      return provider ? zones.filter((z) => z.provider.slug === provider) : []
     },
     getZoneStyle(types) {
       let color
@@ -214,9 +214,9 @@ export default {
       }
 
       return {
-        style: { color }
+        style: { color },
       }
-    }
+    },
   },
   apollo: {
     vehicles() {
@@ -224,7 +224,7 @@ export default {
         loadingKey: 'fetchingVehicles',
         query() {
           return gql`
-            query($lat: Float!, $lng: Float!, $excludeProviders: [String]) {
+            query ($lat: Float!, $lng: Float!, $excludeProviders: [String]) {
               vehicles(lat: $lat, lng: $lng, excludeProviders: $excludeProviders) {
                 id
                 lat
@@ -292,10 +292,10 @@ export default {
         },
         update(data) {
           return data.vehicles ? data.vehicles : []
-        }
+        },
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

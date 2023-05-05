@@ -1,11 +1,9 @@
 <template>
   <div style="width: 100%">
-    <a @click="showScannerModal = true" class="scan-button">
-      <camera-icon/>Unlock
-    </a>
+    <a @click="showScannerModal = true" class="scan-button"> <camera-icon />Unlock </a>
 
     <transition name="modal">
-      <div v-if="showScannerModal" class="modal-mask" @click="showScannerModal= false">
+      <div v-if="showScannerModal" class="modal-mask" @click="showScannerModal = false">
         <div class="modal-wrapper">
           <div class="modal-container" @click.stop>
             <div class="modal-body">
@@ -38,7 +36,7 @@ export default {
   name: 'QrcodeScanner',
   components: {
     QrcodeStream,
-    CameraIcon
+    CameraIcon,
   },
   props: ['provider'],
   data() {
@@ -46,7 +44,7 @@ export default {
       paused: false,
       isValid: false,
       validating: false,
-      showScannerModal: false
+      showScannerModal: false,
     }
   },
   computed: {
@@ -55,9 +53,9 @@ export default {
     },
     subAccountProviders() {
       return this.$store.state.myAccount && this.$store.state.myAccount.subAccounts
-        ? this.$store.state.myAccount.subAccounts.map(sa => sa.provider.slug)
+        ? this.$store.state.myAccount.subAccounts.map((sa) => sa.provider.slug)
         : []
-    }
+    },
   },
   methods: {
     ...mapActions(['startMyRide']),
@@ -74,7 +72,7 @@ export default {
 
         this.startMyRide({
           provider: this.provider,
-          token: decoded
+          token: decoded,
         })
           .then(() => {
             this.paused = false
@@ -90,8 +88,8 @@ export default {
         this.validating = false
         this.paused = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -120,7 +118,7 @@ export default {
   }
 
   &:hover {
-    box-shadow: inset 0 0 5px 1px #afafaf
+    box-shadow: inset 0 0 5px 1px #afafaf;
   }
 }
 
@@ -129,7 +127,7 @@ export default {
   width: 100%;
   height: 100%;
 
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 10px;
 
@@ -194,5 +192,3 @@ export default {
   transform: scale(1.1);
 }
 </style>
-
-

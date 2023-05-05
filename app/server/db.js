@@ -10,21 +10,19 @@ const db = knex({
     port: process.env.DATABASE_PORT || 5432,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME || 'multicycles-app'
-  }
+    database: process.env.DATABASE_NAME || 'multicycles-app',
+  },
 })
 
 function findById(id) {
-  return db('users')
-    .where({ id })
-    .first()
+  return db('users').where({ id }).first()
 }
 
 function findOrCreateUser(provider_field, provider_id) {
   return db('users')
     .where(provider_field, provider_id)
     .first()
-    .then(user => {
+    .then((user) => {
       if (user) {
         return user
       } else {
@@ -32,7 +30,7 @@ function findOrCreateUser(provider_field, provider_id) {
           return db('users')
             .insert({ account_id: id, [provider_field]: provider_id })
             .returning('*')
-            .then(rows => rows[0])
+            .then((rows) => rows[0])
         })
       }
     })
@@ -40,5 +38,5 @@ function findOrCreateUser(provider_field, provider_id) {
 
 module.exports = {
   findById,
-  findOrCreateUser
+  findOrCreateUser,
 }

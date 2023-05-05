@@ -13,22 +13,18 @@
 
               <label for="provider">
                 {{ $t(`MissingModal.provider`) }}
-                <br>
-                <input
-                  id="provider"
-                  v-model="provider"
-                  type="text"
-                  name="provider"
-                  required
-                  :disabled="submiting"
-                >
+                <br />
+                <input id="provider" v-model="provider" type="text" name="provider" required :disabled="submiting" />
               </label>
 
-              <span>&nbsp;{{ $t(`MissingModal.Location`) }}: {{ $store.state.geolocation[0] }} / {{ $store.state.geolocation[1] }}</span>
+              <span
+                >&nbsp;{{ $t(`MissingModal.Location`) }}: {{ $store.state.geolocation[0] }} /
+                {{ $store.state.geolocation[1] }}</span
+              >
 
               <button type="submit" class="btn--success btn--big" :disabled="submiting">
                 {{ $t('MissingModal.submit') }}
-                <loader-icon v-if="submiting" class="spinner"/>
+                <loader-icon v-if="submiting" class="spinner" />
               </button>
             </form>
           </div>
@@ -46,7 +42,7 @@ export default {
   data() {
     return {
       provider: '',
-      submiting: false
+      submiting: false,
     }
   },
   methods: {
@@ -61,8 +57,8 @@ export default {
           return this.$emit('close')
         })
         .catch(() => (this.submiting = false))
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -74,15 +70,15 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
-  text-align: center
+  text-align: center;
 }
 
 .modal-container {
@@ -92,8 +88,8 @@ export default {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 
   color: #000;
@@ -135,7 +131,9 @@ button {
 }
 
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {
@@ -143,4 +141,3 @@ button {
   animation: spinner 4s linear infinite;
 }
 </style>
-

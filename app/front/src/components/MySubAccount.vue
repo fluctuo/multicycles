@@ -39,19 +39,19 @@ export default {
   props: {
     provider: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     CheckIcon,
-    LinkSubaccountModal
+    LinkSubaccountModal,
   },
   data() {
     return {
       showLinkSubAccountModal: false,
       providerLinkSubAccountModal: null,
       account: this.$store.state.myAccount,
-      refresh: false
+      refresh: false,
     }
   },
   computed: {
@@ -59,8 +59,8 @@ export default {
       return `https://cdn.fluctuo.com/providers/${this.provider}.jpg`
     },
     subAccount() {
-      return this.$store.state.myAccount.subAccounts.find(sa => sa.provider.slug === this.provider)
-    }
+      return this.$store.state.myAccount.subAccounts.find((sa) => sa.provider.slug === this.provider)
+    },
   },
   methods: {
     loginUrl(service) {
@@ -72,8 +72,8 @@ export default {
       }
       this.providerLinkSubAccountModal = provider
       this.showLinkSubAccountModal = true
-    }
-  }
+    },
+  },
 }
 </script>
 

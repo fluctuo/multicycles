@@ -26,7 +26,7 @@ const providers = {
   spin: 'Spin',
   whitebikes: 'Whitebikes',
   wind: 'Wind',
-  yobike: 'Yobike'
+  yobike: 'Yobike',
 }
 
 const types = ['BIKE', 'SCOOTER', 'MOTORSCOOTER', 'STATION']
@@ -53,19 +53,19 @@ storiesOf('SelectedVehicle', module)
             app: {
               android: 'https://play.google.com/store/apps/details?id=so.ofo.abroad',
               ios: 'https://itunes.apple.com/us/app/ofo-smart-bike-sharing/id1190831637?mt=8',
-              __typename: 'OsLink'
+              __typename: 'OsLink',
             },
             deepLink: {
               android: 'growing.75b85ae957f8a52b://',
               ios: 'growing.272596a6fc275283://',
-              __typename: 'OsLink'
+              __typename: 'OsLink',
             },
-            __typename: 'Provider'
+            __typename: 'Provider',
           },
-          __typename: 'Ofo'
-        }
+          __typename: 'Ofo',
+        },
       }
-    }
+    },
   }))
   .add('Station', () => ({
     i18n,
@@ -87,18 +87,18 @@ storiesOf('SelectedVehicle', module)
             app: {
               android: 'https://play.google.com/store/apps/details?id=de.nextbike',
               ios: 'https://itunes.apple.com/app/id504288371',
-              __typename: 'OsLink'
+              __typename: 'OsLink',
             },
             deepLink: { android: 'nextbike://', ios: 'nextbike://', __typename: 'OsLink' },
-            __typename: 'Provider'
+            __typename: 'Provider',
           },
           availableVehicles: 3,
           availableStands: 9,
           isVirtual: false,
-          __typename: 'Nextbike'
-        }
+          __typename: 'Nextbike',
+        },
       }
-    }
+    },
   }))
   .add('Motor-scooter', () => ({
     i18n,
@@ -120,15 +120,15 @@ storiesOf('SelectedVehicle', module)
             app: {
               android: 'https://play.google.com/store/apps/details?id=com.joincoup.app',
               ios: 'https://itunes.apple.com/app/id1139725011',
-              __typename: 'OsLink'
+              __typename: 'OsLink',
             },
             deepLink: { android: null, ios: null, __typename: 'OsLink' },
-            __typename: 'Provider'
+            __typename: 'Provider',
           },
-          __typename: 'Coup'
-        }
+          __typename: 'Coup',
+        },
       }
-    }
+    },
   }))
   .add('Scooter', () => ({
     i18n,
@@ -150,15 +150,15 @@ storiesOf('SelectedVehicle', module)
             app: {
               android: 'https://play.google.com/store/apps/details?id=com.limebike',
               ios: 'https://itunes.apple.com/app/id1199780189',
-              __typename: 'OsLink'
+              __typename: 'OsLink',
             },
             deepLink: { android: 'https://limebike.app.link', ios: 'https://limebike.app.link', __typename: 'OsLink' },
-            __typename: 'Provider'
+            __typename: 'Provider',
           },
-          __typename: 'Lime'
-        }
+          __typename: 'Lime',
+        },
       }
-    }
+    },
   }))
   .add('with knobs', () => ({
     i18n,
@@ -176,7 +176,7 @@ storiesOf('SelectedVehicle', module)
             boolean('Electric', false, 'Attributes') ? 'ELECTRIC' : '',
             boolean('Child seat', false, 'Attributes') ? 'CHILD_SEAT' : '',
             boolean('Cargo', false, 'Attributes') ? 'CARGO' : '',
-            boolean('Tandem', false, 'Attributes') ? 'TANDEM' : ''
+            boolean('Tandem', false, 'Attributes') ? 'TANDEM' : '',
           ],
           provider: {
             name: text('Name', 'Call a Bike', 'provider'),
@@ -186,16 +186,16 @@ storiesOf('SelectedVehicle', module)
             app: {
               android: 'https://play.google.com/store/apps/details?id=de.bahn.callabike',
               ios: 'https://itunes.apple.com/app/id420360589',
-              __typename: 'OsLink'
+              __typename: 'OsLink',
             },
             deepLink: { android: 'callabike://search', ios: null, __typename: 'OsLink' },
-            __typename: 'Provider'
+            __typename: 'Provider',
           },
           availableVehicles: number('Available vehicles', 6, 'Station'),
           availableStands: number('Available stands', 2, 'Station'),
           isVirtual: boolean('Is Virtual', false, 'Station'),
-          __typename: 'CallABike'
-        }
+          __typename: 'CallABike',
+        },
       }
-    }
+    },
   }))

@@ -3,10 +3,7 @@
     <transition name="slideDown">
       <div v-if="hasActiveRides" class="activeRide">
         <div>{{ $t('ActiveRide.riding') }}</div>
-        <button
-          @click="showActiveRideModal = true"
-          class="btn--ghost"
-        >{{ $t('ActiveRide.clickToDetail') }}</button>
+        <button @click="showActiveRideModal = true" class="btn--ghost">{{ $t('ActiveRide.clickToDetail') }}</button>
       </div>
     </transition>
     <active-ride-modal v-if="showActiveRideModal" @close="showActiveRideModal = false"></active-ride-modal>
@@ -20,16 +17,16 @@ import ActiveRideModal from './ActiveRideModal'
 export default {
   name: 'ActiveRide',
   components: {
-    ActiveRideModal
+    ActiveRideModal,
   },
   data() {
     return {
-      showActiveRideModal: false
+      showActiveRideModal: false,
     }
   },
   computed: mapState({
-    hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
-  })
+    hasActiveRides: (state) => !!(state.activeRides && state.activeRides.length),
+  }),
 }
 </script>
 
@@ -49,4 +46,3 @@ export default {
   font-weight: bold;
 }
 </style>
-

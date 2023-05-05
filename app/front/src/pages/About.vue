@@ -26,11 +26,11 @@ export default {
   name: 'About',
   components: {
     ArrowLeftCircleIcon,
-    Footer
+    Footer,
   },
   methods: {
-    ...mapMutations(['setPage'])
-  }
+    ...mapMutations(['setPage']),
+  },
 }
 </script>
 

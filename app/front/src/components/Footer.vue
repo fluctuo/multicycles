@@ -1,12 +1,10 @@
 <template>
-  <div class="footer">
-    Fabriqué en France
-  </div>
+  <div class="footer">Fabriqué en France</div>
 </template>
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
 }
 </script>
 

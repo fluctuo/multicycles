@@ -8,7 +8,7 @@ import VueApollo from 'vue-apollo'
 import introspectionQueryResultData from './fragmentTypes.json'
 
 const httpLink = new HttpLink({
-  uri: `${process.env.VUE_APP_API_URL}/graphql`
+  uri: `${process.env.VUE_APP_API_URL}/graphql`,
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -18,26 +18,26 @@ const authLink = setContext((_, { headers }) => {
     ? {
         headers: {
           ...headers,
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
     : { headers }
 })
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData
+  introspectionQueryResultData,
 })
 
 const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
-    fragmentMatcher
+    fragmentMatcher,
   }),
-  connectToDevTools: process.env.NODE_ENV !== 'production'
+  connectToDevTools: process.env.NODE_ENV !== 'production',
 })
 
 Vue.use(VueApollo)
 
 export default new VueApollo({
-  defaultClient: apolloClient
+  defaultClient: apolloClient,
 })

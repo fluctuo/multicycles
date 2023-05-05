@@ -15,7 +15,7 @@ import i18n from './i18n'
 import store from './store'
 import './registerServiceWorker'
 
-window.addEventListener('beforeinstallprompt', event => {
+window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault()
   window.installPromptEvent = event
 })
@@ -24,15 +24,13 @@ if (process.env.VUE_APP_UA_ANALYTICS) {
   Vue.use(VueAnalytics, {
     id: process.env.VUE_APP_UA_ANALYTICS,
     autoTracking: {
-      exception: true
-    }
+      exception: true,
+    },
   })
 }
 
 if (process.env.VUE_APP_SENTRY_KEY) {
-  Raven.config(process.env.VUE_APP_SENTRY_KEY)
-    .addPlugin(RavenVue, Vue)
-    .install()
+  Raven.config(process.env.VUE_APP_SENTRY_KEY).addPlugin(RavenVue, Vue).install()
 }
 
 Vue.config.productionTip = false
@@ -40,7 +38,7 @@ Vue.config.productionTip = false
 Vue.use(
   VueAxios,
   Axios.create({
-    baseURL: process.env.VUE_APP_API_URL
+    baseURL: process.env.VUE_APP_API_URL,
   })
 )
 
@@ -49,7 +47,7 @@ Vue.use(DrawerLayout)
 Vue.directive('focus', {
   inserted(el) {
     el.focus()
-  }
+  },
 })
 
 /* eslint-disable no-new */
@@ -59,5 +57,5 @@ new Vue({
   i18n,
   store,
   template: '<App/>',
-  components: { App }
+  components: { App },
 })

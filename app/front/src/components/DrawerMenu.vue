@@ -34,7 +34,7 @@ export default {
   components: {
     GlobeIcon,
     SettingsIcon,
-    InfoIcon
+    InfoIcon,
   },
   methods: {
     ...mapMutations(['setPage']),
@@ -44,8 +44,8 @@ export default {
     },
     handleToggleDrawer() {
       this.$parent.toggle()
-    }
-  }
+    },
+  },
 }
 </script>
 

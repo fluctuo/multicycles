@@ -14,12 +14,12 @@
               <span
                 v-if="
                   vehicle.stationVehicleDetails &&
-                    vehicle.stationVehicleDetails.length === 2 &&
-                    vehicle.stationVehicleDetails[0].availableVehicles != null &&
-                    vehicle.stationVehicleDetails[1].availableVehicles != null &&
-                    vehicle.stationVehicleDetails[0].vehicleType === 'BIKE' &&
-                    vehicle.stationVehicleDetails[1].vehicleType === 'BIKE' &&
-                    vehicle.stationVehicleDetails[0].propulsion != vehicle.stationVehicleDetails[1].propulsion
+                  vehicle.stationVehicleDetails.length === 2 &&
+                  vehicle.stationVehicleDetails[0].availableVehicles != null &&
+                  vehicle.stationVehicleDetails[1].availableVehicles != null &&
+                  vehicle.stationVehicleDetails[0].vehicleType === 'BIKE' &&
+                  vehicle.stationVehicleDetails[1].vehicleType === 'BIKE' &&
+                  vehicle.stationVehicleDetails[0].propulsion != vehicle.stationVehicleDetails[1].propulsion
                 "
               >
                 <span v-if="vehicle.stationVehicleDetails[0].propulsion === 'HUMAIN'">
@@ -31,7 +31,7 @@
                 <span
                   v-if="
                     vehicle.stationVehicleDetails[0].propulsion === 'ASSIST' ||
-                      vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'
+                    vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC'
                   "
                 >
                   {{ vehicle.stationVehicleDetails[0].availableVehicles
@@ -75,13 +75,13 @@
               <img
                 v-if="
                   vehicle.propulsion === 'ELECTRIC' ||
-                    vehicle.propulsion === 'ASSIST' ||
-                    (vehicle.stationVehicleDetails &&
-                      vehicle.stationVehicleDetails.length === 1 &&
-                      vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC') ||
-                    (vehicle.stationVehicleDetails &&
-                      vehicle.stationVehicleDetails.length === 1 &&
-                      vehicle.stationVehicleDetails[0].propulsion === 'ASSIST')
+                  vehicle.propulsion === 'ASSIST' ||
+                  (vehicle.stationVehicleDetails &&
+                    vehicle.stationVehicleDetails.length === 1 &&
+                    vehicle.stationVehicleDetails[0].propulsion === 'ELECTRIC') ||
+                  (vehicle.stationVehicleDetails &&
+                    vehicle.stationVehicleDetails.length === 1 &&
+                    vehicle.stationVehicleDetails[0].propulsion === 'ASSIST')
                 "
                 src="../assets/lightning.svg"
                 class="attribute"
@@ -157,17 +157,17 @@ export default {
     detail: false,
     isAndroid: md.is('AndroidOS'),
     isiOs: md.is('iOS'),
-    isComputer: md.phone() === null && md.tablet() === null
+    isComputer: md.phone() === null && md.tablet() === null,
   }),
   computed: {
     ...mapGetters(['isEmbedded']),
     ...mapState({
-      lang: state => state.lang,
-      hasActiveRides: state => !!(state.activeRides && state.activeRides.length)
+      lang: (state) => state.lang,
+      hasActiveRides: (state) => !!(state.activeRides && state.activeRides.length),
     }),
-    unlockWhitelisted: function() {
+    unlockWhitelisted: function () {
       return unlockWhitelist.includes(this.vehicle.provider.slug)
-    }
+    },
   },
   methods: {
     ...mapActions(['selectVehicle']),
@@ -201,11 +201,11 @@ export default {
       return isMobile && deeplink
     },
     pricingInterval(interval) {
-      if (interval.find(p => !p.interval && !p.end)) {
+      if (interval.find((p) => !p.interval && !p.end)) {
         return null // has fixed price
       }
 
-      const prices = interval.map(p => {
+      const prices = interval.map((p) => {
         let interval = p.interval ? p.interval : p.end - p.start
         let unitPrice = p.price / interval
 
@@ -219,16 +219,16 @@ export default {
       if (first.unitPrice === last.unitPrice) {
         return {
           price: first.p.price,
-          interval: first.p.interval
+          interval: first.p.interval,
         }
       }
 
-      const sameInterval = !sorted.find(a => a.interval !== first.interval)
+      const sameInterval = !sorted.find((a) => a.interval !== first.interval)
       if (sameInterval) {
         return {
           min: first.p.price,
           max: last.p.price,
-          interval: first.interval
+          interval: first.interval,
         }
       }
 
@@ -236,7 +236,7 @@ export default {
       // min is the FIRST interval, not the MINIMUM price.
       return {
         min: prices[0].p.price,
-        interval: prices[0].interval
+        interval: prices[0].interval,
       }
     },
     strIntervalMin(interval) {
@@ -301,8 +301,8 @@ export default {
       }
 
       return parts
-    }
-  }
+    },
+  },
 }
 </script>
 

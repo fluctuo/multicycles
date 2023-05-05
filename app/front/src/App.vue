@@ -48,7 +48,7 @@ export default {
     About,
     Account,
     LocalMap,
-    FluctuoBanner
+    FluctuoBanner,
   },
   computed: mapGetters(['drawerEnable', 'page', 'isEmbedded']),
   created() {
@@ -88,8 +88,8 @@ export default {
     },
     handleMaskClick() {
       this.$refs.drawerLayout.toggle(false)
-    }
-  }
+    },
+  },
 }
 </script>
 

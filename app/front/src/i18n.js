@@ -12,6 +12,6 @@ export default new VueI18n({
     en: require('./langs/en.json'),
     fr: require('./langs/fr.json'),
     zh: require('./langs/zh.json'),
-    de: require('./langs/de.json')
-  }
+    de: require('./langs/de.json'),
+  },
 })

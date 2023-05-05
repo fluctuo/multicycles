@@ -51,7 +51,7 @@ export default {
   name: 'Settings',
   components: {
     ArrowLeftCircleIcon,
-    ArrowDownCircleIcon
+    ArrowDownCircleIcon,
   },
   created() {
     this.getProviders()
@@ -63,8 +63,8 @@ export default {
         { text: 'Français', value: 'fr' },
         { text: 'English', value: 'en' },
         { text: '中文', value: 'zh' },
-        { text: 'German', value: 'de' }
-      ]
+        { text: 'German', value: 'de' },
+      ],
     }
   },
   computed: mapGetters(['isProviderDisabled']),
@@ -76,8 +76,8 @@ export default {
     },
     logoSrc(provider) {
       return `https://cdn.fluctuo.com/providers/${provider.slug}.jpg`
-    }
-  }
+    },
+  },
 }
 </script>
 

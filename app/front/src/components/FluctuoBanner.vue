@@ -2,12 +2,8 @@
   <div class="banner" v-if="!bannerHidden">
     <div>
       Multicycles.org is powered by&nbsp;
-      <a href="https://fluctuo.com">
-        <b>Fluctuo Data Flow</b>&nbsp;API
-      </a>
-      <span class="hideOnMobile">
-        <br />The best data on shared-mobility vehicles available in real-time.
-      </span>
+      <a href="https://fluctuo.com"> <b>Fluctuo Data Flow</b>&nbsp;API </a>
+      <span class="hideOnMobile"> <br />The best data on shared-mobility vehicles available in real-time. </span>
     </div>
     <div class="hide-banner">
       <a href="#" @click="hide()">close</a>
@@ -20,7 +16,7 @@ export default {
   name: 'FluctuoBanner',
   data() {
     return {
-      bannerHidden: false
+      bannerHidden: false,
     }
   },
   mounted() {
@@ -31,8 +27,8 @@ export default {
     hide() {
       localStorage.setItem('bannerHidden', true)
       this.bannerHidden = true
-    }
-  }
+    },
+  },
 }
 </script>
 

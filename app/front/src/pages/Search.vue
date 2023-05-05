@@ -21,11 +21,7 @@
       </div>
     </div>
     <ul class="results">
-      <li
-        v-for="address in addresses"
-        :key="address.id"
-        @click="selectAddress(address)"
-      >{{ address.place_name }}</li>
+      <li v-for="address in addresses" :key="address.id" @click="selectAddress(address)">{{ address.place_name }}</li>
       <search-icon v-if="!addresses.length" class="background" />
     </ul>
   </div>
@@ -39,13 +35,13 @@ export default {
   name: 'Search',
   components: {
     ArrowLeftIcon,
-    SearchIcon
+    SearchIcon,
   },
   data() {
     return {
       searchedAdress: null,
       mapboxKey: process.env.VUE_APP_MAPBOX_KEY,
-      addresses: []
+      addresses: [],
     }
   },
   methods: {
@@ -55,11 +51,9 @@ export default {
       if (this.searchedAdress.length > 3) {
         return this.axios
           .get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${this.searchedAdress}.json?access_token=${
-              this.mapboxKey
-            }`
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${this.searchedAdress}.json?access_token=${this.mapboxKey}`
           )
-          .then(resp => {
+          .then((resp) => {
             this.addresses = resp.data.features
           })
       }
@@ -68,11 +62,10 @@ export default {
       this.setAddress({ name: address.place_name, position: address.geometry.coordinates.reverse() })
       this.setPage('home')
       this.updateLocation()
-    }
-  }
+    },
+  },
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import '../app.scss';

@@ -1,4 +1,4 @@
-module.exports = api => {
+module.exports = (api) => {
   api.cache.never()
   return {
     presets: [
@@ -6,11 +6,11 @@ module.exports = api => {
         '@babel/preset-env',
         {
           targets: {
-            node: '8'
-          }
-        }
-      ]
+            node: '8',
+          },
+        },
+      ],
     ],
-    plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-object-rest-spread']
+    plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-object-rest-spread'],
   }
 }

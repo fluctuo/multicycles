@@ -40,7 +40,7 @@ function getAccount(accountId) {
     }
   `,
     {
-      accountId
+      accountId,
     }
   )
 }
@@ -64,7 +64,7 @@ function getActiveRides(accountId) {
     }
   `,
     {
-      accountId
+      accountId,
     }
   )
 }
@@ -89,7 +89,7 @@ function startRide(accountId, { provider, token, lat, lng }) {
       provider,
       token,
       lat,
-      lng
+      lng,
     }
   )
 }
@@ -113,7 +113,7 @@ function stopRide(accountId, { rideId, lat, lng }) {
       accountId,
       rideId,
       lat,
-      lng
+      lng,
     }
   )
 }
@@ -124,5 +124,5 @@ module.exports = {
   getAccount,
   getActiveRides,
   startRide,
-  stopRide
+  stopRide,
 }

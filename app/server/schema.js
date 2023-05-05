@@ -6,7 +6,7 @@ const {
   GraphQLList,
   GraphQLInt,
   GraphQLNonNull,
-  GraphQLFloat
+  GraphQLFloat,
 } = require('graphql')
 const api = require('./api')
 const db = require('./db')
@@ -15,7 +15,7 @@ const MySubAccountType = new GraphQLObjectType({
   name: 'MySubAccount',
   fields: {
     puid: {
-      type: GraphQLString
+      type: GraphQLString,
     },
     status: { type: GraphQLString },
     provider: {
@@ -24,23 +24,23 @@ const MySubAccountType = new GraphQLObjectType({
         description: 'A provider detail. A provider refer to a company or a service that rents vehicles.',
         fields: {
           name: { type: GraphQLString, description: 'Provider name' },
-          slug: { type: GraphQLString, description: 'Provider slug, can be used as a key' }
-        }
-      })
+          slug: { type: GraphQLString, description: 'Provider slug, can be used as a key' },
+        },
+      }),
     },
     name: { type: GraphQLString },
     phone: { type: GraphQLString },
     hasPaymentMethod: { type: GraphQLBoolean },
     referralCode: {
-      type: GraphQLString
+      type: GraphQLString,
     },
     createdAt: {
-      type: GraphQLString
+      type: GraphQLString,
     },
     refreshedAt: {
-      type: GraphQLString
-    }
-  }
+      type: GraphQLString,
+    },
+  },
 })
 
 const MyAccountType = new GraphQLObjectType({
@@ -50,9 +50,9 @@ const MyAccountType = new GraphQLObjectType({
     name: { type: GraphQLString },
     email: { type: GraphQLString },
     subAccounts: {
-      type: new GraphQLList(MySubAccountType)
-    }
-  }
+      type: new GraphQLList(MySubAccountType),
+    },
+  },
 })
 
 const MyActiveRidesType = new GraphQLObjectType({
@@ -66,11 +66,11 @@ const MyActiveRidesType = new GraphQLObjectType({
         description: 'A provider detail. A provider refer to a company or a service that rents vehicles.',
         fields: {
           name: { type: GraphQLString, description: 'Provider name' },
-          slug: { type: GraphQLString, description: 'Provider slug, can be used as a key' }
-        }
-      })
-    }
-  }
+          slug: { type: GraphQLString, description: 'Provider slug, can be used as a key' },
+        },
+      }),
+    },
+  },
 })
 
 module.exports = new GraphQLSchema({
@@ -84,14 +84,14 @@ module.exports = new GraphQLSchema({
             throw new Error('not logged')
           }
 
-          return db.findById(ctx.user.userId).then(user => {
+          return db.findById(ctx.user.userId).then((user) => {
             if (!user) {
               return null
             }
 
-            return api.getAccount(user.account_id).then(data => data.getAccount)
+            return api.getAccount(user.account_id).then((data) => data.getAccount)
           })
-        }
+        },
       },
       getMyActiveRides: {
         type: new GraphQLList(MyActiveRidesType),
@@ -100,26 +100,26 @@ module.exports = new GraphQLSchema({
             throw new Error('not logged')
           }
 
-          return db.findById(ctx.user.userId).then(user => {
+          return db.findById(ctx.user.userId).then((user) => {
             if (!user) {
               return null
             }
 
-            return api.getActiveRides(user.account_id).then(data => {
+            return api.getActiveRides(user.account_id).then((data) => {
               if (data.getRides.total > 0) {
-                return data.getRides.nodes.map(r => ({
+                return data.getRides.nodes.map((r) => ({
                   id: r.id,
                   startedAt: r.startedAt,
-                  provider: r.provider
+                  provider: r.provider,
                 }))
               } else {
                 return null
               }
             })
           })
-        }
-      }
-    }
+        },
+      },
+    },
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
@@ -130,7 +130,7 @@ module.exports = new GraphQLSchema({
           provider: { type: new GraphQLNonNull(GraphQLString) },
           token: { type: new GraphQLNonNull(GraphQLString) },
           lat: { type: new GraphQLNonNull(GraphQLFloat) },
-          lng: { type: new GraphQLNonNull(GraphQLFloat) }
+          lng: { type: new GraphQLNonNull(GraphQLFloat) },
         },
         resolve(root, args, ctx) {
           if (!ctx.user) {
@@ -139,16 +139,16 @@ module.exports = new GraphQLSchema({
 
           return db
             .findById(ctx.user.userId)
-            .then(user => api.startRide(user.account_id, args))
-            .then(data => data.startRide)
-        }
+            .then((user) => api.startRide(user.account_id, args))
+            .then((data) => data.startRide)
+        },
       },
       stopMyRide: {
         type: MyActiveRidesType,
         args: {
           rideId: { type: new GraphQLNonNull(GraphQLString) },
           lat: { type: new GraphQLNonNull(GraphQLFloat) },
-          lng: { type: new GraphQLNonNull(GraphQLFloat) }
+          lng: { type: new GraphQLNonNull(GraphQLFloat) },
         },
         resolve(root, args, ctx) {
           if (!ctx.user) {
@@ -157,10 +157,10 @@ module.exports = new GraphQLSchema({
 
           return db
             .findById(ctx.user.userId)
-            .then(user => api.stopRide(user.account_id, args))
-            .then(data => data.stopRide)
-        }
-      }
-    }
-  })
+            .then((user) => api.stopRide(user.account_id, args))
+            .then((data) => data.stopRide)
+        },
+      },
+    },
+  }),
 })

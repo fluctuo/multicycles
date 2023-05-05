@@ -36,7 +36,7 @@ export default {
     LoaderIcon,
     Login,
     MyAccount,
-    Footer
+    Footer,
   },
   created() {
     if (window.location.search) {
@@ -53,18 +53,18 @@ export default {
   },
   data() {
     return {
-      isLoging: true
+      isLoging: true,
     }
   },
   computed: {
     isLogged() {
       return this.$store.state.myAccount !== null
-    }
+    },
   },
   methods: {
     ...mapActions(['login']),
-    ...mapMutations(['setPage', 'updateLocation'])
-  }
+    ...mapMutations(['setPage', 'updateLocation']),
+  },
 }
 </script>
 

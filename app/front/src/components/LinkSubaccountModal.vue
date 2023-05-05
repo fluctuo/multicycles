@@ -4,7 +4,7 @@
       <div class="modal-wrapper">
         <div class="modal-container" @click.stop>
           <div class="modal-header">
-            <h3>{{ $t('LinkSubaccountModal.title', {provider}) }}</h3>
+            <h3>{{ $t('LinkSubaccountModal.title', { provider }) }}</h3>
           </div>
 
           <div class="modal-body">
@@ -13,7 +13,7 @@
               <div v-for="field in currentStep.fields" :key="field.name">
                 <label :for="field.name">
                   {{ field.name }}
-                  <br>
+                  <br />
                   <input
                     :id="field.name"
                     v-model="form[field.name]"
@@ -21,13 +21,13 @@
                     :name="field.name"
                     required
                     :disabled="submiting"
-                  >
+                  />
                 </label>
               </div>
 
               <button type="submit" class="btn--success btn--big" :disabled="submiting">
                 {{ $t(`LinkSubaccountModal.${hasNextStep ? 'next' : 'link'}`) }}
-                <loader-icon v-if="submiting" class="spinner"/>
+                <loader-icon v-if="submiting" class="spinner" />
               </button>
             </form>
           </div>
@@ -55,7 +55,7 @@ const providerRequirements = {
               phone
             }
           }
-        `
+        `,
         },
         {
           description: 'limeStep2',
@@ -66,9 +66,9 @@ const providerRequirements = {
               puid
             }
           }
-        `
-        }
-      ]
+        `,
+        },
+      ],
     },
     refresh: {
       initMutation: `
@@ -88,10 +88,10 @@ const providerRequirements = {
             puid
           }
         }
-      `
-        }
-      ]
-    }
+      `,
+        },
+      ],
+    },
   },
   bird: {
     login: {
@@ -105,7 +105,7 @@ const providerRequirements = {
                 email
               }
             }
-          `
+          `,
         },
         {
           description: 'birdStep2',
@@ -116,9 +116,9 @@ const providerRequirements = {
                 puid
               }
             }
-          `
-        }
-      ]
+          `,
+        },
+      ],
     },
     refresh: {
       initMutation: `
@@ -138,26 +138,29 @@ const providerRequirements = {
             puid
           }
         }
-      `
-        }
-      ]
-    }
+      `,
+        },
+      ],
+    },
   },
   tier: {
     login: {
       steps: [
         {
           description: 'fleedbirdStep',
-          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          fields: [
+            { name: 'email', type: 'email' },
+            { name: 'password', type: 'password' },
+          ],
           mutation: `
             mutation($email: String!, $password: String!){
               lastStep : tierLogin(email: $email, password: $password) {
                 puid
               }
             }
-          `
-        }
-      ]
+          `,
+        },
+      ],
     },
     refresh: {
       steps: [
@@ -170,26 +173,29 @@ const providerRequirements = {
             puid
           }
         }
-      `
-        }
-      ]
-    }
+      `,
+        },
+      ],
+    },
   },
   ufo: {
     login: {
       steps: [
         {
           description: 'fleedbirdStep',
-          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          fields: [
+            { name: 'email', type: 'email' },
+            { name: 'password', type: 'password' },
+          ],
           mutation: `
             mutation($email: String!, $password: String!){
               lastStep : ufoLogin(email: $email, password: $password) {
                 puid
               }
             }
-          `
-        }
-      ]
+          `,
+        },
+      ],
     },
     refresh: {
       steps: [
@@ -202,26 +208,29 @@ const providerRequirements = {
             puid
           }
         }
-      `
-        }
-      ]
-    }
+      `,
+        },
+      ],
+    },
   },
   hive: {
     login: {
       steps: [
         {
           description: 'fleedbirdStep',
-          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          fields: [
+            { name: 'email', type: 'email' },
+            { name: 'password', type: 'password' },
+          ],
           mutation: `
             mutation($email: String!, $password: String!){
               lastStep : hiveLogin(email: $email, password: $password) {
                 puid
               }
             }
-          `
-        }
-      ]
+          `,
+        },
+      ],
     },
     refresh: {
       steps: [
@@ -234,10 +243,10 @@ const providerRequirements = {
             puid
           }
         }
-      `
-        }
-      ]
-    }
+      `,
+        },
+      ],
+    },
   },
   circ: {
     login: {
@@ -251,7 +260,7 @@ const providerRequirements = {
               phone
             }
           }
-        `
+        `,
         },
         {
           description: 'phoneStep2',
@@ -262,9 +271,9 @@ const providerRequirements = {
               puid
             }
           }
-        `
-        }
-      ]
+        `,
+        },
+      ],
     },
     refresh: {
       initMutation: `
@@ -284,26 +293,29 @@ const providerRequirements = {
             puid
           }
         }
-      `
-        }
-      ]
-    }
+      `,
+        },
+      ],
+    },
   },
   moow: {
     login: {
       steps: [
         {
           description: 'fleedbirdStep',
-          fields: [{ name: 'email', type: 'email' }, { name: 'password', type: 'password' }],
+          fields: [
+            { name: 'email', type: 'email' },
+            { name: 'password', type: 'password' },
+          ],
           mutation: `
             mutation($email: String!, $password: String!){
               lastStep : moowLogin(email: $email, password: $password) {
                 puid
               }
             }
-          `
-        }
-      ]
+          `,
+        },
+      ],
     },
     refresh: {
       steps: [
@@ -316,11 +328,11 @@ const providerRequirements = {
             puid
           }
         }
-      `
-        }
-      ]
-    }
-  }
+      `,
+        },
+      ],
+    },
+  },
 }
 
 export default {
@@ -328,19 +340,19 @@ export default {
   props: {
     provider: {
       type: String,
-      required: true
+      required: true,
     },
     subAccount: {
       type: Object,
-      required: false
+      required: false,
     },
     refresh: {
       type: Boolean,
-      required: false
-    }
+      required: false,
+    },
   },
   components: {
-    LoaderIcon
+    LoaderIcon,
   },
   created() {
     if (this.refresh) {
@@ -349,7 +361,7 @@ export default {
       if (providerRequirements[this.provider].refresh.initMutation) {
         this.$apolloProvider.defaultClient.mutate({
           mutation: gql(providerRequirements[this.provider].refresh.initMutation),
-          variables: { puid: this.subAccount.puid }
+          variables: { puid: this.subAccount.puid },
         })
       }
     } else {
@@ -361,7 +373,7 @@ export default {
       form: {},
       step: 0,
       submiting: false,
-      action: null
+      action: null,
     }
   },
   computed: {
@@ -370,7 +382,7 @@ export default {
     },
     hasNextStep() {
       return this.step < providerRequirements[this.provider][this.action].steps.length - 1
-    }
+    },
   },
   methods: {
     ...mapActions(['login']),
@@ -392,9 +404,9 @@ export default {
       this.$apolloProvider.defaultClient
         .mutate({
           mutation: gql(this.currentStep.mutation),
-          variables
+          variables,
         })
-        .then(result => {
+        .then((result) => {
           if (this.hasNextStep) {
             this.submiting = false
             this.step++
@@ -415,7 +427,7 @@ export default {
       return this.$apolloProvider.defaultClient
         .mutate({
           mutation: gql`
-            mutation($accountId: String!, $puid: String!) {
+            mutation ($accountId: String!, $puid: String!) {
               linkSubAccount(accountId: $accountId, puid: $puid) {
                 id
               }
@@ -423,15 +435,15 @@ export default {
           `,
           variables: {
             puid,
-            accountId: this.$store.state.myAccount.id
-          }
+            accountId: this.$store.state.myAccount.id,
+          },
         })
         .then(() => this.login())
         .then(() => {
           this.$emit('close')
         })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -448,7 +460,9 @@ form {
   label {
     width: 100%;
 
-    input { width: 100%; }
+    input {
+      width: 100%;
+    }
   }
 }
 
@@ -465,9 +479,9 @@ form {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .modal-wrapper {
@@ -482,8 +496,8 @@ form {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 
   color: #000;
@@ -522,7 +536,9 @@ button {
 }
 
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {
@@ -530,4 +546,3 @@ button {
   animation: spinner 4s linear infinite;
 }
 </style>
-

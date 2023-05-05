@@ -8,7 +8,7 @@ const {
   makeRemoteExecutableSchema,
   FilterRootFields,
   transformSchema,
-  mergeSchemas
+  mergeSchemas,
 } = require('apollo-server')
 const bodyParser = require('koa-bodyparser')
 const jwt = require('jsonwebtoken')
@@ -22,7 +22,7 @@ app.proxy = true
 
 const limiter = RateLimit.middleware({
   interval: 1 * 60 * 1000,
-  max: process.env.RATE_LIMIT_PER_MIN || 20
+  max: process.env.RATE_LIMIT_PER_MIN || 20,
 })
 
 app.use(async (ctx, next) => {
@@ -35,7 +35,7 @@ app.use(async (ctx, next) => {
 app.use(bodyParser())
 app.use(
   cors({
-    origin: process.env.FRONT_BASE_URL
+    origin: process.env.FRONT_BASE_URL,
   })
 )
 
@@ -46,8 +46,8 @@ app.use((ctx, next) => {
   ) {
     ctx.body = JSON.stringify({
       data: {
-        vehicles: []
-      }
+        vehicles: [],
+      },
     })
     return
   } else {
@@ -59,7 +59,7 @@ passport(app)
 
 const customFetch = (uri, options) => {
   const start = new Date()
-  return fetch(uri, options).then(async resp => {
+  return fetch(uri, options).then(async (resp) => {
     if (resp.status === 502) {
       console.log('RETRY', Date.now() - start, resp.headers)
       return customFetch(uri, options)
@@ -71,7 +71,7 @@ const customFetch = (uri, options) => {
 
 const multicyclesPrivateLink = new HttpLink({
   uri: `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
-  fetch: customFetch
+  fetch: customFetch,
 })
 
 async function init() {
@@ -79,7 +79,7 @@ async function init() {
 
   const executableSchema = makeRemoteExecutableSchema({
     schema: multicyclesApiSchema,
-    link: multicyclesPrivateLink
+    link: multicyclesPrivateLink,
   })
 
   const transformedSchema = transformSchema(executableSchema, [
@@ -109,14 +109,14 @@ async function init() {
         'circLoginRefresh',
         'circLoginRefreshOTP',
         'moowLogin',
-        'moowLoginRefresh'
+        'moowLoginRefresh',
       ].includes(rootField)
-    })
+    }),
   ])
 
   const server = new ApolloServer({
     schema: mergeSchemas({
-      schemas: [transformedSchema, schema]
+      schemas: [transformedSchema, schema],
     }),
     context: ({ ctx }) => {
       if (ctx.request.header && ctx.request.header.authorization) {
@@ -128,13 +128,13 @@ async function init() {
         }
 
         return {
-          user
+          user,
         }
       }
     },
     formatError(err) {
       console.log(require('util').inspect(err, { depth: null, colors: true }))
-    }
+    },
   })
 
   server.applyMiddleware({ app })
@@ -144,6 +144,6 @@ async function init() {
 
 init()
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err)
 })
