@@ -4,7 +4,7 @@
   },
   "about": {
     "title": "About",
-    "text": "<p>Multicycles is the technology demo of fluctuo's Data Flow API.</p><p>Fluctuo is the startup specialized in shared mobility. More info on <a href=\"https://fluctuo.com\">fluctuo.com</a>.</p><p>Find out more about the Data Flow API on <a href=\"https://flow.fluctuo.com\">flow.fluctuo.com</a>. This API integrates real-time data from over 200 shared mobility operators around the world.</p><p>fluctuo also developed, City Dive, a historical data dashboard. More info on <a href=\"https://dive.fluctuo.com\">dive.fluctuo.com</a>.</p><p><a href=\"https://www.linkedin.com/company/fluctuo/\">linkedin</a> | <a href=\"https://twitter.com/fluctuo\">twitter</a></p>"
+    "text": "<p>Multicycles is the technology demo of fluctuo's Bridge API.</p><p>Fluctuo is the startup specialized in shared mobility. More info on <a href=\"https://fluctuo.com\">fluctuo.com</a>.</p><p>Find out more about the Bridge API on <a href=\"https://flow.fluctuo.com\">flow.fluctuo.com</a>. This API integrates real-time data from over 200 shared mobility operators around the world.</p><p>fluctuo also developed, City Dive, a historical data dashboard. More info on <a href=\"https://dive.fluctuo.com\">dive.fluctuo.com</a>.</p><p><a href=\"https://www.linkedin.com/company/fluctuo/\">linkedin</a> | <a href=\"https://twitter.com/fluctuo\">twitter</a></p>"
   },
   "settings": {
     "title": "Settings",
