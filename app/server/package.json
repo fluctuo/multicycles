@@ -15,8 +15,8 @@
   "dependencies": {
     "@koa/cors": "^4.0.0",
     "apollo-link-http": "^1.5.9",
-    "apollo-server": "^2.25.3",
-    "apollo-server-koa": "^2.25.3",
+    "apollo-server": "^3.0.0",
+    "apollo-server-koa": "^3.0.0",
     "dotenv": "^16.0.3",
     "graphql": "^15.8.0",
     "graphql-request": "^6.0.0",
