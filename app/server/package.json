@@ -32,6 +32,6 @@
     "pg": "^8.10.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.0.0"
   }
 }
