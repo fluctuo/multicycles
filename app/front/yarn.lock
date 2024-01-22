@@ -8773,9 +8773,9 @@ vue-analytics@^5.22.1:
   integrity sha512-HPKQMN7gfcUqS5SxoO0VxqLRRSPkG1H1FqglsHccz6BatBatNtm/Vyy8brApktZxNCfnAkrSVDpxg3/FNDeOgQ==
 
 vue-apollo@^3.0.5:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/vue-apollo/-/vue-apollo-3.1.0.tgz#d0370b64f928f488b7ad98177cca8e1a82fa725e"
-  integrity sha512-TkXMpgypbqM/27vKIpWNhL347QRtcu9kWkEmxplPGGMnZb+hSbbIwU07LjQVzFwrLBer0ha9zJP4hIW/fCQDuw==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/vue-apollo/-/vue-apollo-3.1.2.tgz#fc01a3d460536f9a5d2db7b26f84acc7c716189d"
+  integrity sha512-ZS4b9C+iiiVmjpbTcxp2ryrRiX4lux+duPuyj4qm25hS8Y45NjQXitgLYitSToqepl52/VZDrRnD07G2RpbejQ==
   dependencies:
     chalk "^2.4.2"
     serialize-javascript "^4.0.0"
