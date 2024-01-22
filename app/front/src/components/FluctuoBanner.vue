@@ -2,7 +2,7 @@
   <div class="banner" v-if="!bannerHidden">
     <div>
       Multicycles.org is powered by&nbsp;
-      <a href="https://fluctuo.com"> <b>Fluctuo Data Flow</b>&nbsp;API </a>
+      <a href="https://fluctuo.com"> <b>Fluctuo bridge</b>&nbsp;API </a>
       <span class="hideOnMobile"> <br />The best data on shared-mobility vehicles available in real-time. </span>
     </div>
     <div class="hide-banner">
