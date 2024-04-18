@@ -22,7 +22,7 @@
     "mobile-detect": "^1.4.3",
     "query-string": "^6.13.6",
     "raven-js": "^3.27.0",
-    "vue": "^2.6.12",
+    "vue": "^3.0.0",
     "vue-analytics": "^5.22.1",
     "vue-apollo": "^3.0.5",
     "vue-axios": "^3.1.3",
