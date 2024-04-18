@@ -85,7 +85,6 @@ async function init() {
       return [
         'providers',
         'vehicles',
-        'zones',
       ].includes(rootField)
     }),
   ])

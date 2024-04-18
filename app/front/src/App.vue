@@ -66,7 +66,7 @@ export default {
     this.startGeolocation()
   },
   methods: {
-    ...mapActions(['setDrawerEnable', 'startGeolocation', 'getZones', 'setCenter', 'setMoved']),
+    ...mapActions(['setDrawerEnable', 'startGeolocation', 'setCenter', 'setMoved']),
     ...mapMutations(['setPage', 'setEmbedded', 'setAutoReload']),
     fixEnable(visible) {
       if (visible) {

@@ -53,7 +53,6 @@ const state = {
   },
   roundedLocation: position || [48.856613, 2.352222],
   fixGPS: false,
-  zones: [],
   embedded: false,
   autoReload: false,
 }
@@ -133,7 +132,6 @@ const actions = {
       navigator.geolocation.getCurrentPosition((position) => {
         commit('fixGPS')
         dispatch('getProviders', { lat: position.coords.latitude, lng: position.coords.longitude })
-        dispatch('getZones', { lat: position.coords.latitude, lng: position.coords.longitude })
 
         if (!state.moved) {
           state.map.center = [position.coords.latitude, position.coords.longitude]
@@ -152,32 +150,6 @@ const actions = {
         }
       })
     }
-  },
-  getZones({ commit }, position) {
-    apolloProvider.defaultClient
-      .query({
-        query: gql`
-          query ($lat: Float!, $lng: Float!, $types: [ZoneType]) {
-            zones(lat: $lat, lng: $lng, types: $types) {
-              id
-              name
-              types
-              geojson
-              provider {
-                name
-                slug
-              }
-            }
-          }
-        `,
-        variables: {
-          ...position,
-          types: ['parking', 'no_parking', 'no_ride', 'ride'],
-        },
-      })
-      .then((result) => {
-        commit('setZones', result.data.zones)
-      })
   },
 }
 
@@ -249,9 +221,6 @@ const mutations = {
   },
   fixGPS(state) {
     state.fixGPS = true
-  },
-  setZones(state, zones) {
-    state.zones = zones
   },
   setEmbedded(state) {
     state.embedded = true
