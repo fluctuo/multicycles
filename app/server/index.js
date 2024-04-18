@@ -51,25 +51,9 @@ app.use((ctx, next) => {
   }
 })
 
-const customFetch = (uri, options) => {
-  console.error('FETCH', uri, options )
-  const start = new Date()
-  return fetch(uri, options).then(async (resp) => {
-    if (resp.status === 502) {
-      console.log('RETRY', Date.now() - start, resp.headers)
-      return customFetch(uri, options)
-    }
-
-    return resp
-  }).catch((err) => {
-    console.log('ERROR', err)
-    throw err
-  })
-}
-
 const multicyclesPrivateLink = new HttpLink({
   uri: `${process.env.MULTICYCLES_API_URL}?access_token=${process.env.MULTICYCLES_API_PRIVATE_TOKEN}`,
-  fetch: customFetch,
+  fetch
 })
 
 async function init() {
@@ -96,11 +80,7 @@ async function init() {
   app.listen({ port: 3001 }, () => console.log(`🚀 Server ready at http://localhost:3001${server.graphqlPath}`))
 }
 
-init().catch((err) => {
-  console.error(err)
-}).then(() => {
-  console.log('INIT DONE')
-})
+init()
 
 process.on('unhandledRejection', (err) => {
   console.error(err)

@@ -3,16 +3,7 @@
   "name": "multicycles",
   "version": "1.0.0-beta.1",
   "scripts": {
-    "#<git hooks>": "handled by husky",
-    "precommit": "lint-staged",
-    "#</git hooks>": "handled by husky",
     "dev": "cd app && docker-compose up --build"
-  },
-  "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --write",
-      "git add"
-    ]
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",
@@ -21,8 +12,6 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.21.5",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
     "prettier": "^2.8.8"
   },
   "dependencies": {}
