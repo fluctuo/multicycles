@@ -43,7 +43,7 @@
         ></l-marker>
 
         <l-geo-json
-          v-for="zone in activeRideOrSelectedVehicle(zones)"
+          v-for="zone in selectedVehicleZones(zones)"
           :geojson="zone.geojson"
           :key="zone.id"
           :options="getZoneStyle(zone.types)"
@@ -120,7 +120,6 @@ export default {
     }
   },
   computed: mapState({
-    hasActiveRides: (state) => !!(state.activeRides && state.activeRides.length),
     center: (state) => state.map.center,
     excludeProviders: (state) => state.disabledProviders,
     roundedLocation: (state) => state.roundedLocation,
@@ -193,10 +192,8 @@ export default {
     reloadVehicules() {
       this.$apollo.queries.vehicles.refetch()
     },
-    activeRideOrSelectedVehicle(zones) {
-      const provider = this.hasActiveRides
-        ? this.$store.state.activeRides[0].provider.slug
-        : this.$store.state.selectedVehicle
+    selectedVehicleZones(zones) {
+      const provider = this.$store.state.selectedVehicle
         ? this.$store.state.selectedVehicle.provider.slug
         : null
 

@@ -8,10 +8,8 @@ const {
   makeRemoteExecutableSchema,
   FilterRootFields,
   transformSchema,
-  mergeSchemas,
 } = require('apollo-server')
 const bodyParser = require('koa-bodyparser')
-const jwt = require('jsonwebtoken')
 const RateLimit = require('koa2-ratelimit').RateLimit
 
 const app = new Koa()
@@ -88,7 +86,6 @@ async function init() {
         'providers',
         'vehicles',
         'zones',
-        'missingProvider'
       ].includes(rootField)
     }),
   ])

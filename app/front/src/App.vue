@@ -9,11 +9,9 @@
     <drawer-menu slot="drawer" />
     <div slot="content" class="wrapper">
       <fluctuo-banner v-if="page === 'home'" />
-      <active-ride />
       <search v-if="page === 'search'" />
       <settings v-else-if="page === 'settings'" />
       <about v-else-if="page === 'about'" />
-      <account v-else-if="page === 'account'" />
       <home v-else />
     </div>
   </vue-drawer-layout>
@@ -27,7 +25,6 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import queryString from 'query-string'
 import DrawerMenu from './components/DrawerMenu'
-import ActiveRide from './components/ActiveRide'
 import FluctuoBanner from './components/FluctuoBanner'
 
 import Home from '@/pages/Home'
@@ -35,18 +32,15 @@ import LocalMap from '@/components/Map'
 import Search from '@/pages/Search'
 import Settings from '@/pages/Settings'
 import About from '@/pages/About'
-import Account from '@/pages/Account'
 
 export default {
   name: 'app',
   components: {
     DrawerMenu,
-    ActiveRide,
     Home,
     Search,
     Settings,
     About,
-    Account,
     LocalMap,
     FluctuoBanner,
   },
@@ -59,10 +53,6 @@ export default {
         this.setEmbedded(true)
       }
 
-      if (params.jwt) {
-        this.setPage('account')
-      }
-
       if (params.l) {
         this.setCenter(params.l)
         this.setMoved(true)
@@ -73,11 +63,10 @@ export default {
       }
     }
 
-    this.login()
     this.startGeolocation()
   },
   methods: {
-    ...mapActions(['setDrawerEnable', 'login', 'startGeolocation', 'getZones', 'setCenter', 'setMoved']),
+    ...mapActions(['setDrawerEnable', 'startGeolocation', 'getZones', 'setCenter', 'setMoved']),
     ...mapMutations(['setPage', 'setEmbedded', 'setAutoReload']),
     fixEnable(visible) {
       if (visible) {
