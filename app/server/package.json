@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@koa/cors": "^4.0.0",
+    "@koa/cors": "^5.0.0",
     "apollo-link-http": "^1.5.9",
     "apollo-server": "^2.25.3",
     "apollo-server-koa": "^2.25.3",
