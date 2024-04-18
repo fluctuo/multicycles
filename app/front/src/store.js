@@ -51,11 +51,8 @@ const state = {
   selectedAddress: {
     name: '',
   },
-  myAccount: null,
-  activeRides: [],
   roundedLocation: position || [48.856613, 2.352222],
   fixGPS: false,
-  zones: [],
   embedded: false,
   autoReload: false,
 }
@@ -129,118 +126,12 @@ const actions = {
     commit('setRoundedLocation', address.position)
     commit('setMoved', true)
   },
-  login({ commit, dispatch }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .query({
-          fetchPolicy: 'no-cache',
-          query: gql`
-            query {
-              getMyAccount {
-                id
-                name
-                subAccounts {
-                  puid
-                  status
-                  provider {
-                    name
-                    slug
-                  }
-                }
-              }
-            }
-          `,
-        })
-        .then((result) => {
-          commit('setMyAccount', result.data.getMyAccount)
-          return dispatch('getActiveRides')
-        })
-    }
-  },
-  getActiveRides({ commit }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .query({
-          query: gql`
-            query {
-              getMyActiveRides {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
-            }
-          `,
-        })
-        .then((result) => {
-          commit('setActiveRides', result.data.getMyActiveRides)
-        })
-    }
-  },
-  startMyRide({ commit, state }, { token, provider }) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .mutate({
-          mutation: gql`
-            mutation ($provider: String!, $token: String!, $lat: Float!, $lng: Float!) {
-              startMyRide(provider: $provider, token: $token, lat: $lat, lng: $lng) {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
-            }
-          `,
-          variables: {
-            token,
-            provider,
-            lat: state.geolocation[0],
-            lng: state.geolocation[1],
-          },
-        })
-        .then((result) => {
-          commit('setActiveRides', [result.data.startMyRide])
-        })
-    }
-  },
-  stopMyRide({ commit, state }, rideId) {
-    if (localStorage.getItem('token')) {
-      return apolloProvider.defaultClient
-        .mutate({
-          mutation: gql`
-            mutation ($rideId: String!, $lat: Float!, $lng: Float!) {
-              stopMyRide(rideId: $rideId, lat: $lat, lng: $lng) {
-                id
-                startedAt
-                provider {
-                  name
-                  slug
-                }
-              }
-            }
-          `,
-          variables: {
-            rideId,
-            lat: state.geolocation[0],
-            lng: state.geolocation[1],
-          },
-        })
-        .then(() => {
-          commit('setActiveRides', null)
-        })
-    }
-  },
   startGeolocation({ commit, state, dispatch }) {
     // request lat lng by ip
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         commit('fixGPS')
         dispatch('getProviders', { lat: position.coords.latitude, lng: position.coords.longitude })
-        dispatch('getZones', { lat: position.coords.latitude, lng: position.coords.longitude })
 
         if (!state.moved) {
           state.map.center = [position.coords.latitude, position.coords.longitude]
@@ -259,48 +150,6 @@ const actions = {
         }
       })
     }
-  },
-  getZones({ commit }, position) {
-    apolloProvider.defaultClient
-      .query({
-        query: gql`
-          query ($lat: Float!, $lng: Float!, $types: [ZoneType]) {
-            zones(lat: $lat, lng: $lng, types: $types) {
-              id
-              name
-              types
-              geojson
-              provider {
-                name
-                slug
-              }
-            }
-          }
-        `,
-        variables: {
-          ...position,
-          types: ['parking', 'no_parking', 'no_ride', 'ride'],
-        },
-      })
-      .then((result) => {
-        commit('setZones', result.data.zones)
-      })
-  },
-  missingProvider({ state }, provider) {
-    apolloProvider.defaultClient.mutate({
-      mutation: gql`
-        mutation missingProvider($provider: String!, $lat: Float!, $lng: Float!) {
-          missingProvider(provider: $provider, lat: $lat, lng: $lng) {
-            provider
-          }
-        }
-      `,
-      variables: {
-        provider,
-        lat: state.geolocation[0],
-        lng: state.geolocation[1],
-      },
-    })
   },
 }
 
@@ -358,12 +207,6 @@ const mutations = {
   clearAddress(state) {
     state.selectedAddress = { name: '' }
   },
-  setMyAccount(state, myAccount) {
-    Vue.set(state, 'myAccount', myAccount)
-  },
-  setActiveRides(state, rides) {
-    state.activeRides = rides
-  },
   setRoundedLocation(state, center) {
     const diff = distanceInKmBetweenEarthCoordinates(
       state.roundedLocation[0],
@@ -378,9 +221,6 @@ const mutations = {
   },
   fixGPS(state) {
     state.fixGPS = true
-  },
-  setZones(state, zones) {
-    state.zones = zones
   },
   setEmbedded(state) {
     state.embedded = true

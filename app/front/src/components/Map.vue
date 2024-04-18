@@ -41,15 +41,6 @@
           :key="vehicle.id"
           @click="selectVehicle(vehicle)"
         ></l-marker>
-
-        <l-geo-json
-          v-for="zone in activeRideOrSelectedVehicle(zones)"
-          :geojson="zone.geojson"
-          :key="zone.id"
-          :options="getZoneStyle(zone.types)"
-        >
-          <l-popup>Hello!</l-popup>
-        </l-geo-json>
       </l-map>
       <transition name="custom-classes-transition" enter-active-class="fadeInUp" leave-active-class="fadeOutDown">
         <selected-vehicle
@@ -63,7 +54,7 @@
 
 <script>
 import L from 'leaflet'
-import { LMap, LTileLayer, LMarker, LGeoJson } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import gql from 'graphql-tag'
 import { mapActions, mapState, mapMutations } from 'vuex'
 
@@ -78,7 +69,6 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LGeoJson,
     'v-progress': Progress,
     SelectedVehicle,
   },
@@ -120,11 +110,9 @@ export default {
     }
   },
   computed: mapState({
-    hasActiveRides: (state) => !!(state.activeRides && state.activeRides.length),
     center: (state) => state.map.center,
     excludeProviders: (state) => state.disabledProviders,
     roundedLocation: (state) => state.roundedLocation,
-    zones: (state) => state.zones,
     autoReloadEnabled: (state) => state.autoReload,
   }),
   watch: {
@@ -192,30 +180,6 @@ export default {
     },
     reloadVehicules() {
       this.$apollo.queries.vehicles.refetch()
-    },
-    activeRideOrSelectedVehicle(zones) {
-      const provider = this.hasActiveRides
-        ? this.$store.state.activeRides[0].provider.slug
-        : this.$store.state.selectedVehicle
-        ? this.$store.state.selectedVehicle.provider.slug
-        : null
-
-      return provider ? zones.filter((z) => z.provider.slug === provider) : []
-    },
-    getZoneStyle(types) {
-      let color
-
-      if (types.indexOf('no_parking') > -1 || types.indexOf('no_ride') > -1) {
-        color = '#f44336'
-      } else if (types.indexOf('ride') > -1) {
-        color = '#c8e6c9'
-      } else if (types.indexOf('parking') > -1) {
-        color = '#4caf50'
-      }
-
-      return {
-        style: { color },
-      }
     },
   },
   apollo: {

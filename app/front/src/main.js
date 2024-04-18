@@ -13,7 +13,6 @@ import App from './App'
 import apolloProvider from './apollo'
 import i18n from './i18n'
 import store from './store'
-import './registerServiceWorker'
 
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault()

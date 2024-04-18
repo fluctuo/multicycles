@@ -19,20 +19,16 @@
       <div class="left">
         <crosshair-icon class="icon" @click="centerOnGeolocation" />
         <filter-icon class="icon" @click="setPage('settings')" />
-        <alert-circle-icon class="icon" @click="openMissingModal" />
       </div>
     </div>
     <local-map v-if="centerReady" />
-
-    <missing-modal v-if="showMissingModal" @close="showMissingModal = false"></missing-modal>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
-import { MenuIcon, CrosshairIcon, FilterIcon, AlertCircleIcon } from 'vue-feather-icons'
+import { MenuIcon, CrosshairIcon, FilterIcon } from 'vue-feather-icons'
 import LocalMap from '../components/Map'
-import MissingModal from '../components/MissingModal'
 
 export default {
   name: 'Home',
@@ -41,13 +37,6 @@ export default {
     CrosshairIcon,
     FilterIcon,
     LocalMap,
-    AlertCircleIcon,
-    MissingModal,
-  },
-  data() {
-    return {
-      showMissingModal: false,
-    }
   },
   computed: mapState(['map', 'roundedLocation']),
   methods: {
@@ -58,9 +47,6 @@ export default {
     },
     centerReady() {
       return this.map.center && this.roundedLocation
-    },
-    openMissingModal() {
-      this.showMissingModal = true
     },
   },
 }

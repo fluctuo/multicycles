@@ -113,8 +113,7 @@
         <div v-if="vehicle.pricing.includeVat === false">{{ $t('cost.vatExcl') }}</div>
       </div>
       <div class="subdetail" v-if="!isEmbedded">
-        <qrcode-scanner v-if="!hasActiveRides && unlockWhitelisted" :provider="vehicle.provider.slug" />
-        <div v-else>
+        <div>
           <a v-if="isMobileAndDeeplink('ios')" :href="vehicle.provider.deepLink.ios" class="open-native">
             {{ $t('selectedVehicle.unlockInTheApp') }}&nbsp;
             <external-link-icon />
@@ -145,13 +144,12 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 import MobileDetect from 'mobile-detect'
 import { ExternalLinkIcon } from 'vue-feather-icons'
-import QrcodeScanner from './QrcodeScanner'
 
 const md = new MobileDetect(window.navigator.userAgent)
 const unlockWhitelist = []
 
 export default {
-  components: { ExternalLinkIcon, QrcodeScanner },
+  components: { ExternalLinkIcon },
   props: ['vehicle'],
   data: () => ({
     detail: false,
@@ -163,7 +161,6 @@ export default {
     ...mapGetters(['isEmbedded']),
     ...mapState({
       lang: (state) => state.lang,
-      hasActiveRides: (state) => !!(state.activeRides && state.activeRides.length),
     }),
     unlockWhitelisted: function () {
       return unlockWhitelist.includes(this.vehicle.provider.slug)
